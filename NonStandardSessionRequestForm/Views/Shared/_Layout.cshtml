@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <base href="@Url.Content("~")" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/kendocss")
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+<header>
+    @*<div id="top-banner" class="hidden-xs">
+        <div class="container">
+            <div class="row">
+                <div id="information-nav" class="col-lg-6">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><strong>Information for:</strong></li>
+                        <li><a href="information/students.html">Students</a></li>
+                        <li><a href="information/alumni.html">Alumni</a> </li>
+                        <li><a href="information/parents.html">Parents</a></li>
+                        <li><a href="information/staff.html">Staff</a></li>
+                    </ul>
+                </div>
+                <div id="access-nav" class="col-lg-6">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><strong>Login/Register:</strong></li>
+                        <li><a href="https://camel2.usc.edu/OASIS/" target="_blank">OASIS</a></li>
+                        <li><a href="https://my.usc.edu/" target="_blank">myUSC</a></li>
+                         <li><a href="https://secweb.usc.edu/uscnet/login" target="_blank">USCnet</a></li>
+                        <li><a href="http://www.usc.edu/dept/ARR/services/transcripts/parchment.html" target="_blank">Parchment </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="container">
+        <div class="clearfix">
+            <div style="width: 252px;" class="pull-right hidden-xs">
+                <a href="http://usc.edu">
+                    <img src="~/Content/images/usc_230.png" class="img-responsive" alt="University of Southern California" />
+                </a>
+            </div>
+            <div style="padding-top: 20px;" class="pull-left">
+                <a href="http://arr.usc.edu/index.html">
+                    <div class="hidden-xs"> <img src="~/Content/images/logo.png" alt="Office of Academic Records and Registrar"></div>
+                    <div class="visible-xs"><img src="~/Content/images/USC logo-xs.png" class="img-responsive"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main">
+    <div class="container">
+
+        <div class="mainContent">
+            @RenderBody()
+        </div>
+    </div>
+
+</div>
+<footer class="text-center">
+    <div class="container">
+        <div id="disclaimer">
+            The University of Southern California admits students of any race, color, national origin, ancestry,
+            religion, gender, sexual orientation, age, physical disability or mental disability. The University's
+            full non-discrimination policy can be found on the Web at policies.usc.edu.
+
+            <br><br>
+            <a href="http://www.usc.edu/admission/undergraduate/policy" target="_blank">Accessibility for Students With Disabilities</a> <br>
+            <a href="http://policy.usc.edu/info-privacy/" target="_blank">Privacy Policy</a> <br>
+            <a href="http://adminopsnet.usc.edu/department/department-public-safety/clery-compliance" target="_blank">Clery Compliance</a>
+        </div>
+        <div>
+            ©2017 The University of Southern California
+        </div>
+    </div>
+</footer>
+   
+<script id="infoTemplate" type="text/x-kendo-template">
+    <div class="notification-info">
+        <h3>
+            <span class="glyphicon glyphicon-info-sign icon" aria-hidden="true"></span>
+            #= title #
+        </h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="errorTemplate" type="text/x-kendo-template">
+    <div class="notification-error">
+        <h3>
+            <span class="glyphicon glyphicon-remove-sign icon" aria-hidden="true"></span>
+            #= title #
+        </h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="successTemplate" type="text/x-kendo-template">
+    <div class="notification-success">
+        <h3>
+            <span class="glyphicon glyphicon glyphicon-ok-sign icon" aria-hidden="true"></span>
+            #= title #
+        </h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="warningTemplate" type="text/x-kendo-template">
+    <div class="notification-warning">
+        <h3>
+            <span class="glyphicon glyphicon glyphicon-exclamation-sign icon" aria-hidden="true"></span>
+            #= title #
+        </h3>
+        <p>#= message #</p>
+    </div>
+</script>
+    
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/bundles/kendo")
+@Scripts.Render("~/bundles/sessionModule")
+@RenderSection("scripts", required: false)
+
+</body>
+</html>
