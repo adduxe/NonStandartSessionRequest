@@ -1,29 +1,43 @@
 ﻿<form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.roomNumbersessionCode.$invalid && sessionRequestForm.$submitted}">
-                <label for="sessionCode" class="col-sm-5 control-label">Session Code:</label>
-                <div class="col-sm-5">
+                <label for="sessionCode" class="col-sm-6 control-label">Semester:</label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="24" required ng-model="session.sessionCode" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.accountNo.$invalid && sessionRequestForm.$submitted}">
-                <label for="accountNo" class="col-sm-5 control-label">Income Account No:</label>
-                <div class="col-sm-5">
+                <label for="accountNo" class="col-sm-6 control-label"><abbr title="The Department you belong to">Department</abbr>: </label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="accountNo" name="accountNo" maxlength="24" required ng-model="session.accountNo" />
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.roomNumbersessionCode.$invalid && sessionRequestForm.$submitted}">
+                <label for="sessionCode" class="col-sm-6 control-label">Session Code:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="24" required ng-model="session.sessionCode" />
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.accountNo.$invalid && sessionRequestForm.$submitted}">
+                <label for="accountNo" class="col-sm-6 control-label">Income Account No: </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="accountNo" name="accountNo" maxlength="24" required ng-model="session.accountNo" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.school.$invalid && sessionRequestForm.$submitted}">
-                <label for="school" class="col-sm-5 control-label">School/College:</label>
-                <div class="col-sm-5">
+                <label for="school" class="col-sm-6 control-label">School/College:</label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="school" name="school" maxlength="24" required ng-model="session.school" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.department.$invalid && sessionRequestForm.$submitted}">
-                <label for="department" class="col-sm-5 control-label">Room number:</label>
-                <div class="col-sm-5">
+                <label for="department" class="col-sm-6 control-label">Room number:</label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="department" name="department" maxlength="24" required ng-model="session.department" />
                 </div>
             </div>
