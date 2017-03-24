@@ -1,14 +1,17 @@
-﻿<form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()">
+﻿
+<form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()">
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.roomNumbersessionCode.$invalid && sessionRequestForm.$submitted}">
                 <label for="sessionCode" class="col-sm-6 control-label">Semester:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="24" required ng-model="session.sessionCode" />
+                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="24" required ng-model="session.sessionCode" style="width: 100%" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.accountNo.$invalid && sessionRequestForm.$submitted}">
-                <label for="accountNo" class="col-sm-6 control-label"><abbr title="The Department you belong to">Department</abbr>: </label>
+                <label for="accountNo" class="col-sm-6 control-label">
+                    <abbr title="The Income Account Number">Income Account No.</abbr>: 
+                </label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="accountNo" name="accountNo" maxlength="24" required ng-model="session.accountNo" />
                 </div>
