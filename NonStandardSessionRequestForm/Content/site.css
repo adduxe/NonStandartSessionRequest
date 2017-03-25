@@ -200,3 +200,7 @@ body #top-banner .navbar-left {
 body #top-banner #access-nav ul {
     text-align: right;
 }
+
+.disabled {
+    background-color: lightgray;
+}

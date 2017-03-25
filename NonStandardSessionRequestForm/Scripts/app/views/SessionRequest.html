@@ -11,7 +11,7 @@
                     <abbr title="Session semester being applied for">Semester:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="24" required ng-model="session.sessionCode" style="width: 100%" />
+                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="20" required ng-model="session.sessionCode" style="width: 100%" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesStartDate.$invalid && sessionRequestForm.$submitted}">
@@ -19,23 +19,23 @@
                     <abbr title="Session Start Date">First day of Classes:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="classesStartDate" name="classesStartDate" maxlength="24" required ng-model="session.classesStartDate" />
+                    <input type="text" class="form-control" id="classesStartDate" name="classesStartDate" maxlength="20" required ng-model="session.classesStartDate" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayEnrollOptionChange.$invalid && sessionRequestForm.$submitted}">
-                <label for="lastDayEnrollOptionChange" class="col-sm-6 control-label">
-                    <abbr title="Last day to change Enrollment Option from 'PN' to 'L'">Last day to Change Enrollment Option:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
+                <label for="finalsStartDate" class="col-sm-6 control-label">
+                    <abbr title="Finals Starting Period Date">First day of Finals:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="lastDayEnrollOptionChange" name="lastDayEnrollOptionChange" maxlength="24" required ng-model="session.lastDayEnrollOptionChange" />
+                    <input type="text" class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="20" required ng-model="session.finalsStartDate" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="classesEndDate" class="col-sm-6 control-label">
-                    <abbr title="Session End Date">Last day of Classes:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayWithdraw.$invalid && sessionRequestForm.$submitted}">
+                <label for="lastDayWithdraw" class="col-sm-6 control-label">
+                    <abbr title="Last day to Withdraw classes">Last day to Withdraw:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="classesEndDate" name="classesEndDate" maxlength="24" required ng-model="session.classesEndDate" />
+                    <input type="text" class="form-control disabled" id="lastDayWithdraw" name="lastDayWithdraw" maxlength="20" required ng-model="session.lastDayWithdraw" />
                 </div>
             </div>
         </div>
@@ -48,31 +48,31 @@
                     <abbr title="3-digit Session code">Session Code:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="24" required ng-model="session.sessionCode" />
+                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="20" required ng-model="session.sessionCode" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayAddDrop.$invalid && sessionRequestForm.$submitted}">
-                <label for="lastDayAddDrop" class="col-sm-6 control-label">
-                    <abbr title="Last day to Add or Drop classes">Last day to Add/Drop:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
+                <label for="classesEndDate" class="col-sm-6 control-label">
+                    <abbr title="Session End Date">Last day of Classes:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="lastDayAddDrop" name="lastDayAddDrop" maxlength="24" required ng-model="session.lastDayAddDrop" />
+                    <input type="text" class="form-control" id="classesEndDate" name="classesEndDate" maxlength="20" required ng-model="session.classesEndDate" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="finalsStartDate" class="col-sm-6 control-label">
-                    <abbr title="Finals Starting Period Date">First day of Finals:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
+                <label for="finalsEndDate" class="col-sm-6 control-label">
+                    <abbr title="Finals Ending Period Date">Last day of Finals:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="24" required ng-model="session.finalsStartDate" />
+                    <input type="text" class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="20" required ng-model="session.finalsEndDate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.gradingPeriodStartDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="gradingPeriodStartDate" class="col-sm-6 control-label">
-                    <abbr title="Last Day to give Final Grades">Finals Grading<br/>Period Start:</abbr>
+                    <abbr title="Last Day to give Final Grades">Finals Grading Period Start:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="gradingPeriodStartDate" name="gradingPeriodStartDate" maxlength="24" required ng-model="session.gradingPeriodStartDate"/>
+                    <input type="text" class="form-control disabled" id="gradingPeriodStartDate" name="gradingPeriodStartDate" maxlength="20" required ng-model="session.gradingPeriodStartDate"/>
                 </div>
             </div>
         </div>
@@ -85,31 +85,31 @@
                     <abbr title="10-digit Account Number">Income Account No.</abbr>:
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="accountNo" name="accountNo" maxlength="24" required ng-model="session.accountNo" />
+                    <input type="text" class="form-control" id="accountNo" name="accountNo" maxlength="20" required ng-model="session.accountNo" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayWithdraw.$invalid && sessionRequestForm.$submitted}">
-                <label for="lastDayWithdraw" class="col-sm-6 control-label">
-                    <abbr title="Last day to Withdraw classes">Last day to Withdraw:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayAddDrop.$invalid && sessionRequestForm.$submitted}">
+                <label for="lastDayAddDrop" class="col-sm-6 control-label">
+                    <abbr title="Last day to Add or Drop classes">Last day to Add/Drop:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="lastDayWithdraw" name="lastDayWithdraw" maxlength="24" required ng-model="session.lastDayWithdraw" />
+                    <input type="text" class="form-control disabled" id="lastDayAddDrop" name="lastDayAddDrop" maxlength="20" required ng-model="session.lastDayAddDrop" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="finalsEndDate" class="col-sm-6 control-label">
-                    <abbr title="Finals Ending Period Date">Last day of Finals:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayEnrollOptionChange.$invalid && sessionRequestForm.$submitted}">
+                <label for="lastDayEnrollOptionChange" class="col-sm-6 control-label">
+                    <abbr title="Last day to change Enrollment Option from 'PN' to 'L'">Last day to chage Enrollment Options:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="24" required ng-model="session.finalsEndDate" />
+                    <input type="text" class="form-control disabled" id="lastDayEnrollOptionChange" name="lastDayEnrollOptionChange" maxlength="20" required ng-model="session.lastDayEnrollOptionChange" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.gradingPeriodEndDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="gradingPeriodStartDate" class="col-sm-6 control-label">
-                    <abbr title="Last Day to give Final Grades">Finals Grading<br/>Period End:</abbr>
+                    <abbr title="Last Day to give Final Grades">Finals Grading Period End:</abbr>
                 </label>
                 <div class="col-sm-6">
-                    <p class="form-control" id="gradingPeriodStartDate" name="gradingPeriodEndDate" maxlength="24" required ng-model="session.gradingPeriodEndDate" />
+                    <input type="text" class="form-control disabled" id="gradingPeriodStartDate" name="gradingPeriodEndDate" maxlength="20" required ng-model="session.gradingPeriodEndDate" />
                 </div>
             </div>
         </div>
