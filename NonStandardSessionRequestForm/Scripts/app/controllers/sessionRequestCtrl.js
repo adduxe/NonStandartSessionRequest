@@ -1,7 +1,7 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
-    $(document).ready(function () {
+    $scope.PopulateSemesterDropdown = function () {
 
         var acadSems =
             '[' +
@@ -9,17 +9,23 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
                 '{"semName":"2017 Summer", "semCode": 20173},' +
                 '{"semName":"2018 Fall", "semCode": 20181},' +
                 '{"semName":"2018 Spring", "semCode": 20182}' +
-            ']';                // only for testing
+            ']';                // only for testing  eventually this will be computed
 
         $scope.acadTerms = JSON.parse(acadSems);
 
-        $("#semester").kendoDropDownList({     // populate the off-campus location dropdown
+        $("#semester").kendoDropDownList({
             dataTextField: "semName",
             dataValueField: "semCode",
             dataSource: {
-                data: $scope.acadTerms      // just for testing
+                data: $scope.acadTerms
             }
-        }); // $("#sessionCode")
+        });
+
+        return;
+    };      // populateSemesterDropdown()
+
+
+    $scope.PopulateCampusDropdown = function () {
 
         var offCampusLocs =
                 '[' +
@@ -37,16 +43,53 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 	                '{"campusCode": "SKB",	"campusName":"No Tuition or Fees"},' +
 	                '{"campusCode": "OTH",	"campusName":"Others"}' +
                 ']';
+        $scope.campusLocations = JSON.parse(offCampusLocs);
 
-        $scope.campusLocations = JSON.parse(offCampusLocs);     // populate the off-campus location dropdown
         $("#offCampusLocation").kendoDropDownList({
             dataTextField: "campusName",
             dataValueField: "campusCode",
             dataSource: {
                 data: $scope.campusLocations
             }
-        }); // $("#offCampusLocation")
+        });
+        return;
+    };  // populateCampusDropdown
+
+
+    $scope.PopulateRatesDropdown = function () {
+        var rateTypes =
+                '[' +
+	                '{"rateCode": "STD",	"rateName":"Standard"},' +
+	                '{"rateCode": "GB", 	"rateName":"Graduate Business"},' +
+	                '{"rateCode": "GCA", 	"rateName":"Graduate Cinematic Arts"},' +
+	                '{"rateCode": "GE",	    "rateName":"Graduate Engineering"},' +
+	                '{"rateCode": "DT3",	"rateName":"Dentistry"},' +
+	                '{"rateCode": "AD3",	"rateName":"Advanced Dentistry"},' +
+	                '{"rateCode": "LAW",	"rateName":"Law"},' +
+	                '{"rateCode": "MED",	"rateName":"Medicine"},' +
+	                '{"rateCode": "OTH",	"rateName":"Others"}' +
+                ']';
+
+        $scope.rates = JSON.parse(rateTypes);
+        $("#rateType").kendoDropDownList({
+            dataTextField: "rateName",
+            dataValueField: "rateCode",
+            dataSource: {
+                data: $scope.rates
+            }
+        });
+
+        return;
+    }   // populateRatesDropdown
+
+
+    $(document).ready(function () {
+
+        $scope.PopulateSemesterDropdown();
+        $scope.PopulateCampusDropdown();
+        $scope.PopulateRatesDropdown();
 
     }); // document.ready()
+
 
 }]);    // sessionModule()
