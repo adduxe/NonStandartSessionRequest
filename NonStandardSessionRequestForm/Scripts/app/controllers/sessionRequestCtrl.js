@@ -13,19 +13,40 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         $scope.acadTerms = JSON.parse(acadSems);
 
-        $("#sessionCode").kendoDropDownList({
+        $("#semester").kendoDropDownList({     // populate the off-campus location dropdown
             dataTextField: "semName",
             dataValueField: "semCode",
             dataSource: {
                 data: $scope.acadTerms      // just for testing
-                //transport: {              // use this for production
-                //    read: {
-                //        dataType: "jsonp",
-                //        url: "https://demos.telerik.com/kendo-ui/service/Products",  // change the link to the web service
-                //    }
-                //}
             }
-        });
-    });
+        }); // $("#sessionCode")
 
-}]);
+        var offCampusLocs =
+                '[' +
+	                '{"campusCode": "HSC",	"campusName":"Health Science Campus"},' +
+	                '{"campusCode": "OCC", 	"campusName":"Orange County Campus"},' +
+	                '{"campusCode": "OVS", 	"campusName":"Overseas"},' +
+	                '{"campusCode": "DC",	"campusName":"Washington D.C."},' +
+	                '{"campusCode": "SAC",	"campusName":"Sacramento"},' +
+	                '{"campusCode": "USA",	"campusName":"Off-campus in U.S."},' +
+	                '{"campusCode": "VIR",	"campusName":"Virtual(DEN/Online)"},' +
+	                '{"campusCode": "CAT",	"campusName":"Catalina"},' +
+	                '{"campusCode": "LAC",	"campusName":"L.A. Center"},' +
+	                '{"campusCode": "SD",	"campusName":"San Diego"},' +
+	                '{"campusCode": "ATT",	"campusName":"AT&T Center"},' +
+	                '{"campusCode": "SKB",	"campusName":"No Tuition or Fees"},' +
+	                '{"campusCode": "OTH",	"campusName":"Others"}' +
+                ']';
+
+        $scope.campusLocations = JSON.parse(offCampusLocs);     // populate the off-campus location dropdown
+        $("#offCampusLocation").kendoDropDownList({
+            dataTextField: "campusName",
+            dataValueField: "campusCode",
+            dataSource: {
+                data: $scope.campusLocations
+            }
+        }); // $("#offCampusLocation")
+
+    }); // document.ready()
+
+}]);    // sessionModule()
