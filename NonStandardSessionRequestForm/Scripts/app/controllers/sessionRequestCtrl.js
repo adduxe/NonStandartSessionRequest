@@ -91,5 +91,4 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     }); // document.ready()
 
-
 }]);    // sessionModule()
