@@ -2,14 +2,14 @@
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $scope.items = [];
-    $scope.n = 0;
+    $scope.semBreakCount = 0;
 
     $scope.AddSemesterBreaks = function () {
-        if ($scope.n == 2) {
+        if ($scope.semBreakCount == 2) {
             alert("A maximum of 2 semester breaks are allowed per session.");
         } else {
-            $scope.n += 1;
-            $scope.items.push($scope.n);
+            $scope.semBreakCount += 1;
+            $scope.items.push($scope.semBreakCount);
         }
         return;
     }
