@@ -43,10 +43,10 @@ namespace USC.RNR.NonStandardSessionRequestForm
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
                       "~/Content/site-xs.css",
                       "~/Content/site-md.css",
-                      "~/Content/site-lg.css"));
+                      "~/Content/site-lg.css",
+                      "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/kendocss").Include(
                 "~/Content/kendo/2017.1.118/kendo.common-bootstrap.min.css",

@@ -57,7 +57,7 @@
                 <div class="col-lg-6">
                     <abbr title="Click here if you want to add Sesssion Breaks as Thanksgiving and Spring Break">
                         <button id="addSessionBreaks" name="addSessionBreaks" class="form-control" required ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
-                            Add Session Break
+                            Add a Session break
                         </button>
                     </abbr>
                 </div>
@@ -68,7 +68,7 @@
                 </label>
                 <div class="col-lg-6">
                     <abbr title="Click here if you want to add Sections to this Session">
-                        <button id="addSections" name="addSections" class="form-control" required ng-model="session.addSections">Add Sections</button>
+                        <button id="addSections" name="addSections" class="form-control" required ng-model="session.addSections" ng-click="AddSection();">Add a Section</button>
                     </abbr>
                 </div>
             </div>
@@ -192,7 +192,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">
                 <label for="tuitionFlatRate" class="col-lg-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Flat Rate<br>Range:(units)</abbr>
+                    <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
                 </label>
                 <div class="col-lg-6" style="align-items:center;">
                     <input id="flatUnitsMin" name="flatUnitsMin" type="number" value="1" min="1" max="18" class="form-control" style="width:60px;display:inline;" />
@@ -222,9 +222,9 @@
         </div>
     </div>
 
-    <div class="row" style="background-color:rgba(153,0,0,.7);align-items:center;color:#ffcc00;padding-bottom:5px;" ng-show="items" ng-repeat="item in items">
+    <div class="row" style="background-color:rgba(153,0,0,.7);align-items:center;color:#ffcc00;padding-bottom:15px;" ng-show="semBreaks" ng-repeat="eachBreak in semBreaks">
         <div class="col-lg-4"  style="text-align:right;">
-            <h4>Session Break {{semBreakCount}}</h4>
+            <!--<h4>Session Break {{semBreakCount}}</h4>-->
         </div>
         <div class="col-lg-3" style="align-self:center;">
             <input kendo-date-picker class="form-control" />
@@ -240,9 +240,10 @@
 
     <br/>
 
-    <!--  Section section -->
+    <!--  Start of Section section -->
+
     <!-- Section 1st column -->
-    <div class="row" style="background-color:#ffcc00;padding-top:15px;">
+    <div class="row" style="background-color:#ffcc00;padding-top:15px;border:solid;border-color:white;" ng-show="sectionCount" ng-repeat="eachSection in sections">
         <div class="col-lg-4">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionNumber.$invalid && sessionRequestForm.$submitted}">
                 <label for="sectionNumber" class="col-lg-6 control-label">
@@ -262,7 +263,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.incomeAcctNumber.$invalid && sessionRequestForm.$submitted}">
                 <label for="incomeAcctNumber" class="col-lg-6 control-label">
-                    <abbr title="The account number to which enrollment in the class should be credited.">Income Account no.:</abbr>
+                    <abbr title="The account number to which enrollment in the class should be credited.">Income Account<br>Number:</abbr>
                 </label>
                 <div class="col-lg-6">
                     <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="session.incomeAcctNumber" />
@@ -293,7 +294,7 @@
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.enrollEstimate.$invalid && sessionRequestForm.$submitted}">
                 <label for="enrollEstimate" class="col-lg-6 control-label">
                     <abbr title="Capacity of the course. This may not exceed the capacity of the room in which the class will be scheduled.">
-                        Estimated Enrollment:
+                        Estimated<br>Enrollment:
                     </abbr>
                 </label>
                 <div class="col-lg-6">
@@ -325,7 +326,7 @@
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionComment.$invalid && sessionRequestForm.$submitted}">
                 <label for="sectionComment" class="col-lg-6 control-label">
                     <abbr title="In this space, enter up to a 60-character comment specific to the section (list 3 descriptors: 1. the country and 2. university name where the course will take place, and 3. the USC school offering the program).">
-                        Section Comments:
+                        Section<br>Comments:
                     </abbr>
                 </label>
                 <div class="col-lg-6">
@@ -335,4 +336,15 @@
         </div>
     </div>
     <!--  End of Section section -->
+    <br>
+    <div class="row" style="align-content:center;">
+        <div class="col-lg-5">
+        </div>
+        <div class="col-lg-2">
+            <button type="submit" class="form-control" >Submit</button>
+        </div>
+        <div class="col-lg-5">
+        </div>
+    </div>
+
 </form>
