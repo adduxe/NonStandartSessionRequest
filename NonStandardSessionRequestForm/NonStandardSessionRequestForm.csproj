@@ -306,6 +306,7 @@
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <None Include="Properties\PublishProfiles\Session Form.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionRequestCtrl.js" />
