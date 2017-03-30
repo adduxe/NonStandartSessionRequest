@@ -10,7 +10,7 @@
                     <abbr title="Session semester being applied for">For Semester:</abbr>
                 </label>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" id="semester" name="semester" maxlength="20" required ng-model="session.semester" style="width: 100%" />
+                    <select type="text" class="form-control" id="semester" name="semester" maxlength="20" required ng-model="session.semester" style="width: 100%" ></select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesStartDate.$invalid && sessionRequestForm.$submitted}">
@@ -55,7 +55,7 @@
                     <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type:</abbr>
                 </label>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control disabled" id="rateType" name="rateType" maxlength="20" required ng-model="session.rateType" />
+                    <select type="text" class="form-control disabled" id="rateType" name="rateType" maxlength="20" required ng-model="session.rateType"></select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.addSessionBreaks.$invalid && sessionRequestForm.$submitted}">
@@ -64,7 +64,9 @@
                 </label>
                 <div class="col-lg-6">
                     <abbr title="Click here if you want to add Sesssion Breaks as Thanksgiving and Spring Break">
-                        <button id="addSessionBreaks" name="addSessionBreaks" class="form-control" required ng-model="session.addSessionBreaks">Add Session Breaks</button>
+                        <button id="addSessionBreaks" name="addSessionBreaks" class="form-control" required ng-model="session.addSessionBreaks"  ng-click="AddSemesterBreaks();">
+                            Add Session Break
+                        </button>
                     </abbr>
                 </div>
             </div>
@@ -109,7 +111,7 @@
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" id="offCampusLocation" name="offCampusLocation" maxlength="25" required ng-model="session.offCampusLocation" />
+                    <select type="text" class="form-control" id="offCampusLocation" name="offCampusLocation" maxlength="25" required ng-model="session.offCampusLocation"></select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionPerUnit.$invalid && sessionRequestForm.$submitted}">
@@ -197,4 +199,33 @@
         </div>
 
     </div> <!-- class="row" -->
+
+    <div class="row" style="background-color:rgba(153,0,0,.7);align-self:center;color:#ffcc00;" ng-show="n">
+            <div class="col-lg-5">
+            </div>
+            <div class="col-lg-3" style="align-content:center;">
+                <h4>Break Start</h4>
+            </div>
+            <div class="col-lg-3" style="align-content:center;">
+               <h4>Break End</h4>
+            </div>
+            <div class="col-lg-2">
+                &nbsp;
+            </div>
+        </div>
+    <div class="row" style="background-color:rgba(153,0,0,.7);align-items:center;padding-bottom:20px;color:#ffcc00;" ng-show="items" ng-repeat="item in items">
+        <div class="col-lg-4"  style="text-align:right;">
+            <h4>Session Break {{n}}</h4>
+        </div>
+        <div class="col-lg-3" style="align-self:center;">
+            <input kendo-date-picker style="width:100%;" />
+        </div>
+        <div class="col-lg-3" style="align-self:center;">
+            <input kendo-date-picker style="width:100%;" />
+        </div>
+        <div class="col-lg-2" style="align-self:center;">
+            &nbsp;
+        </div>
+    </div>
+
 </form>
