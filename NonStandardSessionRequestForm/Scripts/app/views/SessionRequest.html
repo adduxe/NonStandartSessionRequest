@@ -55,10 +55,10 @@
                     &nbsp;
                 </label>
                 <div class="col-lg-6">
-                    <abbr title="Click here if you want to add Sesssion Breaks as Thanksgiving and Spring Break">
-                        <button id="addSessionBreaks" name="addSessionBreaks" class="form-control" required ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
-                            Add a Session break
-                        </button>
+                    <abbr title="Required for a course in which a break five days or longer will be taken.  If the class follows USC’s Thanksgiving holiday and Spring break, the course must have a session break.">
+                        <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton" required ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
+                            Add a Session Break
+                        </kendo-button>
                     </abbr>
                 </div>
             </div>
@@ -68,7 +68,9 @@
                 </label>
                 <div class="col-lg-6">
                     <abbr title="Click here if you want to add Sections to this Session">
-                        <button id="addSections" name="addSections" class="form-control" required ng-model="session.addSections" ng-click="AddSection();">Add a Section</button>
+                        <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" required ng-model="session.addSections" ng-click="AddSection();">
+                            Add a Section
+                        </kendo-button>
                     </abbr>
                 </div>
             </div>
@@ -207,33 +209,35 @@
 
 
     <!--  Session Breaks section -->
+    <div  ng-show="semBreakCount" style="background-color:rgba(153,0,0,.7);padding-bottom:15px;color:#ffcc00;">
 
-    <div class="row" style="background-color:rgba(153,0,0,.7);align-self:center;color:#ffcc00;" ng-show="semBreakCount">
-        <div class="col-lg-4">
+        <div class="row" sstyle="align-self:center;color:#ffcc00;">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-4" style="text-align:center;">
+                <h4>Break Start</h4>
+            </div>
+            <div class="col-lg-4" style="text-align:center;">
+                <h4>Break End</h4>
+            </div>
+            <div class="col-lg-2">
+                &nbsp;
+            </div>
         </div>
-        <div class="col-lg-3" style="text-align:center;">
-            <h4>Break Start</h4>
-        </div>
-        <div class="col-lg-3" style="text-align:center;">
-            <h4>Break End</h4>
-        </div>
-        <div class="col-lg-2">
-            &nbsp;
-        </div>
-    </div>
 
-    <div class="row" style="background-color:rgba(153,0,0,.7);align-items:center;color:#ffcc00;padding-bottom:15px;" ng-show="semBreaks" ng-repeat="eachBreak in semBreaks">
-        <div class="col-lg-4"  style="text-align:right;">
-            <!--<h4>Session Break {{semBreakCount}}</h4>-->
-        </div>
-        <div class="col-lg-3" style="align-self:center;">
-            <input kendo-date-picker class="form-control" />
-        </div>
-        <div class="col-lg-3" style="align-self:center;">
-            <input kendo-date-picker class="form-control" />
-        </div>
-        <div class="col-lg-2" style="align-self:center;">
-            &nbsp;
+        <div class="row" style="align-items:center;padding-bottom:5px;" ng-show="semBreaks" ng-repeat="eachBreak in semBreaks">
+            <div class="col-lg-2"  style="text-align:right;">
+                <!--<h4>Session Break {{semBreakCount}}</h4>-->
+            </div>
+            <div class="col-lg-4" style="align-self:center;">
+                <input kendo-date-picker class="form-control" />
+            </div>
+            <div class="col-lg-4" style="align-self:center;">
+                <input kendo-date-picker class="form-control" />
+            </div>
+            <div class="col-lg-2" style="align-self:center;">
+                &nbsp;
+            </div>
         </div>
     </div>
     <!-- End of Session Breaks Section -->
@@ -242,106 +246,173 @@
 
     <!--  Start of Section section -->
 
-    <!-- Section 1st column -->
-    <div class="row" style="background-color:#ffcc00;padding-top:15px;border:solid;border-color:white;" ng-show="sectionCount" ng-repeat="eachSection in sections">
-        <div class="col-lg-4">
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionNumber.$invalid && sessionRequestForm.$submitted}">
-                <label for="sectionNumber" class="col-lg-6 control-label">
-                    <abbr title="A 5-digit identifier.  Make sure the number you enter is within the range assigned to your department.">Section Number:</abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" required ng-model="session.sectionNumber" />
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionTitle.$invalid && sessionRequestForm.$submitted}">
-                <label for="sectionTitle" class="col-lg-6 control-label">
-                    <abbr title="The title for the course that will print in the Schedule of Classes and on student transcripts.">Section Title:</abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" required ng-model="session.sectionTitle" />
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.incomeAcctNumber.$invalid && sessionRequestForm.$submitted}">
-                <label for="incomeAcctNumber" class="col-lg-6 control-label">
-                    <abbr title="The account number to which enrollment in the class should be credited.">Income Account<br>Number:</abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="session.incomeAcctNumber" />
-                </div>
+    <div ng-show="sectionCount" style="background-color:#ffcc00;padding-top:5px;padding-right:10px;border:solid;border-color:white;">
+
+        <div class="row">
+            <div class="col-lg-12" style="text-align:center;">
+                <h3>Sections</h3>
             </div>
         </div>
 
-        <!-- Section 2nd column -->
-        <div class="col-lg-4">
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.deptAbbrev.$invalid && sessionRequestForm.$submitted}">
-                <label for="deptAbbrev" class="col-lg-6 control-label">
-                    <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">Prefix:</abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="session.deptAbbrev" />
+        <div class="row" ng-repeat="eachSection in sections" style="border-top:solid; border-color:white; padding-top:15px;">
+            <!-- Section 1st column -->
+            <div class="col-lg-4">
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionNumber.$invalid && sessionRequestForm.$submitted}">
+                    <label for="sectionNumber" class="col-lg-6 control-label">
+                        <abbr title="A 5-digit identifier.  Make sure the number you enter is within the range assigned to your department.">Section Number:</abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" required ng-model="session.sectionNumber" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionTitle.$invalid && sessionRequestForm.$submitted}">
+                    <label for="sectionTitle" class="col-lg-6 control-label">
+                        <abbr title="The title for the course that will print in the Schedule of Classes and on student transcripts.">Section Title:</abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" required ng-model="session.sectionTitle" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.incomeAcctNumber.$invalid && sessionRequestForm.$submitted}">
+                    <label for="incomeAcctNumber" class="col-lg-6 control-label">
+                        <abbr title="The account number to which enrollment in the class should be credited.">Income Account No.:</abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="session.incomeAcctNumber" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.addClassSched.$invalid && sessionRequestForm.$submitted}">
+                    <label for="addClassSched" class="col-lg-6 control-label">
+                        &nbsp;
+                    </label>
+                    <div class="col-lg-6">
+                        <abbr title="Click here to add a day, begin, and end times for the class.">
+                            <kendo-button id="addClassSched" name="addClassSched" class="form-control uscRedButton" required ng-model="session.addClassSched" ng-click="addClassSched();">
+                                Add a Schedule
+                            </kendo-button>
+                        </abbr>
+                    </div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.unitValue.$invalid && sessionRequestForm.$submitted}">
-                <label for="unitValue" class="col-lg-6 control-label">
-                    <abbr title="Number of units assigned to the course. The units entered should be the maximum units that most students are expected to earn (note that they may earn fewer units if they take less than a full load).">
-                        Unit value:
-                    </abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="unitValue" name="unitValue" maxlength="25" required ng-model="session.unitValue" />
+
+            <!-- Section 2nd column -->
+            <div class="col-lg-4">
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.deptAbbrev.$invalid && sessionRequestForm.$submitted}">
+                    <label for="deptAbbrev" class="col-lg-6 control-label">
+                        <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">Prefix:</abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="session.deptAbbrev" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.unitValue.$invalid && sessionRequestForm.$submitted}">
+                    <label for="unitValue" class="col-lg-6 control-label">
+                        <abbr title="Number of units assigned to the course. The units entered should be the maximum units that most students are expected to earn (note that they may earn fewer units if they take less than a full load).">
+                            Unit value:
+                        </abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="unitValue" name="unitValue" maxlength="25" required ng-model="session.unitValue" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.enrollEstimate.$invalid && sessionRequestForm.$submitted}">
+                    <label for="enrollEstimate" class="col-lg-6 control-label">
+                        <abbr title="Capacity of the course. This may not exceed the capacity of the room in which the class will be scheduled.">
+                            Estimated Enrollment:
+                        </abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="enrollEstimate" name="enrollEstimate" maxlength="25" required ng-model="session.enrollEstimate" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.enrollEstimate.$invalid && sessionRequestForm.$submitted}">
-                <label for="enrollEstimate" class="col-lg-6 control-label">
-                    <abbr title="Capacity of the course. This may not exceed the capacity of the room in which the class will be scheduled.">
-                        Estimated<br>Enrollment:
-                    </abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="enrollEstimate" name="enrollEstimate" maxlength="25" required ng-model="session.enrollEstimate" />
+
+            <!-- Section 3rd column -->
+            <div class="col-lg-4">
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.courseNumber.$invalid && sessionRequestForm.$submitted}">
+                    <label for="courseNumber" class="col-lg-6 control-label">
+                        <abbr title="A 3-digit code of the course being offered. This number, combined with the Prefix, gives a complete designation for the course, such as BUAD-494.">Course Number:</abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" required ng-model="session.courseNumber" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.instructorName.$invalid && sessionRequestForm.$submitted}">
+                    <label for="instructorName" class="col-lg-6 control-label">
+                        <abbr title="Name of the instructor who will be teaching the course. The instructor’s name should be entered in the following order: Last name, First name">
+                            Instructor Name:
+                        </abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="instructorName" name="instructorName" maxlength="25" required ng-model="session.instructorName" />
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionComment.$invalid && sessionRequestForm.$submitted}">
+                    <label for="sectionComment" class="col-lg-6 control-label">
+                        <abbr title="In this space, enter up to a 60-character comment specific to the section (list 3 descriptors: 1. the country and 2. university name where the course will take place, and 3. the USC school offering the program).">
+                            Section<br>Comments:
+                        </abbr>
+                    </label>
+                    <div class="col-lg-6">
+                        <textarea type="text" class="form-control" id="sectionComment" name="sectionComment" maxlength="60" required ng-model="session.sectionComment" />
+                    </div>
                 </div>
             </div>
+
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="form-group" ng-class="{'has-error': sessionRequestForm.classDay.$invalid && sessionRequestForm.$submitted}">
+                        <label for="classDay" class="col-lg-6 control-label">
+                            Class Day
+                        </label>
+                        <div class="col-lg-6">
+                            <select kendo-drop-down-list class="form-control" id="classDay" name="classDay" maxlength="25" required ng-model="session.classDay">
+                                <option value="" disabled selected>Select a day</option>
+                                <option value="Sun">Sunday</option>
+                                <option value="Mon">Monday</option>
+                                <option value="Tue">Tuesday</option>
+                                <option value="Wed">Wednesday</option>
+                                <option value="Thu">Thursday</option>
+                                <option value="Fri">Friday</option>
+                                <option value="Sat">Saturday</option>
+                                <option value="TBD">To be determined</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group" ng-class="{'has-error': sessionRequestForm.classStart.$invalid && sessionRequestForm.$submitted}">
+                        <label for="classStart" class="col-lg-6 control-label">
+                            Class Start
+                        </label>
+                        <div class="col-lg-6">
+                            <input kendo-time-picker class="form-control" id="classStart" name="classStart" maxlength="25" required ng-model="session.classStart" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group" ng-class="{'has-error': sessionRequestForm.classEnd.$invalid && sessionRequestForm.$submitted}">
+                        <label for="classEnd" class="col-lg-6 control-label">
+                            Class End
+                        </label>
+                        <div class="col-lg-6">
+                            <input kendo-time-picker class="form-control" id="classEnd" name="classEnd" maxlength="25" required ng-model="session.classEnd" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Section 3rd column -->
-        <div class="col-lg-4">
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.courseNumber.$invalid && sessionRequestForm.$submitted}">
-                <label for="courseNumber" class="col-lg-6 control-label">
-                    <abbr title="A 3-digit code of the course being offered. This number, combined with the Prefix, gives a complete designation for the course, such as BUAD-494.">Course Number:</abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" required ng-model="session.courseNumber" />
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.instructorName.$invalid && sessionRequestForm.$submitted}">
-                <label for="instructorName" class="col-lg-6 control-label">
-                    <abbr title="Name of the instructor who will be teaching the course. The instructor’s name should be entered in the following order: Last name, First name">
-                        Instructor Name:
-                    </abbr>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="instructorName" name="instructorName" maxlength="25" required ng-model="session.instructorName" />
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionComment.$invalid && sessionRequestForm.$submitted}">
-                <label for="sectionComment" class="col-lg-6 control-label">
-                    <abbr title="In this space, enter up to a 60-character comment specific to the section (list 3 descriptors: 1. the country and 2. university name where the course will take place, and 3. the USC school offering the program).">
-                        Section<br>Comments:
-                    </abbr>
-                </label>
-                <div class="col-lg-6">
-                    <textarea type="text" class="form-control" id="sectionComment" name="sectionComment" maxlength="60" required ng-model="session.sectionComment" />
-                </div>
-            </div>
-        </div>
     </div>
+        
     <!--  End of Section section -->
     <br>
     <div class="row" style="align-content:center;">
         <div class="col-lg-5">
         </div>
         <div class="col-lg-2">
-            <button type="submit" class="form-control" >Submit</button>
+            <kendo-button type="submit" class="form-control uscRedButton">Submit</kendo-button>
         </div>
         <div class="col-lg-5">
         </div>

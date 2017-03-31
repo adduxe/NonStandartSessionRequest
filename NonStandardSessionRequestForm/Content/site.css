@@ -204,3 +204,8 @@ body #top-banner #access-nav ul {
 .disabled {
     background-color: lightgray;
 }
+
+.uscRedButton {
+    background-color:#a94442;
+    color:white;
+}
