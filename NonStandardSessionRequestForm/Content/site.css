@@ -209,3 +209,19 @@ body #top-banner #access-nav ul {
     background-color:#a94442;
     color:white;
 }
+
+.k-header {
+    background-color:#ffcc00;
+}
+
+.k-grid-header th.k-header > .k-link {
+    background-color:#ffcc00;
+    text-align: center;
+    font-weight: bold;
+}
+
+.k-grid-header th.k-header {
+    background-color:#ffcc00;
+    font-weight: bold;
+    text-align: center;
+}

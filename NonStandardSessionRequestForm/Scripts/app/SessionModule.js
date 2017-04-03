@@ -6,8 +6,13 @@ sessionModule.config([
         $routeProvider
             .when("/",
             {
-                templateUrl: "scripts/app/views/sessionrequest.html",
+                templateUrl: "scripts/app/views/SessionRequest.html",
                 controller: "sessionRequestCtrl"
+            })
+            .when("/Queue",
+            {
+                templateUrl: "scripts/app/views/SessionQueue.html",
+                controller: "sessionQueueCtrl"
             })
             .otherwise({ redirectTo: "/" });
 
