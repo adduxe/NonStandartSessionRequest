@@ -210,6 +210,8 @@ body #top-banner #access-nav ul {
     color:white;
 }
 
+
+/** Grid table header **/
 .k-header {
     background-color:#ffcc00;
 }
@@ -218,10 +220,38 @@ body #top-banner #access-nav ul {
     background-color:#ffcc00;
     text-align: center;
     font-weight: bold;
+    color: #990000;
 }
 
 .k-grid-header th.k-header {
     background-color:#ffcc00;
     font-weight: bold;
     text-align: center;
+    color: #990000;
+}
+
+/** End of Grid table header **/
+
+
+.k-grid table {
+    color: #990000;
+}   /** text color of grid content **/
+
+
+.k-grid tbody .k-button, .k-ie8 .k-grid tbody button.k-button {
+    color: #990000;
+    background-color: #ffcc00;
+} /** Edit/Delete button color **/
+
+
+.k-window-title {
+    font-weight: bold;
+    color: #990000;
+}
+
+.approveRejectBtn {
+    background-color:#990000;
+    color: #ffcc00;
+    padding: 10px;
+    align-self: center;
 }

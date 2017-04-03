@@ -3,4 +3,53 @@
     {{ sample }}
     <kendo-grid options="sessionGrid">
     </kendo-grid>
+
+    <div id="details">
+    </div>
+
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <h5>Session:</h5>
+                </div>
+                <div class="col-lg-8">
+                    <h4>#= sessionCode # #= sessionName #</h4>
+                </div>
+                <div class="col-lg-2">
+                    Requested by:
+                </div>
+                <div class="col-lg-8">
+                    <h4>#= requestedBy #</h4>
+                </div>
+                <div class="col-lg-2">
+                    School/College:
+                </div>
+                <div class="col-lg-8">
+                    <h4>#= requestingSchool #</h4>
+                </div>
+                <div class="col-lg-2">
+                    Department:
+                </div>
+                <div class="col-lg-8">
+                    <h4>#= requestingDept #</h4>
+                </div>
+                <div class="col-lg-2">
+                    Request Date:
+                </div>
+                <div class="col-lg-8">
+                    <h4>#= kendo.toString(requestDate, "MM/dd/yyyy") #</h4>
+                </div>
+                <div class="col-lg-4">
+                    <br>
+                    <button class="approveRejectBtn">Approve</button>
+                </div>
+                <div class="col-lg-4">
+                    <br>
+                    <button class="approveRejectBtn">Reject</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
 </form>

@@ -6,7 +6,7 @@ sessionModule.controller("sessionQueueCtrl", ["$scope", function ($scope) {
         '"sessionCode" : "006",' +
         '"sessionName" : "DENT First Year",' +
         '"requestingSchool" : "Dentistry",' + 
-        '"requestingDept" : "Clinical Dentistry",' +
+        '"requestingDept" : "Preparatory",' +
         '"requestedBy": "Dr. Pliers Anesthesia Who",' +
         '"requestDate": "January 10, 2017"' +
     '},{' +
@@ -21,24 +21,17 @@ sessionModule.controller("sessionQueueCtrl", ["$scope", function ($scope) {
     $scope.sessionRequests = JSON.parse(sessions);
 
     $scope.sessionGrid = {
+
         //dataSource: {
         //    type: "odata",
         //    transport: {
         //        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
         //    },
-        //    pageSize: 5,
-        //    serverPaging: true,
-        //    serverSorting: true
-        //},
-        //sortable: true,
-        //pageable: true,
-        //dataBound: function() {
-        //    this.expandRow(this.tbody.find("tr.k-master-row").first());
         //},
 
         dataSource: {
+
             data: $scope.sessionRequests,
-//            data: sessions,
             schema: {
                 model: {
                     fields: {
@@ -52,6 +45,8 @@ sessionModule.controller("sessionQueueCtrl", ["$scope", function ($scope) {
                 }   // model
             },  // schema
             pageSize: 5,
+            //    serverPaging: true,
+            //    serverSorting: true
         },  // dataSource
         sortable: true,
         pageable: true,
@@ -64,7 +59,27 @@ sessionModule.controller("sessionQueueCtrl", ["$scope", function ($scope) {
             { field: "requestingSchool", title: "School", width: 20 },
             { field: "requestedBy", title: "Requested By", width: 40 },
             { field: "requestDate", title: "Request Date", width: 30 },
-            { command: ["edit", "destroy"], title: "Approval", width: 30 }
-        ]
+            { command: { text: "Review Request", click: showDetails}, title: "Approval", width: 30 }
+        ],
+        editable: "popup"
     };
+
+    var wnd = $("#details").kendoWindow({
+            title: "Session Request Details",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 600
+    }).data("kendoWindow");
+
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function showDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+
 }]);
