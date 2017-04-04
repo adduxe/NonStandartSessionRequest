@@ -255,3 +255,7 @@ body #top-banner #access-nav ul {
     padding: 10px;
     align-self: center;
 }
+
+#details-container {
+    color: #990000;
+}

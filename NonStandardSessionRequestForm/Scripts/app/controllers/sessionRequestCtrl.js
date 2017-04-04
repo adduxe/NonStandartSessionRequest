@@ -1,8 +1,16 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
-        // Add Semester Break functionality
+    var semBreak = { startDate: "", endDate: "" };
+    var section = { semester: "", };
 
+    $scope.Session = {
+        sessionCode: "",
+        sessionBreaks: [],
+        sessionSections: []
+    };
+
+        // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.semBreakCount = 0;
 
@@ -11,8 +19,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         if ($scope.semBreakCount == 2) {
             alert("A maximum of 2 semester breaks are allowed per session.");
         } else {
+            $scope.semBreaks[$scope.semBreakCount] = semBreak;
             $scope.semBreakCount += 1;
-            $scope.semBreaks.push($scope.semBreakCount);
         }
         return;
     }
@@ -24,10 +32,11 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $scope.AddSection = function () {
         $scope.sectionCount += 1;
-        $scope.sections.push($scope.sectionCount);
+        var anArray = [];
+        $scope.sections.push(anArray);
+        if (isArray($scope.sections[$scope.sections.length]))
         return;
     }
-
 
     $scope.PopulateSemesterDropdown = function () {
 
