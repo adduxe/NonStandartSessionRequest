@@ -259,3 +259,8 @@ body #top-banner #access-nav ul {
 #details-container {
     color: #990000;
 }
+
+a:hover, a:focus {
+    color: #ffcc00;
+    text-decoration: underline;
+}

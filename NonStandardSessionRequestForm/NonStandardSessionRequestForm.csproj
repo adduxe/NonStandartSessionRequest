@@ -311,6 +311,7 @@
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionRequestCtrl.js" />
+    <Content Include="Scripts\app\services\temp.js" />
     <Content Include="Scripts\app\SessionModule.js" />
     <Content Include="Scripts\app\views\SessionQueue.html" />
     <Content Include="Scripts\app\views\SessionRequest.html" />
@@ -356,7 +357,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
-    <Folder Include="Scripts\app\services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
