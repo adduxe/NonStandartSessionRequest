@@ -84,7 +84,7 @@
                     <abbr title="3-digit Session code">Session Code:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="20" required ng-model="session.sessionCode" />
+                    <input kendo-auto-complete class="form-control" id="sessionCode" name="sessionCode" maxlength="20" required ng-model="session.sessionCode" k-data-source="sessionCodes" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">

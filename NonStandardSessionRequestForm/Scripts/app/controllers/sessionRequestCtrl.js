@@ -127,7 +127,36 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         });
 
         return;
-    }   // populateRatesDropdown
+    };   // populateRatesDropdown()
+
+
+    $scope.PopulateSessionCodes = function () {
+
+        $scope.sessionCodes =
+            [
+                "001      MAIN ON-CAMPUS SESSION",
+                "002      LAW",
+                "003      KECK - MD PROGRAM",
+                "004      PHAR",
+                "005      PHAR - PSCI & MPTX",
+                "006      DENT - First Year",
+                "007      DENT - Dental Hygiene First Year",
+                "008      DENT - International First Year",
+                "009      DENT - First Year Advanced",
+                "010      DENT - Second Year Advanced",
+                "011      DENT - Pediatric Dentistry Second Year",
+                "012      DENT - OT",
+                "013      PHAR - Continuing Student Program",
+                "014      ENGR - DEN Program",
+                "015      ENGR - DEN Program",
+                "016      PHYS - Special Credit Exams for Subject Credit",
+                "017      KECK - PM",
+                "018      MAIN - Session with no tuition or fees",
+                "019      KECK - PM"
+            ];
+
+    };  // PopulateSessionCodes()
+
 
 
     $(document).ready(function () {
@@ -135,6 +164,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         $scope.PopulateSemesterDropdown();
         $scope.PopulateCampusDropdown();
         $scope.PopulateRatesDropdown();
+        $scope.PopulateSessionCodes();
 
     }); // document.ready()
 
