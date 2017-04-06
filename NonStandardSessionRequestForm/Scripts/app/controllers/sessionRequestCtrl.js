@@ -1,8 +1,6 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
-    var semBreak = { startDate: "", endDate: "" };
-    var section = { semester: "", };
 
     $scope.Session = {
         sessionCode: "",
@@ -10,11 +8,13 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         sessionSections: []
     };
 
-        // Add Semester Break functionality
+    // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.semBreakCount = 0;
 
     $scope.AddSemesterBreaks = function () {
+
+        var semBreak = { startDate: "", endDate: "" };
 
         if ($scope.semBreakCount == 2) {
             alert("A maximum of 2 semester breaks are allowed per session.");
@@ -23,20 +23,30 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             $scope.semBreakCount += 1;
         }
         return;
-    }
+    }   // AddSemesterBreaks()
 
-        // Add Section functionality
+
+    // Add a Section functionality
 
     $scope.sections = [];
-    $scope.sectionCount = 0;
 
     $scope.AddSection = function () {
-        $scope.sectionCount += 1;
-        var anArray = [];
-        $scope.sections.push(anArray);
-        if (isArray($scope.sections[$scope.sections.length]))
+        var section = { sectionNum: "", classSched: [] };
+        $scope.sections.push(section);
         return;
-    }
+    }   // AddSection()
+
+
+    // Add a Class Schedule functionality
+
+    $scope.AddSchedule = function (thisSection) {
+
+        var sched = { classDay: "", classStartTime: "", classEndTime: "" };
+
+        thisSection.classSched.push(sched);
+        return;
+    }   // AddSched()
+
 
     $scope.PopulateSemesterDropdown = function () {
 
@@ -46,7 +56,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
                 '{"semName":"2017 Summer", "semCode": 20173},' +
                 '{"semName":"2018 Fall", "semCode": 20181},' +
                 '{"semName":"2018 Spring", "semCode": 20182}' +
-            ']';                // only for testing  eventually this will be computed
+            ']';    // only for testing  eventually this will be computed
 
         $scope.acadTerms = JSON.parse(acadSems);
 

@@ -246,15 +246,17 @@
 
     <!--  Start of Section section -->
 
-    <div ng-show="sectionCount" style="background-color:#ffcc00;padding-top:5px;padding-right:10px;border:solid;border-color:white;">
+    <div ng-show="sections.length" style="background-color:#ffcc00;padding-top:5px;padding-right:10px;border:solid;border-color:white;">
 
         <div class="row">
             <div class="col-md-12" style="text-align:center;">
                 <h3>Sections</h3>
             </div>
         </div>
-
         <div class="row" ng-repeat="eachSection in sections" style="border-top:solid; border-color:white; padding-top:15px;">
+            <div class="col-md-12" style="text-align:right;padding-bottom:15px;">
+                <a class="uscRedButton" href="javascript:;" ng-click="sections.splice($index,1);" title="Delete this Section">[ X ] Delete this Section</a>
+            </div>
             <!-- Section 1st column -->
             <div class="col-md-4">
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionNumber.$invalid && sessionRequestForm.$submitted}">
@@ -287,7 +289,7 @@
                     </label>
                     <div class="col-md-6">
                         <abbr title="Click here to add a day, begin, and end times for the class.">
-                            <kendo-button id="addClassSched" name="addClassSched" class="form-control uscRedButton" required ng-model="session.addClassSched" ng-click="addClassSched();">
+                            <kendo-button id="addClassSched" name="addClassSched" class="uscRedButton" required ng-click="AddSchedule(eachSection);">
                                 Add a Schedule
                             </kendo-button>
                         </abbr>
@@ -359,8 +361,8 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
-                <div class="col-md-4">
+            <div class="col-md-12" ng-repeat="eachSched in eachSection.classSched">
+                <div class="col-md-3">
                     <div class="form-group" ng-class="{'has-error': sessionRequestForm.classDay.$invalid && sessionRequestForm.$submitted}">
                         <label for="classDay" class="col-md-6 control-label">
                             Class Day
@@ -380,7 +382,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group" ng-class="{'has-error': sessionRequestForm.classStart.$invalid && sessionRequestForm.$submitted}">
                         <label for="classStart" class="col-md-6 control-label">
                             Class Start
@@ -390,7 +392,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group" ng-class="{'has-error': sessionRequestForm.classEnd.$invalid && sessionRequestForm.$submitted}">
                         <label for="classEnd" class="col-md-6 control-label">
                             Class End
@@ -399,6 +401,11 @@
                             <input kendo-time-picker class="form-control" id="classEnd" name="classEnd" maxlength="25" required ng-model="session.classEnd" />
                         </div>
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <a class="uscRedButton" href="javascript:;" ng-click="eachSection.classSched.splice($index,1);" title="Delete this Section">
+                        [ X ] Delete this day
+                    </a>
                 </div>
             </div>
         </div>
