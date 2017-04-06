@@ -18,15 +18,15 @@
                     <abbr title="Session Start Date">First day<br>of Classes:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="classesStartDate" name="classesStartDate" maxlength="20" required ng-model="session.classesStartDate" />
+                    <input kendo-date-picker class="form-control" id="classesStartDate" name="classesStartDate" maxlength="10" required ng-model="session.classesStartDate" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="finalsStartDate" class="col-md-6 control-label">
-                    <abbr title="Finals Starting Period Date">First day <br> of Finals:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
+                <label for="classesEndDate" class="col-md-6 control-label">
+                    <abbr title="Session End Date">Last day<br>of Classes:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="20" required ng-model="session.finalsStartDate" />
+                    <input kendo-date-picker class="form-control" id="classesEndDate" name="classesEndDate" maxlength="20" required ng-model="session.classesEndDate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.isClassHeldAtUPC.$invalid && sessionRequestForm.$submitted}">
@@ -87,20 +87,20 @@
                     <input type="text" class="form-control" id="sessionCode" name="sessionCode" maxlength="20" required ng-model="session.sessionCode" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="classesEndDate" class="col-md-6 control-label">
-                    <abbr title="Session End Date">Last day<br>of Classes:</abbr>
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
+                <label for="finalsStartDate" class="col-md-6 control-label">
+                    <abbr title="Finals Starting Period Date">First day <br> of Finals:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="classesEndDate" name="classesEndDate" maxlength="20" required ng-model="session.classesEndDate" />
+                    <input kendo-date-picker class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="20" required ng-model="session.finalsStartDate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="finalsEndDate" class="col-md-6 control-label">
-                    <abbr title="Finals Ending Period Date">Last day of<br>Finals:</abbr>
+                    <abbr title="Finals Ending Period Date">Last day<br>of Finals:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="20" required ng-model="session.finalsEndDate" />
+                    <input kendo-date-picker class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="20" required ng-model="session.finalsEndDate" />
                 </div>
             </div>
             <!--<div class="form-group" ng-class="{'has-error': sessionRequestForm.gradingPeriodStartDate.$invalid && sessionRequestForm.$submitted}">
@@ -146,7 +146,7 @@
         <div class="col-md-4" id="thirdColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayAddDrop.$invalid && sessionRequestForm.$submitted}">
                 <label for="lastDayAddDrop" class="col-md-6 control-label">
-                    <abbr title="Last day to Add or Drop classes">Last day <br> to Add/Drop:</abbr>
+                    <abbr title="Last day to Add or Drop classes">Last day to Add/Drop:</abbr>
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control disabled" id="lastDayAddDrop" name="lastDayAddDrop" maxlength="20" required ng-model="session.lastDayAddDrop" />
@@ -255,7 +255,7 @@
         </div>
         <div class="row" ng-repeat="eachSection in sections" style="border-top:solid; border-color:white; padding-top:15px;">
             <div class="col-md-12" style="text-align:right;padding-bottom:15px;">
-                <a class="uscRedButton" href="javascript:;" ng-click="sections.splice($index,1);" title="Delete this Section">[ X ] Delete this Section</a>
+                <a class="uscRedButton" href="javascript:;" ng-click="sections.splice($index,1);" title="Delete this Section">[X] Delete this section</a>
             </div>
             <!-- Section 1st column -->
             <div class="col-md-4">
