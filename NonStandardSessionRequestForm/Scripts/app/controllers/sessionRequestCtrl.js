@@ -88,6 +88,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
                 }   // for(var i...
                 break;        
         };  // switch()
+
+        if (newDate > endDate) {    // if computed new date is beyond the Last Day of classes,
+            newDate = endDate;      //  make it equal to the last day of classes.
+        }
             
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }
@@ -107,21 +111,19 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
             } else {        // dates OK.  Calculate computed date fields.
 
-                // Last day to Add/Drop (20%)
-//                alert("Last day to Add/Drop: " + ComputeDate(startDt, endDt, 20));
-                $scope.lastDayAddDrop = ComputeDate(startDt, endDt, 20);
-                //// Last day to Change Enrollment Options (40%)
-//                alert("Last day to Change Enrollment Options: " + ComputeDate(startDt, endDt, 40));
-                $scope.lastDayEnrollOptionChange = ComputeDate(startDt, endDt, 40);
-                //// Last Day to Withdraw (80%)
-//                alert("Last day to Withdraw: " + ComputeDate(startDt, endDt, 80));
-                $scope.lastDayWithdraw = ComputeDate(startDt, endDt, 80);
-            }
-        }
+                $scope.lastDayAddDrop = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
+                $scope.lastDayEnrollOptionChange = ComputeDate(startDt, endDt, 40); // Last day to Change Enrollment Options (40%)
+                $scope.lastDayWithdraw = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
+
+            }   // if (startDt...
+        }   // if (($scope...
         return;
     }       // ClassDateChanged()
 
 
+    $scope.FinalsDatesChanged = function(){
+        alert("FinalsDatesChanged");
+    }   // FinalsDatesChanged()
 
     // Add a Section functionality
     $scope.sections = [];
