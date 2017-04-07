@@ -38,13 +38,57 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         return Math.floor(diff / divideBy[datepart]);
     }   // Date.dateDiff
 
-//    ComputeDate = function (startDate, endDate, percentAdd) {
+
+    //  1) Calculates computed dates given the:
+    //      a) start date
+    //      b) end date
+    //      c) percentage number of days to be added to the start date
+    //
+    //  2) If the new date falls on a weekend, or a holiday:
+    //      - move it to the next school day      
+
+
+
     function ComputeDate(startDate, endDate, percentAdd) {
 
         var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
         var daysToAdd = Math.round(totalDays * (percentAdd/100));
         var newDate = new Date();
+
         newDate.setDate(startDate.getDate() + daysToAdd - 1);
+        
+        switch (newDate.getDay()){
+            case 0:     // Sunday
+                newDate.setDate(newDate.getDate() + 1);
+                break;
+
+            case 6:     // Saturday
+                newDate.setDate(newDate.getDate() + 2);
+                break;
+
+            default:
+                var holidays = ["1/1", "4/4", "12/25"];
+                var newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate();
+                for (var i = 0; i < holidays.length; ++i)
+                {
+                    if (holidays[i] == newDtmonthDay) {
+                        newDate.setDate(newDate.getDate() + 1);
+                        switch (newDate.getDay()) {
+                            case 0:     // Sunday
+                                newDate.setDate(newDate.getDate() + 1);
+                                break;
+
+                            case 6:     // Saturday
+                                newDate.setDate(newDate.getDate() + 2);
+                                break;
+                            default:
+                                break;
+                        }
+                    }   // if (holidays...)
+                }   // for(var i...
+                break;        
+        };  // switch()
+            
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }
 
