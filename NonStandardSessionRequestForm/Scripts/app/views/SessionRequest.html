@@ -95,7 +95,7 @@
                 </label>
                 <div class="col-md-6">
                     <input kendo-date-picker class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="10" 
-                           ngChange="FinalsDatesChanged();" required ng-model="session.finalsStartDate" />
+                           ng-change="FinalsDatesChanged();" required ng-model="finalsStartDate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
@@ -104,7 +104,7 @@
                 </label>
                 <div class="col-md-6">
                     <input kendo-date-picker class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="10" 
-                           ngChange="FinalsDatesChanged();" required ng-model="finalsEndDate" />
+                           ng-change="FinalsDatesChanged();" required ng-model="finalsEndDate" />
                 </div>
             </div>
             <!--<div class="form-group" ng-class="{'has-error': sessionRequestForm.gradingPeriodStartDate.$invalid && sessionRequestForm.$submitted}">

@@ -8,7 +8,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         sessionSections: []
     };
 
-
     // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.AddSemesterBreaks = function () {
@@ -47,54 +46,40 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     //  2) If the new date falls on a weekend, or a holiday:
     //      - move it to the next school day      
 
-
-
     function ComputeDate(startDate, endDate, percentAdd) {
 
         var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
         var daysToAdd = Math.round(totalDays * (percentAdd/100));
         var newDate = new Date();
+        var newDtmonthDay = '';
 
-        newDate.setDate(startDate.getDate() + daysToAdd - 1);
-        
-        switch (newDate.getDay()){
-            case 0:     // Sunday
+        do {
+            newDate.setDate(startDate.getDate() + daysToAdd - 1);
+            switch (newDate.getDay()) {
+                case 0:     // Sunday
+                    newDate.setDate(newDate.getDate() + 1);
+                    break;
+                case 6:     // Saturday
+                    newDate.setDate(newDate.getDate() + 2);
+                    break;
+                default:
+                    break;
+            } // switch()
+
+            newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+            if (holidays.indexOf(newDtmonthDay) > -1) {
                 newDate.setDate(newDate.getDate() + 1);
-                break;
-
-            case 6:     // Saturday
-                newDate.setDate(newDate.getDate() + 2);
-                break;
-
-            default:
-                var holidays = ["1/1", "4/4", "12/25"];
-                var newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate();
-                for (var i = 0; i < holidays.length; ++i)
-                {
-                    if (holidays[i] == newDtmonthDay) {
-                        newDate.setDate(newDate.getDate() + 1);
-                        switch (newDate.getDay()) {
-                            case 0:     // Sunday
-                                newDate.setDate(newDate.getDate() + 1);
-                                break;
-
-                            case 6:     // Saturday
-                                newDate.setDate(newDate.getDate() + 2);
-                                break;
-                            default:
-                                break;
-                        }
-                    }   // if (holidays...)
-                }   // for(var i...
-                break;        
-        };  // switch()
+                newDtmonthDay = newDate.getMonth() +1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+            }
+        }
+        while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
 
         if (newDate > endDate) {    // if computed new date is beyond the Last Day of classes,
             newDate = endDate;      //  make it equal to the last day of classes.
         }
             
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
-    }
+    }   // ComputeDate()
 
 
     //// Validate the Class Start and End dates
@@ -121,8 +106,13 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     }       // ClassDateChanged()
 
 
-    $scope.FinalsDatesChanged = function(){
-        alert("FinalsDatesChanged");
+    $scope.FinalsDatesChanged = function () {
+
+        if (($scope.finalsStartDate > '') && ($scope.finalsEndDate > '')) {
+            // compute Final Grading Period
+        } else {
+
+        } // if (($scope...
     }   // FinalsDatesChanged()
 
     // Add a Section functionality
@@ -253,13 +243,27 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             ];
     };  // PopulateSessionCodes()
 
-
+    var holidays = [];
     $(document).ready(function () {
 
         $scope.PopulateSemesterDropdown();
         $scope.PopulateCampusDropdown();
         $scope.PopulateRatesDropdown();
         $scope.PopulateSessionCodes();
+
+/*
+                        2017 	            2018 	            2019 	                2020
+New Year’s Day 	        Mon 1/2 	        Mon 1/1 	        Tue 1/1 	            Wed 1/1
+Martin Luther King Day 	Mon 1/16 	        Mon 1/15 	        Mon 1/21 	            Mon 1/20
+Presidents’ Day 	    Mon 2/20 	        Mon 2/19 	        Mon 2/18 	            Mon 2/17
+Memorial Day 	        Mon 5/29 	        Mon 5/28 	        Mon 5/27 	            Mon 5/25
+Independence Day 	    Mon 7/3-Tue 7/4     Wed 7/4 	        Thu 7/4-Fri 7/5         Fri 7/3
+Labor Day 	            Mon 9/4 	        Mon 9/3 	        Mon 9/2 	            Mon 9/7
+Thanksgiving 	        Thu 11/23–Fri 11/24 Thu 11/22–Fri 11/23 Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
+Christmas 	            Mon 12/25 	        Mon 12/24–Tue 12/25 Wed 12/25 	            Fri 12/25
+Winter Recess 	        Tue 12/26–Fri 12/29 Wed 12/26–Mon 12/31 Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
+*/
+        holidays = ["1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017"];
 
     }); // document.ready()
 
