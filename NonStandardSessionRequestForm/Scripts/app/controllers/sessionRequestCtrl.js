@@ -8,9 +8,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         sessionSections: []
     };
 
+
     // Add Semester Break functionality
     $scope.semBreaks = [];
-
     $scope.AddSemesterBreaks = function () {
 
         var semBreak = { startDate: "", endDate: "" };
@@ -23,17 +23,61 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         return;
     }   // AddSemesterBreaks()
 
-    $scope.DateChanged = function () {
+    // datepart: 'y', 'm', 'w', 'd', 'h', 'n', 's'
+    Date.dateDiff = function (datepart, fromdate, todate) {
+        datepart = datepart.toLowerCase();
+        var diff = todate - fromdate;
+        var divideBy = {
+            w: 604800000,
+            d: 86400000,
+            h: 3600000,
+            n: 60000,
+            s: 1000
+        };
+
+        return Math.floor(diff / divideBy[datepart]);
+    }   // Date.dateDiff
+
+//    ComputeDate = function (startDate, endDate, percentAdd) {
+    function ComputeDate(startDate, endDate, percentAdd) {
+
+        var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
+        var daysToAdd = Math.round(totalDays * (percentAdd/100));
+        var newDate = new Date();
+        newDate.setDate(startDate.getDate() + daysToAdd - 1);
+        return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
+    }
+
+
+    //// Validate the Class Start and End dates
+    $scope.ClassDatesChanged = function () {
 
         if (($scope.classStartDate > '') && ($scope.classEndDate > '')) {
+
             var startDt = new Date($scope.classStartDate);
             var endDt = new Date($scope.classEndDate);
+
             if (startDt > endDt) {
+
                 alert("Start Date later than End Date");
+
+            } else {        // dates OK.  Calculate computed date fields.
+
+                // Last day to Add/Drop (20%)
+//                alert("Last day to Add/Drop: " + ComputeDate(startDt, endDt, 20));
+                $scope.lastDayAddDrop = ComputeDate(startDt, endDt, 20);
+                //// Last day to Change Enrollment Options (40%)
+//                alert("Last day to Change Enrollment Options: " + ComputeDate(startDt, endDt, 40));
+                $scope.lastDayEnrollOptionChange = ComputeDate(startDt, endDt, 40);
+                //// Last Day to Withdraw (80%)
+//                alert("Last day to Withdraw: " + ComputeDate(startDt, endDt, 80));
+                $scope.lastDayWithdraw = ComputeDate(startDt, endDt, 80);
             }
         }
         return;
-    }       // DateChanged()
+    }       // ClassDateChanged()
+
+
 
     // Add a Section functionality
     $scope.sections = [];
