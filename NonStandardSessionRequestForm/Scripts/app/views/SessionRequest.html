@@ -18,7 +18,8 @@
                     <abbr title="Session Start Date">First day<br>of Classes:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input kendo-date-picker class="form-control" id="classesStartDate" name="classesStartDate" maxlength="10" required ng-model="session.classesStartDate" />
+                    <input kendo-date-picker class="form-control" id="classesStartDate" name="classesStartDate" 
+                           ng-change="DateChanged();" maxlength="10" required ng-model="classStartDate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
@@ -26,7 +27,8 @@
                     <abbr title="Session End Date">Last day<br>of Classes:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input kendo-date-picker class="form-control" id="classesEndDate" name="classesEndDate" maxlength="20" required ng-model="session.classesEndDate" />
+                    <input kendo-date-picker class="form-control" id="classesEndDate" name="classesEndDate" 
+                           maxlength="10" required ng-model="classEndDate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.isClassHeldAtUPC.$invalid && sessionRequestForm.$submitted}">
@@ -209,10 +211,10 @@
 
 
     <!--  Session Breaks section -->
-    <div ng-show="semBreakCount" style="background-color:rgba(153,0,0,.7);padding-bottom:15px;color:#ffcc00;">
+    <div ng-show="semBreaks.length" style="background-color:rgba(153,0,0,.7);padding-bottom:15px;color:#ffcc00;">
 
         <div class="row" sstyle="align-self:center;color:#ffcc00;">
-            <div class="col-md-2">
+            <div class="col-md-1">
             </div>
             <div class="col-md-4" style="text-align:center;">
                 <h4>Break Start</h4>
@@ -220,14 +222,13 @@
             <div class="col-md-4" style="text-align:center;">
                 <h4>Break End</h4>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 &nbsp;
             </div>
         </div>
 
         <div class="row" style="align-items:center;padding-bottom:5px;" ng-show="semBreaks" ng-repeat="eachBreak in semBreaks">
-            <div class="col-md-2"  style="text-align:right;">
-                <!--<h4>Session Break {{semBreakCount}}</h4>-->
+            <div class="col-md-1"  style="text-align:right;">
             </div>
             <div class="col-md-4" style="align-self:center;">
                 <input kendo-date-picker class="form-control" />
@@ -235,8 +236,8 @@
             <div class="col-md-4" style="align-self:center;">
                 <input kendo-date-picker class="form-control" />
             </div>
-            <div class="col-md-2" style="align-self:center;">
-                &nbsp;
+            <div class="col-md-3" style="align-self:center;">
+                <a href="javascript:;" title="Delete this Semester Break" ng-click="semBreaks.splice($index,1);">[X] Remove this Semester Break</a>
             </div>
         </div>
     </div>
@@ -255,7 +256,7 @@
         </div>
         <div class="row" ng-repeat="eachSection in sections" style="border-top:solid; border-color:white; padding-top:15px;">
             <div class="col-md-12" style="text-align:right;padding-bottom:15px;">
-                <a class="uscRedButton" href="javascript:;" ng-click="sections.splice($index,1);" title="Delete this Section">[X] Delete this section</a>
+                <a class="uscRedButton" href="javascript:;" ng-click="sections.splice($index,1);" title="Delete this Section">[X] Remove this section</a>
             </div>
             <!-- Section 1st column -->
             <div class="col-md-4">
@@ -404,7 +405,7 @@
                 </div>
                 <div class="col-md-3">
                     <a class="uscRedButton" href="javascript:;" ng-click="eachSection.classSched.splice($index,1);" title="Delete this Section">
-                        [ X ] Delete this day
+                        [ X ] Remove this day
                     </a>
                 </div>
             </div>

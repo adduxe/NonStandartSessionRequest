@@ -10,24 +10,32 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     // Add Semester Break functionality
     $scope.semBreaks = [];
-    $scope.semBreakCount = 0;
 
     $scope.AddSemesterBreaks = function () {
 
         var semBreak = { startDate: "", endDate: "" };
 
-        if ($scope.semBreakCount == 2) {
+        if ($scope.semBreaks.length == 2) {
             alert("A maximum of 2 semester breaks are allowed per session.");
         } else {
-            $scope.semBreaks[$scope.semBreakCount] = semBreak;
-            $scope.semBreakCount += 1;
+            $scope.semBreaks.push(semBreak);
         }
         return;
     }   // AddSemesterBreaks()
 
+    $scope.DateChanged = function () {
+
+        if (($scope.classStartDate > '') && ($scope.classEndDate > '')) {
+            var startDt = new Date($scope.classStartDate);
+            var endDt = new Date($scope.classEndDate);
+            if (startDt > endDt) {
+                alert("Start Date later than End Date");
+            }
+        }
+        return;
+    }       // DateChanged()
 
     // Add a Section functionality
-
     $scope.sections = [];
 
     $scope.AddSection = function () {
@@ -69,7 +77,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         });
 
         return;
-    };      // populateSemesterDropdown()
+    };                  // PopulateSemesterDropdown()
 
 
     $scope.PopulateCampusDropdown = function () {
@@ -100,7 +108,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             }
         });
         return;
-    };  // populateCampusDropdown
+    };              // PopulateCampusDropdown
 
 
     $scope.PopulateRatesDropdown = function () {
@@ -127,13 +135,12 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         });
 
         return;
-    };   // populateRatesDropdown()
+    };              // PopulateRatesDropdown()
 
 
     $scope.PopulateSessionCodes = function () {
 
-        $scope.sessionCodes =
-            [
+        $scope.sessionCodes = [
                 "001      MAIN ON-CAMPUS SESSION",
                 "002      LAW",
                 "003      KECK - MD PROGRAM",
@@ -154,9 +161,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
                 "018      MAIN - Session with no tuition or fees",
                 "019      KECK - PM"
             ];
-
     };  // PopulateSessionCodes()
-
 
 
     $(document).ready(function () {
