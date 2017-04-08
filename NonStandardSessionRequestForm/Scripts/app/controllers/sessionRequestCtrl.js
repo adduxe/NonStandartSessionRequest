@@ -1,14 +1,13 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
-
     $scope.Session = {
         sessionCode: "",
         sessionBreaks: [],
         sessionSections: []
     };
 
-    // Add Semester Break functionality
+            // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.AddSemesterBreaks = function () {
 
@@ -22,16 +21,16 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         return;
     }   // AddSemesterBreaks()
 
-    // datepart: 'y', 'm', 'w', 'd', 'h', 'n', 's'
+    // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
     Date.dateDiff = function (datepart, fromdate, todate) {
         datepart = datepart.toLowerCase();
         var diff = todate - fromdate;
         var divideBy = {
-            w: 604800000,
-            d: 86400000,
-            h: 3600000,
-            n: 60000,
-            s: 1000
+            w: 604800000,   // weeks
+            d: 86400000,    // days
+            h: 3600000,     // hours
+            m: 60000,       // minutes
+            s: 1000         // seconds
         };
 
         return Math.floor(diff / divideBy[datepart]);
@@ -82,7 +81,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     }   // ComputeDate()
 
 
-    //// Validate the Class Start and End dates
+            // Validate the Class Start and End dates
     $scope.ClassDatesChanged = function () {
 
         if (($scope.classStartDate > '') && ($scope.classEndDate > '')) {
@@ -92,7 +91,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
             if (startDt > endDt) {
 
-                alert("Start Date later than End Date");
+                alert("Class Start Date later than Class End Date");
 
             } else {        // dates OK.  Calculate computed date fields.
 
@@ -109,10 +108,22 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     $scope.FinalsDatesChanged = function () {
 
         if (($scope.finalsStartDate > '') && ($scope.finalsEndDate > '')) {
-            // compute Final Grading Period
-        } else {
 
-        } // if (($scope...
+            var startDt = new Date($scope.finalsStartDate);
+            var endDt = new Date($scope.finalsEndDate);
+
+                // Compute Final Grading Period
+            if (startDt > endDt) {
+                alert("First day of Finals later than Last Day of Finals");
+            } else {
+                    // First Day of Grading = First Day of Finals
+                $scope.lastFinalGradingStartDate = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+                var lastDayGradingDt = new Date();
+                lastDayGradingDt.setDate(endDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
+                $scope.lastFinalGradingEndDate = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
+            }
+
+        }   // if (($scope...
     }   // FinalsDatesChanged()
 
     // Add a Section functionality
@@ -250,18 +261,17 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         $scope.PopulateCampusDropdown();
         $scope.PopulateRatesDropdown();
         $scope.PopulateSessionCodes();
-
 /*
-                        2017 	            2018 	            2019 	                2020
-New Year’s Day 	        Mon 1/2 	        Mon 1/1 	        Tue 1/1 	            Wed 1/1
-Martin Luther King Day 	Mon 1/16 	        Mon 1/15 	        Mon 1/21 	            Mon 1/20
-Presidents’ Day 	    Mon 2/20 	        Mon 2/19 	        Mon 2/18 	            Mon 2/17
-Memorial Day 	        Mon 5/29 	        Mon 5/28 	        Mon 5/27 	            Mon 5/25
-Independence Day 	    Mon 7/3-Tue 7/4     Wed 7/4 	        Thu 7/4-Fri 7/5         Fri 7/3
-Labor Day 	            Mon 9/4 	        Mon 9/3 	        Mon 9/2 	            Mon 9/7
-Thanksgiving 	        Thu 11/23–Fri 11/24 Thu 11/22–Fri 11/23 Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
-Christmas 	            Mon 12/25 	        Mon 12/24–Tue 12/25 Wed 12/25 	            Fri 12/25
-Winter Recess 	        Tue 12/26–Fri 12/29 Wed 12/26–Mon 12/31 Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
+                                2017 	                2018 	                2019 	                2020
+        New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
+        Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
+        Presidents’ Day 	    Mon 2/20 	            Mon 2/19 	            Mon 2/18 	            Mon 2/17
+        Memorial Day 	        Mon 5/29 	            Mon 5/28 	            Mon 5/27 	            Mon 5/25
+        Independence Day 	    Mon 7/3-Tue 7/4         Wed 7/4 	            Thu 7/4-Fri 7/5         Fri 7/3
+        Labor Day 	            Mon 9/4 	            Mon 9/3 	            Mon 9/2 	            Mon 9/7
+        Thanksgiving 	        Thu 11/23–Fri 11/24     Thu 11/22–Fri 11/23     Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
+        Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
+        Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
 */
         holidays = [
             "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",

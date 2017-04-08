@@ -53,10 +53,10 @@
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.addSessionBreaks.$invalid && sessionRequestForm.$submitted}">
-                <label for="addSessionBreaks" class="col-md-6 control-label">
-                    &nbsp;
-                </label>
                 <div class="col-md-6">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="align-content:center;">
                     <abbr title="Required for a course in which a break five days or longer will be taken.  If the class follows USC’s Thanksgiving holiday and Spring break, the course must have a session break.">
                         <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton" required ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
                             Add a Session Break
@@ -65,9 +65,9 @@
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.addSections.$invalid && sessionRequestForm.$submitted}">
-                <label for="addSections" class="col-md-6 control-label">
+                <div class="col-md-6">
                     &nbsp;
-                </label>
+                </div>
                 <div class="col-md-6">
                     <abbr title="Click here if you want to add Sections to this Session">
                         <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" required ng-model="session.addSections" ng-click="AddSection();">
@@ -120,7 +120,7 @@
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <select type="text" class="form-control" id="offCampusLocation" name="offCampusLocation" maxlength="25" required ng-model="session.offCampusLocation"></select>
+                    <select class="form-control"  id="offCampusLocation" name="offCampusLocation" maxlength="25" required ng-model="session.offCampusLocation"></select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionPerUnit.$invalid && sessionRequestForm.$submitted}">
@@ -184,7 +184,7 @@
                     <abbr title="Indicate a campus other than the ones listed in the dropdown">Campus location:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20" required ng-model="session.otherCampusLocation" />
+                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20"  ng-model="session.otherCampusLocation" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">
