@@ -7,6 +7,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         sessionSections: []
     };
 
+    $scope.SessionCode = function () {
+        alert("SessionCode");
+    }
+
             // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.AddSemesterBreaks = function () {
@@ -146,72 +150,37 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         return;
     }   // AddSched()
 
-
-    $scope.PopulateCampusDropdown = function () {
-
-        var offCampusLocs =
-                '[' +
-	                '{"campusCode": "HSC",	"campusName":"Health Science Campus"},' +
-	                '{"campusCode": "OCC", 	"campusName":"Orange County Campus"},' +
-	                '{"campusCode": "OVS", 	"campusName":"Overseas"},' +
-	                '{"campusCode": "DC",	"campusName":"Washington D.C."},' +
-	                '{"campusCode": "SAC",	"campusName":"Sacramento"},' +
-	                '{"campusCode": "USA",	"campusName":"Off-campus in U.S."},' +
-	                '{"campusCode": "VIR",	"campusName":"Virtual(DEN/Online)"},' +
-	                '{"campusCode": "CAT",	"campusName":"Catalina"},' +
-	                '{"campusCode": "LAC",	"campusName":"L.A. Center"},' +
-	                '{"campusCode": "SD",	"campusName":"San Diego"},' +
-	                '{"campusCode": "ATT",	"campusName":"AT&T Center"},' +
-	                '{"campusCode": "SKB",	"campusName":"No Tuition or Fees"},' +
-	                '{"campusCode": "OTH",	"campusName":"Others"}' +
-                ']';
-        $scope.campusLocations = JSON.parse(offCampusLocs);
-
-        $("#offCampusLocation").kendoDropDownList({
-            dataTextField: "campusName",
-            dataValueField: "campusCode",
-            dataSource: {
-                data: $scope.campusLocations
-            }
-        });
-        return;
-    };              // PopulateCampusDropdown
-
-
     $scope.PopulateSessionCodes = function () {
 
         $scope.sessionCodes = [
-                "001      MAIN ON-CAMPUS SESSION",
-                "002      LAW",
-                "003      KECK - MD PROGRAM",
-                "004      PHAR",
-                "005      PHAR - PSCI & MPTX",
-                "006      DENT - First Year",
-                "007      DENT - Dental Hygiene First Year",
-                "008      DENT - International First Year",
-                "009      DENT - First Year Advanced",
-                "010      DENT - Second Year Advanced",
-                "011      DENT - Pediatric Dentistry Second Year",
-                "012      DENT - OT",
-                "013      PHAR - Continuing Student Program",
-                "014      ENGR - DEN Program",
-                "015      ENGR - DEN Program",
-                "016      PHYS - Special Credit Exams for Subject Credit",
-                "017      KECK - PM",
-                "018      MAIN - Session with no tuition or fees",
-                "019      KECK - PM"
+                "001  MAIN ON-CAMPUS SESSION",
+                "002  LAW",
+                "003  KECK - MD PROGRAM",
+                "004  PHAR",
+                "005  PHAR - PSCI & MPTX",
+                "006  DENT - First Year",
+                "007  DENT - Dental Hygiene First Year",
+                "008  DENT - International First Year",
+                "009  DENT - First Year Advanced",
+                "010  DENT - Second Year Advanced",
+                "011  DENT - Pediatric Dentistry Second Year",
+                "012  DENT - OT",
+                "013  PHAR - Continuing Student Program",
+                "014  ENGR - DEN Program",
+                "015  ENGR - DEN Program",
+                "016  PHYS - Special Credit Exams for Subject Credit",
+                "017  KECK - PM",
+                "018  MAIN - Session with no tuition or fees",
+                "019  KECK - PM"
             ];
     };  // PopulateSessionCodes()
 
     $scope.SetRates = function () {
 
         if (($scope.acadTerm > '') && ($scope.rateType > '')) {
-  //          alert("Semester = " + $scope.acadTerm + "  Rate Type = " + $scope.rateType);
             var rateIndex = $scope.acadTerm + $scope.rateType;
             $scope.tuitionFlatRate = rates[rateIndex].flatRate;
             $scope.tuitionUnitRate = rates[rateIndex].unitRate;
-
-            alert("unitRate = " + rates[rateIndex].unitRate + "  flateRate = " + rates[rateIndex].flatRate);
         }
         return;
     }
@@ -267,7 +236,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $(document).ready(function () {
 
-        $scope.PopulateCampusDropdown();
         $scope.PopulateSessionCodes();
 
         $scope.semesters = [                                    // Populate the Semester Dropdown
@@ -289,7 +257,22 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 	        {rateCode: "OTH", rateName:"Others"}
         ];
 
-
+        $scope.campusLocs =                                     // Populate the Campus Location dropdown.
+            [
+                { campusCode: "HSC", campusName: "Health Science Campus" },
+                { campusCode: "OCC", campusName: "Orange County Campus" },
+                { campusCode: "OVS", campusName: "Overseas" },
+                { campusCode: "DC", campusName: "Washington D.C." },
+                { campusCode: "SAC", campusName: "Sacramento" },
+                { campusCode: "USA", campusName: "Off-campus in U.S." },
+                { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
+                { campusCode: "CAT", campusName: "Catalina" },
+                { campusCode: "LAC", campusName: "L.A. Center" },
+                { campusCode: "SD", campusName: "San Diego" },
+                { campusCode: "ATT", campusName: "AT&T Center" },
+                { campusCode: "SKB", campusName: "No Tuition or Fees" },
+                { campusCode: "OTH", campusName: "Others" }
+            ];
 
         /*
                                 2017 	                2018 	                2019 	                2020

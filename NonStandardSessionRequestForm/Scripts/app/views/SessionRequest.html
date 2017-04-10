@@ -90,7 +90,7 @@
                     <abbr title="3-digit Session code">Session Code:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input kendo-auto-complete class="form-control" id="sessionCode" name="sessionCode" maxlength="20" required ng-model="session.sessionCode" k-data-source="sessionCodes" />
+                    <input kendo-auto-complete class="form-control" id="sessionCode" name="sessionCode" maxlength="4" required k-ng-model="sessionCode" k-data-source="sessionCodes" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
@@ -124,7 +124,9 @@
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <select class="form-control"  id="offCampusLocation" name="offCampusLocation" maxlength="25" required ng-model="session.offCampusLocation"></select>
+                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" required ng-model="session.offCampusLocation">
+                        <option ng-repeat="eachCampus in campusLocs" value="{{ eachCampus.campusCode }}">{{ eachCampus.campusName }}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
@@ -211,9 +213,7 @@
             </div>
         </div>
         <!-- End of 3rd Column -->
-
     </div> <!-- class="row" -->
-
 
     <!--  Session Breaks section -->
     <div ng-show="semBreaks.length" style="background-color:rgba(153,0,0,.7);padding-bottom:15px;color:#ffcc00;">
