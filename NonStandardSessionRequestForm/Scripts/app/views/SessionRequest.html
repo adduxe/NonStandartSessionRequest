@@ -10,7 +10,7 @@
                     <abbr title="Session semester being applied for">For Semester:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <select class="form-control" id="semester" name="semester" required ng-model="semester" ng-change="SetRates();">
+                    <select class="form-control" id="semester" name="semester" required ng-model="acadTerm" ng-change="SetRates();">
                         <option ng-repeat="eachSem in semesters" value="{{ eachSem.semCode }}">{{ eachSem.semName }}</option>
                     </select>
                 </div>
@@ -127,12 +127,12 @@
                     <select class="form-control"  id="offCampusLocation" name="offCampusLocation" maxlength="25" required ng-model="session.offCampusLocation"></select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionPerUnit.$invalid && sessionRequestForm.$submitted}">
-                <label for="tuitionPerUnit" class="col-md-6 control-label">
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
+                <label for="tuitionUnitRate" class="col-md-6 control-label">
                     <abbr title="Tuition per unit rate in dollars">Tuition per Unit:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionPerUnit" name="tuitionPerUnit" maxlength="25" required ng-model="session.tuitionPerUnit" />
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" required ng-model="tuitionUnitRate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -196,7 +196,7 @@
                     <abbr title="Tuition flat rate in dollars">Tuition Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" maxlength="25" required ng-model="session.tuitionFlatRate" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly required ng-model="tuitionFlatRate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">

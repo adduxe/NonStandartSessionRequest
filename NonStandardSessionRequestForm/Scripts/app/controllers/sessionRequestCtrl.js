@@ -204,14 +204,70 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     };  // PopulateSessionCodes()
 
     $scope.SetRates = function () {
-        alert("Semester = " + $scope.semester + "  Rate Type = " + $scope.rateType);
+
+        if (($scope.acadTerm > '') && ($scope.rateType > '')) {
+  //          alert("Semester = " + $scope.acadTerm + "  Rate Type = " + $scope.rateType);
+            var rateIndex = $scope.acadTerm + $scope.rateType;
+            $scope.tuitionFlatRate = rates[rateIndex].flatRate;
+            $scope.tuitionUnitRate = rates[rateIndex].unitRate;
+
+            alert("unitRate = " + rates[rateIndex].unitRate + "  flateRate = " + rates[rateIndex].flatRate);
+        }
+        return;
     }
 
     var holidays = [];
+
+    var rates =
+        {       // 2017 Fall Rates
+            "20171STD": { unitRate: "u_20171STD", flatRate: "f_20171STD" },
+            "20171GB": { unitRate: "u_20171GB", flatRate: "f_20171GB" },
+            "20171GCA": { unitRate: "u_20171GCA", flatRate: "f_20171GCA" },
+            "20171GE": { unitRate: "u_20171GE", flatRate: "f_20171GE" },
+            "20171DT3": { unitRate: "u_20171DT3", flatRate: "f_20171DT3" },
+            "20171AD3": { unitRate: "u_20171AD3", flatRate: "f_20171AD3" },
+            "20171LAW": { unitRate: "u_20171LAW", flatRate: "f_20171LAW" },
+            "20171MED": { unitRate: "u_20171MED", flatRate: "f_20171MED" },
+            "20171OTH": { unitRate: "u_20171OTH", flatRate: "f_20171OTH" },
+
+            // 2017 Spring Rates
+            "20172STD": { unitRate: "u_20172STD", flatRate: "f_20172STD" },
+            "20172GB": { unitRate: "u_20172GB", flatRate: "f_20172GB" },
+            "20172GCA": { unitRate: "u_20172GCA", flatRate: "f_20172GCA" },
+            "20172GE": { unitRate: "u_20172GE", flatRate: "f_20172GE" },
+            "20172DT3": { unitRate: "u_20172DT3", flatRate: "f_20172DT3" },
+            "20172AD3": { unitRate: "u_20172AD3", flatRate: "f_20172AD3" },
+            "20172LAW": { unitRate: "u_20172LAW", flatRate: "f_20172LAW" },
+            "20172MED": { unitRate: "u_20172MED", flatRate: "f_20172MED" },
+            "20172OTH": { unitRate: "u_20172OTH", flatRate: "f_20172OTH" },
+
+            // 2017 Summer Rates
+            "20173STD": { unitRate: "u_20173STD", flatRate: "f_20173STD" },
+            "20173GB": { unitRate: "u_20173GB", flatRate: "f_20173GB" },
+            "20173GCA": { unitRate: "u_20173GCA", flatRate: "f_20173GCA" },
+            "20173GE": { unitRate: "u_20173GE", flatRate: "f_20173GE" },
+            "20173DT3": { unitRate: "u_20173DT3", flatRate: "f_20173DT3" },
+            "20173AD3": { unitRate: "u_20173AD3", flatRate: "f_20173AD3" },
+            "20173LAW": { unitRate: "u_20173LAW", flatRate: "f_20173LAW" },
+            "20173MED": { unitRate: "u_20173MED", flatRate: "f_20173MED" },
+            "20173OTH": { unitRate: "u_20173OTH", flatRate: "f_20173OTH" },
+
+            // 2018 Fall Rates
+            "20181STD": { unitRate: "u_20181STD", flatRate: "f_20181STD" },
+            "20181GB": { unitRate: "u_20181GB", flatRate: "f_20181GB" },
+            "20181GCA": { unitRate: "u_20181GCA", flatRate: "f_20181GCA" },
+            "20181GE": { unitRate: "u_20181GE", flatRate: "f_20181GE" },
+            "20181DT3": { unitRate: "u_20181DT3", flatRate: "f_20181DT3" },
+            "20181AD3": { unitRate: "u_20181AD3", flatRate: "f_20181AD3" },
+            "20181LAW": { unitRate: "u_20181LAW", flatRate: "f_20181LAW" },
+            "20181MED": { unitRate: "u_20181MED", flatRate: "f_20181MED" },
+            "20181OTH": { unitRate: "u_20181OTH", flatRate: "f_20181OTH" }
+        };
+
+
     $(document).ready(function () {
 
         $scope.PopulateCampusDropdown();
-//        $scope.PopulateRatesDropdown();
         $scope.PopulateSessionCodes();
 
         $scope.semesters = [                                    // Populate the Semester Dropdown
@@ -232,6 +288,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 	        {rateCode: "MED", rateName:"Medicine"},
 	        {rateCode: "OTH", rateName:"Others"}
         ];
+
+
 
         /*
                                 2017 	                2018 	                2019 	                2020
