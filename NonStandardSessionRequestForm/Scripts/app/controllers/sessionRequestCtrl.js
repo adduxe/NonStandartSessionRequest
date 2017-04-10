@@ -178,33 +178,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     };              // PopulateCampusDropdown
 
 
-    $scope.PopulateRatesDropdown = function () {
-        var rateTypes =
-                '[' +
-	                '{"rateCode": "STD",	"rateName":"Standard"},' +
-	                '{"rateCode": "GB", 	"rateName":"Graduate Business"},' +
-	                '{"rateCode": "GCA", 	"rateName":"Graduate Cinematic Arts"},' +
-	                '{"rateCode": "GE",	    "rateName":"Graduate Engineering"},' +
-	                '{"rateCode": "DT3",	"rateName":"Dentistry"},' +
-	                '{"rateCode": "AD3",	"rateName":"Advanced Dentistry"},' +
-	                '{"rateCode": "LAW",	"rateName":"Law"},' +
-	                '{"rateCode": "MED",	"rateName":"Medicine"},' +
-	                '{"rateCode": "OTH",	"rateName":"Others"}' +
-                ']';
-
-        $scope.rates = JSON.parse(rateTypes);
-        $("#rateType").kendoDropDownList({
-            dataTextField: "rateName",
-            dataValueField: "rateCode",
-            dataSource: {
-                data: $scope.rates
-            }
-        });
-
-        return;
-    };              // PopulateRatesDropdown()
-
-
     $scope.PopulateSessionCodes = function () {
 
         $scope.sessionCodes = [
@@ -231,21 +204,33 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     };  // PopulateSessionCodes()
 
     $scope.SetRates = function () {
-        alert($scope.semester);
+        alert("Semester = " + $scope.semester + "  Rate Type = " + $scope.rateType);
     }
 
     var holidays = [];
     $(document).ready(function () {
 
         $scope.PopulateCampusDropdown();
-        $scope.PopulateRatesDropdown();
+//        $scope.PopulateRatesDropdown();
         $scope.PopulateSessionCodes();
 
         $scope.semesters = [                                    // Populate the Semester Dropdown
             { semName: "2017 Spring", semCode: "20172" },
             { semName: "2017 Summer", semCode: "20173" },
-            { semName: "2018 Fall", semCode: "20181" },
+            { semName: "2018 Fall"  , semCode: "20181" },
             { semName: "2018 Spring", semCode: "20182" }
+        ];
+
+        $scope.rateTypes = [                                    // Populate the Rate Type dropdown
+	        {rateCode: "STD", rateName:"Standard"},
+	        {rateCode: "GB",  rateName:"Graduate Business"},
+	        {rateCode: "GCA", rateName:"Graduate Cinematic Arts"},
+	        {rateCode: "GE",  rateName:"Graduate Engineering"},
+	        {rateCode: "DT3", rateName:"Dentistry"},
+	        {rateCode: "AD3", rateName:"Advanced Dentistry"},
+	        {rateCode: "LAW", rateName:"Law"},
+	        {rateCode: "MED", rateName:"Medicine"},
+	        {rateCode: "OTH", rateName:"Others"}
         ];
 
         /*
