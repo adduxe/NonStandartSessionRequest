@@ -2,7 +2,7 @@
 <form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()">
 
     <div class="row">
-
+        
         <!-- 1st Column -->
         <div class="col-md-4" id="firstColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.semester.$invalid && sessionRequestForm.$submitted}">
@@ -10,7 +10,9 @@
                     <abbr title="Session semester being applied for">For Semester:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <select type="text" class="form-control" id="semester" name="semester" maxlength="20" required ng-model="session.semester" style="width: 100%" ></select>
+                    <select class="form-control" id="semester" name="semester" required ng-model="semester" ng-change="SetRates();">
+                        <option ng-repeat="eachSem in semesters" value="{{ eachSem.semCode }}">{{ eachSem.semName }}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesStartDate.$invalid && sessionRequestForm.$submitted}">

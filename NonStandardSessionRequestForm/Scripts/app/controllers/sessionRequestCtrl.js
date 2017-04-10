@@ -147,30 +147,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     }   // AddSched()
 
 
-    $scope.PopulateSemesterDropdown = function () {
-
-        var acadSems =
-            '[' +
-                '{"semName":"2017 Spring", "semCode": 20172},' +
-                '{"semName":"2017 Summer", "semCode": 20173},' +
-                '{"semName":"2018 Fall", "semCode": 20181},' +
-                '{"semName":"2018 Spring", "semCode": 20182}' +
-            ']';    // only for testing  eventually this will be computed
-
-        $scope.acadTerms = JSON.parse(acadSems);
-
-        $("#semester").kendoDropDownList({
-            dataTextField: "semName",
-            dataValueField: "semCode",
-            dataSource: {
-                data: $scope.acadTerms
-            }
-        });
-
-        return;
-    };                  // PopulateSemesterDropdown()
-
-
     $scope.PopulateCampusDropdown = function () {
 
         var offCampusLocs =
@@ -254,14 +230,25 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             ];
     };  // PopulateSessionCodes()
 
+    $scope.SetRates = function () {
+        alert($scope.semester);
+    }
+
     var holidays = [];
     $(document).ready(function () {
 
-        $scope.PopulateSemesterDropdown();
         $scope.PopulateCampusDropdown();
         $scope.PopulateRatesDropdown();
         $scope.PopulateSessionCodes();
-/*
+
+        $scope.semesters = [                                    // Populate the Semester Dropdown
+            { semName: "2017 Spring", semCode: "20172" },
+            { semName: "2017 Summer", semCode: "20173" },
+            { semName: "2018 Fall", semCode: "20181" },
+            { semName: "2018 Spring", semCode: "20182" }
+        ];
+
+        /*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
         Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
