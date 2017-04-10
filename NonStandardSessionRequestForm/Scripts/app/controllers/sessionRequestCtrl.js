@@ -8,7 +8,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     };
 
     $scope.SessionCode = function () {
-        alert("SessionCode");
+//        alert($scope.sessionCode);
     }
 
             // Add Semester Break functionality
@@ -53,7 +53,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
         var daysToAdd = Math.round(totalDays * (percentAdd/100));
-        var newDate = new Date();
+        var newDate = new Date(startDate);
         var newDtmonthDay = '';
 
         do {
@@ -233,20 +233,62 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             "20181OTH": { unitRate: "u_20181OTH", flatRate: "f_20181OTH" }
         };
 
+    function PopulateSemesterDropdown (){
+
+        var currDate = new Date();
+        var currYear = currDate.getFullYear();
+        var nextYear = parseInt(currYear) + 1;
+
+        var springDate = new Date("01/01/" + currYear);
+        var summerDate = new Date("05/01/" + currYear);
+        var fallDate = new Date("08/01/" + currYear);
+
+        var semChoices = [];
+
+        if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
+
+            semChoices = [
+
+                { semName: currYear + " Spring", semCode: currYear + "1" },
+                { semName: currYear + " Summer",    semCode: currYear + "2" },
+                { semName: currYear + " Fall",      semCode: nextYear + "3" },
+                { semName: nextYear + " Spring",    semCode: nextYear + "1" }
+            ];
+
+        } else if ((currDate >= summerDate) && (currDate < fallDate)){  // Display Summer Current Year to Summer Next Year
+
+            semChoices = [
+
+                { semName: currYear + " Summer",    semCode: currYear + "2" },
+                { semName: currYear + " Fall",      semCode: currYear + "3" },
+                { semName: nextYear + " Spring",    semCode: nextYear + "1" },
+                { semName: nextYear + " Summer",    semCode: nextYear + "2" }
+            ];
+
+        } else {                                                        // Display Current Fall to Next Year Fall
+            
+            semChoices = [
+
+                { semName: currYear + " Fall",      semCode: currYear + "3" },
+                { semName: nextYear + " Spring",    semCode: nextYear + "1" },
+                { semName: nextYear + " Summer",    semCode: nextYear + "2" },
+                { semName: nextYear + " Fall",      semCode: nextYear + "3" }
+            ];
+        }
+
+        $scope.semesters = semChoices;
+    }   // PopulateSemesterDropdown
+
 
     $(document).ready(function () {
 
         $scope.PopulateSessionCodes();
 
-        $scope.semesters = [                                    // Populate the Semester Dropdown
-            { semName: "2017 Spring", semCode: "20172" },
-            { semName: "2017 Summer", semCode: "20173" },
-            { semName: "2018 Fall"  , semCode: "20181" },
-            { semName: "2018 Spring", semCode: "20182" }
-        ];
+        PopulateSemesterDropdown();
 
         $scope.rateTypes = [                                    // Populate the Rate Type dropdown
-	        {rateCode: "STD", rateName:"Standard"},
+
+	        { rateCode: "STD", rateName: "Standard" },
 	        {rateCode: "GB",  rateName:"Graduate Business"},
 	        {rateCode: "GCA", rateName:"Graduate Cinematic Arts"},
 	        {rateCode: "GE",  rateName:"Graduate Engineering"},
@@ -257,8 +299,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 	        {rateCode: "OTH", rateName:"Others"}
         ];
 
-        $scope.campusLocs =                                     // Populate the Campus Location dropdown.
-            [
+        $scope.campusLocs = [                                   // Populate the Campus Location dropdown.
+
                 { campusCode: "HSC", campusName: "Health Science Campus" },
                 { campusCode: "OCC", campusName: "Orange County Campus" },
                 { campusCode: "OVS", campusName: "Overseas" },
@@ -272,7 +314,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
                 { campusCode: "ATT", campusName: "AT&T Center" },
                 { campusCode: "SKB", campusName: "No Tuition or Fees" },
                 { campusCode: "OTH", campusName: "Others" }
-            ];
+         ];
 
         /*
                                 2017 	                2018 	                2019 	                2020
