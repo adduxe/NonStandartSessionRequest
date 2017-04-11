@@ -14,26 +14,32 @@
     <div id="top-banner" class="hidden-xs">
         <div class="container">
             <div class="row">
-                <div id="information-nav" class="col-lg-6">
+                <div id="information-nav" class="col-md-5">
                     <ul class="nav navbar-nav navbar-left">
-                        <li><strong>Viterbi School of Engineering</strong></li>
+                        <li><strong>@ViewBag.ShibCollege</strong></li>
                     </ul>
-                </div>
-                <div id="access-nav" class="col-lg-6">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><strong>Prof. Darth Vader, PhD</strong></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>Chemical Engineering Department</li>
+                        <li>@ViewBag.ShibDepartment</li>
                     </ul>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-md-4">
+                    <ul class="nav navbar-nav">
+                        <div style="width: 252px;" class="pull-left hidden-xs">
+                            <a href="http://usc.edu">
+                                <img src="~/Content/images/usc_230.png" class="img-responsive" alt="University of Southern California" />
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+                <div id="access-nav" class="col-md-3">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>(213) 851-4467</li>
+                        <li><strong>@ViewBag.ShibUserName</strong></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@ViewBag.ShibPhoneNo</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@ViewBag.ShibEmailAddr</li>
                     </ul>
                 </div>
             </div>
@@ -41,14 +47,8 @@
     </div>
     <div class="container">
         <div class="clearfix">
-            <div style="width: 252px;" class="pull-right hidden-xs">
-                <a href="http://usc.edu">
-                    <img src="~/Content/images/usc_230.png" class="img-responsive" alt="University of Southern California" />
-                </a>
-            </div>
-            <div class="pull-left">
-                @*<div class="hidden-xs"> <img src="~/Content/images/logo.png" alt="Office of Academic Records and Registrar"></div>*@
-                <div class="hidden-xs"><h1 style="color:#ffcc00;">Non-standard Session Request Form</h1></div>
+            <div class="">
+                <div class="hidden-xs"><h2 style="color:#ffcc00;">Non-standard Session Request Form</h2></div>
                 <div class="visible-xs"><img src="~/Content/images/USC logo-xs.png" class="img-responsive"></div>
             </div>
         </div>
