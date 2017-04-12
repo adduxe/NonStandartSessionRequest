@@ -59,22 +59,22 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         do {
             newDate.setDate(startDate.getDate() + daysToAdd - 1);
             switch (newDate.getDay()) {
-                case 0:     // Sunday
-                    newDate.setDate(newDate.getDate() + 1);
+                case 0:             // if the computed day falls on a Sunday
+                    newDate.setDate(newDate.getDate() + 1);     // add a day to make it a Monday
                     break;
-                case 6:     // Saturday
-                    newDate.setDate(newDate.getDate() + 2);
+                case 6:             // Saturday
+                    newDate.setDate(newDate.getDate() + 2);     // add 2 days to make it a Monday
                     break;
                 default:
                     break;
             } // switch()
 
             newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-            if (holidays.indexOf(newDtmonthDay) > -1) {
+            if (holidays.indexOf(newDtmonthDay) > -1) {     // if the new date falls on a holiday, add a day
                 newDate.setDate(newDate.getDate() + 1);
                 newDtmonthDay = newDate.getMonth() +1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
             }
-        }
+        }       // keep checking until the computed day is not a weekend nor a holiday
         while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
 
         if (newDate > endDate) {    // if computed new date is beyond the Last Day of classes,
@@ -153,26 +153,26 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     $scope.PopulateSessionCodes = function () {
 
         $scope.sessionCodes = [
-                "001  MAIN ON-CAMPUS SESSION",
-                "002  LAW",
-                "003  KECK - MD PROGRAM",
-                "004  PHAR",
-                "005  PHAR - PSCI & MPTX",
-                "006  DENT - First Year",
-                "007  DENT - Dental Hygiene First Year",
-                "008  DENT - International First Year",
-                "009  DENT - First Year Advanced",
-                "010  DENT - Second Year Advanced",
-                "011  DENT - Pediatric Dentistry Second Year",
-                "012  DENT - OT",
-                "013  PHAR - Continuing Student Program",
-                "014  ENGR - DEN Program",
-                "015  ENGR - DEN Program",
-                "016  PHYS - Special Credit Exams for Subject Credit",
-                "017  KECK - PM",
-                "018  MAIN - Session with no tuition or fees",
-                "019  KECK - PM"
-            ];
+            "001  MAIN ON-CAMPUS SESSION",
+            "002  LAW",
+            "003  KECK - MD PROGRAM",
+            "004  PHAR",
+            "005  PHAR - PSCI & MPTX",
+            "006  DENT - First Year",
+            "007  DENT - Dental Hygiene First Year",
+            "008  DENT - International First Year",
+            "009  DENT - First Year Advanced",
+            "010  DENT - Second Year Advanced",
+            "011  DENT - Pediatric Dentistry Second Year",
+            "012  DENT - OT",
+            "013  PHAR - Continuing Student Program",
+            "014  ENGR - DEN Program",
+            "015  ENGR - DEN Program",
+            "016  PHYS - Special Credit Exams for Subject Credit",
+            "017  KECK - PM",
+            "018  MAIN - Session with no tuition or fees",
+            "019  KECK - PM"
+        ];
     };  // PopulateSessionCodes()
 
     $scope.SetRates = function () {
@@ -188,49 +188,49 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     var holidays = [];
 
     var rates =
-        {       // 2017 Fall Rates
-            "20171STD": { unitRate: "u_20171STD", flatRate: "f_20171STD" },
-            "20171GB": { unitRate: "u_20171GB", flatRate: "f_20171GB" },
-            "20171GCA": { unitRate: "u_20171GCA", flatRate: "f_20171GCA" },
-            "20171GE": { unitRate: "u_20171GE", flatRate: "f_20171GE" },
-            "20171DT3": { unitRate: "u_20171DT3", flatRate: "f_20171DT3" },
-            "20171AD3": { unitRate: "u_20171AD3", flatRate: "f_20171AD3" },
-            "20171LAW": { unitRate: "u_20171LAW", flatRate: "f_20171LAW" },
-            "20171MED": { unitRate: "u_20171MED", flatRate: "f_20171MED" },
-            "20171OTH": { unitRate: "u_20171OTH", flatRate: "f_20171OTH" },
-
-            // 2017 Spring Rates
-            "20172STD": { unitRate: "u_20172STD", flatRate: "f_20172STD" },
-            "20172GB": { unitRate: "u_20172GB", flatRate: "f_20172GB" },
-            "20172GCA": { unitRate: "u_20172GCA", flatRate: "f_20172GCA" },
-            "20172GE": { unitRate: "u_20172GE", flatRate: "f_20172GE" },
-            "20172DT3": { unitRate: "u_20172DT3", flatRate: "f_20172DT3" },
-            "20172AD3": { unitRate: "u_20172AD3", flatRate: "f_20172AD3" },
-            "20172LAW": { unitRate: "u_20172LAW", flatRate: "f_20172LAW" },
-            "20172MED": { unitRate: "u_20172MED", flatRate: "f_20172MED" },
-            "20172OTH": { unitRate: "u_20172OTH", flatRate: "f_20172OTH" },
+        {       // 2017 Spring Rates
+            "20171STD": { unitRate: "24732", flatRate: "1666" },
+            "20171GB": { unitRate: "n/a", flatRate: "1710" },
+            "20171GCA": { unitRate: "n/a", flatRate: "1772" },
+            "20171GE": { unitRate: "n/a", flatRate: "1774" },
+            "20171DT3": { unitRate: "28142", flatRate: "1666" },
+            "20171AD3": { unitRate: "28445", flatRate: "1666" },
+            "20171LAW": { unitRate: "28643", flatRate: "2214" },
+            "20171MED": { unitRate: "28424", flatRate: "1666" },
+            "20171OTH": { unitRate: "", flatRate: "" },
 
             // 2017 Summer Rates
-            "20173STD": { unitRate: "u_20173STD", flatRate: "f_20173STD" },
-            "20173GB": { unitRate: "u_20173GB", flatRate: "f_20173GB" },
-            "20173GCA": { unitRate: "u_20173GCA", flatRate: "f_20173GCA" },
-            "20173GE": { unitRate: "u_20173GE", flatRate: "f_20173GE" },
-            "20173DT3": { unitRate: "u_20173DT3", flatRate: "f_20173DT3" },
-            "20173AD3": { unitRate: "u_20173AD3", flatRate: "f_20173AD3" },
-            "20173LAW": { unitRate: "u_20173LAW", flatRate: "f_20173LAW" },
-            "20173MED": { unitRate: "u_20173MED", flatRate: "f_20173MED" },
-            "20173OTH": { unitRate: "u_20173OTH", flatRate: "f_20173OTH" },
+            "20172STD": { unitRate: "25732", flatRate: "2666" },
+            "20172GB": { unitRate: "n/a", flatRate: "2710" },
+            "20172GCA": { unitRate: "n/a", flatRate: "2772" },
+            "20172GE": { unitRate: "n/a", flatRate: "2774" },
+            "20172DT3": { unitRate: "29142", flatRate: "2666" },
+            "20172AD3": { unitRate: "29445", flatRate: "2666" },
+            "20172LAW": { unitRate: "29643", flatRate: "2214" },
+            "20172MED": { unitRate: "29424", flatRate: "2666" },
+            "20172OTH": { unitRate: "", flatRate: "" },
 
-            // 2018 Fall Rates
-            "20181STD": { unitRate: "u_20181STD", flatRate: "f_20181STD" },
-            "20181GB": { unitRate: "u_20181GB", flatRate: "f_20181GB" },
-            "20181GCA": { unitRate: "u_20181GCA", flatRate: "f_20181GCA" },
-            "20181GE": { unitRate: "u_20181GE", flatRate: "f_20181GE" },
-            "20181DT3": { unitRate: "u_20181DT3", flatRate: "f_20181DT3" },
-            "20181AD3": { unitRate: "u_20181AD3", flatRate: "f_20181AD3" },
-            "20181LAW": { unitRate: "u_20181LAW", flatRate: "f_20181LAW" },
-            "20181MED": { unitRate: "u_20181MED", flatRate: "f_20181MED" },
-            "20181OTH": { unitRate: "u_20181OTH", flatRate: "f_20181OTH" }
+            // 2017 Fall Rates
+            "20173STD": { unitRate: "26732", flatRate: "3666" },
+            "20173GB": { unitRate: "n/a", flatRate: "3710" },
+            "20173GCA": { unitRate: "n/a", flatRate: "3774" },
+            "20173GE": { unitRate: "n/a", flatRate: "3774" },
+            "20173DT3": { unitRate: "30142", flatRate: "3666" },
+            "20173AD3": { unitRate: "30445", flatRate: "3666" },
+            "20173LAW": { unitRate: "30643", flatRate: "3214" },
+            "20173MED": { unitRate: "30424", flatRate: "3666" },
+            "20173OTH": { unitRate: "", flatRate: "" },
+
+            // 2018 Spring Rates
+            "20181STD": { unitRate: "27732", flatRate: "4666" },
+            "20181GB": { unitRate: "n/a", flatRate: "4710" },
+            "20181GCA": { unitRate: "n/a", flatRate: "4772" },
+            "20181GE": { unitRate: "n/a", flatRate: "4774" },
+            "20181DT3": { unitRate: "31142", flatRate: "4666" },
+            "20181AD3": { unitRate: "31445", flatRate: "4666" },
+            "20181LAW": { unitRate: "31643", flatRate: "4214" },
+            "20181MED": { unitRate: "31424", flatRate: "4666" },
+            "20181OTH": { unitRate: "", flatRate: "" }
         };
 
     function PopulateSemesterDropdown (){
@@ -249,9 +249,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
             semChoices = [
 
-                { semName: currYear + " Spring", semCode: currYear + "1" },
+                { semName: currYear + " Spring",    semCode: currYear + "1" },
                 { semName: currYear + " Summer",    semCode: currYear + "2" },
-                { semName: currYear + " Fall",      semCode: nextYear + "3" },
+                { semName: currYear + " Fall",      semCode: currYear + "3" },
                 { semName: nextYear + " Spring",    semCode: nextYear + "1" }
             ];
 
@@ -301,19 +301,19 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         $scope.campusLocs = [                                   // Populate the Campus Location dropdown.
 
-                { campusCode: "HSC", campusName: "Health Science Campus" },
-                { campusCode: "OCC", campusName: "Orange County Campus" },
-                { campusCode: "OVS", campusName: "Overseas" },
-                { campusCode: "DC", campusName: "Washington D.C." },
-                { campusCode: "SAC", campusName: "Sacramento" },
-                { campusCode: "USA", campusName: "Off-campus in U.S." },
-                { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
-                { campusCode: "CAT", campusName: "Catalina" },
-                { campusCode: "LAC", campusName: "L.A. Center" },
-                { campusCode: "SD", campusName: "San Diego" },
-                { campusCode: "ATT", campusName: "AT&T Center" },
-                { campusCode: "SKB", campusName: "No Tuition or Fees" },
-                { campusCode: "OTH", campusName: "Others" }
+            { campusCode: "HSC", campusName: "Health Science Campus" },
+            { campusCode: "OCC", campusName: "Orange County Campus" },
+            { campusCode: "OVS", campusName: "Overseas" },
+            { campusCode: "DC", campusName: "Washington D.C." },
+            { campusCode: "SAC", campusName: "Sacramento" },
+            { campusCode: "USA", campusName: "Off-campus in U.S." },
+            { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
+            { campusCode: "CAT", campusName: "Catalina" },
+            { campusCode: "LAC", campusName: "L.A. Center" },
+            { campusCode: "SD", campusName: "San Diego" },
+            { campusCode: "ATT", campusName: "AT&T Center" },
+            { campusCode: "SKB", campusName: "No Tuition or Fees" },
+            { campusCode: "OTH", campusName: "Others" }
          ];
 
         /*

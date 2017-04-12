@@ -14,6 +14,11 @@ sessionModule.config([
                 templateUrl: "scripts/app/views/SessionQueue.html",
                 controller: "sessionQueueCtrl"
             })
+            .when("/Review",
+            {
+                templateUrl: "scripts/app/views/SessionReview.html",
+                controller: "sessionReviewCtrl"
+            })
             .otherwise({ redirectTo: "/" });
 
         $locationProvider.html5Mode(true);

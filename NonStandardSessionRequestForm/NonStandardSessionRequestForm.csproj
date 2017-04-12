@@ -311,6 +311,7 @@
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionRequestCtrl.js" />
+    <Content Include="Scripts\app\controllers\sessionReviewCtrl.js" />
     <Content Include="Scripts\app\services\temp.js" />
     <Content Include="Scripts\app\SessionModule.js" />
     <Content Include="Scripts\app\views\SessionQueue.html" />
