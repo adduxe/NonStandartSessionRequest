@@ -311,11 +311,13 @@
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionRequestCtrl.js" />
+    <Content Include="Scripts\app\controllers\sessionSubmissionsCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionReviewCtrl.js" />
     <Content Include="Scripts\app\services\temp.js" />
     <Content Include="Scripts\app\SessionModule.js" />
     <Content Include="Scripts\app\views\SessionQueue.html" />
     <Content Include="Scripts\app\views\SessionRequest.html" />
+    <Content Include="Scripts\app\views\SessionSubmissions.html" />
     <Content Include="Scripts\app\views\SessionReview.html" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -14,6 +14,11 @@ sessionModule.config([
                 templateUrl: "scripts/app/views/SessionQueue.html",
                 controller: "sessionQueueCtrl"
             })
+            .when("/Submissions",
+            {
+                templateUrl: "scripts/app/views/SessionSubmissions.html",
+                controller: "sessionSubmissionsCtrl"
+            })
             .when("/Review",
             {
                 templateUrl: "scripts/app/views/SessionReview.html",

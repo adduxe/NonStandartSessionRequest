@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body ng-controller="sessionReviewCtrl" >
+    {{ secID }}
+    <div class="row" ng-init="secID = 0">
+        <div class="col-md-2 k-grid-header k-header">
+            Semester
+        </div>
+        <div class="col-md-2 k-grid-header k-header">
+            Session
+        </div>
+        <div class="col-md-2 k-grid-header k-header">
+            Session Name
+        </div>
+        <div class="col-md-2 k-grid-header k-header">
+            Requesting School
+        </div>
+        <div class="col-md-2 k-grid-header k-header">
+            Requested by
+        </div>
+        <div class="col-md-2 k-grid-header k-header">
+            Requested Date
+        </div>
+    </div>
+
+    <div class="row" ng-repeat="eachSession in sessions">
+        <a href="javascript:;" ng-mouseover="">
+        <div class="col-md-2">
+            {{ eachSession.acadTerm }}
+        </div>
+        <div class="col-md-2" >
+            <b ng-click="clickedHere(eachSession.sessionCode);">{{ eachSession.sessionCode }}</b>
+        </div>
+        <div class="col-md-2">
+            {{ eachSession.sessionName }}
+        </div>
+        <div class="col-md-2">
+            {{ eachSession.owningSchool }}
+        </div>
+        <div class="col-md-2">
+            {{ eachSession.userContact }}
+        </div>
+        <div class="col-md-2">
+            {{ eachSession.requestDate }}
+        </div>
+        </a>
+        <div class="col-md-12" ng-show="session == eachSession.sessionCode">
+            <div class="col-md-2">
+                {{ eachSession.userUSCID }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.userEmail }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.userPhone }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.owningDept }}
+            </div>
+        </div>
+        <div class="col-md-12" ng-show="session == eachSession.sessionCode" ng-repeat="eachSection in eachSession.sections">
+            <div class="col-md-2">
+                {{ eachSection.sectionNumber }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSection.unitValue }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSection.sectionTitle }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSection.instructorName }}
+            </div>
+            <div class="col-md-2">
+                <button ng-click="showSchedule(eachSection.sectionID);">Show Schedule</button>
+            </div>
+            <div class="col-md-12" ng-show="secID == eachSection.sectionID" ng-repeat="eachSched in eachSection.classSchedule">
+                <div class="col-md-2">
+                    {{ eachSched.classDay }}
+                </div>
+                <div class="col-md-2">
+                    {{ eachSched.classStartTime }}
+                </div>
+                <div class="col-md-2">
+                    {{ eachSched.classEndTime }}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
