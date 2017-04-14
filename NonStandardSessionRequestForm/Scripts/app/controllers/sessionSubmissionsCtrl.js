@@ -1,11 +1,21 @@
 ﻿sessionModule.controller("sessionSubmissionsCtrl", ["$scope", function ($scope) {
 
     $scope.ShowSections = function (sessID) {
-        $scope.session = sessID;
+        if ($scope.session == sessID) {
+            $scope.session = 0;
+        } else {
+            $scope.session = sessID;
+        }
+        return;
     }
 
     $scope.showSchedule = function (sID) {
-        $scope.secID = sID;
+        if ($scope.secID == sID) {
+            $scope.secID = 0;
+        } else {
+            $scope.secID = sID;
+        }
+        return;
     }
 
     $scope.sessions =

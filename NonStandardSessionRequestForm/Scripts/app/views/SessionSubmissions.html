@@ -66,13 +66,11 @@
         <div class="col-md-2" ng-show="session == eachSession.sessionCode">
             <button>Approve</button><button>Reject</button>
         </div>
-        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;">
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:35px;">
             <div class="col-md-1">
-                <br/>
                 &nbsp;
             </div>
             <div class="col-md-3">
-                <br/>
                 <div class="col-sm-3">
                     <b class="red">Contact:</b>
                 </div>
@@ -81,7 +79,6 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <br />
                 <div class="col-sm-3">
                     <b class="red">Email:</b>
                 </div>
@@ -90,7 +87,6 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <br />
                 <div class="col-sm-3">
                     <b class="red">Phone:</b>
                 </div>
@@ -99,8 +95,7 @@
                 </div>
             </div>
         </div>
-        <br />
-        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;">
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
             <div class="col-md-1">
                 <div class="col-sm-12">
                     &nbsp;
@@ -168,7 +163,55 @@
                 </div>
             </div>
         </div>
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
+            <div class="col-md-1">
+                &nbsp;
+            </div>
+            <div class="col-md-3">
+                <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;{{ eachSession.dateAddDropLastDay }}
+            </div>
+            <div class="col-md-3">
+                <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;{{ eachSession.dateWithdrawLastDay }}
+            </div>
+            <div class="col-md-4">
+                <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;{{ eachSession.dateGradeChangeLastDay }}
+            </div>
+        </div>
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
+            <div class="col-md-1">
+                &nbsp;
+            </div>
+            <div class="col-md-3">
+                <b class="red">Classes held on campus?</b>&nbsp;&nbsp;{{ eachSession.isClassHeldAtUPC }}
+            </div>
+            <div class="col-md-3">
+                <b class="red">Campus Location</b>&nbsp;&nbsp;{{ eachSession.upcCampusLoc }}
+            </div>
+            <div class="col-md-4">
+                <b class="red">Other Campus:</b>&nbsp;&nbsp;{{ eachSession.otherCampusLoc }}
+            </div>
+        </div>
         <br>
+        <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode" style="width:70%;" align="center">
+            <thead>
+            <tr class="red">
+                <th>Rate Type</th>
+                <th>Rate per Unit</th>
+                <th>Flat Rate</th>
+                <th>Flat Rate<br>Min. Units</th>
+                <th>Flat Rate<br>Max. Units</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="black">
+                <td>{{ eachSession.rateType }}</td>
+                <td>{{ eachSession.ratePerUnit }}</td>
+                <td>{{ eachSession.rateFlatAmount }}</td>
+                <td>{{ eachSession.rateFlatRangeMin }}</td>
+                <td>{{ eachSession.rateFlatRangeMax }}</td>
+            </tr>
+            <tbody>
+        </table>
         <div class="col-md-12" ng-show="session == eachSession.sessionCode" ng-repeat="eachSection in eachSession.sections">
             <a href="javascript:;" title="Click to view the Class Schedule" ng-click="showSchedule(eachSection.sectionID);">
                 <div class="col-md-2">
