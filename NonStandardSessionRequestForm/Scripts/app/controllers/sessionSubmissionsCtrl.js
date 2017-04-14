@@ -1,12 +1,10 @@
 ﻿sessionModule.controller("sessionSubmissionsCtrl", ["$scope", function ($scope) {
 
-    $scope.clickedHere = function (messg) {
-//        alert(messg);
-        $scope.session = messg;
+    $scope.ShowSections = function (sessID) {
+        $scope.session = sessID;
     }
 
     $scope.showSchedule = function (sID) {
-        alert(sID);
         $scope.secID = sID;
     }
 
@@ -16,13 +14,43 @@
             acadTerm: "20171",
             sessionCode: "866",
             sessionName: "PHAR - MPTX",
+            revisionNum: 2,
             owningSchool: "School of Pharmacy",
             owningDept: "Preparatory",
             userUSCID: "1234567890",
             userContact: "Dr. Kana Biss",
             userEmail: "kbiss@usc.edu",
             userPhone: "(213) 821-5988",
+            dateClassFirstDay: "01/15/2017",
+            dateClassLastDay: "03/26/2017",
+            dateAddDropLastDay: "01/30/2017",
+            dateWithdrawLastDay: "02/13/2017",
+            dateGradeChangeLastDay: "03/15/2017",
+            dateFinalsFirstDay: "03/10/2017",
+            dateFinalsLastDay: "03/12/2017",
+            dateFinalGradeFirstDay: "03/11/2017",
+            dateFinalGradeLastDay: "03/16/2017",
+            isClassHeldAtUPC: false,
+            upcCampusLoc: "Catalina",
+            otherCampusLoc: "",
+            dateSessBreakStart1: "02/15/2017",
+            dateSessBreakEnd1: "02/20/2017",
+            dateSessBreakStart2: "",
+            dateSessBreakEnd2: "",
+            rateType: "Advanced Dentistry",
+            ratePerUnit: 1666,
+            rateFlatAmount: 24650,
+            rateFlatRangeMin: 10,
+            rateFlatRangeMax: 20,
             requestDate: "01/04/2017",
+            isApprovedByFAO: true,
+            dateApprovedFAO: "01/05/2017",
+            isApprovedByRNR: false,
+            dateApprovedRNR: "01/06/2017",
+            rejectReasonFAO: "",
+            rejectReasonRNR: "Incorrect rates",
+            dateSentRejectEmailFAO: "",
+            dateSentRejectEmailRNR: "01/06/2017",
             sections: [
                 {
                     sectionID: 500,
@@ -63,7 +91,36 @@
             userUSCID: "0987654321",
             userEmail: "btube@usc.edu",
             userPhone: "(213) 821-6688",
+            dateClassFirstDay: "01/05/2017",
+            dateClassLastDay: "04/26/2017",
+            dateAddDropLastDay: "01/26/2017",
+            dateWithdrawLastDay: "02/17/2017",
+            dateEnrOptChangeLastDay: "04/03/2017",
+            dateFinalsFirstDay: "03/10/2017",
+            dateFinalsLastDay: "03/12/2017",
+            dateFinalGradeFirstDay: "03/11/2017",
+            dateFinalGradeLastDay: "03/16/2017",
+            isClassHeldAtUPC: false,
+            upcCampusLoc: "Others",
+            otherCampusLoc: "CBS Studio",
+            dateSessBreakStart1: "02/17/2017",
+            dateSessBreakEnd1: "02/21/2017",
+            dateSessBreakStart2: "",
+            dateSessBreakEnd2: "",
+            rateType: "Others",
+            ratePerUnit: 1777,
+            rateFlatAmount: 24650,
+            rateFlatRangeMin: 10,
+            rateFlatRangeMax: 20,
             requestDate: "01/03/2017",
+            isApprovedByFAO: true,
+            dateApprovedFAO: "01/05/2017",
+            isApprovedByRNR: false,
+            dateApprovedRNR: "01/06/2017",
+            rejectReasonFAO: "",
+            rejectReasonRNR: "Incorrect rates",
+            dateSentRejectEmailFAO: "",
+            dateSentRejectEmailRNR: "01/06/2017",
             sections: [{
                 sectionID: 700,
                 sectionNumber: "17842D",
@@ -77,84 +134,5 @@
                 ]       // end of classSchedules
             }]
         }];
-
-    //$scope.mainGridOptions = {
-
-    //    dataSource: {
-    //        data: $scope.submissions,
-    //        pageSize: 5,
-    //        serverPaging: true,
-    //        serverSorting: true
-    //    },
-    //    sortable: true,
-    //    pageable: true,
-    //    //dataBound: function () {
-    //    //    this.expandRow(this.tbody.find("tr.k-master-row").first());
-    //    //},
-    //    columns: [{
-    //        field: "sessionCode",
-    //        title: "Session",
-    //        width: "100px"
-    //    }, {
-    //        field: "sessionName",
-    //        title: "Session Name",
-    //        width: "180px"
-    //    }, {
-    //        field: "owningSchool",
-    //        title: "Requesting School",
-    //        width: "180px"
-    //    }, {
-    //        field: "userContact",
-    //        title: "Requested by",
-    //        width: "120px"
-    //    }, {
-    //        field: "requestDate",
-    //        title: "Requesting Date",
-    //    }]
-    //};
-
-    //$scope.sectionGridOptions = function (dataItem) {
-    //    return {
-    //        dataSource: {
-    //            data: dataItem.sections,
-    //            pageSize: 5,
-    //        },
-    //        scrollable: false,
-    //        sortable: true,
-    //        pageable: true,
-    //        columns: [
-    //            { field: "sectionNumber", title: "Section", width: "40px" },
-    //            { field: "sectionTitle", title: "Section Title", width: "160px" },
-    //            { field: "unitValue", title: "Units", width: "60px" },
-    //            { field: "instructorName", title: "Instructor Name", width: "80px" },
-    //            {   field: "classSchedule",
-    //                title: "Class Schedule",
-    //                width: "240px",
-    //                template: "<table border='1'>" +
-    //                            "<tr>" +
-    //                                "<td>#: data.sectionPrefix #</td>" +
-    //                           "</tr>" +
-    //                        "</table>"
-    //            }
-    //        ]
-    //    };
-    //};
-
-    //$scope.scheduleGridOptions = function (dataItem) {
-    //    return {
-    //        dataSource: {
-    //            data: dataItem.classSchedule,
-    //            pageSize: 5,
-    //        },
-    //        scrollable: false,
-    //        sortable: true,
-    //        pageable: true,
-    //        columns: [
-    //            { field: "classDay", title: "Class Day", width: "100px" },
-    //            { field: "classStartTime", title: "Start Time", width: "150px" },
-    //            { field: "classEndTime", title: "End Time", width: "150px" }
-    //        ]
-    //    };
-    //};
 
 }]);

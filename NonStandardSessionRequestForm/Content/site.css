@@ -264,3 +264,7 @@ a:hover, a:focus {
     color: #ffcc00;
     text-decoration: underline;
 }
+
+.k-header {
+    color: #990000;
+}

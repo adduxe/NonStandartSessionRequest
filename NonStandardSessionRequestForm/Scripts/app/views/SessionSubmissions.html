@@ -1,83 +1,155 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Review Submissions</title>
 	<meta charset="utf-8" />
+    <style>
+        .activeRow {
+            color: black;
+            font-weight: bold;
+            background-color: yellow;
+        }
+        .inactiveRow {
+            color: #990000;
+            font-weight: normal;
+            background-color: white;
+        }
+    </style>
 </head>
 <body ng-controller="sessionReviewCtrl" >
     {{ secID }}
-    <div class="row" ng-init="secID = 0">
-        <div class="col-md-2 k-grid-header k-header">
-            Semester
+    <div class="row" ng-init="secID = 0" style="color: #990000">
+        <div class="col-md-1 k-header">
+            <h4>Semester</h4>
         </div>
-        <div class="col-md-2 k-grid-header k-header">
-            Session
+        <div class="col-md-1 k-header">
+            <h4>Session</h4>
         </div>
-        <div class="col-md-2 k-grid-header k-header">
-            Session Name
+        <div class="col-md-2 k-header">
+            <h4>Session Name</h4>
         </div>
-        <div class="col-md-2 k-grid-header k-header">
-            Requesting School
+        <div class="col-md-2 k-header">
+            <h4>Requesting School</h4>
         </div>
-        <div class="col-md-2 k-grid-header k-header">
-            Requested by
+        <div class="col-md-2 k-header">
+            <h4>Requested by</h4>
         </div>
-        <div class="col-md-2 k-grid-header k-header">
-            Requested Date
+        <div class="col-md-2 k-header">
+            <h4>Requested Date</h4>
+        </div>
+        <div class="col-md-2 k-header">
+            <h4>&nbsp;</h4>
         </div>
     </div>
-
     <div class="row" ng-repeat="eachSession in sessions">
-        <a href="javascript:;" ng-mouseover="">
-        <div class="col-md-2">
-            {{ eachSession.acadTerm }}
-        </div>
-        <div class="col-md-2" >
-            <b ng-click="clickedHere(eachSession.sessionCode);">{{ eachSession.sessionCode }}</b>
-        </div>
-        <div class="col-md-2">
-            {{ eachSession.sessionName }}
-        </div>
-        <div class="col-md-2">
-            {{ eachSession.owningSchool }}
-        </div>
-        <div class="col-md-2">
-            {{ eachSession.userContact }}
-        </div>
-        <div class="col-md-2">
-            {{ eachSession.requestDate }}
-        </div>
+        <a href="javascript:;" ng-click="ShowSections(eachSession.sessionCode);" class="ng-class: session == eachSession.sessionCode ? 'activeRow' : 'inactiveRow'">
+            <div class="col-md-1">
+                {{ eachSession.acadTerm }}
+            </div>
+            <div class="col-md-1">
+                {{ eachSession.sessionCode }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.sessionName }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.owningSchool }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.userContact }}
+            </div>
+            <div class="col-md-2">
+                {{ eachSession.requestDate }}
+            </div>
         </a>
-        <div class="col-md-12" ng-show="session == eachSession.sessionCode">
-            <div class="col-md-2">
-                {{ eachSession.userUSCID }}
+        <div class="col-md-2" ng-show="session == eachSession.sessionCode">
+            <button>Approve</button><button>Reject</button>
+        </div>
+        <div class="col-md-12" ng-show="session == eachSession.sessionCode" style="color:black;">
+            <div class="col-md-3">
+                <label for="uscid" class="col-md-4">
+                    USC ID:
+                </label>
+                <div id="uscid" class="col-md-8">
+                    {{ eachSession.userUSCID }}
+                </div>
             </div>
-            <div class="col-md-2">
-                {{ eachSession.userEmail }}
+            <div class="col-md-3 form-group">
+                <label for="email" class="col-md-4">
+                       Email:
+                </label>
+                <div id="email" class="col-md-8">
+                    {{ eachSession.userEmail }}
+                </div>
             </div>
-            <div class="col-md-2">
-                {{ eachSession.userPhone }}
+            <div class="col-md-3">
+                <label for="phone" class="col-md-4">
+                    Phone:
+                </label>
+                <div id="phone" class="col-md-8">
+                    {{ eachSession.userPhone }}
+                </div>
             </div>
-            <div class="col-md-2">
-                {{ eachSession.owningDept }}
+
+            <div class="col-md-3">
+                <label for="department" class="col-md-5">
+                    Department:
+                </label>
+                <div id="department" class="col-md-7">
+                    {{ eachSession.owningDept }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" ng-show="session == eachSession.sessionCode" style="color:black;">
+            <div class="col-md-3">
+                <label for="uscid" class="col-md-4">
+                    USC ID:
+                </label>
+                <div id="uscid" class="col-md-8">
+                    {{ eachSession.userUSCID }}
+                </div>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="email" class="col-md-4">
+                    Email:
+                </label>
+                <div id="email" class="col-md-8">
+                    {{ eachSession.userEmail }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="phone" class="col-md-4">
+                    Phone:
+                </label>
+                <div id="phone" class="col-md-8">
+                    {{ eachSession.userPhone }}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="department" class="col-md-5">
+                    Department:
+                </label>
+                <div id="department" class="col-md-7">
+                    {{ eachSession.owningDept }}
+                </div>
             </div>
         </div>
         <div class="col-md-12" ng-show="session == eachSession.sessionCode" ng-repeat="eachSection in eachSession.sections">
-            <div class="col-md-2">
-                {{ eachSection.sectionNumber }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSection.unitValue }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSection.sectionTitle }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSection.instructorName }}
-            </div>
-            <div class="col-md-2">
-                <button ng-click="showSchedule(eachSection.sectionID);">Show Schedule</button>
-            </div>
+            <a href="javascript:;" title="Click to view the Class Schedule" ng-click="showSchedule(eachSection.sectionID);">
+                <div class="col-md-2">
+                    {{ eachSection.sectionNumber }}
+                </div>
+                <div class="col-md-2">
+                    {{ eachSection.unitValue }}
+                </div>
+                <div class="col-md-2">
+                    {{ eachSection.sectionTitle }}
+                </div>
+                <div class="col-md-2">
+                    {{ eachSection.instructorName }}
+                </div>
+            </a>
             <div class="col-md-12" ng-show="secID == eachSection.sectionID" ng-repeat="eachSched in eachSection.classSchedule">
                 <div class="col-md-2">
                     {{ eachSched.classDay }}
