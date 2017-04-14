@@ -192,7 +192,7 @@
             </div>
         </div>
         <br>
-        <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode" style="width:70%;" align="center">
+        <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode">
             <thead>
             <tr class="red">
                 <th>Rate Type</th>
@@ -239,6 +239,30 @@
                 </div>
             </div>
         </div>
+
+        <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode" >
+        <tr>
+            <th></th>
+            <th>Approved</th>
+            <th>Date Approved</th>
+            <th>Rejection Email</th>
+            <th>Reject Reason</th>
+        </tr>
+        <tr>
+            <th>FAO</th>
+            <td>{{ eachSession.isApprovedByFAO }}</td>
+            <td>{{ eachSession.dateApprovedFAO }}</td>
+            <td>{{ eachSession.dateSentRejectEmailFAO }}</td>
+            <td>{{ eachSession.rejectReasonFAO }}</td>
+        </tr>
+        <tr>
+            <th>RNR</th>
+            <td>{{ eachSession.isApprovedByRNR }}</td>
+            <td>{{ eachSession.dateApprovedRNR }}</td>
+            <td>{{ eachSession.dateSentRejectEmailRNR }}</td>
+            <td>{{ eachSession.rejectReasonRNR }}</td>
+        </tr>
+        </table>
     </div>
 </body>
 </html>
