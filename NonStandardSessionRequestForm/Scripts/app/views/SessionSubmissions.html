@@ -5,12 +5,12 @@
 	<meta charset="utf-8" />
     <style>
         .activeRow {
-            color: black;
+            color: red;
             font-weight: bold;
             background-color: yellow;
         }
         .inactiveRow {
-            color: #990000;
+            color: darkgray;
             font-weight: normal;
             background-color: white;
         }
@@ -29,10 +29,10 @@
             <h4>Session Name</h4>
         </div>
         <div class="col-md-2 k-header">
-            <h4>Requesting School</h4>
+            <h4>School</h4>
         </div>
         <div class="col-md-2 k-header">
-            <h4>Requested by</h4>
+            <h4>Department</h4>
         </div>
         <div class="col-md-2 k-header">
             <h4>Requested Date</h4>
@@ -42,6 +42,7 @@
         </div>
     </div>
     <div class="row" ng-repeat="eachSession in sessions">
+        <br/>
         <a href="javascript:;" ng-click="ShowSections(eachSession.sessionCode);" class="ng-class: session == eachSession.sessionCode ? 'activeRow' : 'inactiveRow'">
             <div class="col-md-1">
                 {{ eachSession.acadTerm }}
@@ -56,7 +57,7 @@
                 {{ eachSession.owningSchool }}
             </div>
             <div class="col-md-2">
-                {{ eachSession.userContact }}
+                {{ eachSession.owningDept }}
             </div>
             <div class="col-md-2">
                 {{ eachSession.requestDate }}
@@ -65,76 +66,109 @@
         <div class="col-md-2" ng-show="session == eachSession.sessionCode">
             <button>Approve</button><button>Reject</button>
         </div>
-        <div class="col-md-12" ng-show="session == eachSession.sessionCode" style="color:black;">
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;">
+            <div class="col-md-1">
+                <br/>
+                &nbsp;
+            </div>
             <div class="col-md-3">
-                <label for="uscid" class="col-md-4">
-                    USC ID:
-                </label>
-                <div id="uscid" class="col-md-8">
-                    {{ eachSession.userUSCID }}
+                <br/>
+                <div class="col-sm-3">
+                    <b class="red">Contact:</b>
+                </div>
+                <div class="col-sm-6">
+                    {{ eachSession.userContact }}
                 </div>
             </div>
-            <div class="col-md-3 form-group">
-                <label for="email" class="col-md-4">
-                       Email:
-                </label>
-                <div id="email" class="col-md-8">
+            <div class="col-md-3">
+                <br />
+                <div class="col-sm-3">
+                    <b class="red">Email:</b>
+                </div>
+                <div class="col-sm-6">
                     {{ eachSession.userEmail }}
                 </div>
             </div>
             <div class="col-md-3">
-                <label for="phone" class="col-md-4">
-                    Phone:
-                </label>
-                <div id="phone" class="col-md-8">
+                <br />
+                <div class="col-sm-3">
+                    <b class="red">Phone:</b>
+                </div>
+                <div class="col-sm-7">
                     {{ eachSession.userPhone }}
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <label for="department" class="col-md-5">
-                    Department:
-                </label>
-                <div id="department" class="col-md-7">
-                    {{ eachSession.owningDept }}
+        </div>
+        <br />
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;">
+            <div class="col-md-1">
+                <div class="col-sm-12">
+                    &nbsp;
+                </div>
+                <div class="col-sm-12">
+                    <b class="red pull-right">Start</b>
+                </div>
+                <div class="col-sm-12">
+                    <b class="red pull-right">End</b>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="col-sm-12">
+                    <b class="red">Classes</b>
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateClassFirstDay }}&nbsp;
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateClassLastDay }}&nbsp;
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="col-sm-12">
+                    <b class="red">1st Session Break</b>
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateSessBreakStart1 }}&nbsp;
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateSessBreakEnd1 }}&nbsp;
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="col-sm-12">
+                    <b class="red">2nd Session Break</b>
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateSessBreakStart2 }}&nbsp;
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateSessBreakEnd2 }}&nbsp;
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="col-sm-12">
+                    <b class="red">Finals</b>
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateFinalsFirstDay }}&nbsp;
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateFinalsLastDay }}&nbsp;
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="col-sm-12">
+                    <b class="red">Final Grades</b>
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateFinalGradeFirstDay }}
+                </div>
+                <div class="col-sm-12 borders">
+                    {{ eachSession.dateFinalGradeLastDay }}
                 </div>
             </div>
         </div>
-        <div class="col-md-12" ng-show="session == eachSession.sessionCode" style="color:black;">
-            <div class="col-md-3">
-                <label for="uscid" class="col-md-4">
-                    USC ID:
-                </label>
-                <div id="uscid" class="col-md-8">
-                    {{ eachSession.userUSCID }}
-                </div>
-            </div>
-            <div class="col-md-3 form-group">
-                <label for="email" class="col-md-4">
-                    Email:
-                </label>
-                <div id="email" class="col-md-8">
-                    {{ eachSession.userEmail }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label for="phone" class="col-md-4">
-                    Phone:
-                </label>
-                <div id="phone" class="col-md-8">
-                    {{ eachSession.userPhone }}
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <label for="department" class="col-md-5">
-                    Department:
-                </label>
-                <div id="department" class="col-md-7">
-                    {{ eachSession.owningDept }}
-                </div>
-            </div>
-        </div>
+        <br>
         <div class="col-md-12" ng-show="session == eachSession.sessionCode" ng-repeat="eachSection in eachSession.sections">
             <a href="javascript:;" title="Click to view the Class Schedule" ng-click="showSchedule(eachSection.sectionID);">
                 <div class="col-md-2">

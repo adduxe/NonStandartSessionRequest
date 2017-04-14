@@ -268,3 +268,13 @@ a:hover, a:focus {
 .k-header {
     color: #990000;
 }
+
+.red {
+    color: red;
+}
+
+.borders {
+    border: outset;
+    border-color:grey;
+    border-width: 1px;
+}
