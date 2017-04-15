@@ -10,11 +10,184 @@
 
     <kendo-grid options="mainGridOptions">
         <div k-detail-template>
-            <kendo-grid k-options="sectionGridOptions(dataItem)">
-                <div k-detail-template>
-                    <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+            <kendo-tabstrip>
+                <ul>
+                    <li class="k-state-active">Details</li>
+                    <li>Sections</li>
+                </ul>
+                <div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-md-3">
+                            <div class="col-sm-3">
+                                <b class="red">Contact:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userContact #
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-sm-3">
+                                <b class="red">Email:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userEmail #
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-3">
+                                <b class="red">Phone:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userPhone #
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-sm-3">
+                            <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= data.isClassHeldAtUPC ? 'Yes' : 'No' #
+                        </div>
+                        <div class="col-sm-3">
+                            <b class="red">Campus Location</b>&nbsp;&nbsp;#= data.upcCampusLoc #
+                        </div>
+                        <div class="col-sm-4">
+                            <b class="red">Other Campus:</b>&nbsp;&nbsp;#= data.otherCampusLoc #
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-sm-3">
+                            <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;#= data.dateAddDropLastDay #
+                        </div>
+                        <div class="col-sm-3">
+                            <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;#= data.dateWithdrawLastDay #
+                        </div>
+                        <div class="col-sm-4">
+                            <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;#= data.dateGradeChangeLastDay #
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-sm-1">
+                            <div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                <b class="red">Start</b>
+                            </div>
+                            <div>
+                                <b class="red">End</b>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div>
+                                <b class="red">Classes</b>
+                            </div>
+                            <div class="borders">
+                                #= data.dateClassFirstDay #&nbsp;
+                            </div>
+                            <div class="borders">
+                                #= data.dateClassLastDay #&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <b class="red">1st Sem Break</b>
+                            </div>
+                            <div class="borders">
+                                #= data.dateSessBreakStart1 #&nbsp;
+                            </div>
+                            <div class="borders">
+                                #= data.dateSessBreakEnd1 #&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <b class="red">2nd Sem Break</b>
+                            </div>
+                            <div class="borders">
+                                #= data.dateSessBreakStart2 #&nbsp;
+                            </div>
+                            <div class="borders">
+                                #= data.dateSessBreakEnd2 #&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div>
+                                <b class="red">Finals</b>
+                            </div>
+                            <div class="borders">
+                                #= data.dateFinalsFirstDay #&nbsp;
+                            </div>
+                            <div class="borders">
+                                #= data.dateFinalsLastDay #&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <b class="red">Final Grades</b>
+                            </div>
+                            <div class="borders">
+                                #= data.dateFinalGradeFirstDay #
+                            </div>
+                            <div class="borders">
+                                #= data.dateFinalGradeLastDay #
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="red">
+                            <th>Rate Type</th>
+                            <th>Rate per Unit</th>
+                            <th>Flat Rate</th>
+                            <th>Flat Rate Min. Units</th>
+                            <th>Flat Rate Max. Units</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="black">
+                            <td>#= data.rateType #</td>
+                            <td>#= data.ratePerUnit #</td>
+                            <td>#= data.rateFlatAmount #</td>
+                            <td>#= data.rateFlatRangeMin #</td>
+                            <td>#= data.rateFlatRangeMax #</td>
+                        </tr>
+                    <tbody>
+                    </table>
+
+                    <br/>
+
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th></th>
+                            <th>Approved</th>
+                            <th>Date Approved</th>
+                            <th>Rejection Email</th>
+                            <th>Reject Reason</th>
+                        </tr>
+                        <tr>
+                            <th>FAO</th>
+                            <td>#= data.isApprovedByFAO ? 'Yes' : 'No' #</td>
+                            <td>#= data.dateApprovedFAO #</td>
+                            <td>#= data.dateSentRejectEmailFAO #</td>
+                            <td>#= data.rejectReasonFAO #</td>
+                        </tr>
+                        <tr>
+                            <th>RNR</th>
+                            <td>#= data.isApprovedByRNR ? 'Yes' : 'No' #</td>
+                            <td>#= data.dateApprovedRNR #</td>
+                            <td>#= data.dateSentRejectEmailRNR #</td>
+                            <td>#= data.rejectReasonRNR #</td>
+                        </tr>
+                    </table>
                 </div>
-            </kendo-grid>
+                <div>
+                    <kendo-grid k-options="sectionGridOptions(dataItem)">
+                        <div k-detail-template>
+                            <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+                        </div>
+                    </kendo-grid>
+                </div>
+            </kendo-tabstrip>
         </div>
     </kendo-grid>
     <script type="text/x-kendo-template" id="template">
@@ -69,6 +242,7 @@
                     <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;#= dateGradeChangeLastDay #
                 </div>
             </div>
+
             <div class="row" style="padding-top:10px;">
                 <div class="col-sm-1">
                     <div>
@@ -137,6 +311,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row" style="padding-top:10px;align-items:center;">
                 <div class="col-sm-3">
                     &nbsp;
