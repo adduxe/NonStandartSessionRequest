@@ -19,11 +19,7 @@
     </kendo-grid>
     <script type="text/x-kendo-template" id="template">
         <div id="details-container">
-
-            <div class="row">
-                <div class="col-md-1">
-                    &nbsp;
-                </div>
+            <div class="row" style="padding-top:10px;">
                 <div class="col-md-3">
                     <div class="col-sm-3">
                         <b class="red">Contact:</b>
@@ -40,57 +36,119 @@
                         #= userEmail #
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="col-sm-3">
                         <b class="red">Phone:</b>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-6">
                         #= userPhone #
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <h5>Session:</h5>
+            <div class="row" style="padding-top:10px;">
+                <div class="col-sm-3">
+                    <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= isClassHeldAtUPC ? 'Yes' : 'No' #
                 </div>
-                <div class="col-md-8">
-                    <h4>#= sessionCode # #= sessionName #</h4>
+                <div class="col-sm-3">
+                    <b class="red">Campus Location</b>&nbsp;&nbsp;#= upcCampusLoc #
                 </div>
-                <div class="col-md-2">
-                    Requested by:
+                <div class="col-sm-4">
+                    <b class="red">Other Campus:</b>&nbsp;&nbsp;#= otherCampusLoc #
                 </div>
-                <div class="col-md-8">
-                    <h4>#= userContact #</h4>
+            </div>
+
+            <div class="row" style="padding-top:10px;">
+                <div class="col-sm-3">
+                    <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;#= dateAddDropLastDay #
                 </div>
-                <div class="col-md-2">
-                    School/College:
+                <div class="col-sm-3">
+                    <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;#= dateWithdrawLastDay #
                 </div>
-                <div class="col-md-8">
-                    <h4>#= owningSchool #</h4>
+                <div class="col-sm-4">
+                    <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;#= dateGradeChangeLastDay #
                 </div>
-                <div class="col-md-2">
-                    Department:
+            </div>
+            <div class="row" style="padding-top:10px;">
+                <div class="col-sm-1">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div class="col-sm-12">
+                        <b class="red pull-right">Start</b>
+                    </div>
+                    <div class="col-sm-12">
+                        <b class="red pull-right">End</b>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <h4>#= owningDept #</h4>
+                <div class="col-sm-1">
+                    <div>
+                        <b class="red">Classes</b>
+                    </div>
+                    <div class="borders">
+                        #= dateClassFirstDay #&nbsp;
+                    </div>
+                    <div class="borders">
+                        #= dateClassLastDay #&nbsp;
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    Request Date:
+                <div class="col-sm-1">
+                    <div>
+                        <b class="red">1st Sem Break</b>
+                    </div>
+                    <div class="borders">
+                        #= dateSessBreakStart1 #&nbsp;
+                    </div>
+                    <div class="borders">
+                        #= dateSessBreakEnd1 #&nbsp;
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <h4>#= kendo.toString(requestDate, "MM/dd/yyyy") #</h4>
+                <div class="col-sm-1">
+                    <div>
+                        <b class="red">2nd Sem Break</b>
+                    </div>
+                    <div class="borders">
+                        #= dateSessBreakStart2 #&nbsp;
+                    </div>
+                    <div class="borders">
+                        #= dateSessBreakEnd2 #&nbsp;
+                    </div>
                 </div>
-                <div class="col-lg-12">
-                    #= sections #
+                <div class="col-sm-1">
+                    <div>
+                        <b class="red">Finals</b>
+                    </div>
+                    <div class="borders">
+                        #= dateFinalsFirstDay #&nbsp;
+                    </div>
+                    <div class="borders">
+                        #= dateFinalsLastDay #&nbsp;
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <br>
+                <div class="col-sm-1">
+                    <div>
+                        <b class="red">Final Grades</b>
+                    </div>
+                    <div class="borders">
+                        #= dateFinalGradeFirstDay #
+                    </div>
+                    <div class="borders">
+                        #= dateFinalGradeLastDay #
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top:10px;align-items:center;">
+                <div class="col-sm-3">
+                    &nbsp;
+                </div>
+                <div class="col-sm-2">
                     <button class="approveRejectBtn">Approve</button>
                 </div>
-                <div class="col-md-4">
-                    <br>
+                <div class="col-sm-2">
                     <button class="approveRejectBtn">Reject</button>
+                </div>
+                <div class="col-sm-3">
+                    &nbsp;
                 </div>
             </div>
         </div>
