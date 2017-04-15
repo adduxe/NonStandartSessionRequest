@@ -97,6 +97,34 @@
         </div>
         <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
             <div class="col-md-1">
+                &nbsp;
+            </div>
+            <div class="col-md-3">
+                <b class="red">Classes held on campus?</b>&nbsp;&nbsp;{{ eachSession.isClassHeldAtUPC ? 'Yes' : 'No' }}
+            </div>
+            <div class="col-md-3">
+                <b class="red">Campus Location</b>&nbsp;&nbsp;{{ eachSession.upcCampusLoc }}
+            </div>
+            <div class="col-md-4">
+                <b class="red">Other Campus:</b>&nbsp;&nbsp;{{ eachSession.otherCampusLoc }}
+            </div>
+        </div>
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
+            <div class="col-md-1">
+                &nbsp;
+            </div>
+            <div class="col-md-3">
+                <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;{{ eachSession.dateAddDropLastDay }}
+            </div>
+            <div class="col-md-3">
+                <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;{{ eachSession.dateWithdrawLastDay }}
+            </div>
+            <div class="col-md-4">
+                <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;{{ eachSession.dateGradeChangeLastDay }}
+            </div>
+        </div>
+        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
+            <div class="col-md-1">
                 <div class="col-sm-12">
                     &nbsp;
                 </div>
@@ -163,34 +191,6 @@
                 </div>
             </div>
         </div>
-        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
-            <div class="col-md-1">
-                &nbsp;
-            </div>
-            <div class="col-md-3">
-                <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;{{ eachSession.dateAddDropLastDay }}
-            </div>
-            <div class="col-md-3">
-                <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;{{ eachSession.dateWithdrawLastDay }}
-            </div>
-            <div class="col-md-4">
-                <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;{{ eachSession.dateGradeChangeLastDay }}
-            </div>
-        </div>
-        <div class="row" ng-show="session == eachSession.sessionCode" style="color:black;padding-top:10px;">
-            <div class="col-md-1">
-                &nbsp;
-            </div>
-            <div class="col-md-3">
-                <b class="red">Classes held on campus?</b>&nbsp;&nbsp;{{ eachSession.isClassHeldAtUPC }}
-            </div>
-            <div class="col-md-3">
-                <b class="red">Campus Location</b>&nbsp;&nbsp;{{ eachSession.upcCampusLoc }}
-            </div>
-            <div class="col-md-4">
-                <b class="red">Other Campus:</b>&nbsp;&nbsp;{{ eachSession.otherCampusLoc }}
-            </div>
-        </div>
         <br>
         <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode">
             <thead>
@@ -212,7 +212,36 @@
             </tr>
             <tbody>
         </table>
-        <div class="col-md-12" ng-show="session == eachSession.sessionCode" ng-repeat="eachSection in eachSession.sections">
+
+        <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode" >
+        <tr>
+            <th></th>
+            <th>Approved</th>
+            <th>Date Approved</th>
+            <th>Rejection Email</th>
+            <th>Reject Reason</th>
+        </tr>
+        <tr>
+            <th>FAO</th>
+            <td>{{ eachSession.isApprovedByFAO ? 'Yes' : 'No' }}</td>
+            <td>{{ eachSession.dateApprovedFAO }}</td>
+            <td>{{ eachSession.dateSentRejectEmailFAO }}</td>
+            <td>{{ eachSession.rejectReasonFAO }}</td>
+        </tr>
+        <tr>
+            <th>RNR</th>
+            <td>{{ eachSession.isApprovedByRNR ? 'Yes' : 'No' }}</td>
+            <td>{{ eachSession.dateApprovedRNR }}</td>
+            <td>{{ eachSession.dateSentRejectEmailRNR }}</td>
+            <td>{{ eachSession.rejectReasonRNR }}</td>
+        </tr>
+        </table>
+        <kendo-grid options="sectionGrid({{ eachSession.sections }})" ng-show="session == eachSession.sessionCode">
+            <div k-detail-template>
+                <kendo-grid k-options="scheduleGrid(dataItem)"></kendo-grid>
+            </div>
+        </kendo-grid>
+        <div class="col-md-12" ng-show="(session == eachSession.sessionCode) && eachSession.sections" ng-repeat="eachSection in eachSession.sections">
             <a href="javascript:;" title="Click to view the Class Schedule" ng-click="showSchedule(eachSection.sectionID);">
                 <div class="col-md-2">
                     {{ eachSection.sectionNumber }}
@@ -239,30 +268,6 @@
                 </div>
             </div>
         </div>
-
-        <table class="table table-bordered table-hover" ng-show="session == eachSession.sessionCode" >
-        <tr>
-            <th></th>
-            <th>Approved</th>
-            <th>Date Approved</th>
-            <th>Rejection Email</th>
-            <th>Reject Reason</th>
-        </tr>
-        <tr>
-            <th>FAO</th>
-            <td>{{ eachSession.isApprovedByFAO }}</td>
-            <td>{{ eachSession.dateApprovedFAO }}</td>
-            <td>{{ eachSession.dateSentRejectEmailFAO }}</td>
-            <td>{{ eachSession.rejectReasonFAO }}</td>
-        </tr>
-        <tr>
-            <th>RNR</th>
-            <td>{{ eachSession.isApprovedByRNR }}</td>
-            <td>{{ eachSession.dateApprovedRNR }}</td>
-            <td>{{ eachSession.dateSentRejectEmailRNR }}</td>
-            <td>{{ eachSession.rejectReasonRNR }}</td>
-        </tr>
-        </table>
-    </div>
+    </div> <!-- of <div class="row" ng-repeat="eachSession in sessions"> -->
 </body>
 </html>

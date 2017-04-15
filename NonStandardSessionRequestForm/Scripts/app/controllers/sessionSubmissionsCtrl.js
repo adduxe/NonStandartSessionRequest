@@ -145,4 +145,23 @@
             }]
         }];
 
+    $scope.sectionGrid = function (sections) {
+
+        return{
+            dataSource: {
+                data: sections,
+                pageSize: 5
+            },
+            scrollable: false,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: "sectionNumber", title: "Section", width: "50px" },
+                { field: "sectionTitle", title: "Section Title", width: "200px" },
+                { field: "unitValue", title: "Units", width: "50px" },
+                { field: "instructorName", title: " Name", width: "150px" }
+            ]
+        };
+    };
+
 }]);

@@ -5,17 +5,95 @@
 	<meta charset="utf-8" />
 </head>
 <body ng-controller="sessionReviewCtrl">
+
+    <div id="details"></div>
+
     <kendo-grid options="mainGridOptions">
         <div k-detail-template>
-            <kendo-tabstrip>
-                    <ul>
-                        <li class="k-state-active">Sections</li>
-                    </ul>
-                    <div>
-                        <div kendo-grid k-options="sectionGridOptions(dataItem)"></div>
-                    </div>
-            <kendo-tabstrip>
+            <kendo-grid k-options="sectionGridOptions(dataItem)">
+                <div k-detail-template>
+                    <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+                </div>
+            </kendo-grid>
         </div>
     </kendo-grid>
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+
+            <div class="row">
+                <div class="col-md-1">
+                    &nbsp;
+                </div>
+                <div class="col-md-3">
+                    <div class="col-sm-3">
+                        <b class="red">Contact:</b>
+                    </div>
+                    <div class="col-sm-6">
+                        #= userContact #
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-sm-3">
+                        <b class="red">Email:</b>
+                    </div>
+                    <div class="col-sm-6">
+                        #= userEmail #
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-sm-3">
+                        <b class="red">Phone:</b>
+                    </div>
+                    <div class="col-sm-7">
+                        #= userPhone #
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Session:</h5>
+                </div>
+                <div class="col-md-8">
+                    <h4>#= sessionCode # #= sessionName #</h4>
+                </div>
+                <div class="col-md-2">
+                    Requested by:
+                </div>
+                <div class="col-md-8">
+                    <h4>#= userContact #</h4>
+                </div>
+                <div class="col-md-2">
+                    School/College:
+                </div>
+                <div class="col-md-8">
+                    <h4>#= owningSchool #</h4>
+                </div>
+                <div class="col-md-2">
+                    Department:
+                </div>
+                <div class="col-md-8">
+                    <h4>#= owningDept #</h4>
+                </div>
+                <div class="col-md-2">
+                    Request Date:
+                </div>
+                <div class="col-md-8">
+                    <h4>#= kendo.toString(requestDate, "MM/dd/yyyy") #</h4>
+                </div>
+                <div class="col-lg-12">
+                    #= sections #
+                </div>
+                <div class="col-md-4">
+                    <br>
+                    <button class="approveRejectBtn">Approve</button>
+                </div>
+                <div class="col-md-4">
+                    <br>
+                    <button class="approveRejectBtn">Reject</button>
+                </div>
+            </div>
+        </div>
+    </script>
 </body>
 </html>
