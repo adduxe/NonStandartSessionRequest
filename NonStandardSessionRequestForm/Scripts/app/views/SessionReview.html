@@ -14,6 +14,7 @@
                 <ul>
                     <li class="k-state-active">Details</li>
                     <li>Sections</li>
+                    <li>Status</li>
                 </ul>
                 <div>
                     <div class="row" style="padding-top:10px;">
@@ -153,9 +154,15 @@
                         </tr>
                     <tbody>
                     </table>
-
-                    <br/>
-
+                </div>
+                <div>
+                    <kendo-grid k-options="sectionGridOptions(dataItem)">
+                        <div k-detail-template>
+                            <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+                        </div>
+                    </kendo-grid>
+                </div>
+                <div>
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th></th>
@@ -180,18 +187,30 @@
                         </tr>
                     </table>
                 </div>
-                <div>
-                    <kendo-grid k-options="sectionGridOptions(dataItem)">
-                        <div k-detail-template>
-                            <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
-                        </div>
-                    </kendo-grid>
-                </div>
             </kendo-tabstrip>
         </div>
     </kendo-grid>
     <script type="text/x-kendo-template" id="template">
         <div id="details-container">
+            <table class="table" align="center">
+                <tr>
+                    <td colspan="2" align="center">
+                        <textarea rows="4" cols="30"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <button>Submit</button>
+                    </td>
+                    <!--<td>
+                        <button class="pull-right" ng-click="$window.close();">Cancel</button>
+                    </td>-->
+                </tr>
+            </table>
+        </div>
+    </script>
+
+<!--
             <div class="row" style="padding-top:10px;">
                 <div class="col-md-3">
                     <div class="col-sm-3">
@@ -326,7 +345,7 @@
                     &nbsp;
                 </div>
             </div>
-        </div>
-    </script>
+-->
+
 </body>
 </html>

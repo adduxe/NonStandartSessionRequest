@@ -152,26 +152,42 @@
         //    this.expandRow(this.tbody.find("tr.k-master-row").first());
         //},
         columns: [
-            { field: "acadTerm",        title: "Semester"},
-            { field: "sessionCode",     title: "Session"},
-            { field: "sessionName",     title: "Session Name"},
-            { field: "owningSchool",    title: "School"},
-            { field: "owningDept",      title: "Department"},
-            { field: "requestDate",     title: "Request Date"},
+            { field: "acadTerm",    title: "Semester",      width: "10%"},
+            { field: "sessionCode", title: "Session",       width: "10%" },
+            { field: "sessionName", title: "Session Name",  width: "20%" },
+            { field: "owningSchool", title: "School",       width: "20%" },
+            { field: "owningDept",  title: "Department",    width: "10%" },
+            { field: "requestDate", title: "Request Date",  width: "10%" },
             {
-                command: { text: "Review", click: showDetails },
-                title: "Approval"
+                command: [
+                    { text: "Approve" },
+                    { text: "Reject", click: showDetails }
+                ]
             }
         ],
         editable: "popup"
     };
 
+        // Configure the pop-up window for the details
     function showDetails(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        wnd.content(detailsTemplate(dataItem));
-        wnd.center().open();
+        //wnd.content(detailsTemplate(dataItem));
+        //wnd.center().open();
+        $scope.wnd.content(detailsTemplate(dataItem));
+        $scope.wnd.center().open();
     }
+
+    var detailsTemplate = kendo.template($("#template").html());
+
+    $scope.wnd = $("#details").kendoWindow({
+//    var wnd = $("#details").kendoWindow({
+        title: "Reason for Rejection",
+        modal: true,
+        visible: false,
+        resizable: true,
+        width: "15%"
+    }).data("kendoWindow");
 
     $scope.scheduleGridOptions = function (dataItem) {
         return {
@@ -189,17 +205,6 @@
             ]
         };
     };
-
-    // Configure the pop-up window for the details
-    var wnd = $("#details").kendoWindow({
-        title: "Session Request Details",
-        modal: true,
-        visible: false,
-        resizable: true,
-        width: "50%"
-    }).data("kendoWindow");
-
-    var detailsTemplate = kendo.template($("#template").html());
 
     $scope.sectionGridOptions = function (dataItem) {
         return {

@@ -133,18 +133,6 @@ sessionModule.controller("sessionQueueCtrl", ["$scope", function ($scope) {
         dataSource: {
 
             data: $scope.sessionRequests,
-            //schema: {
-            //    model: {
-            //        fields: {
-            //            sessionCode: { type: "string" },
-            //            sessionName: { type: "string" },
-            //            requestingSchool: { type: "string" },
-            //            requestedBy: { type: "string" },
-            //            requestDate: { type: "string" }
-            //        } // fields
-
-            //    }   // model
-            //},  // schema
             pageSize: 5,
             //    serverPaging: true,
             //    serverSorting: true
