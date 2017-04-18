@@ -161,11 +161,23 @@
             {
                 command: [
                     { text: "Approve" },
-                    { text: "Reject", click: showDetails }
+                    { text: "Reject", click: showPopup }
+//                    { text: "Reject", click: showDetails }
                 ]
             }
         ],
         editable: "popup"
+    };
+
+    $scope.notifOptions = {
+        templates: [{
+            type: "ngTemplate",
+            template: $("#rejectPopup").html()
+        }]
+    };
+
+    function showPopup() {
+        $scope.notif.show({kValue: "Sonny"}, "ngTemplate");
     };
 
         // Configure the pop-up window for the details

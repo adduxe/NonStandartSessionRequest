@@ -190,6 +190,24 @@
             </kendo-tabstrip>
         </div>
     </kendo-grid>
+
+    <script id="rejectPopup" type="text/x-kendo-template">
+        <table class="table" align="center">
+            <tr>
+                <td colspan="2" align="center">
+                    <textarea rows="4" cols="30"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <button>Submit</button>
+                </td>
+            </tr>
+        </table>
+   </script>
+
+    <span kendo-notification="notif" k-options="notifOptions"></span>
+
     <script type="text/x-kendo-template" id="template">
         <div id="details-container">
             <table class="table" align="center">
@@ -202,150 +220,10 @@
                     <td align="center">
                         <button>Submit</button>
                     </td>
-                    <!--<td>
-                        <button class="pull-right" ng-click="$window.close();">Cancel</button>
-                    </td>-->
                 </tr>
             </table>
         </div>
     </script>
-
-<!--
-            <div class="row" style="padding-top:10px;">
-                <div class="col-md-3">
-                    <div class="col-sm-3">
-                        <b class="red">Contact:</b>
-                    </div>
-                    <div class="col-sm-6">
-                        #= userContact #
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="col-sm-3">
-                        <b class="red">Email:</b>
-                    </div>
-                    <div class="col-sm-6">
-                        #= userEmail #
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="col-sm-3">
-                        <b class="red">Phone:</b>
-                    </div>
-                    <div class="col-sm-6">
-                        #= userPhone #
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:10px;">
-                <div class="col-sm-3">
-                    <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= isClassHeldAtUPC ? 'Yes' : 'No' #
-                </div>
-                <div class="col-sm-3">
-                    <b class="red">Campus Location</b>&nbsp;&nbsp;#= upcCampusLoc #
-                </div>
-                <div class="col-sm-4">
-                    <b class="red">Other Campus:</b>&nbsp;&nbsp;#= otherCampusLoc #
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:10px;">
-                <div class="col-sm-3">
-                    <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;#= dateAddDropLastDay #
-                </div>
-                <div class="col-sm-3">
-                    <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;#= dateWithdrawLastDay #
-                </div>
-                <div class="col-sm-4">
-                    <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;#= dateGradeChangeLastDay #
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:10px;">
-                <div class="col-sm-1">
-                    <div>
-                        &nbsp;
-                    </div>
-                    <div class="col-sm-12">
-                        <b class="red pull-right">Start</b>
-                    </div>
-                    <div class="col-sm-12">
-                        <b class="red pull-right">End</b>
-                    </div>
-                </div>
-                <div class="col-sm-1">
-                    <div>
-                        <b class="red">Classes</b>
-                    </div>
-                    <div class="borders">
-                        #= dateClassFirstDay #&nbsp;
-                    </div>
-                    <div class="borders">
-                        #= dateClassLastDay #&nbsp;
-                    </div>
-                </div>
-                <div class="col-sm-1">
-                    <div>
-                        <b class="red">1st Sem Break</b>
-                    </div>
-                    <div class="borders">
-                        #= dateSessBreakStart1 #&nbsp;
-                    </div>
-                    <div class="borders">
-                        #= dateSessBreakEnd1 #&nbsp;
-                    </div>
-                </div>
-                <div class="col-sm-1">
-                    <div>
-                        <b class="red">2nd Sem Break</b>
-                    </div>
-                    <div class="borders">
-                        #= dateSessBreakStart2 #&nbsp;
-                    </div>
-                    <div class="borders">
-                        #= dateSessBreakEnd2 #&nbsp;
-                    </div>
-                </div>
-                <div class="col-sm-1">
-                    <div>
-                        <b class="red">Finals</b>
-                    </div>
-                    <div class="borders">
-                        #= dateFinalsFirstDay #&nbsp;
-                    </div>
-                    <div class="borders">
-                        #= dateFinalsLastDay #&nbsp;
-                    </div>
-                </div>
-                <div class="col-sm-1">
-                    <div>
-                        <b class="red">Final Grades</b>
-                    </div>
-                    <div class="borders">
-                        #= dateFinalGradeFirstDay #
-                    </div>
-                    <div class="borders">
-                        #= dateFinalGradeLastDay #
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:10px;align-items:center;">
-                <div class="col-sm-3">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2">
-                    <button class="approveRejectBtn">Approve</button>
-                </div>
-                <div class="col-sm-2">
-                    <button class="approveRejectBtn">Reject</button>
-                </div>
-                <div class="col-sm-3">
-                    &nbsp;
-                </div>
-            </div>
--->
 
 </body>
 </html>

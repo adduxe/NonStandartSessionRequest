@@ -7,10 +7,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         sessionSections: []
     };
 
-    $scope.SessionCode = function () {
-//        alert($scope.sessionCode);
-    }
-
             // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.AddSemesterBreaks = function () {
@@ -150,7 +146,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         return;
     }   // AddSched()
 
-    $scope.PopulateSessionCodes = function () {
+    function PopulateSessionCodes() {
 
         $scope.sessionCodes = [
             "001  MAIN ON-CAMPUS SESSION",
@@ -282,13 +278,13 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $(document).ready(function () {
 
-        $scope.PopulateSessionCodes();
+        PopulateSessionCodes();             // for the Session Code Autocomplete feature
 
-        PopulateSemesterDropdown();
+        PopulateSemesterDropdown();         // calculates the semester options for the user
 
-        $scope.rateTypes = [                                    // Populate the Rate Type dropdown
+        $scope.rateTypes = [                // Populate the Rate Type dropdown
 
-	        { rateCode: "STD", rateName: "Standard" },
+	        {rateCode: "STD", rateName: "Standard" },
 	        {rateCode: "GB",  rateName:"Graduate Business"},
 	        {rateCode: "GCA", rateName:"Graduate Cinematic Arts"},
 	        {rateCode: "GE",  rateName:"Graduate Engineering"},
