@@ -6,8 +6,6 @@
 </head>
 <body ng-controller="sessionReviewCtrl">
 
-    <div id="details"></div>
-
     <kendo-grid options="mainGridOptions">
         <div k-detail-template>
             <kendo-tabstrip>
@@ -184,46 +182,21 @@
                             <td>#= data.dateApprovedRNR #</td>
                             <td>#= data.dateSentRejectEmailRNR #</td>
                             <td>#= data.rejectReasonRNR #</td>
+                            
                         </tr>
                     </table>
                 </div>
             </kendo-tabstrip>
         </div>
     </kendo-grid>
+   
 
-    <script id="rejectPopup" type="text/x-kendo-template">
-        <table class="table" align="center">
-            <tr>
-                <td colspan="2" align="center">
-                    <textarea rows="4" cols="30"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <button>Submit</button>
-                </td>
-            </tr>
-        </table>
-   </script>
-
-    <span kendo-notification="notif" k-options="notifOptions"></span>
-
-    <script type="text/x-kendo-template" id="template">
-        <div id="details-container">
-            <table class="table" align="center">
-                <tr>
-                    <td colspan="2" align="center">
-                        <textarea rows="4" cols="30"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button>Submit</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </script>
-
+    <div kendo-dialog="dialog" k-title="'Rejection Reason'" k-width="250" k-height="150" k-visible='false' k-actions="actions" k-modal="false">
+        <p><textarea></textarea><p>
+    </div>
+    
+    <div kendo-dialog="approveDialog" k-width="250" k-height="150" k-visible='false' k-modal="false">
+        Approved!
+    </div>
 </body>
 </html>

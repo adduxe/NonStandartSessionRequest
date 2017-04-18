@@ -1,5 +1,16 @@
 ﻿sessionModule.controller("sessionReviewCtrl", ["$scope", function ($scope) {
 
+    $scope.dialogVisible = false;
+    $scope.actions = [{ text: 'Submit', primary: true, action: onSubmit }];
+
+    function onSubmit(e) {
+        alert("On Submit");
+    }
+
+    function onApprove() {
+        alert("Approved");
+    }
+
     $scope.submissions =
         [{
             requestID: 001,
@@ -160,46 +171,14 @@
             { field: "requestDate", title: "Request Date",  width: "10%" },
             {
                 command: [
-                    { text: "Approve" },
-                    { text: "Reject", click: showPopup }
-//                    { text: "Reject", click: showDetails }
+                    { template: "<button type='button' ng-click='approveDialog.open()'>Approve</button>" },
+                    { template: "<button type='button' ng-click='dialog.open()'>Reject</button>" }
                 ]
             }
         ],
         editable: "popup"
     };
 
-    $scope.notifOptions = {
-        templates: [{
-            type: "ngTemplate",
-            template: $("#rejectPopup").html()
-        }]
-    };
-
-    function showPopup() {
-        $scope.notif.show({kValue: "Sonny"}, "ngTemplate");
-    };
-
-        // Configure the pop-up window for the details
-    function showDetails(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        //wnd.content(detailsTemplate(dataItem));
-        //wnd.center().open();
-        $scope.wnd.content(detailsTemplate(dataItem));
-        $scope.wnd.center().open();
-    }
-
-    var detailsTemplate = kendo.template($("#template").html());
-
-    $scope.wnd = $("#details").kendoWindow({
-//    var wnd = $("#details").kendoWindow({
-        title: "Reason for Rejection",
-        modal: true,
-        visible: false,
-        resizable: true,
-        width: "15%"
-    }).data("kendoWindow");
 
     $scope.scheduleGridOptions = function (dataItem) {
         return {
