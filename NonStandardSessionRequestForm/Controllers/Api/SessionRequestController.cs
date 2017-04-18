@@ -20,24 +20,44 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new DataApiClient(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
                 {
                     client.SessionRequest.PostBysessionDTO(session);
+                    return Ok();
                 }
             }
             catch (HttpOperationException apiEx)
             {
                 Log.Logger.Error("Failed to POST session! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
                 Log.Logger.Error("Failed to POST session! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
             }
-
-            return Ok();
         }
 
         [Route("sessionrequests/{requestId}")]
         public IHttpActionResult Get(int requestId)
         {
-            return Ok();
+            object sessionRequest;
+            try
+            {
+                using (var client = new DataApiClient(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
+                {
+                    sessionRequest = client.SessionRequest.GetByrequestId(requestId);
+                }
+
+                return Ok(sessionRequest);
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to POST session! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to POST session! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
         }
     }
 }
