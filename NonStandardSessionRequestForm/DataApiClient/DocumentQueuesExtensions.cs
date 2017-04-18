@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -23,9 +23,9 @@ namespace DataApi
             /// <param name='queueStatus'>
             /// Possible values include: 'Sent', 'NotSent'
             /// </param>
-            public static object GetPdfQueueByqueueStatus(this IDocumentQueues operations, string queueStatus = default(string))
+            public static object GetPdfQueueByQueueStatus(this IDocumentQueues operations, string queueStatus = default(string))
             {
-                return Task.Factory.StartNew(s => ((IDocumentQueues)s).GetPdfQueueByqueueStatusAsync(queueStatus), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDocumentQueues)s).GetPdfQueueByQueueStatusAsync(queueStatus), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -37,9 +37,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetPdfQueueByqueueStatusAsync(this IDocumentQueues operations, string queueStatus = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetPdfQueueByQueueStatusAsync(this IDocumentQueues operations, string queueStatus = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPdfQueueByqueueStatusWithHttpMessagesAsync(queueStatus, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPdfQueueByQueueStatusWithHttpMessagesAsync(queueStatus, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

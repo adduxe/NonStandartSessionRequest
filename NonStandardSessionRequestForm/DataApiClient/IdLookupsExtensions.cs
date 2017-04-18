@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -44,9 +44,9 @@ namespace DataApi
             /// </param>
             /// <param name='idLookup'>
             /// </param>
-            public static object PostByidLookup(this IIdLookups operations, IdLookup idLookup)
+            public static object PostByIdLookup(this IIdLookups operations, IdLookup idLookup)
             {
-                return Task.Factory.StartNew(s => ((IIdLookups)s).PostByidLookupAsync(idLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIdLookups)s).PostByIdLookupAsync(idLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByidLookupAsync(this IIdLookups operations, IdLookup idLookup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByIdLookupAsync(this IIdLookups operations, IdLookup idLookup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByidLookupWithHttpMessagesAsync(idLookup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByIdLookupWithHttpMessagesAsync(idLookup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,9 +70,9 @@ namespace DataApi
             /// </param>
             /// <param name='casID'>
             /// </param>
-            public static object GetBycasID(this IIdLookups operations, string casID)
+            public static object GetByCasID(this IIdLookups operations, string casID)
             {
-                return Task.Factory.StartNew(s => ((IIdLookups)s).GetBycasIDAsync(casID), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIdLookups)s).GetByCasIDAsync(casID), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -83,9 +83,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetBycasIDAsync(this IIdLookups operations, string casID, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByCasIDAsync(this IIdLookups operations, string casID, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBycasIDWithHttpMessagesAsync(casID, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByCasIDWithHttpMessagesAsync(casID, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -98,9 +98,9 @@ namespace DataApi
             /// </param>
             /// <param name='idLookup'>
             /// </param>
-            public static object PutBycasIDidLookup(this IIdLookups operations, string casID, IdLookup idLookup)
+            public static object PutByCasIDIdLookup(this IIdLookups operations, string casID, IdLookup idLookup)
             {
-                return Task.Factory.StartNew(s => ((IIdLookups)s).PutBycasIDidLookupAsync(casID, idLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIdLookups)s).PutByCasIDIdLookupAsync(casID, idLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -113,9 +113,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutBycasIDidLookupAsync(this IIdLookups operations, string casID, IdLookup idLookup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutByCasIDIdLookupAsync(this IIdLookups operations, string casID, IdLookup idLookup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutBycasIDidLookupWithHttpMessagesAsync(casID, idLookup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutByCasIDIdLookupWithHttpMessagesAsync(casID, idLookup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

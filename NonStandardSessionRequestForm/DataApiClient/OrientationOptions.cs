@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// OrientationOptions operations.
     /// </summary>
-    public partial class OrientationOptions : IServiceOperations<DataApiClient>, IOrientationOptions
+    public partial class OrientationOptions : IServiceOperations<DataAPI>, IOrientationOptions
     {
         /// <summary>
         /// Initializes a new instance of the OrientationOptions class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public OrientationOptions(DataApiClient client)
+        public OrientationOptions(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -159,7 +159,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetBycodeWithHttpMessagesAsync(string code, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByCodeWithHttpMessagesAsync(string code, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (code == null)
             {
@@ -174,7 +174,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("code", code);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetBycode", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByCode", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +27,6 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostByuscIdpaymentWithHttpMessagesAsync(string uscId, Payment payment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostByUscIdPaymentWithHttpMessagesAsync(string uscId, Payment payment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

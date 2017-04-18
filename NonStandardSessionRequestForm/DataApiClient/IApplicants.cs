@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetByuscIdapplicationStatusWithHttpMessagesAsync(string uscId, string applicationStatus = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetByUscIdApplicationStatusWithHttpMessagesAsync(string uscId, string applicationStatus = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='uscId'>
         /// </param>
         /// <param name='applicant'>
@@ -40,6 +40,6 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PatchByuscIdapplicantWithHttpMessagesAsync(string uscId, Applicant applicant, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PatchByUscIdApplicantWithHttpMessagesAsync(string uscId, Applicant applicant, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

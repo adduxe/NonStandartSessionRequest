@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostByceebLookupWithHttpMessagesAsync(CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostByCeebLookupWithHttpMessagesAsync(CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='ceeb'>
         /// </param>
         /// <param name='customHeaders'>
@@ -41,7 +41,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetCeebByUscCeebByceebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetCeebByUscCeebByCeebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='ceeb'>
         /// </param>
         /// <param name='customHeaders'>
@@ -50,7 +50,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetCeebByLiaisonCeebByceebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetCeebByLiaisonCeebByCeebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='ceeblookups'>
         /// </param>
         /// <param name='customHeaders'>
@@ -59,7 +59,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostByceeblookupsWithHttpMessagesAsync(IList<CeebLookup> ceeblookups, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostByCeeblookupsWithHttpMessagesAsync(IList<CeebLookup> ceeblookups, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='liaisonCeeb'>
         /// </param>
         /// <param name='ceebLookup'>
@@ -70,7 +70,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PutByliaisonCeebceebLookupWithHttpMessagesAsync(string liaisonCeeb, CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PutByLiaisonCeebCeebLookupWithHttpMessagesAsync(string liaisonCeeb, CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='liaisonCeeb'>
         /// </param>
         /// <param name='customHeaders'>
@@ -79,6 +79,6 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> DeleteByliaisonCeebWithHttpMessagesAsync(string liaisonCeeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> DeleteByLiaisonCeebWithHttpMessagesAsync(string liaisonCeeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -44,9 +44,9 @@ namespace DataApi
             /// </param>
             /// <param name='name'>
             /// </param>
-            public static object GetByname(this IControlRecords operations, string name)
+            public static object GetByName(this IControlRecords operations, string name)
             {
-                return Task.Factory.StartNew(s => ((IControlRecords)s).GetBynameAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IControlRecords)s).GetByNameAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetBynameAsync(this IControlRecords operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByNameAsync(this IControlRecords operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBynameWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByNameWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

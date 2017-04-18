@@ -317,7 +317,7 @@
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-Bold.ttf" />
-    <None Include="Properties\PublishProfiles\NonStandardSessionRequest.pubxml" />
+    <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
@@ -372,7 +372,7 @@
     <Compile Include="DataApiClient\CeebLookupsExtensions.cs" />
     <Compile Include="DataApiClient\ControlRecords.cs" />
     <Compile Include="DataApiClient\ControlRecordsExtensions.cs" />
-    <Compile Include="DataApiClient\DataApiClient.cs" />
+    <Compile Include="DataApiClient\DataAPI.cs" />
     <Compile Include="DataApiClient\DocumentQueues.cs" />
     <Compile Include="DataApiClient\DocumentQueuesExtensions.cs" />
     <Compile Include="DataApiClient\DocumentTypes.cs" />
@@ -389,7 +389,7 @@
     <Compile Include="DataApiClient\IApplications.cs" />
     <Compile Include="DataApiClient\ICeebLookups.cs" />
     <Compile Include="DataApiClient\IControlRecords.cs" />
-    <Compile Include="DataApiClient\IDataAPIClient.cs" />
+    <Compile Include="DataApiClient\IDataAPI.cs" />
     <Compile Include="DataApiClient\IdLookups.cs" />
     <Compile Include="DataApiClient\IdLookupsExtensions.cs" />
     <Compile Include="DataApiClient\IDocumentQueues.cs" />

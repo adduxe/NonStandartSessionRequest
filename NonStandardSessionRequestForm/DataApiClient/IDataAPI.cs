@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace DataApi
 
     /// <summary>
     /// </summary>
-    public partial interface IDataAPIClient : IDisposable
+    public partial interface IDataAPI : IDisposable
     {
         /// <summary>
         /// The base URI of the service.

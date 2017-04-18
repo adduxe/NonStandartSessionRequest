@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -22,9 +22,9 @@ namespace DataApi
             /// </param>
             /// <param name='requestId'>
             /// </param>
-            public static object GetByrequestId(this ISessionRequest operations, int requestId)
+            public static object GetByRequestId(this ISessionRequest operations, int requestId)
             {
-                return Task.Factory.StartNew(s => ((ISessionRequest)s).GetByrequestIdAsync(requestId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISessionRequest)s).GetByRequestIdAsync(requestId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -35,9 +35,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByrequestIdAsync(this ISessionRequest operations, int requestId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByRequestIdAsync(this ISessionRequest operations, int requestId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByrequestIdWithHttpMessagesAsync(requestId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByRequestIdWithHttpMessagesAsync(requestId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -48,9 +48,9 @@ namespace DataApi
             /// </param>
             /// <param name='sessionDTO'>
             /// </param>
-            public static object PostBysessionDTO(this ISessionRequest operations, Session sessionDTO)
+            public static object PostBySessionDTO(this ISessionRequest operations, Session sessionDTO)
             {
-                return Task.Factory.StartNew(s => ((ISessionRequest)s).PostBysessionDTOAsync(sessionDTO), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISessionRequest)s).PostBySessionDTOAsync(sessionDTO), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -61,9 +61,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostBysessionDTOAsync(this ISessionRequest operations, Session sessionDTO, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostBySessionDTOAsync(this ISessionRequest operations, Session sessionDTO, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostBysessionDTOWithHttpMessagesAsync(sessionDTO, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostBySessionDTOWithHttpMessagesAsync(sessionDTO, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

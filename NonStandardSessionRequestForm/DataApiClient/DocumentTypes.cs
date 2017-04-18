@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// DocumentTypes operations.
     /// </summary>
-    public partial class DocumentTypes : IServiceOperations<DataApiClient>, IDocumentTypes
+    public partial class DocumentTypes : IServiceOperations<DataAPI>, IDocumentTypes
     {
         /// <summary>
         /// Initializes a new instance of the DocumentTypes class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public DocumentTypes(DataApiClient client)
+        public DocumentTypes(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -159,7 +159,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByLiaisonDocTypeBydocTypeWithHttpMessagesAsync(string docType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByLiaisonDocTypeByDocTypeWithHttpMessagesAsync(string docType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (docType == null)
             {
@@ -174,7 +174,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("docType", docType);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByLiaisonDocTypeBydocType", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByLiaisonDocTypeByDocType", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -271,7 +271,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByDexFlowDocTypeBydocTypeWithHttpMessagesAsync(string docType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByDexFlowDocTypeByDocTypeWithHttpMessagesAsync(string docType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (docType == null)
             {
@@ -286,7 +286,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("docType", docType);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByDexFlowDocTypeBydocType", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByDexFlowDocTypeByDocType", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

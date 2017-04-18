@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -22,9 +22,9 @@ namespace DataApi
             /// </param>
             /// <param name='uscId'>
             /// </param>
-            public static object GetByuscId(this IUsers operations, string uscId)
+            public static object GetByUscId(this IUsers operations, string uscId)
             {
-                return Task.Factory.StartNew(s => ((IUsers)s).GetByuscIdAsync(uscId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUsers)s).GetByUscIdAsync(uscId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -35,9 +35,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByuscIdAsync(this IUsers operations, string uscId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByUscIdAsync(this IUsers operations, string uscId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByuscIdWithHttpMessagesAsync(uscId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByUscIdWithHttpMessagesAsync(uscId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -50,9 +50,9 @@ namespace DataApi
             /// </param>
             /// <param name='user'>
             /// </param>
-            public static object PutByuscIduser(this IUsers operations, string uscId, FaoUser user)
+            public static object PutByUscIdUser(this IUsers operations, string uscId, FaoUser user)
             {
-                return Task.Factory.StartNew(s => ((IUsers)s).PutByuscIduserAsync(uscId, user), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUsers)s).PutByUscIdUserAsync(uscId, user), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -65,9 +65,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutByuscIduserAsync(this IUsers operations, string uscId, FaoUser user, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutByUscIdUserAsync(this IUsers operations, string uscId, FaoUser user, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutByuscIduserWithHttpMessagesAsync(uscId, user, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutByUscIdUserWithHttpMessagesAsync(uscId, user, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,9 +78,9 @@ namespace DataApi
             /// </param>
             /// <param name='uscId'>
             /// </param>
-            public static object DeleteByuscId(this IUsers operations, string uscId)
+            public static object DeleteByUscId(this IUsers operations, string uscId)
             {
-                return Task.Factory.StartNew(s => ((IUsers)s).DeleteByuscIdAsync(uscId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUsers)s).DeleteByUscIdAsync(uscId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -91,9 +91,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteByuscIdAsync(this IUsers operations, string uscId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteByUscIdAsync(this IUsers operations, string uscId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteByuscIdWithHttpMessagesAsync(uscId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteByUscIdWithHttpMessagesAsync(uscId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -106,9 +106,9 @@ namespace DataApi
             /// </param>
             /// <param name='user'>
             /// </param>
-            public static object PatchByuscIduser(this IUsers operations, string uscId, FaoUser user)
+            public static object PatchByUscIdUser(this IUsers operations, string uscId, FaoUser user)
             {
-                return Task.Factory.StartNew(s => ((IUsers)s).PatchByuscIduserAsync(uscId, user), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUsers)s).PatchByUscIdUserAsync(uscId, user), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -121,9 +121,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PatchByuscIduserAsync(this IUsers operations, string uscId, FaoUser user, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PatchByUscIdUserAsync(this IUsers operations, string uscId, FaoUser user, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchByuscIduserWithHttpMessagesAsync(uscId, user, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchByUscIdUserWithHttpMessagesAsync(uscId, user, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -156,9 +156,9 @@ namespace DataApi
             /// </param>
             /// <param name='user'>
             /// </param>
-            public static object PostByuser(this IUsers operations, FaoUser user)
+            public static object PostByUser(this IUsers operations, FaoUser user)
             {
-                return Task.Factory.StartNew(s => ((IUsers)s).PostByuserAsync(user), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUsers)s).PostByUserAsync(user), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -169,9 +169,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByuserAsync(this IUsers operations, FaoUser user, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByUserAsync(this IUsers operations, FaoUser user, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByuserWithHttpMessagesAsync(user, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByUserWithHttpMessagesAsync(user, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

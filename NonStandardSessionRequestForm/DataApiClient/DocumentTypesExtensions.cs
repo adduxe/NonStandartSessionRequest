@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -44,9 +44,9 @@ namespace DataApi
             /// </param>
             /// <param name='docType'>
             /// </param>
-            public static object GetByLiaisonDocTypeBydocType(this IDocumentTypes operations, string docType)
+            public static object GetByLiaisonDocTypeByDocType(this IDocumentTypes operations, string docType)
             {
-                return Task.Factory.StartNew(s => ((IDocumentTypes)s).GetByLiaisonDocTypeBydocTypeAsync(docType), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDocumentTypes)s).GetByLiaisonDocTypeByDocTypeAsync(docType), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByLiaisonDocTypeBydocTypeAsync(this IDocumentTypes operations, string docType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByLiaisonDocTypeByDocTypeAsync(this IDocumentTypes operations, string docType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByLiaisonDocTypeBydocTypeWithHttpMessagesAsync(docType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByLiaisonDocTypeByDocTypeWithHttpMessagesAsync(docType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,9 +70,9 @@ namespace DataApi
             /// </param>
             /// <param name='docType'>
             /// </param>
-            public static object GetByDexFlowDocTypeBydocType(this IDocumentTypes operations, string docType)
+            public static object GetByDexFlowDocTypeByDocType(this IDocumentTypes operations, string docType)
             {
-                return Task.Factory.StartNew(s => ((IDocumentTypes)s).GetByDexFlowDocTypeBydocTypeAsync(docType), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDocumentTypes)s).GetByDexFlowDocTypeByDocTypeAsync(docType), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -83,9 +83,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByDexFlowDocTypeBydocTypeAsync(this IDocumentTypes operations, string docType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByDexFlowDocTypeByDocTypeAsync(this IDocumentTypes operations, string docType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByDexFlowDocTypeBydocTypeWithHttpMessagesAsync(docType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByDexFlowDocTypeByDocTypeWithHttpMessagesAsync(docType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

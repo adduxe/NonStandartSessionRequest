@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetBycasIDWithHttpMessagesAsync(string casID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetByCasIDWithHttpMessagesAsync(string casID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='casID'>
         /// </param>
         /// <param name='dexFlowDocumentType'>
@@ -40,7 +40,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetBycasIDdexFlowDocumentTypecycleNamecollegeSequenceIdWithHttpMessagesAsync(string casID, string dexFlowDocumentType, string cycleName, string collegeSequenceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetByCasIDDexFlowDocumentTypeCycleNameCollegeSequenceIdWithHttpMessagesAsync(string casID, string dexFlowDocumentType, string cycleName, string collegeSequenceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='casID'>
         /// </param>
         /// <param name='dexFlowDocumentType'>
@@ -55,7 +55,7 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PutBycasIDdexFlowDocumentTypecycleNamepdfInfoWithHttpMessagesAsync(string casID, string dexFlowDocumentType, string cycleName, PdfInfo pdfInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PutByCasIDDexFlowDocumentTypeCycleNamePdfInfoWithHttpMessagesAsync(string casID, string dexFlowDocumentType, string cycleName, PdfInfo pdfInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='pdfInfo'>
         /// </param>
         /// <param name='customHeaders'>
@@ -64,6 +64,6 @@ namespace DataApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostBypdfInfoWithHttpMessagesAsync(PdfInfo pdfInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostByPdfInfoWithHttpMessagesAsync(PdfInfo pdfInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -44,9 +44,9 @@ namespace DataApi
             /// </param>
             /// <param name='code'>
             /// </param>
-            public static object GetBycode(this IHousingOptions operations, string code)
+            public static object GetByCode(this IHousingOptions operations, string code)
             {
-                return Task.Factory.StartNew(s => ((IHousingOptions)s).GetBycodeAsync(code), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHousingOptions)s).GetByCodeAsync(code), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetBycodeAsync(this IHousingOptions operations, string code, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByCodeAsync(this IHousingOptions operations, string code, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBycodeWithHttpMessagesAsync(code, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByCodeWithHttpMessagesAsync(code, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -44,9 +44,9 @@ namespace DataApi
             /// </param>
             /// <param name='applicantUscId'>
             /// </param>
-            public static object GetByapplicantUscId(this IParents operations, string applicantUscId)
+            public static object GetByApplicantUscId(this IParents operations, string applicantUscId)
             {
-                return Task.Factory.StartNew(s => ((IParents)s).GetByapplicantUscIdAsync(applicantUscId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IParents)s).GetByApplicantUscIdAsync(applicantUscId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByapplicantUscIdAsync(this IParents operations, string applicantUscId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByApplicantUscIdAsync(this IParents operations, string applicantUscId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByapplicantUscIdWithHttpMessagesAsync(applicantUscId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByApplicantUscIdWithHttpMessagesAsync(applicantUscId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -72,9 +72,9 @@ namespace DataApi
             /// </param>
             /// <param name='parent'>
             /// </param>
-            public static object PostByapplicantUscIdparent(this IParents operations, string applicantUscId, Parent parent)
+            public static object PostByApplicantUscIdParent(this IParents operations, string applicantUscId, Parent parent)
             {
-                return Task.Factory.StartNew(s => ((IParents)s).PostByapplicantUscIdparentAsync(applicantUscId, parent), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IParents)s).PostByApplicantUscIdParentAsync(applicantUscId, parent), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -87,9 +87,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByapplicantUscIdparentAsync(this IParents operations, string applicantUscId, Parent parent, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByApplicantUscIdParentAsync(this IParents operations, string applicantUscId, Parent parent, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByapplicantUscIdparentWithHttpMessagesAsync(applicantUscId, parent, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByApplicantUscIdParentWithHttpMessagesAsync(applicantUscId, parent, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -100,9 +100,9 @@ namespace DataApi
             /// </param>
             /// <param name='parentId'>
             /// </param>
-            public static object GetByparentId(this IParents operations, int parentId)
+            public static object GetByParentId(this IParents operations, int parentId)
             {
-                return Task.Factory.StartNew(s => ((IParents)s).GetByparentIdAsync(parentId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IParents)s).GetByParentIdAsync(parentId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -113,9 +113,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByparentIdAsync(this IParents operations, int parentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByParentIdAsync(this IParents operations, int parentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByparentIdWithHttpMessagesAsync(parentId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByParentIdWithHttpMessagesAsync(parentId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -128,9 +128,9 @@ namespace DataApi
             /// </param>
             /// <param name='parentId'>
             /// </param>
-            public static object GetByapplicantUscIdparentId(this IParents operations, string applicantUscId, int parentId)
+            public static object GetByApplicantUscIdParentId(this IParents operations, string applicantUscId, int parentId)
             {
-                return Task.Factory.StartNew(s => ((IParents)s).GetByapplicantUscIdparentIdAsync(applicantUscId, parentId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IParents)s).GetByApplicantUscIdParentIdAsync(applicantUscId, parentId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -143,9 +143,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByapplicantUscIdparentIdAsync(this IParents operations, string applicantUscId, int parentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByApplicantUscIdParentIdAsync(this IParents operations, string applicantUscId, int parentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByapplicantUscIdparentIdWithHttpMessagesAsync(applicantUscId, parentId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByApplicantUscIdParentIdWithHttpMessagesAsync(applicantUscId, parentId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -160,9 +160,9 @@ namespace DataApi
             /// </param>
             /// <param name='parent'>
             /// </param>
-            public static object PutByapplicantUscIdparentIdparent(this IParents operations, string applicantUscId, int parentId, Parent parent)
+            public static object PutByApplicantUscIdParentIdParent(this IParents operations, string applicantUscId, int parentId, Parent parent)
             {
-                return Task.Factory.StartNew(s => ((IParents)s).PutByapplicantUscIdparentIdparentAsync(applicantUscId, parentId, parent), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IParents)s).PutByApplicantUscIdParentIdParentAsync(applicantUscId, parentId, parent), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -177,9 +177,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutByapplicantUscIdparentIdparentAsync(this IParents operations, string applicantUscId, int parentId, Parent parent, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutByApplicantUscIdParentIdParentAsync(this IParents operations, string applicantUscId, int parentId, Parent parent, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutByapplicantUscIdparentIdparentWithHttpMessagesAsync(applicantUscId, parentId, parent, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutByApplicantUscIdParentIdParentWithHttpMessagesAsync(applicantUscId, parentId, parent, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -192,9 +192,9 @@ namespace DataApi
             /// </param>
             /// <param name='parentId'>
             /// </param>
-            public static object DeleteByapplicantUscIdparentId(this IParents operations, string applicantUscId, int parentId)
+            public static object DeleteByApplicantUscIdParentId(this IParents operations, string applicantUscId, int parentId)
             {
-                return Task.Factory.StartNew(s => ((IParents)s).DeleteByapplicantUscIdparentIdAsync(applicantUscId, parentId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IParents)s).DeleteByApplicantUscIdParentIdAsync(applicantUscId, parentId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -207,9 +207,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteByapplicantUscIdparentIdAsync(this IParents operations, string applicantUscId, int parentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteByApplicantUscIdParentIdAsync(this IParents operations, string applicantUscId, int parentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteByapplicantUscIdparentIdWithHttpMessagesAsync(applicantUscId, parentId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteByApplicantUscIdParentIdWithHttpMessagesAsync(applicantUscId, parentId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

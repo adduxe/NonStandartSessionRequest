@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// IdLookups operations.
     /// </summary>
-    public partial class IdLookups : IServiceOperations<DataApiClient>, IIdLookups
+    public partial class IdLookups : IServiceOperations<DataAPI>, IIdLookups
     {
         /// <summary>
         /// Initializes a new instance of the IdLookups class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public IdLookups(DataApiClient client)
+        public IdLookups(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -159,7 +159,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostByidLookupWithHttpMessagesAsync(IdLookup idLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostByIdLookupWithHttpMessagesAsync(IdLookup idLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (idLookup == null)
             {
@@ -174,7 +174,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("idLookup", idLookup);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PostByidLookup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PostByIdLookup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -276,7 +276,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetBycasIDWithHttpMessagesAsync(string casID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByCasIDWithHttpMessagesAsync(string casID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (casID == null)
             {
@@ -291,7 +291,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("casID", casID);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetBycasID", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByCasID", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -390,7 +390,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PutBycasIDidLookupWithHttpMessagesAsync(string casID, IdLookup idLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PutByCasIDIdLookupWithHttpMessagesAsync(string casID, IdLookup idLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (casID == null)
             {
@@ -410,7 +410,7 @@ namespace DataApi
                 tracingParameters.Add("casID", casID);
                 tracingParameters.Add("idLookup", idLookup);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PutBycasIDidLookup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PutByCasIDIdLookup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

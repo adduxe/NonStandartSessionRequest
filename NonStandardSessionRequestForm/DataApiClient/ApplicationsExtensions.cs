@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -22,9 +22,9 @@ namespace DataApi
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static object GetByid(this IApplications operations, int id)
+            public static object GetById(this IApplications operations, int id)
             {
-                return Task.Factory.StartNew(s => ((IApplications)s).GetByidAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplications)s).GetByIdAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -35,9 +35,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByidAsync(this IApplications operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByIdAsync(this IApplications operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByidWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -50,9 +50,9 @@ namespace DataApi
             /// </param>
             /// <param name='app'>
             /// </param>
-            public static object PutByidapp(this IApplications operations, int id, FaoApp app)
+            public static object PutByIdApp(this IApplications operations, int id, FaoApp app)
             {
-                return Task.Factory.StartNew(s => ((IApplications)s).PutByidappAsync(id, app), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplications)s).PutByIdAppAsync(id, app), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -65,9 +65,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutByidappAsync(this IApplications operations, int id, FaoApp app, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutByIdAppAsync(this IApplications operations, int id, FaoApp app, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutByidappWithHttpMessagesAsync(id, app, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutByIdAppWithHttpMessagesAsync(id, app, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,9 +78,9 @@ namespace DataApi
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static object DeleteByid(this IApplications operations, int id)
+            public static object DeleteById(this IApplications operations, int id)
             {
-                return Task.Factory.StartNew(s => ((IApplications)s).DeleteByidAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplications)s).DeleteByIdAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -91,9 +91,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteByidAsync(this IApplications operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteByIdAsync(this IApplications operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteByidWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -126,9 +126,9 @@ namespace DataApi
             /// </param>
             /// <param name='app'>
             /// </param>
-            public static object PostByapp(this IApplications operations, FaoApp app)
+            public static object PostByApp(this IApplications operations, FaoApp app)
             {
-                return Task.Factory.StartNew(s => ((IApplications)s).PostByappAsync(app), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplications)s).PostByAppAsync(app), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -139,9 +139,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByappAsync(this IApplications operations, FaoApp app, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByAppAsync(this IApplications operations, FaoApp app, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByappWithHttpMessagesAsync(app, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByAppWithHttpMessagesAsync(app, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

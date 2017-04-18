@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// Applicants operations.
     /// </summary>
-    public partial class Applicants : IServiceOperations<DataApiClient>, IApplicants
+    public partial class Applicants : IServiceOperations<DataAPI>, IApplicants
     {
         /// <summary>
         /// Initializes a new instance of the Applicants class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public Applicants(DataApiClient client)
+        public Applicants(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='uscId'>
         /// </param>
@@ -59,7 +59,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByuscIdapplicationStatusWithHttpMessagesAsync(string uscId, string applicationStatus = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByUscIdApplicationStatusWithHttpMessagesAsync(string uscId, string applicationStatus = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (uscId == null)
             {
@@ -75,7 +75,7 @@ namespace DataApi
                 tracingParameters.Add("uscId", uscId);
                 tracingParameters.Add("applicationStatus", applicationStatus);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByuscIdapplicationStatus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByUscIdApplicationStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -183,7 +183,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PatchByuscIdapplicantWithHttpMessagesAsync(string uscId, Applicant applicant, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PatchByUscIdApplicantWithHttpMessagesAsync(string uscId, Applicant applicant, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (uscId == null)
             {
@@ -203,7 +203,7 @@ namespace DataApi
                 tracingParameters.Add("uscId", uscId);
                 tracingParameters.Add("applicant", applicant);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PatchByuscIdapplicant", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PatchByUscIdApplicant", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

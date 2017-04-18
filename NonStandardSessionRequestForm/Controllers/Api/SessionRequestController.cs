@@ -1,5 +1,5 @@
-﻿using DataApi;
-using DataApi.Models;
+﻿using DataApiClient;
+using DataApiClient.Models;
 using Microsoft.Rest;
 using Serilog;
 using System;
@@ -17,9 +17,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
-                using (var client = new DataApiClient(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
+                using (var client = new DataAPI(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
                 {
-                    client.SessionRequest.PostBysessionDTO(session);
+                    client.SessionRequest.PostBySessionDTO(session);
                     return Ok();
                 }
             }
@@ -41,9 +41,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             object sessionRequest;
             try
             {
-                using (var client = new DataApiClient(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
+                using (var client = new DataAPI(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
                 {
-                    sessionRequest = client.SessionRequest.GetByrequestId(requestId);
+                    sessionRequest = client.SessionRequest.GetByRequestId(requestId);
                 }
 
                 return Ok(sessionRequest);

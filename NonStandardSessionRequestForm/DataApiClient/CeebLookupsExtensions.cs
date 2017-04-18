@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -44,9 +44,9 @@ namespace DataApi
             /// </param>
             /// <param name='ceebLookup'>
             /// </param>
-            public static object PostByceebLookup(this ICeebLookups operations, CeebLookup ceebLookup)
+            public static object PostByCeebLookup(this ICeebLookups operations, CeebLookup ceebLookup)
             {
-                return Task.Factory.StartNew(s => ((ICeebLookups)s).PostByceebLookupAsync(ceebLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICeebLookups)s).PostByCeebLookupAsync(ceebLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,9 +57,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByceebLookupAsync(this ICeebLookups operations, CeebLookup ceebLookup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByCeebLookupAsync(this ICeebLookups operations, CeebLookup ceebLookup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByceebLookupWithHttpMessagesAsync(ceebLookup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByCeebLookupWithHttpMessagesAsync(ceebLookup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,9 +70,9 @@ namespace DataApi
             /// </param>
             /// <param name='ceeb'>
             /// </param>
-            public static object GetCeebByUscCeebByceeb(this ICeebLookups operations, string ceeb)
+            public static object GetCeebByUscCeebByCeeb(this ICeebLookups operations, string ceeb)
             {
-                return Task.Factory.StartNew(s => ((ICeebLookups)s).GetCeebByUscCeebByceebAsync(ceeb), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICeebLookups)s).GetCeebByUscCeebByCeebAsync(ceeb), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -83,9 +83,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetCeebByUscCeebByceebAsync(this ICeebLookups operations, string ceeb, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetCeebByUscCeebByCeebAsync(this ICeebLookups operations, string ceeb, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCeebByUscCeebByceebWithHttpMessagesAsync(ceeb, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCeebByUscCeebByCeebWithHttpMessagesAsync(ceeb, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -96,9 +96,9 @@ namespace DataApi
             /// </param>
             /// <param name='ceeb'>
             /// </param>
-            public static object GetCeebByLiaisonCeebByceeb(this ICeebLookups operations, string ceeb)
+            public static object GetCeebByLiaisonCeebByCeeb(this ICeebLookups operations, string ceeb)
             {
-                return Task.Factory.StartNew(s => ((ICeebLookups)s).GetCeebByLiaisonCeebByceebAsync(ceeb), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICeebLookups)s).GetCeebByLiaisonCeebByCeebAsync(ceeb), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -109,9 +109,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetCeebByLiaisonCeebByceebAsync(this ICeebLookups operations, string ceeb, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetCeebByLiaisonCeebByCeebAsync(this ICeebLookups operations, string ceeb, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCeebByLiaisonCeebByceebWithHttpMessagesAsync(ceeb, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCeebByLiaisonCeebByCeebWithHttpMessagesAsync(ceeb, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -122,9 +122,9 @@ namespace DataApi
             /// </param>
             /// <param name='ceeblookups'>
             /// </param>
-            public static object PostByceeblookups(this ICeebLookups operations, IList<CeebLookup> ceeblookups)
+            public static object PostByCeeblookups(this ICeebLookups operations, IList<CeebLookup> ceeblookups)
             {
-                return Task.Factory.StartNew(s => ((ICeebLookups)s).PostByceeblookupsAsync(ceeblookups), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICeebLookups)s).PostByCeeblookupsAsync(ceeblookups), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -135,9 +135,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByceeblookupsAsync(this ICeebLookups operations, IList<CeebLookup> ceeblookups, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByCeeblookupsAsync(this ICeebLookups operations, IList<CeebLookup> ceeblookups, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByceeblookupsWithHttpMessagesAsync(ceeblookups, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByCeeblookupsWithHttpMessagesAsync(ceeblookups, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -150,9 +150,9 @@ namespace DataApi
             /// </param>
             /// <param name='ceebLookup'>
             /// </param>
-            public static object PutByliaisonCeebceebLookup(this ICeebLookups operations, string liaisonCeeb, CeebLookup ceebLookup)
+            public static object PutByLiaisonCeebCeebLookup(this ICeebLookups operations, string liaisonCeeb, CeebLookup ceebLookup)
             {
-                return Task.Factory.StartNew(s => ((ICeebLookups)s).PutByliaisonCeebceebLookupAsync(liaisonCeeb, ceebLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICeebLookups)s).PutByLiaisonCeebCeebLookupAsync(liaisonCeeb, ceebLookup), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -165,9 +165,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutByliaisonCeebceebLookupAsync(this ICeebLookups operations, string liaisonCeeb, CeebLookup ceebLookup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutByLiaisonCeebCeebLookupAsync(this ICeebLookups operations, string liaisonCeeb, CeebLookup ceebLookup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutByliaisonCeebceebLookupWithHttpMessagesAsync(liaisonCeeb, ceebLookup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutByLiaisonCeebCeebLookupWithHttpMessagesAsync(liaisonCeeb, ceebLookup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -178,9 +178,9 @@ namespace DataApi
             /// </param>
             /// <param name='liaisonCeeb'>
             /// </param>
-            public static object DeleteByliaisonCeeb(this ICeebLookups operations, string liaisonCeeb)
+            public static object DeleteByLiaisonCeeb(this ICeebLookups operations, string liaisonCeeb)
             {
-                return Task.Factory.StartNew(s => ((ICeebLookups)s).DeleteByliaisonCeebAsync(liaisonCeeb), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICeebLookups)s).DeleteByLiaisonCeebAsync(liaisonCeeb), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -191,9 +191,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteByliaisonCeebAsync(this ICeebLookups operations, string liaisonCeeb, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteByLiaisonCeebAsync(this ICeebLookups operations, string liaisonCeeb, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteByliaisonCeebWithHttpMessagesAsync(liaisonCeeb, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteByLiaisonCeebWithHttpMessagesAsync(liaisonCeeb, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

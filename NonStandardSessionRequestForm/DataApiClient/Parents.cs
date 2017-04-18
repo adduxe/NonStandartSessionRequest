@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// Parents operations.
     /// </summary>
-    public partial class Parents : IServiceOperations<DataApiClient>, IParents
+    public partial class Parents : IServiceOperations<DataAPI>, IParents
     {
         /// <summary>
         /// Initializes a new instance of the Parents class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public Parents(DataApiClient client)
+        public Parents(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -159,7 +159,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByapplicantUscIdWithHttpMessagesAsync(string applicantUscId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByApplicantUscIdWithHttpMessagesAsync(string applicantUscId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicantUscId == null)
             {
@@ -174,7 +174,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("applicantUscId", applicantUscId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByapplicantUscId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByApplicantUscId", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -273,7 +273,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostByapplicantUscIdparentWithHttpMessagesAsync(string applicantUscId, Parent parent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostByApplicantUscIdParentWithHttpMessagesAsync(string applicantUscId, Parent parent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicantUscId == null)
             {
@@ -293,7 +293,7 @@ namespace DataApi
                 tracingParameters.Add("applicantUscId", applicantUscId);
                 tracingParameters.Add("parent", parent);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PostByapplicantUscIdparent", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PostByApplicantUscIdParent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -396,7 +396,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByparentIdWithHttpMessagesAsync(int parentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByParentIdWithHttpMessagesAsync(int parentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -407,7 +407,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parentId", parentId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByparentId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByParentId", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -506,7 +506,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByapplicantUscIdparentIdWithHttpMessagesAsync(string applicantUscId, int parentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetByApplicantUscIdParentIdWithHttpMessagesAsync(string applicantUscId, int parentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicantUscId == null)
             {
@@ -522,7 +522,7 @@ namespace DataApi
                 tracingParameters.Add("applicantUscId", applicantUscId);
                 tracingParameters.Add("parentId", parentId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByapplicantUscIdparentId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByApplicantUscIdParentId", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -624,7 +624,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PutByapplicantUscIdparentIdparentWithHttpMessagesAsync(string applicantUscId, int parentId, Parent parent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PutByApplicantUscIdParentIdParentWithHttpMessagesAsync(string applicantUscId, int parentId, Parent parent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicantUscId == null)
             {
@@ -645,7 +645,7 @@ namespace DataApi
                 tracingParameters.Add("parentId", parentId);
                 tracingParameters.Add("parent", parent);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PutByapplicantUscIdparentIdparent", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PutByApplicantUscIdParentIdParent", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -751,7 +751,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> DeleteByapplicantUscIdparentIdWithHttpMessagesAsync(string applicantUscId, int parentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> DeleteByApplicantUscIdParentIdWithHttpMessagesAsync(string applicantUscId, int parentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicantUscId == null)
             {
@@ -767,7 +767,7 @@ namespace DataApi
                 tracingParameters.Add("applicantUscId", applicantUscId);
                 tracingParameters.Add("parentId", parentId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteByapplicantUscIdparentId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteByApplicantUscIdParentId", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

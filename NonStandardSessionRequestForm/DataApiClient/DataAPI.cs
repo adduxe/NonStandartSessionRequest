@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -20,7 +20,7 @@ namespace DataApi
     using Newtonsoft.Json;
     using Models;
 
-    public partial class DataApiClient : ServiceClient<DataApiClient>, IDataAPIClient
+    public partial class DataAPI : ServiceClient<DataAPI>, IDataAPI
     {
         /// <summary>
         /// The base URI of the service.
@@ -123,18 +123,18 @@ namespace DataApi
         public virtual IUsers Users { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the DataAPIClient class.
+        /// Initializes a new instance of the DataAPI class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataApiClient(params DelegatingHandler[] handlers) : base(handlers)
+        public DataAPI(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataAPIClient class.
+        /// Initializes a new instance of the DataAPI class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -142,13 +142,13 @@ namespace DataApi
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataApiClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public DataAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataAPIClient class.
+        /// Initializes a new instance of the DataAPI class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -156,7 +156,7 @@ namespace DataApi
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataApiClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public DataAPI(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -166,7 +166,7 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataAPIClient class.
+        /// Initializes a new instance of the DataAPI class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -177,7 +177,7 @@ namespace DataApi
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataApiClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public DataAPI(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

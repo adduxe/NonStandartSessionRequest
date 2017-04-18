@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -22,9 +22,9 @@ namespace DataApi
             /// </param>
             /// <param name='casID'>
             /// </param>
-            public static object GetBycasID(this IPdfInfos operations, string casID)
+            public static object GetByCasID(this IPdfInfos operations, string casID)
             {
-                return Task.Factory.StartNew(s => ((IPdfInfos)s).GetBycasIDAsync(casID), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPdfInfos)s).GetByCasIDAsync(casID), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -35,9 +35,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetBycasIDAsync(this IPdfInfos operations, string casID, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByCasIDAsync(this IPdfInfos operations, string casID, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBycasIDWithHttpMessagesAsync(casID, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByCasIDWithHttpMessagesAsync(casID, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -54,9 +54,9 @@ namespace DataApi
             /// </param>
             /// <param name='collegeSequenceId'>
             /// </param>
-            public static object GetBycasIDdexFlowDocumentTypecycleNamecollegeSequenceId(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, string collegeSequenceId = default(string))
+            public static object GetByCasIDDexFlowDocumentTypeCycleNameCollegeSequenceId(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, string collegeSequenceId = default(string))
             {
-                return Task.Factory.StartNew(s => ((IPdfInfos)s).GetBycasIDdexFlowDocumentTypecycleNamecollegeSequenceIdAsync(casID, dexFlowDocumentType, cycleName, collegeSequenceId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPdfInfos)s).GetByCasIDDexFlowDocumentTypeCycleNameCollegeSequenceIdAsync(casID, dexFlowDocumentType, cycleName, collegeSequenceId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -73,9 +73,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetBycasIDdexFlowDocumentTypecycleNamecollegeSequenceIdAsync(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, string collegeSequenceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByCasIDDexFlowDocumentTypeCycleNameCollegeSequenceIdAsync(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, string collegeSequenceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBycasIDdexFlowDocumentTypecycleNamecollegeSequenceIdWithHttpMessagesAsync(casID, dexFlowDocumentType, cycleName, collegeSequenceId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByCasIDDexFlowDocumentTypeCycleNameCollegeSequenceIdWithHttpMessagesAsync(casID, dexFlowDocumentType, cycleName, collegeSequenceId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -92,9 +92,9 @@ namespace DataApi
             /// </param>
             /// <param name='pdfInfo'>
             /// </param>
-            public static object PutBycasIDdexFlowDocumentTypecycleNamepdfInfo(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, PdfInfo pdfInfo)
+            public static object PutByCasIDDexFlowDocumentTypeCycleNamePdfInfo(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, PdfInfo pdfInfo)
             {
-                return Task.Factory.StartNew(s => ((IPdfInfos)s).PutBycasIDdexFlowDocumentTypecycleNamepdfInfoAsync(casID, dexFlowDocumentType, cycleName, pdfInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPdfInfos)s).PutByCasIDDexFlowDocumentTypeCycleNamePdfInfoAsync(casID, dexFlowDocumentType, cycleName, pdfInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -111,9 +111,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutBycasIDdexFlowDocumentTypecycleNamepdfInfoAsync(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, PdfInfo pdfInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutByCasIDDexFlowDocumentTypeCycleNamePdfInfoAsync(this IPdfInfos operations, string casID, string dexFlowDocumentType, string cycleName, PdfInfo pdfInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutBycasIDdexFlowDocumentTypecycleNamepdfInfoWithHttpMessagesAsync(casID, dexFlowDocumentType, cycleName, pdfInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutByCasIDDexFlowDocumentTypeCycleNamePdfInfoWithHttpMessagesAsync(casID, dexFlowDocumentType, cycleName, pdfInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -124,9 +124,9 @@ namespace DataApi
             /// </param>
             /// <param name='pdfInfo'>
             /// </param>
-            public static object PostBypdfInfo(this IPdfInfos operations, PdfInfo pdfInfo)
+            public static object PostByPdfInfo(this IPdfInfos operations, PdfInfo pdfInfo)
             {
-                return Task.Factory.StartNew(s => ((IPdfInfos)s).PostBypdfInfoAsync(pdfInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPdfInfos)s).PostByPdfInfoAsync(pdfInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -137,9 +137,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostBypdfInfoAsync(this IPdfInfos operations, PdfInfo pdfInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByPdfInfoAsync(this IPdfInfos operations, PdfInfo pdfInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostBypdfInfoWithHttpMessagesAsync(pdfInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByPdfInfoWithHttpMessagesAsync(pdfInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

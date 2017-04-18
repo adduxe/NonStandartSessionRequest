@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// DocumentQueues operations.
     /// </summary>
-    public partial class DocumentQueues : IServiceOperations<DataApiClient>, IDocumentQueues
+    public partial class DocumentQueues : IServiceOperations<DataAPI>, IDocumentQueues
     {
         /// <summary>
         /// Initializes a new instance of the DocumentQueues class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public DocumentQueues(DataApiClient client)
+        public DocumentQueues(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='queueStatus'>
         /// Possible values include: 'Sent', 'NotSent'
@@ -56,7 +56,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetPdfQueueByqueueStatusWithHttpMessagesAsync(string queueStatus = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetPdfQueueByQueueStatusWithHttpMessagesAsync(string queueStatus = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -67,7 +67,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("queueStatus", queueStatus);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetPdfQueueByqueueStatus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetPdfQueueByQueueStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

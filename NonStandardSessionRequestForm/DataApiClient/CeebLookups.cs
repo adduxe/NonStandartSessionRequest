@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// CeebLookups operations.
     /// </summary>
-    public partial class CeebLookups : IServiceOperations<DataApiClient>, ICeebLookups
+    public partial class CeebLookups : IServiceOperations<DataAPI>, ICeebLookups
     {
         /// <summary>
         /// Initializes a new instance of the CeebLookups class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public CeebLookups(DataApiClient client)
+        public CeebLookups(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -159,7 +159,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostByceebLookupWithHttpMessagesAsync(CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostByCeebLookupWithHttpMessagesAsync(CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (ceebLookup == null)
             {
@@ -174,7 +174,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("ceebLookup", ceebLookup);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PostByceebLookup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PostByCeebLookup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -276,7 +276,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetCeebByUscCeebByceebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetCeebByUscCeebByCeebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (ceeb == null)
             {
@@ -291,7 +291,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("ceeb", ceeb);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCeebByUscCeebByceeb", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCeebByUscCeebByCeeb", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -388,7 +388,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetCeebByLiaisonCeebByceebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetCeebByLiaisonCeebByCeebWithHttpMessagesAsync(string ceeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (ceeb == null)
             {
@@ -403,7 +403,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("ceeb", ceeb);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCeebByLiaisonCeebByceeb", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCeebByLiaisonCeebByCeeb", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -500,7 +500,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostByceeblookupsWithHttpMessagesAsync(IList<CeebLookup> ceeblookups, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostByCeeblookupsWithHttpMessagesAsync(IList<CeebLookup> ceeblookups, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (ceeblookups == null)
             {
@@ -515,7 +515,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("ceeblookups", ceeblookups);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PostByceeblookups", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PostByCeeblookups", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -619,7 +619,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PutByliaisonCeebceebLookupWithHttpMessagesAsync(string liaisonCeeb, CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PutByLiaisonCeebCeebLookupWithHttpMessagesAsync(string liaisonCeeb, CeebLookup ceebLookup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (liaisonCeeb == null)
             {
@@ -639,7 +639,7 @@ namespace DataApi
                 tracingParameters.Add("liaisonCeeb", liaisonCeeb);
                 tracingParameters.Add("ceebLookup", ceebLookup);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PutByliaisonCeebceebLookup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PutByLiaisonCeebCeebLookup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -742,7 +742,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> DeleteByliaisonCeebWithHttpMessagesAsync(string liaisonCeeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> DeleteByLiaisonCeebWithHttpMessagesAsync(string liaisonCeeb, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (liaisonCeeb == null)
             {
@@ -757,7 +757,7 @@ namespace DataApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("liaisonCeeb", liaisonCeeb);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteByliaisonCeeb", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteByLiaisonCeeb", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

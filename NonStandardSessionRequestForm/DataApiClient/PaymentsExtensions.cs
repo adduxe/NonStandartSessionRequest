@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -24,9 +24,9 @@ namespace DataApi
             /// </param>
             /// <param name='payment'>
             /// </param>
-            public static object PostByuscIdpayment(this IPayments operations, string uscId, Payment payment)
+            public static object PostByUscIdPayment(this IPayments operations, string uscId, Payment payment)
             {
-                return Task.Factory.StartNew(s => ((IPayments)s).PostByuscIdpaymentAsync(uscId, payment), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPayments)s).PostByUscIdPaymentAsync(uscId, payment), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -39,9 +39,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostByuscIdpaymentAsync(this IPayments operations, string uscId, Payment payment, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostByUscIdPaymentAsync(this IPayments operations, string uscId, Payment payment, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostByuscIdpaymentWithHttpMessagesAsync(uscId, payment, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostByUscIdPaymentWithHttpMessagesAsync(uscId, payment, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

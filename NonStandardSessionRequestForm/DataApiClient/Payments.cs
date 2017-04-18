@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Linq;
@@ -22,7 +22,7 @@ namespace DataApi
     /// <summary>
     /// Payments operations.
     /// </summary>
-    public partial class Payments : IServiceOperations<DataApiClient>, IPayments
+    public partial class Payments : IServiceOperations<DataAPI>, IPayments
     {
         /// <summary>
         /// Initializes a new instance of the Payments class.
@@ -30,7 +30,7 @@ namespace DataApi
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        public Payments(DataApiClient client)
+        public Payments(DataAPI client)
         {
             if (client == null) 
             {
@@ -40,9 +40,9 @@ namespace DataApi
         }
 
         /// <summary>
-        /// Gets a reference to the DataAPIClient
+        /// Gets a reference to the DataAPI
         /// </summary>
-        public DataApiClient Client { get; private set; }
+        public DataAPI Client { get; private set; }
 
         /// <param name='uscId'>
         /// </param>
@@ -57,7 +57,7 @@ namespace DataApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostByuscIdpaymentWithHttpMessagesAsync(string uscId, Payment payment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostByUscIdPaymentWithHttpMessagesAsync(string uscId, Payment payment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (uscId == null)
             {
@@ -77,7 +77,7 @@ namespace DataApi
                 tracingParameters.Add("uscId", uscId);
                 tracingParameters.Add("payment", payment);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PostByuscIdpayment", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PostByUscIdPayment", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

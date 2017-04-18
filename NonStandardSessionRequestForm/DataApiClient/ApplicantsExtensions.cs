@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace DataApi
+namespace DataApiClient
 {
     using System;
     using System.Collections;
@@ -26,9 +26,9 @@ namespace DataApi
             /// Possible values include: 'All', 'Certifiable', 'Certified',
             /// 'Withdrawable', 'Withdrawn'
             /// </param>
-            public static object GetByuscIdapplicationStatus(this IApplicants operations, string uscId, string applicationStatus = default(string))
+            public static object GetByUscIdApplicationStatus(this IApplicants operations, string uscId, string applicationStatus = default(string))
             {
-                return Task.Factory.StartNew(s => ((IApplicants)s).GetByuscIdapplicationStatusAsync(uscId, applicationStatus), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplicants)s).GetByUscIdApplicationStatusAsync(uscId, applicationStatus), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -43,9 +43,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetByuscIdapplicationStatusAsync(this IApplicants operations, string uscId, string applicationStatus = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByUscIdApplicationStatusAsync(this IApplicants operations, string uscId, string applicationStatus = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByuscIdapplicationStatusWithHttpMessagesAsync(uscId, applicationStatus, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByUscIdApplicationStatusWithHttpMessagesAsync(uscId, applicationStatus, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -58,9 +58,9 @@ namespace DataApi
             /// </param>
             /// <param name='applicant'>
             /// </param>
-            public static object PatchByuscIdapplicant(this IApplicants operations, string uscId, Applicant applicant)
+            public static object PatchByUscIdApplicant(this IApplicants operations, string uscId, Applicant applicant)
             {
-                return Task.Factory.StartNew(s => ((IApplicants)s).PatchByuscIdapplicantAsync(uscId, applicant), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplicants)s).PatchByUscIdApplicantAsync(uscId, applicant), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -73,9 +73,9 @@ namespace DataApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PatchByuscIdapplicantAsync(this IApplicants operations, string uscId, Applicant applicant, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PatchByUscIdApplicantAsync(this IApplicants operations, string uscId, Applicant applicant, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchByuscIdapplicantWithHttpMessagesAsync(uscId, applicant, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchByUscIdApplicantWithHttpMessagesAsync(uscId, applicant, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
