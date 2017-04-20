@@ -1,12 +1,6 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
-    $scope.Session = {
-        sessionCode: "",
-        sessionBreaks: [],
-        sessionSections: []
-    };
-
             // Add Semester Break functionality
     $scope.semBreaks = [];
     $scope.AddSemesterBreaks = function () {
@@ -84,10 +78,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             // Validate the Class Start and End dates
     $scope.ClassDatesChanged = function () {
 
-        if (($scope.classStartDate > '') && ($scope.classEndDate > '')) {
+        if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {
 
-            var startDt = new Date($scope.classStartDate);
-            var endDt = new Date($scope.classEndDate);
+            var startDt = new Date($scope.session.firstDayOfClass);
+            var endDt = new Date($scope.session.lastDayOfClass);
 
             if (startDt > endDt) {
 
@@ -95,9 +89,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
             } else {        // dates OK.  Calculate computed date fields.
 
-                $scope.lastDayAddDrop = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
-                $scope.lastDayEnrollOptionChange = ComputeDate(startDt, endDt, 40); // Last day to Change Enrollment Options (40%)
-                $scope.lastDayWithdraw = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
+                $scope.session.lastDayToAddDrop = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
+                $scope.session.lastDayEnrollChange = ComputeDate(startDt, endDt, 40); // Last day to Change Enrollment Options (40%)
+                $scope.session.lastDayToWithdraw = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
 
             }   // if (startDt...
         }   // if (($scope...
@@ -107,20 +101,20 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $scope.FinalsDatesChanged = function () {
 
-        if (($scope.finalsStartDate > '') && ($scope.finalsEndDate > '')) {
+        if (($scope.firstDayOfFinals > '') && ($scope.lastDayOfFinals > '')) {
 
-            var startDt = new Date($scope.finalsStartDate);
-            var endDt = new Date($scope.finalsEndDate);
+            var startDt = new Date($scope.firstDayOfFinals);
+            var endDt = new Date($scope.lastDayOfFinals);
 
                 // Compute Final Grading Period
             if (startDt > endDt) {
                 alert("First day of Finals later than Last Day of Finals");
             } else {
                     // First Day of Grading = First Day of Finals
-                $scope.lastFinalGradingStartDate = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+                $scope.firstDayForFinalGrades = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
                 var lastDayGradingDt = new Date();
                 lastDayGradingDt.setDate(endDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
-                $scope.lastFinalGradingEndDate = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
+                $scope.lastDayForFinalGrades = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }
 
         }   // if (($scope...
@@ -330,6 +324,26 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019", "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
             "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020", "11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
         ];
+
+        $scope.session = {
+            acadTerm    :       "",
+            sessionCode :       "",
+            owningSchool:       "",     // from Shib
+            owningDepartment:   "",     // from Shib
+            userContact:        "",     // from Shib
+            userEmail:          "",     // from Shib
+            userPhone:          "",      // from Shib
+            firstDayOfClass:    "",
+            lastDayToAddDrop:   "",
+            lastDayOfClass:     "",
+            lastDayEnrollChange: "",
+            lastDayToWithdraw:  "",
+            firstDayOfFinals: "",
+            firstDayForFinalGrades: "",
+            lastDayForFinalGrades: "",
+            sessionBreaks: [],
+            sessionSections: []
+        };
 
     }); // document.ready()
 
