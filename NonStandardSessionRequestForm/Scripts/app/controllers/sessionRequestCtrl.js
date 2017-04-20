@@ -1,16 +1,15 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
-            // Add Semester Break functionality
-    $scope.semBreaks = [];
+        // Add Semester Break functionality
     $scope.AddSemesterBreaks = function () {
 
         var semBreak = { startDate: "", endDate: "" };
 
-        if ($scope.semBreaks.length == 2) {
+        if ($scope.session.sessionBreaks.length == 2) {
             alert("A maximum of 2 semester breaks are allowed per session.");
         } else {
-            $scope.semBreaks.push(semBreak);
+            $scope.session.sessionBreaks.push(semBreak);
         }
         return;
     }   // AddSemesterBreaks()
@@ -101,44 +100,39 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $scope.FinalsDatesChanged = function () {
 
-        if (($scope.firstDayOfFinals > '') && ($scope.lastDayOfFinals > '')) {
+        if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-            var startDt = new Date($scope.firstDayOfFinals);
-            var endDt = new Date($scope.lastDayOfFinals);
+            var startDt = new Date($scope.session.firstDayOfFinals);
+            var endDt = new Date($scope.session.lastDayOfFinals);
 
                 // Compute Final Grading Period
             if (startDt > endDt) {
                 alert("First day of Finals later than Last Day of Finals");
             } else {
                     // First Day of Grading = First Day of Finals
-                $scope.firstDayForFinalGrades = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+                $scope.session.firstDayForFinalGrades = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
                 var lastDayGradingDt = new Date();
                 lastDayGradingDt.setDate(endDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
-                $scope.lastDayForFinalGrades = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
+                $scope.session.lastDayForFinalGrades = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }
-
         }   // if (($scope...
     }   // FinalsDatesChanged()
 
-    // Add a Section functionality
-    $scope.sections = [];
-
+        // Add a Section functionality
     $scope.AddSection = function () {
+
         var section = { sectionNum: "", classSched: [] };
-        $scope.sections.push(section);
+        $scope.session.sections.push(section);
         return;
-    }   // AddSection()
+    }
 
-
-    // Add a Class Schedule functionality
-
+        // Add a Class Schedule functionality
     $scope.AddSchedule = function (thisSection) {
-
         var sched = { classDay: "", classStartTime: "", classEndTime: "" };
-
         thisSection.classSched.push(sched);
         return;
-    }   // AddSched()
+    }
+
 
     function PopulateSessionCodes() {
 
@@ -165,12 +159,13 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         ];
     };  // PopulateSessionCodes()
 
+
     $scope.SetRates = function () {
 
-        if (($scope.acadTerm > '') && ($scope.rateType > '')) {
-            var rateIndex = $scope.acadTerm + $scope.rateType;
-            $scope.tuitionFlatRate = rates[rateIndex].flatRate;
-            $scope.tuitionUnitRate = rates[rateIndex].unitRate;
+        if (($scope.session.acadTerm > '') && ($scope.session.rateType > '')) {
+            var rateIndex = $scope.session.acadTerm + $scope.session.rateType;
+            $scope.session.tuitionFlatRate = rates[rateIndex].flatRate;
+            $scope.session.tuitionUnitRate = rates[rateIndex].unitRate;
         }
         return;
     }
@@ -326,23 +321,32 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         ];
 
         $scope.session = {
-            acadTerm    :       "",
-            sessionCode :       "",
-            owningSchool:       "",     // from Shib
-            owningDepartment:   "",     // from Shib
-            userContact:        "",     // from Shib
-            userEmail:          "",     // from Shib
-            userPhone:          "",      // from Shib
-            firstDayOfClass:    "",
-            lastDayToAddDrop:   "",
-            lastDayOfClass:     "",
-            lastDayEnrollChange: "",
-            lastDayToWithdraw:  "",
-            firstDayOfFinals: "",
-            firstDayForFinalGrades: "",
-            lastDayForFinalGrades: "",
-            sessionBreaks: [],
-            sessionSections: []
+            acadTerm    :           "",
+            sessionCode :           "",
+            owningSchool:           "",     // from Shib
+            owningDepartment:       "",     // from Shib
+            userContact:            "",     // from Shib
+            userEmail:              "",     // from Shib
+            userPhone:              "",      // from Shib
+            firstDayOfClass:        "",
+            lastDayToAddDrop:       "",
+            lastDayOfClass:         "",
+            lastDayEnrollChange:    "",
+            lastDayToWithdraw:      "",
+            firstDayOfFinals:       "",
+            firstDayForFinalGrading: "",
+            lastDayForFinalGrading: "",
+            isClassHeldAtUpc:       false,
+            uscCampusLocation:      "",
+            otherCampusLocation:    "",
+            rateType:               "",
+            tuitionUnitRate:        0,
+            tuitionFlatRate:        0,
+            flatRateUnitsMin:       0,
+            flatRateUnitsMax:       0,
+            submitDate:             "",
+            sessionBreaks:          [],
+            sections:        []
         };
 
     }); // document.ready()
