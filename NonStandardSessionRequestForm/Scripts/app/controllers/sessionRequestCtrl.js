@@ -265,6 +265,15 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
     }   // PopulateSemesterDropdown
 
 
+    $scope.SubmitForm = function () {
+        // ValidateForm();
+        var today = new Date();
+        $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
+        alert($scope.session.submitDate);
+//        alert("In SubmitForm");
+    }
+
+
     $(document).ready(function () {
 
         PopulateSessionCodes();             // for the Session Code Autocomplete feature
@@ -322,7 +331,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         $scope.session = {
             acadTerm    :           "",
-            sessionCode :           "",
+            sessionCode:            "",
             owningSchool:           "",     // from Shib
             owningDepartment:       "",     // from Shib
             userContact:            "",     // from Shib
@@ -334,8 +343,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             lastDayEnrollChange:    "",
             lastDayToWithdraw:      "",
             firstDayOfFinals:       "",
-            firstDayForFinalGrading: "",
-            lastDayForFinalGrading: "",
+            firstDayForFinalGrades: "",
+            lastDayForFinalGrades:  "",
             isClassHeldAtUpc:       false,
             uscCampusLocation:      "",
             otherCampusLocation:    "",
@@ -346,7 +355,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             flatRateUnitsMax:       0,
             submitDate:             "",
             sessionBreaks:          [],
-            sections:        []
+            sections: []
         };
 
     }); // document.ready()

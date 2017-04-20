@@ -256,7 +256,7 @@
                         <abbr title="A 5-digit identifier.  Make sure the number you enter is within the range assigned to your department.">Section Number:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" required ng-model="session.sectionNumber" />
+                        <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" required ng-model="eachSection.sectionNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionTitle.$invalid && sessionRequestForm.$submitted}">
@@ -264,7 +264,7 @@
                         <abbr title="The title for the course that will print in the Schedule of Classes and on student transcripts.">Section Title:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" required ng-model="session.sectionTitle" />
+                        <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" required ng-model="eachSection.sectionTitle" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.incomeAcctNumber.$invalid && sessionRequestForm.$submitted}">
@@ -272,7 +272,7 @@
                         <abbr title="The account number to which enrollment in the class should be credited.">Income Account No.:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="session.incomeAcctNumber" />
+                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="eachSection.incomeAcctNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.addClassSched.$invalid && sessionRequestForm.$submitted}">
@@ -296,7 +296,7 @@
                         <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">Prefix:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="session.deptAbbrev" />
+                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="eachSection.deptAbbrev" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.unitValue.$invalid && sessionRequestForm.$submitted}">
@@ -306,7 +306,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="unitValue" name="unitValue" maxlength="25" required ng-model="session.unitValue" />
+                        <input type="text" class="form-control" id="unitValue" name="unitValue" maxlength="25" required ng-model="eachSection.unitValue" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.enrollEstimate.$invalid && sessionRequestForm.$submitted}">
@@ -316,7 +316,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="enrollEstimate" name="enrollEstimate" maxlength="25" required ng-model="session.enrollEstimate" />
+                        <input type="text" class="form-control" id="enrollEstimate" name="enrollEstimate" maxlength="25" required ng-model="eachSection.enrollEstimate" />
                     </div>
                 </div>
             </div>
@@ -328,7 +328,7 @@
                         <abbr title="A 3-digit code of the course being offered. This number, combined with the Prefix, gives a complete designation for the course, such as BUAD-494.">Course Number:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" required ng-model="session.courseNumber" />
+                        <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" required ng-model="eachSection.courseNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.instructorName.$invalid && sessionRequestForm.$submitted}">
@@ -338,7 +338,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="instructorName" name="instructorName" maxlength="25" required ng-model="session.instructorName" />
+                        <input type="text" class="form-control" id="instructorName" name="instructorName" maxlength="25" required ng-model="eachSection.instructorName" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionComment.$invalid && sessionRequestForm.$submitted}">
@@ -348,7 +348,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <textarea type="text" class="form-control" id="sectionComment" name="sectionComment" maxlength="60" required ng-model="session.sectionComment" />
+                        <textarea type="text" class="form-control" id="sectionComment" name="sectionComment" maxlength="60" required ng-model="eachSection.sectionComment" />
                     </div>
                 </div>
             </div>
@@ -360,7 +360,7 @@
                             Class Day
                         </label>
                         <div class="col-md-6">
-                            <select kendo-drop-down-list class="form-control" id="classDay" name="classDay" maxlength="25" required ng-model="session.classDay">
+                            <select kendo-drop-down-list class="form-control" id="classDay" name="classDay" maxlength="25" required ng-model="eachSched.classDay">
                                 <option value="" disabled >Select a day</option>
                                 <option value="Sun">Sunday</option>
                                 <option value="Mon">Monday</option>
@@ -380,7 +380,7 @@
                             Class Start
                         </label>
                         <div class="col-md-6">
-                            <input kendo-time-picker class="form-control" id="classStart" name="classStart" maxlength="25" required ng-model="session.classStart" />
+                            <input kendo-time-picker class="form-control" id="classStart" name="classStart" maxlength="25" required ng-model="eachSched.classStart" />
                         </div>
                     </div>
                 </div>
@@ -390,7 +390,7 @@
                             Class End
                         </label>
                         <div class="col-md-6">
-                            <input kendo-time-picker class="form-control" id="classEnd" name="classEnd" maxlength="25" required ng-model="session.classEnd" />
+                            <input kendo-time-picker class="form-control" id="classEnd" name="classEnd" maxlength="25" required ng-model="eachSched.classEnd" />
                         </div>
                     </div>
                 </div>
@@ -410,7 +410,7 @@
         <div class="col-md-5">
         </div>
         <div class="col-md-2">
-            <kendo-button type="submit" class="form-control uscRedButton">Submit</kendo-button>
+            <kendo-button type="submit" class="form-control uscRedButton" ng-click="SubmitForm();">Submit</kendo-button>
         </div>
         <div class="col-md-5">
         </div>
