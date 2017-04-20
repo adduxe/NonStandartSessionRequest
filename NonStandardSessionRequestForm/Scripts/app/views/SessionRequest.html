@@ -90,8 +90,8 @@
                     <abbr title="3-digit Session code">Session Code:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input kendo-auto-complete class="form-control" id="sessionCode" name="sessionCode" maxlength="4" required 
-                           ng-model="session.sessionCode" k-data-source="sessionCodes" />
+                    <input kendo-auto-complete="sessCode" class="form-control" id="sessionCode" name="sessionCode" maxlength="4" required 
+                           k-ng-model="session.sessionCode" k-data-source="sessionCodes" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
@@ -222,10 +222,10 @@
             <div class="col-md-1"  style="text-align:right;">
             </div>
             <div class="col-md-4" style="align-self:center;">
-                <input kendo-date-picker class="form-control" />
+                <input kendo-date-picker class="form-control" ng-model="eachBreak.startDate"/>
             </div>
             <div class="col-md-4" style="align-self:center;">
-                <input kendo-date-picker class="form-control" />
+                <input kendo-date-picker class="form-control"  ng-model="eachBreak.endDate"/>
             </div>
             <div class="col-md-3" style="align-self:center;">
                 <a href="javascript:;" title="Delete this Semester Break" ng-click="session.sessionBreaks.splice($index,1);">[X] Remove this Semester Break</a>
@@ -272,7 +272,7 @@
                         <abbr title="The account number to which enrollment in the class should be credited.">Income Account No.:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="eachSection.incomeAcctNumber" />
+                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="eachSection.incomeAccountNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.addClassSched.$invalid && sessionRequestForm.$submitted}">
@@ -296,7 +296,7 @@
                         <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">Prefix:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="eachSection.deptAbbrev" />
+                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="eachSection.sectionPrefix" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.unitValue.$invalid && sessionRequestForm.$submitted}">
@@ -316,7 +316,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="enrollEstimate" name="enrollEstimate" maxlength="25" required ng-model="eachSection.enrollEstimate" />
+                        <input type="number" class="form-control" id="enrollEstimate" name="enrollEstimate" value="0" min="0" max="999" maxlength="3" required ng-model="eachSection.estimatedEnrollment" />
                     </div>
                 </div>
             </div>
@@ -353,14 +353,14 @@
                 </div>
             </div>
 
-            <div class="col-md-12" ng-repeat="eachSched in eachSection.classSched">
-                <div class="col-md-3">
+            <div class="col-md-12" ng-repeat="eachSched in eachSection.schedules">
+                <div class="col-md-4">
                     <div class="form-group" ng-class="{'has-error': sessionRequestForm.classDay.$invalid && sessionRequestForm.$submitted}">
-                        <label for="classDay" class="col-md-6 control-label">
+                        <label for="classDay" class="col-md-5 control-label">
                             Class Day
                         </label>
-                        <div class="col-md-6">
-                            <select kendo-drop-down-list class="form-control" id="classDay" name="classDay" maxlength="25" required ng-model="eachSched.classDay">
+                        <div class="col-md-7">
+                            <select class="form-control" id="classDay" name="classDay" maxlength="25" ng-model="eachSched.classDay">
                                 <option value="" disabled >Select a day</option>
                                 <option value="Sun">Sunday</option>
                                 <option value="Mon">Monday</option>
@@ -380,7 +380,7 @@
                             Class Start
                         </label>
                         <div class="col-md-6">
-                            <input kendo-time-picker class="form-control" id="classStart" name="classStart" maxlength="25" required ng-model="eachSched.classStart" />
+                            <input kendo-time-picker class="form-control" id="classStart" name="classStart" maxlength="25" ng-model="eachSched.classStartTime" />
                         </div>
                     </div>
                 </div>
@@ -390,11 +390,11 @@
                             Class End
                         </label>
                         <div class="col-md-6">
-                            <input kendo-time-picker class="form-control" id="classEnd" name="classEnd" maxlength="25" required ng-model="eachSched.classEnd" />
+                            <input kendo-time-picker class="form-control" id="classEnd" name="classEnd" maxlength="25" ng-model="eachSched.classEndTime" />
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <a class="uscRedButton" href="javascript:;" ng-click="eachSection.classSched.splice($index,1);" title="Delete this Section">
                         [ X ] Remove this day
                     </a>

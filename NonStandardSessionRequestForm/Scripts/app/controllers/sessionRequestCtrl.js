@@ -121,7 +121,16 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         // Add a Section functionality
     $scope.AddSection = function () {
 
-        var section = { sectionNum: "", classSched: [] };
+        var section = {
+            sectionNumber: "",
+            sectionTitle: "",
+            sectionPrefix: "",
+            unitValue: 0,
+            estimatedEnrollment: 0,
+            sectionComment: "",
+            schedules: []
+        };
+
         $scope.session.sections.push(section);
         return;
     }
@@ -129,7 +138,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         // Add a Class Schedule functionality
     $scope.AddSchedule = function (thisSection) {
         var sched = { classDay: "", classStartTime: "", classEndTime: "" };
-        thisSection.classSched.push(sched);
+        thisSection.schedules.push(sched);
         return;
     }
 
@@ -269,8 +278,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         // ValidateForm();
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
-        alert($scope.session.submitDate);
-//        alert("In SubmitForm");
+        $scope.session.sessionCode = $scope.sessCode.value();
+        return;
     }
 
 
@@ -352,10 +361,11 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             tuitionUnitRate:        0,
             tuitionFlatRate:        0,
             flatRateUnitsMin:       0,
-            flatRateUnitsMax:       0,
-            submitDate:             "",
+            flatRateUnitsMax: 0,
+            sessionComment:         "",
             sessionBreaks:          [],
-            sections: []
+            sections:               [],
+            submitDate:             "",
         };
 
     }); // document.ready()
