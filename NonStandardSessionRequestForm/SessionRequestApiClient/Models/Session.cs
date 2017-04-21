@@ -25,9 +25,10 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the Session class.
         /// </summary>
-        public Session(int? requestId = default(int?), string owningSchool = default(string), string owningDepartment = default(string), string userContact = default(string), string userEmail = default(string), string userPhone = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), System.DateTime? sessionBreakStart1 = default(System.DateTime?), System.DateTime? sessionBreakEnd1 = default(System.DateTime?), System.DateTime? sessionBreakStart2 = default(System.DateTime?), System.DateTime? sessionBreakEnd2 = default(System.DateTime?), string sessionCode = default(string), string rateType = default(string), double? ratePerUnit = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), System.DateTime? submitDate = default(System.DateTime?), string comments = default(string), IList<Section> sections = default(IList<Section>))
+        public Session(int? requestId = default(int?), string academicTerm = default(string), string owningSchool = default(string), string owningDepartment = default(string), string userContact = default(string), string userEmail = default(string), string userPhone = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string sessionCode = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), System.DateTime? submitDate = default(System.DateTime?), string comments = default(string), IList<SessionBreak> sessionBreaks = default(IList<SessionBreak>), IList<Section> sections = default(IList<Section>))
         {
             RequestId = requestId;
+            AcademicTerm = academicTerm;
             OwningSchool = owningSchool;
             OwningDepartment = owningDepartment;
             UserContact = userContact;
@@ -45,18 +46,15 @@ namespace SessionRequestApi.Client.Models
             IsClassHeldAtUpc = isClassHeldAtUpc;
             UscCampusLocation = uscCampusLocation;
             OtherCampusLocation = otherCampusLocation;
-            SessionBreakStart1 = sessionBreakStart1;
-            SessionBreakEnd1 = sessionBreakEnd1;
-            SessionBreakStart2 = sessionBreakStart2;
-            SessionBreakEnd2 = sessionBreakEnd2;
             SessionCode = sessionCode;
             RateType = rateType;
-            RatePerUnit = ratePerUnit;
+            RatePerUnitAmount = ratePerUnitAmount;
             FlatRateAmount = flatRateAmount;
             FlatRateUnitsMin = flatRateUnitsMin;
             FlatRateUnitsMax = flatRateUnitsMax;
             SubmitDate = submitDate;
             Comments = comments;
+            SessionBreaks = sessionBreaks;
             Sections = sections;
             CustomInit();
         }
@@ -70,6 +68,11 @@ namespace SessionRequestApi.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "requestId")]
         public int? RequestId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "academicTerm")]
+        public string AcademicTerm { get; set; }
 
         /// <summary>
         /// </summary>
@@ -158,26 +161,6 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "sessionBreakStart1")]
-        public System.DateTime? SessionBreakStart1 { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sessionBreakEnd1")]
-        public System.DateTime? SessionBreakEnd1 { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sessionBreakStart2")]
-        public System.DateTime? SessionBreakStart2 { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sessionBreakEnd2")]
-        public System.DateTime? SessionBreakEnd2 { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "sessionCode")]
         public string SessionCode { get; set; }
 
@@ -188,8 +171,8 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "ratePerUnit")]
-        public double? RatePerUnit { get; set; }
+        [JsonProperty(PropertyName = "ratePerUnitAmount")]
+        public double? RatePerUnitAmount { get; set; }
 
         /// <summary>
         /// </summary>
@@ -218,6 +201,11 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "sessionBreaks")]
+        public IList<SessionBreak> SessionBreaks { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "sections")]
         public IList<Section> Sections { get; set; }
 
@@ -229,6 +217,10 @@ namespace SessionRequestApi.Client.Models
             if( null != RequestId )
             {
                 result.Add(new XElement("requestId", RequestId) );
+            }
+            if( null != AcademicTerm )
+            {
+                result.Add(new XElement("academicTerm", AcademicTerm) );
             }
             if( null != OwningSchool )
             {
@@ -298,22 +290,6 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("otherCampusLocation", OtherCampusLocation) );
             }
-            if( null != SessionBreakStart1 )
-            {
-                result.Add(new XElement("sessionBreakStart1", SessionBreakStart1) );
-            }
-            if( null != SessionBreakEnd1 )
-            {
-                result.Add(new XElement("sessionBreakEnd1", SessionBreakEnd1) );
-            }
-            if( null != SessionBreakStart2 )
-            {
-                result.Add(new XElement("sessionBreakStart2", SessionBreakStart2) );
-            }
-            if( null != SessionBreakEnd2 )
-            {
-                result.Add(new XElement("sessionBreakEnd2", SessionBreakEnd2) );
-            }
             if( null != SessionCode )
             {
                 result.Add(new XElement("sessionCode", SessionCode) );
@@ -322,9 +298,9 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("rateType", RateType) );
             }
-            if( null != RatePerUnit )
+            if( null != RatePerUnitAmount )
             {
-                result.Add(new XElement("ratePerUnit", RatePerUnit) );
+                result.Add(new XElement("ratePerUnitAmount", RatePerUnitAmount) );
             }
             if( null != FlatRateAmount )
             {
@@ -345,6 +321,12 @@ namespace SessionRequestApi.Client.Models
             if( null != Comments )
             {
                 result.Add(new XElement("comments", Comments) );
+            }
+            if( null != SessionBreaks )
+            {
+                foreach( var value in SessionBreaks ){
+                    result.Add(value.XmlSerialize( new XElement( "sessionBreaks") ) );
+                }
             }
             if( null != Sections )
             {
@@ -370,6 +352,12 @@ namespace SessionRequestApi.Client.Models
             if (deserializeRequestId(payload, "requestId", out resultRequestId))
             {
                 result.RequestId = resultRequestId;
+            }
+            var deserializeAcademicTerm = XmlSerialization.ToDeserializer(e => (string)e);
+            string resultAcademicTerm;
+            if (deserializeAcademicTerm(payload, "academicTerm", out resultAcademicTerm))
+            {
+                result.AcademicTerm = resultAcademicTerm;
             }
             var deserializeOwningSchool = XmlSerialization.ToDeserializer(e => (string)e);
             string resultOwningSchool;
@@ -473,30 +461,6 @@ namespace SessionRequestApi.Client.Models
             {
                 result.OtherCampusLocation = resultOtherCampusLocation;
             }
-            var deserializeSessionBreakStart1 = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultSessionBreakStart1;
-            if (deserializeSessionBreakStart1(payload, "sessionBreakStart1", out resultSessionBreakStart1))
-            {
-                result.SessionBreakStart1 = resultSessionBreakStart1;
-            }
-            var deserializeSessionBreakEnd1 = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultSessionBreakEnd1;
-            if (deserializeSessionBreakEnd1(payload, "sessionBreakEnd1", out resultSessionBreakEnd1))
-            {
-                result.SessionBreakEnd1 = resultSessionBreakEnd1;
-            }
-            var deserializeSessionBreakStart2 = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultSessionBreakStart2;
-            if (deserializeSessionBreakStart2(payload, "sessionBreakStart2", out resultSessionBreakStart2))
-            {
-                result.SessionBreakStart2 = resultSessionBreakStart2;
-            }
-            var deserializeSessionBreakEnd2 = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultSessionBreakEnd2;
-            if (deserializeSessionBreakEnd2(payload, "sessionBreakEnd2", out resultSessionBreakEnd2))
-            {
-                result.SessionBreakEnd2 = resultSessionBreakEnd2;
-            }
             var deserializeSessionCode = XmlSerialization.ToDeserializer(e => (string)e);
             string resultSessionCode;
             if (deserializeSessionCode(payload, "sessionCode", out resultSessionCode))
@@ -509,11 +473,11 @@ namespace SessionRequestApi.Client.Models
             {
                 result.RateType = resultRateType;
             }
-            var deserializeRatePerUnit = XmlSerialization.ToDeserializer(e => (double?)e);
-            double? resultRatePerUnit;
-            if (deserializeRatePerUnit(payload, "ratePerUnit", out resultRatePerUnit))
+            var deserializeRatePerUnitAmount = XmlSerialization.ToDeserializer(e => (double?)e);
+            double? resultRatePerUnitAmount;
+            if (deserializeRatePerUnitAmount(payload, "ratePerUnitAmount", out resultRatePerUnitAmount))
             {
-                result.RatePerUnit = resultRatePerUnit;
+                result.RatePerUnitAmount = resultRatePerUnitAmount;
             }
             var deserializeFlatRateAmount = XmlSerialization.ToDeserializer(e => (double?)e);
             double? resultFlatRateAmount;
@@ -544,6 +508,12 @@ namespace SessionRequestApi.Client.Models
             if (deserializeComments(payload, "comments", out resultComments))
             {
                 result.Comments = resultComments;
+            }
+            var deserializeSessionBreaks = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => SessionBreak.XmlDeserialize(e)), null);
+            IList<SessionBreak> resultSessionBreaks;
+            if (deserializeSessionBreaks(payload, "sessionBreaks", out resultSessionBreaks))
+            {
+                result.SessionBreaks = resultSessionBreaks;
             }
             var deserializeSections = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => Section.XmlDeserialize(e)), null);
             IList<Section> resultSections;

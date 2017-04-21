@@ -23,11 +23,11 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the Schedule class.
         /// </summary>
-        public Schedule(int? scheduleId = default(int?), int? sectionId = default(int?), string classStartDayOfWeek = default(string), string classStartTime = default(string), string classEndTime = default(string))
+        public Schedule(int? scheduleId = default(int?), int? sectionId = default(int?), string classDayOfWeek = default(string), string classStartTime = default(string), string classEndTime = default(string))
         {
             ScheduleId = scheduleId;
             SectionId = sectionId;
-            ClassStartDayOfWeek = classStartDayOfWeek;
+            ClassDayOfWeek = classDayOfWeek;
             ClassStartTime = classStartTime;
             ClassEndTime = classEndTime;
             CustomInit();
@@ -50,8 +50,8 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "classStartDayOfWeek")]
-        public string ClassStartDayOfWeek { get; set; }
+        [JsonProperty(PropertyName = "classDayOfWeek")]
+        public string ClassDayOfWeek { get; set; }
 
         /// <summary>
         /// </summary>
@@ -76,9 +76,9 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("sectionId", SectionId) );
             }
-            if( null != ClassStartDayOfWeek )
+            if( null != ClassDayOfWeek )
             {
-                result.Add(new XElement("classStartDayOfWeek", ClassStartDayOfWeek) );
+                result.Add(new XElement("classDayOfWeek", ClassDayOfWeek) );
             }
             if( null != ClassStartTime )
             {
@@ -113,11 +113,11 @@ namespace SessionRequestApi.Client.Models
             {
                 result.SectionId = resultSectionId;
             }
-            var deserializeClassStartDayOfWeek = XmlSerialization.ToDeserializer(e => (string)e);
-            string resultClassStartDayOfWeek;
-            if (deserializeClassStartDayOfWeek(payload, "classStartDayOfWeek", out resultClassStartDayOfWeek))
+            var deserializeClassDayOfWeek = XmlSerialization.ToDeserializer(e => (string)e);
+            string resultClassDayOfWeek;
+            if (deserializeClassDayOfWeek(payload, "classDayOfWeek", out resultClassDayOfWeek))
             {
-                result.ClassStartDayOfWeek = resultClassStartDayOfWeek;
+                result.ClassDayOfWeek = resultClassDayOfWeek;
             }
             var deserializeClassStartTime = XmlSerialization.ToDeserializer(e => (string)e);
             string resultClassStartTime;
