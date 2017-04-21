@@ -24,6 +24,10 @@ sessionModule.config([
                 templateUrl: "scripts/app/views/SessionReview.html",
                 controller: "sessionReviewCtrl"
             })
+            .when("/sessions",
+            {
+                templateUrl: "scripts/app/views/dummyData/sessions.json"
+            })
             .otherwise({ redirectTo: "/" });
 
         $locationProvider.html5Mode(true);
