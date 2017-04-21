@@ -110,10 +110,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
                 alert("First day of Finals later than Last Day of Finals");
             } else {
                     // First Day of Grading = First Day of Finals
-                $scope.session.firstDayForFinalGrades = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+                $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
                 var lastDayGradingDt = new Date();
                 lastDayGradingDt.setDate(endDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
-                $scope.session.lastDayForFinalGrades = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
+                $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }
         }   // if (($scope...
     }   // FinalsDatesChanged()
@@ -338,6 +338,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         ];
 
         $scope.session = {
+
             acadTerm    :           "",
             sessionCode:            "",
             owningSchool:           "",     // from Shib
@@ -351,8 +352,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             lastDayForEnrollChange: "",
             lastDayForWithdrawal:   "",
             firstDayOfFinals:       "",
-            firstDayForFinalGrades: "",
-            lastDayForFinalGrades:  "",
+            firstDayForFinalGrading: "",
+            lastDayForFinalGrading:  "",
             isClassHeldAtUpc:       false,
             uscCampusLocation:      "",
             otherCampusLocation:    "",
