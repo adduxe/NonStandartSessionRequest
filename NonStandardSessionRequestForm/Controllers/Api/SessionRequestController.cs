@@ -57,12 +57,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to POST session! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to GET session! Error: {Error}", apiEx.Message);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to POST session! Error: {Error}", ex.Message);
+                Log.Logger.Error("Failed to GET session! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
         }
@@ -84,12 +84,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to POST session! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to GET submissions! Error: {Error}", apiEx.Message);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to POST session! Error: {Error}", ex.Message);
+                Log.Logger.Error("Failed to GET submissions! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
         }
