@@ -18,7 +18,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         private readonly Uri _dataApiUri = new Uri(ConfigurationManager.AppSettings["DataApiUrl"]);
 
         [Route("sessionrequests")]
-        public async Task<IHttpActionResult> Post(Session session)
+        public async Task<IHttpActionResult> PostSessionRequest(Session session)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("sessionrequests/{requestId}")]
-        public async Task<IHttpActionResult> Get(int requestId)
+        public async Task<IHttpActionResult> GetSessionRequest(int requestId)
         {
             try
             {
@@ -54,6 +54,33 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
                     });
                 }            
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to POST session! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to POST session! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("submissions/pending")]
+        public async Task<IHttpActionResult> GetPendingSubmissions()
+        {
+            try
+            {
+                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                {
+                    var sessionRequest = await client.Submissions.GetPendingAsync();
+                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
+                    return ResponseMessage(new HttpResponseMessage
+                    {
+                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
+                    });
+                }
             }
             catch (HttpOperationException apiEx)
             {
