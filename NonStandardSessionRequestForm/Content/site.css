@@ -261,7 +261,7 @@ body #top-banner #access-nav ul {
 }
 
 a:hover, a:focus {
-    color: black;
+    color: #ffcc00;
     text-decoration: underline;
 }
 

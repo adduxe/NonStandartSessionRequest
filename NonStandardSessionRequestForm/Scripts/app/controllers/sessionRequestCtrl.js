@@ -125,8 +125,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             sectionNumber: "",
             sectionTitle: "",
             sectionPrefix: "",
+            courseNumber: "",
             unitValue: 0,
             estimatedEnrollment: 0,
+            incomeAccountNumber: "",
             sectionComment: "",
             schedules: []
         };
@@ -242,7 +244,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
 
             semChoices = [
-
                 { semName: currYear + " Spring",    semCode: currYear + "1" },
                 { semName: currYear + " Summer",    semCode: currYear + "2" },
                 { semName: currYear + " Fall",      semCode: currYear + "3" },
@@ -252,7 +253,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         } else if ((currDate >= summerDate) && (currDate < fallDate)){  // Display Summer Current Year to Summer Next Year
 
             semChoices = [
-
                 { semName: currYear + " Summer",    semCode: currYear + "2" },
                 { semName: currYear + " Fall",      semCode: currYear + "3" },
                 { semName: nextYear + " Spring",    semCode: nextYear + "1" },
@@ -262,7 +262,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         } else {                                                        // Display Current Fall to Next Year Fall
             
             semChoices = [
-
                 { semName: currYear + " Fall",      semCode: currYear + "3" },
                 { semName: nextYear + " Spring",    semCode: nextYear + "1" },
                 { semName: nextYear + " Summer",    semCode: nextYear + "2" },
@@ -345,12 +344,12 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             owningDepartment:       "",     // from Shib
             userContact:            "",     // from Shib
             userEmail:              "",     // from Shib
-            userPhone:              "",      // from Shib
+            userPhone:              "",     // from Shib
             firstDayOfClass:        "",
-            lastDayToAddDrop:       "",
             lastDayOfClass:         "",
-            lastDayEnrollChange:    "",
-            lastDayToWithdraw:      "",
+            lastDayForAddDrop:      "",
+            lastDayForEnrollChange: "",
+            lastDayForWithdrawal:   "",
             firstDayOfFinals:       "",
             firstDayForFinalGrades: "",
             lastDayForFinalGrades:  "",

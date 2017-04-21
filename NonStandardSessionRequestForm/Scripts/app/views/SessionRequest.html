@@ -6,38 +6,38 @@
         <!-- 1st Column -->
         <div class="col-md-4" id="firstColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.semester.$invalid && sessionRequestForm.$submitted}">
-                <label for="semester" class="col-md-6 control-label">
+                <label for="semester" class="col-md-4 control-label">
                     <abbr title="Session semester being applied for">For Semester:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <select class="form-control" id="semester" name="semester" required ng-model="session.acadTerm" ng-change="SetRates();">
                         <option ng-repeat="eachSem in semesters" value="{{ eachSem.semCode }}">{{ eachSem.semName }}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesStartDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="classesStartDate" class="col-md-6 control-label">
+                <label for="classesStartDate" class="col-md-4 control-label">
                     <abbr title="Session Start Date">First day<br>of Classes:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="classStartDate" name="classStartDate" 
                            ng-change="ClassDatesChanged();" maxlength="10" required ng-model="session.firstDayOfClass" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="classesEndDate" class="col-md-6 control-label">
+                <label for="classesEndDate" class="col-md-4 control-label">
                     <abbr title="Session End Date">Last day<br>of Classes:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="classEndDate" name="classEndDate" 
                            ng-change="ClassDatesChanged();" maxlength="10" required ng-model="session.lastDayOfClass" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.isClassHeldAtUPC.$invalid && sessionRequestForm.$submitted}">
-                <label for="isClassAtUPC" class="col-md-6 control-label">
+                <label for="isClassAtUPC" class="col-md-4 control-label">
                     <abbr title="Is the venue of the class going to be within the University Park Campus?">Class held at UPC?</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <label class="radio-inline">
                         <input type="radio" name="isClassAtUPC" value="Y" ng-model="session.isClassHeldAtUPC" />Yes
                     </label>
@@ -47,20 +47,20 @@
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.rateType.$invalid && sessionRequestForm.$submitted}">
-                <label for="rateType" class="col-md-6 control-label">
+                <label for="rateType" class="col-md-4 control-label">
                     <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <select class="form-control" id="rateType" name="rateType" required ng-model="session.rateType" ng-change="SetRates();">
                         <option ng-repeat="eachRate in rateTypes" value="{{ eachRate.rateCode }}">{{ eachRate.rateName }}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     &nbsp;
                 </div>
-                <div class="col-md-6" style="align-content:center;">
+                <div class="col-md-8" style="align-content:center;">
                     <abbr title="Required for a course in which a break five days or longer will be taken.  If the class follows USC’s Thanksgiving holiday and Spring break, the course must have a session break.">
                         <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton" required ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
                             Add a Session Break
@@ -69,10 +69,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     &nbsp;
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <abbr title="Click here if you want to add Sections to this Session">
                         <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" required ng-click="AddSection();">
                             Add a Section
@@ -86,57 +86,57 @@
         <!--  2nd Column-->
         <div class="col-md-4" id="secondColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionCode.$invalid && sessionRequestForm.$submitted}">
-                <label for="sessionCode" class="col-md-6 control-label">
+                <label for="sessionCode" class="col-md-4 control-label">
                     <abbr title="3-digit Session code">Session Code:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input kendo-auto-complete="sessCode" class="form-control" id="sessionCode" name="sessionCode" maxlength="4" required 
                            k-ng-model="session.sessionCode" k-data-source="sessionCodes" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="finalsStartDate" class="col-md-6 control-label">
-                    <abbr title="Finals Starting Period Date">First day <br> of Finals:</abbr>
+                <label for="finalsStartDate" class="col-md-4 control-label">
+                    <abbr title="Finals Starting Period Date">First day of Finals:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="10" 
                            ng-change="FinalsDatesChanged();" required ng-model="session.firstDayOfFinals" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
-                <label for="finalsEndDate" class="col-md-6 control-label">
-                    <abbr title="Finals Ending Period Date">Last day<br>of Finals:</abbr>
+                <label for="finalsEndDate" class="col-md-4 control-label">
+                    <abbr title="Finals Ending Period Date">Last day of Finals:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="10" 
                            ng-change="FinalsDatesChanged();" required ng-model="session.lastDayOfFinals" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.offCampusLocation.$invalid && sessionRequestForm.$submitted}">
-                <label for="offCampusLocation" class="col-md-6 control-label">
+                <label for="offCampusLocation" class="col-md-4 control-label">
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <select class="form-control" id="offCampusLocation" name="offCampusLocation" required ng-model="session.uscCampusLocation">
                         <option ng-repeat="eachCampus in campusLocs" value="{{ eachCampus.campusCode }}">{{ eachCampus.campusName }}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
-                <label for="tuitionUnitRate" class="col-md-6 control-label">
+                <label for="tuitionUnitRate" class="col-md-4 control-label">
                     <abbr title="Tuition per unit rate in dollars">Tuition per Unit:</abbr>
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" required ng-model="session.tuitionUnitRate" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
-                <label for="sessionComment" class="col-md-6 control-label">
+                <label for="sessionComment" class="col-md-4 control-label">
                     <abbr title="In this space, enter up to a 60-character comment specific to the Session.">
-                        Session<br>Comment
+                        Session Comment
                     </abbr>:
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <textarea type="text" class="form-control" id="sessionComment" name="sessionComment" maxlength="60" required ng-model="session.sessionComment" />
                 </div>
             </div>
@@ -228,7 +228,9 @@
                 <input kendo-date-picker class="form-control"  ng-model="eachBreak.endDate"/>
             </div>
             <div class="col-md-3" style="align-self:center;">
-                <a href="javascript:;" title="Delete this Semester Break" ng-click="session.sessionBreaks.splice($index,1);">[X] Remove this Semester Break</a>
+                <a href="javascript:;" class="uscRedButton" title="Delete this Semester Break" ng-click="session.sessionBreaks.splice($index,1);">
+                    [X] Remove this Break
+                </a>
             </div>
         </div>
     </div>
@@ -247,7 +249,7 @@
         </div>
         <div class="row" ng-repeat="eachSection in session.sections" style="border-top:solid; border-color:white; padding-top:15px;">
             <div class="col-md-12" style="text-align:right;padding-bottom:15px;">
-                <a class="uscRedButton" href="javascript:;" ng-click="session.sections.splice($index,1);" title="Delete this Section">[X] Remove this section</a>
+                <a class="uscRedButton" href="javascript:;" ng-click="session.sections.splice($index,1);" title="Delete this Section">[X] Remove this Section</a>
             </div>
             <!-- Section 1st column -->
             <div class="col-md-4">
@@ -395,8 +397,8 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <a class="uscRedButton" href="javascript:;" ng-click="eachSection.classSched.splice($index,1);" title="Delete this Section">
-                        [ X ] Remove this day
+                    <a class="uscRedButton" href="javascript:;" ng-click="eachSection.schedules.splice($index,1);" title="Delete this Schedule">
+                        [ X ] Remove this Schedule
                     </a>
                 </div>
             </div>
