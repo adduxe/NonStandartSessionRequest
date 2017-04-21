@@ -93,5 +93,28 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 return InternalServerError(ex);
             }
         }
+
+        [Route("submissions/{submissionId}")]
+        public async Task<IHttpActionResult> PutSubmission(int submissionId, Submission submission)
+        {
+            try
+            {
+                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                {
+                    await client.Submissions.PutBySubmissionIdSubmissionDTOAsync(submissionId, submission);
+                    return Ok();
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to PUT submission! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to PUT submission! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
     }
 }
