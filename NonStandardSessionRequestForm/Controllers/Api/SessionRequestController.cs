@@ -116,5 +116,46 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 return InternalServerError(ex);
             }
         }
+
+        [Route("ratetable")]
+        public async Task<IHttpActionResult> GetRateTable()
+        {
+            try
+            {
+                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                {
+                    var json = @"{
+                        ""Term"":""20173"",
+                            ""RateTypes"":[
+                                {""RateTypeCode"":""STD"",
+                                ""RateTypeDesc"":""Standard (session 001)"",
+                                ""RateTypeFlatRate"":""34"",
+                                ""RateTypeUnitRate"":""45""
+                                },
+                                {""RateTypeCode"":""GBUS"",
+                                ""RateTypeDesc"":""Graduate Business"",
+                                ""RateTypeFlatRate"":""34"",
+                                ""RateTypeUnitRate"":""45""
+                                }
+                                ]
+                            }";
+
+                    return ResponseMessage(new HttpResponseMessage
+                    {
+                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
+                    });
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET rate table! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET rate table! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
     }
 }
