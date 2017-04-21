@@ -1,25 +1,30 @@
-﻿using DataApiClient;
-using DataApiClient.Models;
-using Microsoft.Rest;
+﻿using Microsoft.Rest;
+using Newtonsoft.Json;
 using Serilog;
+using SessionRequestApi.Client;
+using SessionRequestApi.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 {
     [RoutePrefix("api")]
     public class SessionRequestController : ApiController
-    {        
+    {
+        private readonly Uri _dataApiUri = new Uri(ConfigurationManager.AppSettings["DataApiUrl"]);
+
         [Route("sessionrequests")]
-        public IHttpActionResult Post(Session session)
+        public async Task<IHttpActionResult> Post(Session session)
         {
             try
             {
-                using (var client = new DataAPI(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
+                using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    client.SessionRequest.PostBySessionDTO(session);
+                    await client.SessionRequest.PostBySessionDTOAsync(session);
                     return Ok();
                 }
             }
@@ -36,17 +41,19 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("sessionrequests/{requestId}")]
-        public IHttpActionResult Get(int requestId)
+        public async Task<IHttpActionResult> Get(int requestId)
         {
-            object sessionRequest;
             try
             {
-                using (var client = new DataAPI(new Uri(ConfigurationManager.AppSettings["DataApiUrl"])))
+                using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    sessionRequest = client.SessionRequest.GetByRequestId(requestId);
-                }
-
-                return Ok(sessionRequest);
+                    var sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestId);
+                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
+                    return ResponseMessage(new HttpResponseMessage
+                    {
+                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
+                    });
+                }            
             }
             catch (HttpOperationException apiEx)
             {
