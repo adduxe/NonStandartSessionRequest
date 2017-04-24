@@ -376,6 +376,7 @@
     <Compile Include="SessionRequestApiClient\Models\Schedule.cs" />
     <Compile Include="SessionRequestApiClient\Models\Section.cs" />
     <Compile Include="SessionRequestApiClient\Models\Session.cs" />
+    <Compile Include="SessionRequestApiClient\Models\SessionBreak.cs" />
     <Compile Include="SessionRequestApiClient\Models\Submission.cs" />
     <Compile Include="SessionRequestApiClient\Models\XmlSerialization.cs" />
     <Compile Include="SessionRequestApiClient\RNRSessionRequestAPI.cs" />
