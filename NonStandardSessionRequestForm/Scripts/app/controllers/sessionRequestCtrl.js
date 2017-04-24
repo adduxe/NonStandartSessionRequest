@@ -88,9 +88,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
             } else {        // dates OK.  Calculate computed date fields.
 
-                $scope.session.lastDayToAddDrop = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
-                $scope.session.lastDayEnrollChange = ComputeDate(startDt, endDt, 40); // Last day to Change Enrollment Options (40%)
-                $scope.session.lastDayToWithdraw = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
+                $scope.session.lastDayForAddDrop        = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
+                $scope.session.lastDayForEnrollChange   = ComputeDate(startDt, endDt, 40); // Last day to Change Enrollment Options (40%)
+                $scope.session.lastDayForWithdrawal     = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
 
             }   // if (startDt...
         }   // if (($scope...
@@ -123,13 +123,14 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         var section = {
             sectionNumber: "",
-            sectionTitle: "",
-            sectionPrefix: "",
+            prefix: "",
+            title: "",
             courseNumber: "",
             unitValue: 0,
+            instructorName: "",
             estimatedEnrollment: 0,
             incomeAccountNumber: "",
-            sectionComment: "",
+            comments: "",
             schedules: []
         };
 
@@ -139,7 +140,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         // Add a Class Schedule functionality
     $scope.AddSchedule = function (thisSection) {
-        var sched = { classDay: "", classStartTime: "", classEndTime: "" };
+        var sched = { classDayOfWeek: "", classStartTime: "", classEndTime: "" };
         thisSection.schedules.push(sched);
         return;
     }
@@ -173,10 +174,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
     $scope.SetRates = function () {
 
-        if (($scope.session.acadTerm > '') && ($scope.session.rateType > '')) {
-            var rateIndex = $scope.session.acadTerm + $scope.session.rateType;
-            $scope.session.tuitionFlatRate = rates[rateIndex].flatRate;
-            $scope.session.tuitionUnitRate = rates[rateIndex].unitRate;
+        if (($scope.session.academicTerm > '') && ($scope.session.rateType > '')) {
+            var rateIndex = $scope.session.academicTerm + $scope.session.rateType;
+            $scope.session.rateFlatAmount = rates[rateIndex].flatRate;
+            $scope.session.ratePerUnitAmount = rates[rateIndex].unitRate;
         }
         return;
     }
@@ -339,7 +340,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
 
         $scope.session = {
 
-            acadTerm    :           "",
+            academicTerm:           "",
             sessionCode:            "",
             owningSchool:           "",     // from Shib
             owningDepartment:       "",     // from Shib
@@ -353,16 +354,16 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
             lastDayForWithdrawal:   "",
             firstDayOfFinals:       "",
             firstDayForFinalGrading: "",
-            lastDayForFinalGrading:  "",
+            lastDayForFinalGrading: "",
             isClassHeldAtUpc:       false,
             uscCampusLocation:      "",
             otherCampusLocation:    "",
             rateType:               "",
-            tuitionUnitRate:        0,
-            tuitionFlatRate:        0,
+            ratePerUnitAmount:      0,
+            rateFlatAmount:         0,
             flatRateUnitsMin:       0,
-            flatRateUnitsMax: 0,
-            sessionComment:         "",
+            flatRateUnitsMax:       0,
+            comments:               "",
             sessionBreaks:          [],
             sections:               [],
             submitDate:             "",
