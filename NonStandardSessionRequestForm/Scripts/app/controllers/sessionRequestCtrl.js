@@ -14,7 +14,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         return;
     }   // AddSemesterBreaks()
 
-    // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
+        // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
     Date.dateDiff = function (datepart, fromdate, todate) {
         datepart = datepart.toLowerCase();
         var diff = todate - fromdate;
@@ -48,26 +48,26 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         do {
             newDate.setDate(startDate.getDate() + daysToAdd - 1);
             switch (newDate.getDay()) {
-                case 0:             // if the computed day falls on a Sunday
+                case 0:                                         // if the computed day falls on a Sunday
                     newDate.setDate(newDate.getDate() + 1);     // add a day to make it a Monday
                     break;
-                case 6:             // Saturday
+                case 6:                                         // Saturday
                     newDate.setDate(newDate.getDate() + 2);     // add 2 days to make it a Monday
                     break;
                 default:
                     break;
-            } // switch()
+            }   // switch()
 
             newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
-            if (holidays.indexOf(newDtmonthDay) > -1) {     // if the new date falls on a holiday, add a day
+            if (holidays.indexOf(newDtmonthDay) > -1) {         // if the new date falls on a holiday, add a day
                 newDate.setDate(newDate.getDate() + 1);
                 newDtmonthDay = newDate.getMonth() +1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
             }
-        }       // keep checking until the computed day is not a weekend nor a holiday
+        }                                                       // keep checking until the computed day is not a weekend nor a holiday
         while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
 
-        if (newDate > endDate) {    // if computed new date is beyond the Last Day of classes,
-            newDate = endDate;      //  make it equal to the last day of classes.
+        if (newDate > endDate) {                                // if computed new date is beyond the Last Day of classes,
+            newDate = endDate;                                  //  make it equal to the last day of classes.
         }
             
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
