@@ -33,11 +33,11 @@
             //    this.expandRow(this.tbody.find("tr.k-master-row").first());
             //},
             columns: [
-                { field: "acadTerm", title: "Semester", width: "10%" },
+                { field: "academicTerm", title: "Semester", width: "10%" },
                 { field: "sessionCode", title: "Session", width: "10%" },
                 { field: "sessionName", title: "Session Name", width: "20%" },
                 { field: "owningSchool", title: "School", width: "20%" },
-                { field: "owningDept", title: "Department", width: "10%" },
+                { field: "owningDepartment", title: "Department", width: "10%" },
                 { field: "requestDate", title: "Request Date", width: "10%" },
                 {
                     command: [
@@ -193,16 +193,13 @@
     function showDetails(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        //wnd.content(detailsTemplate(dataItem));
-        //wnd.center().open();
-        $scope.wnd.content(detailsTemplate(dataItem));
-        $scope.wnd.center().open();
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
     }
 
     var detailsTemplate = kendo.template($("#template").html());
 
-    $scope.wnd = $("#details").kendoWindow({
-//    var wnd = $("#details").kendoWindow({
+    var wnd = $("#details").kendoWindow({
         title: "Reason for Rejection",
         modal: true,
         visible: false,
@@ -220,7 +217,7 @@
             sortable: true,
             pageable: true,
             columns: [
-                { field: "classDay", title: "Class Day", width: "100px" },
+                { field: "classDayofWeek", title: "Class Day", width: "100px" },
                 { field: "classStartTime", title: "Start Time", width: "150px" },
                 { field: "classEndTime", title: "End Time", width: "150px" }
             ]
@@ -238,7 +235,7 @@
             pageable: true,
             columns: [
                 { field: "sectionNumber", title: "Section", width: "50px" },
-                { field: "sectionTitle", title: "Section Title", width: "200px" },
+                { field: "title", title: "Section Title", width: "200px" },
                 { field: "unitValue", title: "Units", width: "50px" },
                 { field: "instructorName", title: " Name", width: "150px" } //,
             ]

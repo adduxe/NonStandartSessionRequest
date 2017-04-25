@@ -48,21 +48,21 @@
                             <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= data.isClassHeldAtUPC ? 'Yes' : 'No' #
                         </div>
                         <div class="col-sm-3">
-                            <b class="red">Campus Location</b>&nbsp;&nbsp;#= data.upcCampusLoc #
+                            <b class="red">Campus Location</b>&nbsp;&nbsp;#= data.uscCampusLocation #
                         </div>
                         <div class="col-sm-4">
-                            <b class="red">Other Campus:</b>&nbsp;&nbsp;#= data.otherCampusLoc #
+                            <b class="red">Other Campus:</b>&nbsp;&nbsp;#= data.otherCampusLocation #
                         </div>
                     </div>
                     <div class="row" style="padding-top:10px;">
                         <div class="col-sm-3">
-                            <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;#= data.dateAddDropLastDay #
+                            <b class="red">Last Day Add/Drop:</b>&nbsp;&nbsp;#= data.lastDayForAddDrop #
                         </div>
                         <div class="col-sm-3">
-                            <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;#= data.dateWithdrawLastDay #
+                            <b class="red">Last day Withdraw:</b>&nbsp;&nbsp;#= data.lastDayForWithdrawal #
                         </div>
                         <div class="col-sm-4">
-                            <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;#= data.dateGradeChangeLastDay #
+                            <b class="red">Last day for Enrollment Change:</b>&nbsp;&nbsp;#= data.lastDayForEnrollmentOptionChange #
                         </div>
                     </div>
                     <div class="row" style="padding-top:10px;">
@@ -82,10 +82,10 @@
                                 <b class="red">Classes</b>
                             </div>
                             <div class="borders">
-                                #= data.dateClassFirstDay #&nbsp;
+                                #= data.firstDayOfClass #&nbsp;
                             </div>
                             <div class="borders">
-                                #= data.dateClassLastDay #&nbsp;
+                                #= data.lastDayOfClass #&nbsp;
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -115,10 +115,10 @@
                                 <b class="red">Finals</b>
                             </div>
                             <div class="borders">
-                                #= data.dateFinalsFirstDay #&nbsp;
+                                #= data.firstDayOfFinals #&nbsp;
                             </div>
                             <div class="borders">
-                                #= data.dateFinalsLastDay #&nbsp;
+                                #= data.lastDayOfFinals #&nbsp;
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -126,10 +126,10 @@
                                 <b class="red">Final Grades</b>
                             </div>
                             <div class="borders">
-                                #= data.dateFinalGradeFirstDay #
+                                #= data.firstDayForFinalGrading #
                             </div>
                             <div class="borders">
-                                #= data.dateFinalGradeLastDay #
+                                #= data.lastDayForFinalGrading #
                             </div>
                         </div>
                     </div>
@@ -147,10 +147,10 @@
                     <tbody>
                         <tr class="black">
                             <td>#= data.rateType #</td>
-                            <td>#= data.ratePerUnit #</td>
+                            <td>#= data.ratePerUnitAmount #</td>
                             <td>#= data.rateFlatAmount #</td>
-                            <td>#= data.rateFlatRangeMin #</td>
-                            <td>#= data.rateFlatRangeMax #</td>
+                            <td>#= data.flatRateUnitsMin #</td>
+                            <td>#= data.flatRateUnitsMax #</td>
                         </tr>
                     <tbody>
                     </table>
