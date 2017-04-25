@@ -125,17 +125,17 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var json = @"{
-                        ""Term"":""20173"",
-                            ""RateTypes"":[
-                                {""RateTypeCode"":""STD"",
-                                ""RateTypeDesc"":""Standard (session 001)"",
-                                ""RateTypeFlatRate"":""34"",
-                                ""RateTypeUnitRate"":""45""
+                        ""term"":""20173"",
+                            ""rateTypes"":[
+                                {""rateTypeCode"":""STD"",
+                                ""rateTypeDesc"":""Standard (session 001)"",
+                                ""rateTypeFlatRate"":""34"",
+                                ""rateTypeUnitRate"":""45""
                                 },
-                                {""RateTypeCode"":""GBUS"",
-                                ""RateTypeDesc"":""Graduate Business"",
-                                ""RateTypeFlatRate"":""34"",
-                                ""RateTypeUnitRate"":""45""
+                                {""rateTypeCode"":""GBUS"",
+                                ""rateTypeDesc"":""Graduate Business"",
+                                ""rateTypeFlatRate"":""34"",
+                                ""rateTypeUnitRate"":""45""
                                 }
                                 ]
                             }";
