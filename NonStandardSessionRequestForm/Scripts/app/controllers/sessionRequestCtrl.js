@@ -1,5 +1,5 @@
 ﻿"use strict";
-sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
+sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($scope, $http) {
 
         // Add Semester Break functionality
     $scope.AddSemesterBreaks = function () {
@@ -279,6 +279,11 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", function ($scope) {
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
         $scope.session.sessionCode = $scope.sessCode.value();
+//        $http.post("http://oweb7-vm.usc.edu/NonStandardSessionRequest/api/sessionrequests", $scope.session, { headers: {'Content-Type': 'application/json'} })
+        $http.post("http://oweb7-vm.usc.edu/NonStandardSessionRequest/api/sessionrequests", $scope.session, null)
+            .then(function (response) {
+                alert("Data posted!");
+            })
         return;
     }
 
