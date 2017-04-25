@@ -1,6 +1,6 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($scope, $http) {
-
+    
         // Add Semester Break functionality
     $scope.AddSemesterBreaks = function () {
 
@@ -45,8 +45,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
         var newDate = new Date(startDate);
         var newDtmonthDay = '';
 
+        newDate.setDate(startDate.getDate() + daysToAdd - 1);
         do {
-            newDate.setDate(startDate.getDate() + daysToAdd - 1);
             switch (newDate.getDay()) {
                 case 0:                                         // if the computed day falls on a Sunday
                     newDate.setDate(newDate.getDate() + 1);     // add a day to make it a Monday
@@ -89,7 +89,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
             } else {        // dates OK.  Calculate computed date fields.
 
                 $scope.session.lastDayForAddDrop        = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
-                $scope.session.lastDayForEnrollChange   = ComputeDate(startDt, endDt, 40); // Last day to Change Enrollment Options (40%)
+                $scope.session.lastDayForEnrollChange   = ComputeDate(startDt, endDt, 45); // Last day to Change Enrollment Options (40%)
                 $scope.session.lastDayForWithdrawal     = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
 
             }   // if (startDt...
@@ -172,63 +172,107 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
     };  // PopulateSessionCodes()
 
 
-    $scope.SetRates = function () {
+    $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
 
         if (($scope.session.academicTerm > '') && ($scope.session.rateType > '')) {
-            var rateIndex = $scope.session.academicTerm + $scope.session.rateType;
-            $scope.session.rateFlatAmount = rates[rateIndex].flatRate;
-            $scope.session.ratePerUnitAmount = rates[rateIndex].unitRate;
+
+            $scope.session.rateFlatAmount = "";
+            $scope.session.ratePerUnitAmount = "";
+
+            angular.forEach(rates, function (value) {
+                if (value.term == $scope.session.academicTerm) {
+                    angular.forEach(value.rateTypes, function (value) {
+                        if (value.RateTypeCode == $scope.session.rateType) {
+                            $scope.session.rateFlatAmount = value.RateTypeFlatRate;
+                            $scope.session.ratePerUnitAmount = value.RateTypeUnitRate;
+                        }
+                    })
+                }
+            });
         }
         return;
     }
 
     var holidays = [];
 
-    var rates =
-        {       // 2017 Spring Rates
-            "20171STD": { unitRate: "24732", flatRate: "1666" },
-            "20171GB": { unitRate: "n/a", flatRate: "1710" },
-            "20171GCA": { unitRate: "n/a", flatRate: "1772" },
-            "20171GE": { unitRate: "n/a", flatRate: "1774" },
-            "20171DT3": { unitRate: "28142", flatRate: "1666" },
-            "20171AD3": { unitRate: "28445", flatRate: "1666" },
-            "20171LAW": { unitRate: "28643", flatRate: "2214" },
-            "20171MED": { unitRate: "28424", flatRate: "1666" },
-            "20171OTH": { unitRate: "", flatRate: "" },
+    //[
+    //    {
+    //        term: "20173",
+    //        rateTypes: [
+    //          {
+    //              RateTypeCode: "GE",
+    //              RateTypeDesc: "Standard (session 001)",
+    //              RateTypeFlatRate: "34",
+    //              RateTypeUnitRate: "45"
+    //          },
+    //          {
+    //              RateTypeCode: "GB",
+    //              RateTypeDesc: "Graduate Business",
+    //              RateTypeFlatRate: "22",
+    //              RateTypeUnitRate: "23"
+    //          }]
+    //    },
+    //    {
+    //        term: "20183",
+    //        rateTypes: [
+    //          {
+    //              RateTypeCode: "STD",
+    //              RateTypeDesc: "Standard (session 001)",
+    //              RateTypeFlatRate: "24",
+    //              RateTypeUnitRate: "25"
+    //          },
+    //          {
+    //              RateTypeCode: "GBUS",
+    //              RateTypeDesc: "Graduate Business",
+    //              RateTypeFlatRate: "26",
+    //              RateTypeUnitRate: "27"
+    //          }]
+    //    }
+    //];
+        //{       // 2017 Spring Rates
+        //    "20171STD": { unitRate: "24732", flatRate: "1666" },
+        //    "20171GB": { unitRate: "n/a", flatRate: "1710" },
+        //    "20171GCA": { unitRate: "n/a", flatRate: "1772" },
+        //    "20171GE": { unitRate: "n/a", flatRate: "1774" },
+        //    "20171DT3": { unitRate: "28142", flatRate: "1666" },
+        //    "20171AD3": { unitRate: "28445", flatRate: "1666" },
+        //    "20171LAW": { unitRate: "28643", flatRate: "2214" },
+        //    "20171MED": { unitRate: "28424", flatRate: "1666" },
+        //    "20171OTH": { unitRate: "", flatRate: "" },
 
-            // 2017 Summer Rates
-            "20172STD": { unitRate: "25732", flatRate: "2666" },
-            "20172GB": { unitRate: "n/a", flatRate: "2710" },
-            "20172GCA": { unitRate: "n/a", flatRate: "2772" },
-            "20172GE": { unitRate: "n/a", flatRate: "2774" },
-            "20172DT3": { unitRate: "29142", flatRate: "2666" },
-            "20172AD3": { unitRate: "29445", flatRate: "2666" },
-            "20172LAW": { unitRate: "29643", flatRate: "2214" },
-            "20172MED": { unitRate: "29424", flatRate: "2666" },
-            "20172OTH": { unitRate: "", flatRate: "" },
+        //    // 2017 Summer Rates
+        //    "20172STD": { unitRate: "25732", flatRate: "2666" },
+        //    "20172GB": { unitRate: "n/a", flatRate: "2710" },
+        //    "20172GCA": { unitRate: "n/a", flatRate: "2772" },
+        //    "20172GE": { unitRate: "n/a", flatRate: "2774" },
+        //    "20172DT3": { unitRate: "29142", flatRate: "2666" },
+        //    "20172AD3": { unitRate: "29445", flatRate: "2666" },
+        //    "20172LAW": { unitRate: "29643", flatRate: "2214" },
+        //    "20172MED": { unitRate: "29424", flatRate: "2666" },
+        //    "20172OTH": { unitRate: "", flatRate: "" },
 
-            // 2017 Fall Rates
-            "20173STD": { unitRate: "26732", flatRate: "3666" },
-            "20173GB": { unitRate: "n/a", flatRate: "3710" },
-            "20173GCA": { unitRate: "n/a", flatRate: "3774" },
-            "20173GE": { unitRate: "n/a", flatRate: "3774" },
-            "20173DT3": { unitRate: "30142", flatRate: "3666" },
-            "20173AD3": { unitRate: "30445", flatRate: "3666" },
-            "20173LAW": { unitRate: "30643", flatRate: "3214" },
-            "20173MED": { unitRate: "30424", flatRate: "3666" },
-            "20173OTH": { unitRate: "", flatRate: "" },
+        //    // 2017 Fall Rates
+        //    "20173STD": { unitRate: "26732", flatRate: "3666" },
+        //    "20173GB": { unitRate: "n/a", flatRate: "3710" },
+        //    "20173GCA": { unitRate: "n/a", flatRate: "3774" },
+        //    "20173GE": { unitRate: "n/a", flatRate: "3774" },
+        //    "20173DT3": { unitRate: "30142", flatRate: "3666" },
+        //    "20173AD3": { unitRate: "30445", flatRate: "3666" },
+        //    "20173LAW": { unitRate: "30643", flatRate: "3214" },
+        //    "20173MED": { unitRate: "30424", flatRate: "3666" },
+        //    "20173OTH": { unitRate: "", flatRate: "" },
 
-            // 2018 Spring Rates
-            "20181STD": { unitRate: "27732", flatRate: "4666" },
-            "20181GB": { unitRate: "n/a", flatRate: "4710" },
-            "20181GCA": { unitRate: "n/a", flatRate: "4772" },
-            "20181GE": { unitRate: "n/a", flatRate: "4774" },
-            "20181DT3": { unitRate: "31142", flatRate: "4666" },
-            "20181AD3": { unitRate: "31445", flatRate: "4666" },
-            "20181LAW": { unitRate: "31643", flatRate: "4214" },
-            "20181MED": { unitRate: "31424", flatRate: "4666" },
-            "20181OTH": { unitRate: "", flatRate: "" }
-        };
+        //    // 2018 Spring Rates
+        //    "20181STD": { unitRate: "27732", flatRate: "4666" },
+        //    "20181GB": { unitRate: "n/a", flatRate: "4710" },
+        //    "20181GCA": { unitRate: "n/a", flatRate: "4772" },
+        //    "20181GE": { unitRate: "n/a", flatRate: "4774" },
+        //    "20181DT3": { unitRate: "31142", flatRate: "4666" },
+        //    "20181AD3": { unitRate: "31445", flatRate: "4666" },
+        //    "20181LAW": { unitRate: "31643", flatRate: "4214" },
+        //    "20181MED": { unitRate: "31424", flatRate: "4666" },
+        //    "20181OTH": { unitRate: "", flatRate: "" }
+        //};
 
     function PopulateSemesterDropdown (){
 
@@ -287,12 +331,26 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
         return;
     }
 
+    var rates = "";
+
+    function GetRateTable() {
+        var response = '';
+        $http.get(window.location.host + "/api/ratetable")
+            .then(function (response) {
+                rates = JSON.parse(response.data);
+            }, function (response) {
+                alert(response.statusText);
+            });
+        return;
+    }   // GetRateTable()
 
     $(document).ready(function () {
 
         PopulateSessionCodes();             // for the Session Code Autocomplete feature
 
         PopulateSemesterDropdown();         // calculates the semester options for the user
+
+        GetRateTable();                     // Reads the rate table from the database
 
         $scope.rateTypes = [                // Populate the Rate Type dropdown
 

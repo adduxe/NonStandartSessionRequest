@@ -24,9 +24,9 @@ sessionModule.config([
                 templateUrl: "scripts/app/views/SessionReview.html",
                 controller: "sessionReviewCtrl"
             })
-            .when("/sessions",
+            .when("/ratetable",
             {
-                templateUrl: "scripts/app/views/dummyData/sessions.json"
+                templateUrl: "api/ratetable"
             })
             .otherwise({ redirectTo: "/" });
 
