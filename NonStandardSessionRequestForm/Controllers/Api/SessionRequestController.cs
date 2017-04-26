@@ -124,7 +124,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    var json = @"{
+                    var json = @"[
+                    {
                         ""term"":""20173"",
                             ""rateTypes"":[
                                 {""rateTypeCode"":""STD"",
@@ -138,7 +139,23 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                 ""rateTypeUnitRate"":""45""
                                 }
                                 ]
-                            }";
+                            },
+                    {
+                        ""term"":""20183"",
+                            ""rateTypes"":[
+                                {""rateTypeCode"":""STD"",
+                                ""rateTypeDesc"":""Standard (session 001)"",
+                                ""rateTypeFlatRate"":""34"",
+                                ""rateTypeUnitRate"":""45""
+                                },
+                                {""rateTypeCode"":""GBUS"",
+                                ""rateTypeDesc"":""Graduate Business"",
+                                ""rateTypeFlatRate"":""34"",
+                                ""rateTypeUnitRate"":""45""
+                                }
+                                ]
+                            }
+                            ]";
 
                     return ResponseMessage(new HttpResponseMessage
                     {
@@ -157,5 +174,30 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 return InternalServerError(ex);
             }
         }
+
+        //[Route("authorization/users/{uscId}")]
+        //public async Task<IHttpActionResult> GetUser(string uscId)
+        //{
+            //try
+            //{
+            //    using (var client = new RNRSessionRequestAPI(_dataApiUri))
+            //    {
+            //        await clien
+            //        return Ok();
+            //    }
+            //}
+            //catch (HttpOperationException apiEx)
+            //{
+            //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", apiEx.Message);
+            //    return InternalServerError(apiEx);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", ex.Message);
+            //    return InternalServerError(ex);
+            //}
+        //}
+
+
     }
 }
