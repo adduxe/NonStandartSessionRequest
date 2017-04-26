@@ -182,9 +182,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
             angular.forEach($scope.rates, function (value) {
                 if (value.term == $scope.session.academicTerm) {
                     angular.forEach(value.rateTypes, function (value) {
-                        if (value.RateTypeCode == $scope.session.rateType) {
-                            $scope.session.rateFlatAmount = value.RateTypeFlatRate;
-                            $scope.session.ratePerUnitAmount = value.RateTypeUnitRate;
+                        if (value.rateTypeCode == $scope.session.rateType) {
+                            $scope.session.rateFlatAmount = value.rateTypeFlatRate;
+                            $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
                         }
                     })
                 }
