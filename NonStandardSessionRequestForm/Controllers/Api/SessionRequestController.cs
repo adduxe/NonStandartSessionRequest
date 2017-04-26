@@ -125,37 +125,125 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var json = @"[
-                    {
-                        ""term"":""20173"",
-                            ""rateTypes"":[
-                                {""rateTypeCode"":""STD"",
-                                ""rateTypeDesc"":""Standard (session 001)"",
-                                ""rateTypeFlatRate"":""34"",
-                                ""rateTypeUnitRate"":""45""
-                                },
-                                {""rateTypeCode"":""GBUS"",
-                                ""rateTypeDesc"":""Graduate Business"",
-                                ""rateTypeFlatRate"":""34"",
-                                ""rateTypeUnitRate"":""45""
-                                }
-                                ]
-                            },
-                    {
-                        ""term"":""20183"",
-                            ""rateTypes"":[
-                                {""rateTypeCode"":""STD"",
-                                ""rateTypeDesc"":""Standard (session 001)"",
-                                ""rateTypeFlatRate"":""34"",
-                                ""rateTypeUnitRate"":""45""
-                                },
-                                {""rateTypeCode"":""GBUS"",
-                                ""rateTypeDesc"":""Graduate Business"",
-                                ""rateTypeFlatRate"":""34"",
-                                ""rateTypeUnitRate"":""45""
-                                }
-                                ]
-                            }
-                            ]";
+       {
+           ""term"": ""20171"",
+           ""rateTypes"": [
+             {
+                 ""rateTypeCode"": ""STD"",
+                 ""rateTypeDesc"": ""MAIN ON-CAMPUS SESSION"",
+                 ""rateTypeUnitRate"": ""24732"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""GB"",
+                 ""rateTypeDesc"": ""Graduate Business"",
+                 ""rateTypeUnitRate"": ""n/a"",
+                 ""rateTypeFlatRate"": ""1710""
+             },
+             {
+                 ""rateTypeCode"": ""GCA"",
+                 ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                 ""rateTypeUnitRate"": ""n/a"",
+                 ""rateTypeFlatRate"": ""1772""
+             },
+             {
+                 ""rateTypeCode"": ""GE"",
+                 ""rateTypeDesc"": ""Graduate Engineering"",
+                 ""rateTypeUnitRate"": ""n/a"",
+                 ""rateTypeFlatRate"": ""1774""
+             },
+             {
+                 ""rateTypeCode"": ""DT3"",
+                 ""rateTypeDesc"": ""Dentistry"",
+                 ""rateTypeUnitRate"": ""28142"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""AD3"",
+                 ""rateTypeDesc"": ""Advanced Dentistry"",
+                 ""rateTypeUnitRate"": ""28445"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""LAW"",
+                 ""rateTypeDesc"": ""Law"",
+                 ""rateTypeUnitRate"": ""28643"",
+                 ""rateTypeFlatRate"": ""2214""
+             },
+             {
+                 ""rateTypeCode"": ""MED"",
+                 ""rateTypeDesc"": ""Medicine"",
+                 ""rateTypeUnitRate"": ""28424"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                   ""rateTypeCode"": ""OTH"",
+                   ""rateTypeDesc"": ""Others"",
+                   ""rateTypeUnitRate"": """",
+                   ""rateTypeFlatRate"": """"
+             }
+           ]        
+       },
+       {
+           ""term"": ""20172"",
+           ""rateTypes"": [
+             {
+                 ""rateTypeCode"": ""STD"",
+                 ""rateTypeDesc"": ""MAIN ON-CAMPUS SESSION"",
+                 ""rateTypeUnitRate"": ""24732"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""GB"",
+                 ""rateTypeDesc"": ""Graduate Business"",
+                 ""rateTypeUnitRate"": ""n/a"",
+                 ""rateTypeFlatRate"": ""1710""
+             },
+             {
+                 ""rateTypeCode"": ""GCA"",
+                 ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                 ""rateTypeUnitRate"": ""n/a"",
+                 ""rateTypeFlatRate"": ""1772""
+             },
+             {
+                 ""rateTypeCode"": ""GE"",
+                 ""rateTypeDesc"": ""Graduate Engineering"",
+                 ""rateTypeUnitRate"": ""n/a"",
+                 ""rateTypeFlatRate"": ""1774""
+             },
+             {
+                 ""rateTypeCode"": ""DT3"",
+                 ""rateTypeDesc"": ""Dentistry"",
+                 ""rateTypeUnitRate"": ""28142"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""AD3"",
+                 ""rateTypeDesc"": ""Advanced Dentistry"",
+                 ""rateTypeUnitRate"": ""28445"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""LAW"",
+                 ""rateTypeDesc"": ""Law"",
+                 ""rateTypeUnitRate"": ""28643"",
+                 ""rateTypeFlatRate"": ""2214""
+             },
+             {
+                 ""rateTypeCode"": ""MED"",
+                 ""rateTypeDesc"": ""Medicine"",
+                 ""rateTypeUnitRate"": ""28424"",
+                 ""rateTypeFlatRate"": ""1666""
+             },
+             {
+                 ""rateTypeCode"": ""OTH"",
+                 ""rateTypeDesc"": ""Others"",
+                 ""rateTypeUnitRate"": """",
+                 ""rateTypeFlatRate"": """"
+             }
+           ]
+       }
+    ]";
 
                     return ResponseMessage(new HttpResponseMessage
                     {
