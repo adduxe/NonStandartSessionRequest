@@ -1,5 +1,5 @@
 ﻿"use strict";
-sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($scope, $http) {
+sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", function ($scope, $http, RateTable) {
     
         // Add Semester Break functionality
     $scope.AddSemesterBreaks = function () {
@@ -179,7 +179,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
             $scope.session.rateFlatAmount = "";
             $scope.session.ratePerUnitAmount = "";
 
-            angular.forEach(rates, function (value) {
+            angular.forEach($scope.rates, function (value) {
                 if (value.term == $scope.session.academicTerm) {
                     angular.forEach(value.rateTypes, function (value) {
                         if (value.RateTypeCode == $scope.session.rateType) {
@@ -194,85 +194,6 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
     }
 
     var holidays = [];
-
-    //[
-    //    {
-    //        term: "20173",
-    //        rateTypes: [
-    //          {
-    //              RateTypeCode: "GE",
-    //              RateTypeDesc: "Standard (session 001)",
-    //              RateTypeFlatRate: "34",
-    //              RateTypeUnitRate: "45"
-    //          },
-    //          {
-    //              RateTypeCode: "GB",
-    //              RateTypeDesc: "Graduate Business",
-    //              RateTypeFlatRate: "22",
-    //              RateTypeUnitRate: "23"
-    //          }]
-    //    },
-    //    {
-    //        term: "20183",
-    //        rateTypes: [
-    //          {
-    //              RateTypeCode: "STD",
-    //              RateTypeDesc: "Standard (session 001)",
-    //              RateTypeFlatRate: "24",
-    //              RateTypeUnitRate: "25"
-    //          },
-    //          {
-    //              RateTypeCode: "GBUS",
-    //              RateTypeDesc: "Graduate Business",
-    //              RateTypeFlatRate: "26",
-    //              RateTypeUnitRate: "27"
-    //          }]
-    //    }
-    //];
-        //{       // 2017 Spring Rates
-        //    "20171STD": { unitRate: "24732", flatRate: "1666" },
-        //    "20171GB": { unitRate: "n/a", flatRate: "1710" },
-        //    "20171GCA": { unitRate: "n/a", flatRate: "1772" },
-        //    "20171GE": { unitRate: "n/a", flatRate: "1774" },
-        //    "20171DT3": { unitRate: "28142", flatRate: "1666" },
-        //    "20171AD3": { unitRate: "28445", flatRate: "1666" },
-        //    "20171LAW": { unitRate: "28643", flatRate: "2214" },
-        //    "20171MED": { unitRate: "28424", flatRate: "1666" },
-        //    "20171OTH": { unitRate: "", flatRate: "" },
-
-        //    // 2017 Summer Rates
-        //    "20172STD": { unitRate: "25732", flatRate: "2666" },
-        //    "20172GB": { unitRate: "n/a", flatRate: "2710" },
-        //    "20172GCA": { unitRate: "n/a", flatRate: "2772" },
-        //    "20172GE": { unitRate: "n/a", flatRate: "2774" },
-        //    "20172DT3": { unitRate: "29142", flatRate: "2666" },
-        //    "20172AD3": { unitRate: "29445", flatRate: "2666" },
-        //    "20172LAW": { unitRate: "29643", flatRate: "2214" },
-        //    "20172MED": { unitRate: "29424", flatRate: "2666" },
-        //    "20172OTH": { unitRate: "", flatRate: "" },
-
-        //    // 2017 Fall Rates
-        //    "20173STD": { unitRate: "26732", flatRate: "3666" },
-        //    "20173GB": { unitRate: "n/a", flatRate: "3710" },
-        //    "20173GCA": { unitRate: "n/a", flatRate: "3774" },
-        //    "20173GE": { unitRate: "n/a", flatRate: "3774" },
-        //    "20173DT3": { unitRate: "30142", flatRate: "3666" },
-        //    "20173AD3": { unitRate: "30445", flatRate: "3666" },
-        //    "20173LAW": { unitRate: "30643", flatRate: "3214" },
-        //    "20173MED": { unitRate: "30424", flatRate: "3666" },
-        //    "20173OTH": { unitRate: "", flatRate: "" },
-
-        //    // 2018 Spring Rates
-        //    "20181STD": { unitRate: "27732", flatRate: "4666" },
-        //    "20181GB": { unitRate: "n/a", flatRate: "4710" },
-        //    "20181GCA": { unitRate: "n/a", flatRate: "4772" },
-        //    "20181GE": { unitRate: "n/a", flatRate: "4774" },
-        //    "20181DT3": { unitRate: "31142", flatRate: "4666" },
-        //    "20181AD3": { unitRate: "31445", flatRate: "4666" },
-        //    "20181LAW": { unitRate: "31643", flatRate: "4214" },
-        //    "20181MED": { unitRate: "31424", flatRate: "4666" },
-        //    "20181OTH": { unitRate: "", flatRate: "" }
-        //};
 
     function PopulateSemesterDropdown (){
 
@@ -331,18 +252,183 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", function ($sc
         return;
     }
 
-    var rates = "";
+    $scope.rates = [];
 
     function GetRateTable() {
         var response = '';
-        $http.get(window.location.host + "/api/ratetable")
-            .then(function (response) {
-                rates = JSON.parse(response.data);
-            }, function (response) {
+        $http.get("http://" + window.location.host + "/api/ratetable")
+            .then(function mySuccess(response) {
+                $scope.rates = response.data;
+            }, function myError(response) {
                 alert(response.statusText);
             });
         return;
     }   // GetRateTable()
+
+    //var rates = 
+    //[
+    //    {
+    //        term: "20171",
+    //        rateTypes: [
+    //          {
+    //              RateTypeCode: "STD",
+    //              RateTypeDesc: "MAIN ON-CAMPUS SESSION",
+    //              RateTypeUnitRate: "24732",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "GB",
+    //              RateTypeDesc: "Graduate Business",
+    //              RateTypeUnitRate: "n/a",
+    //              RateTypeFlatRate: "1710"
+    //          },
+    //          {
+    //              RateTypeCode: "GCA",
+    //              RateTypeDesc: "Graduate Cinematic Arts",
+    //              RateTypeUnitRate: "n/a",
+    //              RateTypeFlatRate: "1772"
+    //          },
+    //          {
+    //              RateTypeCode: "GE",
+    //              RateTypeDesc: "Graduate Engineering",
+    //              RateTypeUnitRate: "n/a",
+    //              RateTypeFlatRate: "1774"
+    //          },
+    //          {
+    //              RateTypeCode: "DT3",
+    //              RateTypeDesc: "Dentistry",
+    //              RateTypeUnitRate: "28142",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "AD3",
+    //              RateTypeDesc: "Advanced Dentistry",
+    //              RateTypeUnitRate: "28445",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "LAW",
+    //              RateTypeDesc: "Law",
+    //              RateTypeUnitRate: "28643",
+    //              RateTypeFlatRate: "2214"
+    //          },
+    //          {
+    //              RateTypeCode: "MED",
+    //              RateTypeDesc: "Medicine",
+    //              RateTypeUnitRate: "28424",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //                RateTypeCode: "OTH",
+    //                RateTypeDesc: "Others",
+    //                RateTypeUnitRate: "",
+    //                RateTypeFlatRate: ""
+    //          }
+    //        ]
+    //    },
+    //    {
+    //        term: "20172",
+    //        rateTypes: [
+    //          {
+    //              RateTypeCode: "STD",
+    //              RateTypeDesc: "MAIN ON-CAMPUS SESSION",
+    //              RateTypeUnitRate: "24732",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "GB",
+    //              RateTypeDesc: "Graduate Business",
+    //              RateTypeUnitRate: "n/a",
+    //              RateTypeFlatRate: "1710"
+    //          },
+    //          {
+    //              RateTypeCode: "GCA",
+    //              RateTypeDesc: "Graduate Cinematic Arts",
+    //              RateTypeUnitRate: "n/a",
+    //              RateTypeFlatRate: "1772"
+    //          },
+    //          {
+    //              RateTypeCode: "GE",
+    //              RateTypeDesc: "Graduate Engineering",
+    //              RateTypeUnitRate: "n/a",
+    //              RateTypeFlatRate: "1774"
+    //          },
+    //          {
+    //              RateTypeCode: "DT3",
+    //              RateTypeDesc: "Dentistry",
+    //              RateTypeUnitRate: "28142",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "AD3",
+    //              RateTypeDesc: "Advanced Dentistry",
+    //              RateTypeUnitRate: "28445",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "LAW",
+    //              RateTypeDesc: "Law",
+    //              RateTypeUnitRate: "28643",
+    //              RateTypeFlatRate: "2214"
+    //          },
+    //          {
+    //              RateTypeCode: "MED",
+    //              RateTypeDesc: "Medicine",
+    //              RateTypeUnitRate: "28424",
+    //              RateTypeFlatRate: "1666"
+    //          },
+    //          {
+    //              RateTypeCode: "OTH",
+    //              RateTypeDesc: "Others",
+    //              RateTypeUnitRate: "",
+    //              RateTypeFlatRate: ""
+    //          }
+    //        ]
+    //    }
+    //];
+    //    {       // 2017 Spring Rates
+    //        "20171STD": { unitRate: "24732", flatRate: "1666" },
+    //        "20171GB": { unitRate: "n/a", flatRate: "1710" },
+    //        "20171GCA": { unitRate: "n/a", flatRate: "1772" },
+    //        "20171GE": { unitRate: "n/a", flatRate: "1774" },
+    //        "20171DT3": { unitRate: "28142", flatRate: "1666" },
+    //        "20171AD3": { unitRate: "28445", flatRate: "1666" },
+    //        "20171LAW": { unitRate: "28643", flatRate: "2214" },
+    //        "20171MED": { unitRate: "28424", flatRate: "1666" },
+    //        "20171OTH": { unitRate: "", flatRate: "" },
+
+    //        // 2017 Summer Rates
+    //        "20172STD": { unitRate: "25732", flatRate: "2666" },
+    //        "20172GB": { unitRate: "n/a", flatRate: "2710" },
+    //        "20172GCA": { unitRate: "n/a", flatRate: "2772" },
+    //        "20172GE": { unitRate: "n/a", flatRate: "2774" },
+    //        "20172DT3": { unitRate: "29142", flatRate: "2666" },
+    //        "20172AD3": { unitRate: "29445", flatRate: "2666" },
+    //        "20172LAW": { unitRate: "29643", flatRate: "2214" },
+    //        "20172MED": { unitRate: "29424", flatRate: "2666" },
+    //        "20172OTH": { unitRate: "", flatRate: "" },
+
+    //        // 2017 Fall Rates
+    //        "20173STD": { unitRate: "26732", flatRate: "3666" },
+    //        "20173GB": { unitRate: "n/a", flatRate: "3710" },
+    //        "20173GCA": { unitRate: "n/a", flatRate: "3774" },
+    //        "20173GE": { unitRate: "n/a", flatRate: "3774" },
+    //        "20173DT3": { unitRate: "30142", flatRate: "3666" },
+    //        "20173AD3": { unitRate: "30445", flatRate: "3666" },
+    //        "20173LAW": { unitRate: "30643", flatRate: "3214" },
+    //        "20173MED": { unitRate: "30424", flatRate: "3666" },
+    //        "20173OTH": { unitRate: "", flatRate: "" },
+    //        // 2018 Spring Rates
+    //        "20181STD": { unitRate: "27732", flatRate: "4666" },
+    //        "20181GB": { unitRate: "n/a", flatRate: "4710" },
+    //        "20181GCA": { unitRate: "n/a", flatRate: "4772" },
+    //        "20181GE": { unitRate: "n/a", flatRate: "4774" },
+    //        "20181DT3": { unitRate: "31142", flatRate: "4666" },
+    //        "20181AD3": { unitRate: "31445", flatRate: "4666" },
+    //        "20181LAW": { unitRate: "31643", flatRate: "4214" },
+    //        "20181MED": { unitRate: "31424", flatRate: "4666" },
+    //        "20181OTH": { unitRate: "", flatRate: "" }
+    //    };
 
     $(document).ready(function () {
 

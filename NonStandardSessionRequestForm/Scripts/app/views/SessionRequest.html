@@ -73,7 +73,7 @@
                     &nbsp;
                 </div>
                 <div class="col-md-8">
-                    <abbr title="Click here if you want to add Sections to this Session">
+                    <abbr title="Click the Add a Section button if you want to provide a list of the sections that will be scheduled in the session you are requesting.">
                         <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" required ng-click="AddSection();">
                             Add a Section
                         </kendo-button>
@@ -87,7 +87,9 @@
         <div class="col-md-4" id="secondColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionCode.$invalid && sessionRequestForm.$submitted}">
                 <label for="sessionCode" class="col-md-4 control-label">
-                    <abbr title="3-digit Session code">Session Code:</abbr>
+                    <abbr title="Enter the 3-digit code that was used for this session previously. If you do not know the Session Code assigned to this academic program, or if the special program is new, please leave this field blank">
+                        Session Code:
+                    </abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-auto-complete="sessCode" class="form-control" id="sessionCode" name="sessionCode" maxlength="4" required 
