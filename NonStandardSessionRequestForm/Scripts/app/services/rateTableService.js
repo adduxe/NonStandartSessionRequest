@@ -4,7 +4,7 @@ sessionModule.factory('RateTable', ['$resource', function ($resource) {
 
     return $resource(
         '/api/ratetable', null,
-        { "query": { method: "GET" } }
+        { "query": { method: "GET", isArray: true} }
     );
 
 }])
