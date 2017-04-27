@@ -244,13 +244,13 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
         $scope.session.sessionCode = $scope.sessCode.value();
+        $scope.session.sessionName = 
+        $http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
+            .then(function (response) {
+                alert("Data posted!")
+                $location("www.usc.edu");
+            })
 
-        //$http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
-        //    .then(function (response) {
-        //        alert("Data posted!");
-        //    })
-
-        Sessions.update(null, $scope.session);
         return;
     }
 
@@ -323,8 +323,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
 
         $scope.session = {
 
-            academicTerm:           "",
-            sessionCode:            "",
+            academicTerm: "",
+            sessionCode: "",
+            sessionName: "",
             owningSchool:           "Engineering",     // from Shib
             owningDepartment:       "Environmental",     // from Shib
             userContact:            "Jessie James",     // from Shib
