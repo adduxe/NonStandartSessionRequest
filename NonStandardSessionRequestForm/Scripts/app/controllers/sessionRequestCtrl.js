@@ -1,5 +1,5 @@
 ﻿"use strict";
-sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", function ($scope, $http, RateTable) {
+sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", "Sessions", function ($scope, $http, RateTable, Sessions) {
     
         // Add Semester Break functionality
     $scope.AddSemesterBreaks = function () {
@@ -244,11 +244,13 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
         $scope.session.sessionCode = $scope.sessCode.value();
-//        $http.post("http://oweb7-vm.usc.edu/NonStandardSessionRequest/api/sessionrequests", $scope.session, { headers: {'Content-Type': 'application/json'} })
-        $http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
-            .then(function (response) {
-                alert("Data posted!");
-            })
+
+        //$http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
+        //    .then(function (response) {
+        //        alert("Data posted!");
+        //    })
+
+        Sessions.update(null, $scope.session);
         return;
     }
 
@@ -257,15 +259,8 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
     function GetRateTable() {
 
         $scope.rates = RateTable.query(function () {
-            ;
+            ;       // just load the table
         });
-        //var response = '';
-        //$http.get("http://" + window.location.host + "/api/ratetable")
-        //    .then(function mySuccess(response) {
-        //        $scope.rates = response.data;
-        //    }, function myError(response) {
-        //        alert(response.statusText);
-        //    });
         return;
     }   // GetRateTable()
 
