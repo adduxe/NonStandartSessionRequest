@@ -24,8 +24,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    await client.SessionRequest.PostBySessionDTOAsync(session);
-                    return Ok();
+                    var createdSession = await client.SessionRequest.PostBySessionDTOAsync(session);
+                    return Ok(createdSession);
                 }
             }
             catch (HttpOperationException apiEx)
