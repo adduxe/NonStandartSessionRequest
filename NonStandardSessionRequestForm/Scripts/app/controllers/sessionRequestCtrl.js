@@ -88,9 +88,9 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
 
             } else {        // dates OK.  Calculate computed date fields.
 
-                $scope.session.lastDayForAddDrop        = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
-                $scope.session.lastDayForEnrollChange   = ComputeDate(startDt, endDt, 45); // Last day to Change Enrollment Options (40%)
-                $scope.session.lastDayForWithdrawal     = ComputeDate(startDt, endDt, 80);   // Last Day to Withdraw (80%)
+                $scope.session.lastDayForAddDrop                = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
+                $scope.session.lastDayForEnrollmentOptionChange = ComputeDate(startDt, endDt, 45);    // Last day to Change Enrollment Options (40%)
+                $scope.session.lastDayForWithdrawal             = ComputeDate(startDt, endDt, 80);    // Last Day to Withdraw (80%)
 
             }   // if (startDt...
         }   // if (($scope...
@@ -338,7 +338,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
             firstDayOfClass:        "",
             lastDayOfClass:         "",
             lastDayForAddDrop:      "",
-            lastDayForEnrollChange: "",
+            lastDayForEnrollmentOptionChange: "",
             lastDayForWithdrawal:   "",
             firstDayOfFinals:       "",
             firstDayForFinalGrading: "",
