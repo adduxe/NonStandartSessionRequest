@@ -16,86 +16,32 @@ namespace SessionRequestApi.Client
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static object Get(this ISubmissions operations)
+            /// <param name='department'>
+            /// Possible values include: 'Fao', 'Rnr'
+            /// </param>
+            /// <param name='status'>
+            /// Possible values include: 'Pending', 'Approved', 'Rejected'
+            /// </param>
+            public static object GetByDepartmentStatus(this ISubmissions operations, string department = default(string), string status = default(string))
             {
-                return operations.GetAsync().GetAwaiter().GetResult();
+                return operations.GetByDepartmentStatusAsync(department, status).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='department'>
+            /// Possible values include: 'Fao', 'Rnr'
+            /// </param>
+            /// <param name='status'>
+            /// Possible values include: 'Pending', 'Approved', 'Rejected'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAsync(this ISubmissions operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetByDepartmentStatusAsync(this ISubmissions operations, string department = default(string), string status = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object GetPending(this ISubmissions operations)
-            {
-                return operations.GetPendingAsync().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetPendingAsync(this ISubmissions operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetPendingWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object GetApproved(this ISubmissions operations)
-            {
-                return operations.GetApprovedAsync().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetApprovedAsync(this ISubmissions operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetApprovedWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object GetRejected(this ISubmissions operations)
-            {
-                return operations.GetRejectedAsync().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetRejectedAsync(this ISubmissions operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetRejectedWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByDepartmentStatusWithHttpMessagesAsync(department, status, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
