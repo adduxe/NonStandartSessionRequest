@@ -74,7 +74,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    var sessionRequest = await client.Submissions.GetPendingAsync();
+                    var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(status: "Pending");
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
                     return ResponseMessage(new HttpResponseMessage
                     {

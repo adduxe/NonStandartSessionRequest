@@ -44,9 +44,9 @@ namespace SessionRequestApi.Client
             /// </param>
             /// <param name='sessionDTO'>
             /// </param>
-            public static object PostBySessionDTO(this ISessionRequest operations, Session sessionDTO)
+            public static void PostBySessionDTO(this ISessionRequest operations, Session sessionDTO)
             {
-                return operations.PostBySessionDTOAsync(sessionDTO).GetAwaiter().GetResult();
+                operations.PostBySessionDTOAsync(sessionDTO).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -57,12 +57,9 @@ namespace SessionRequestApi.Client
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostBySessionDTOAsync(this ISessionRequest operations, Session sessionDTO, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PostBySessionDTOAsync(this ISessionRequest operations, Session sessionDTO, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostBySessionDTOWithHttpMessagesAsync(sessionDTO, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.PostBySessionDTOWithHttpMessagesAsync(sessionDTO, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
