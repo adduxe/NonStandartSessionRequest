@@ -51,7 +51,7 @@
                     <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="rateType" name="rateType" required ng-model="session.rateType" ng-change="SetRates();">
+                    <select class="form-control" id="rateType" name="rateType" ng-model="session.rateType" ng-change="SetRates();">
                         <option ng-repeat="eachRate in rateTypes" value="{{ eachRate.rateCode }}">{{ eachRate.rateName }}</option>
                     </select>
                 </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-md-8" style="align-content:center;">
                     <abbr title="A break of at least five consecutive days during the semester or session when the student is not scheduled to attend a course OR have contact with the course instructor. Two examples of session breaks are the university's Thanksgiving break, which is a five day instructional gap (Wed, Thurs, Friday, Sat, and Sun) and Spring Break, which is a nine day gap in instruction (Sa, Su, Mo, Tu, We, Th, Fr, Sa, Su).">
-                        <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton" required ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
+                        <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton" ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();">
                             Add a Session Break
                         </kendo-button>
                     </abbr>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-md-8">
                     <abbr title="Click the Add a Section button if you want to provide a list of the sections that will be scheduled in the session you are requesting.">
-                        <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" required ng-click="AddSection();">
+                        <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" ng-click="AddSection();">
                             Add a Section
                         </kendo-button>
                     </abbr>
@@ -123,17 +123,17 @@
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" required ng-model="session.uscCampusLocation">
+                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" ng-disabled="(isClassHeldAtUPC != 'N')" ng-model="session.uscCampusLocation">
                         <option ng-repeat="eachCampus in campusLocs" value="{{ eachCampus.campusCode }}">{{ eachCampus.campusName }}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
                 <label for="tuitionUnitRate" class="col-md-4 control-label">
-                    <abbr title="Tuition per unit rate in dollars">Tuition per Unit:</abbr>
+                    <abbr title="Tuition per unit rate in dollars">Tuition <br/> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" required ng-model="session.ratePerUnitAmount" />
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -143,7 +143,7 @@
                     </abbr>:
                 </label>
                 <div class="col-md-8">
-                    <textarea type="text" class="form-control" id="sessionComment" name="sessionComment" maxlength="60" required ng-model="session.comments" />
+                    <textarea type="text" class="form-control" id="sessionComment" name="sessionComment" maxlength="60" ng-model="session.comments" />
                 </div>
             </div>
         </div>
@@ -177,18 +177,18 @@
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.otherCampusLocation.$invalid && sessionRequestForm.$submitted}">
                 <label for="otherCampusLocation" class="col-md-6 control-label">
-                    <abbr title="Indicate a campus other than the ones listed in the dropdown">Campus<br/>Location:</abbr>
+                    <abbr title="Indicate a campus other than the ones listed in the dropdown">Other campus<br/>location:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20" ng-model="session.otherCampusLocation" />
+                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20" ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">
                 <label for="tuitionFlatRate" class="col-md-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Tuition Flat Rate:</abbr>
+                    <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly required ng-model="session.rateFlatAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly ng-model="session.rateFlatAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.flatUnitsMax.$invalid && sessionRequestForm.$submitted}">
@@ -264,7 +264,7 @@
                         <abbr title="A 5-digit identifier.  Make sure the number you enter is within the range assigned to your department.">Section Number:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" required ng-model="eachSection.sectionNumber" />
+                        <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" ng-model="eachSection.sectionNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionTitle.$invalid && sessionRequestForm.$submitted}">
@@ -272,7 +272,7 @@
                         <abbr title="The title for the course that will print in the Schedule of Classes and on student transcripts.">Section Title:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" required ng-model="eachSection.title" />
+                        <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" ng-model="eachSection.title" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.incomeAcctNumber.$invalid && sessionRequestForm.$submitted}">
@@ -280,7 +280,7 @@
                         <abbr title="The account number to which enrollment in the class should be credited.">Income Account No.:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" required ng-model="eachSection.incomeAccountNumber" />
+                        <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" ng-model="eachSection.incomeAccountNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.addClassSched.$invalid && sessionRequestForm.$submitted}">
@@ -289,7 +289,7 @@
                     </label>
                     <div class="col-md-6">
                         <abbr title="Click here to add a day, begin, and end times for the class.">
-                            <kendo-button id="addClassSched" name="addClassSched" class="uscRedButton" required ng-click="AddSchedule(eachSection);">
+                            <kendo-button id="addClassSched" name="addClassSched" class="uscRedButton" ng-click="AddSchedule(eachSection);">
                                 Add a Schedule
                             </kendo-button>
                         </abbr>
@@ -304,7 +304,7 @@
                         <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">Prefix:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" required ng-model="eachSection.prefix" />
+                        <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" ng-model="eachSection.prefix" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.unitValue.$invalid && sessionRequestForm.$submitted}">
@@ -314,7 +314,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="unitValue" name="unitValue" maxlength="25" required ng-model="eachSection.unitValue" />
+                        <input type="text" class="form-control" id="unitValue" name="unitValue" maxlength="25" ng-model="eachSection.unitValue" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.enrollEstimate.$invalid && sessionRequestForm.$submitted}">
@@ -324,7 +324,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="number" class="form-control" id="enrollEstimate" name="enrollEstimate" value="0" min="0" max="999" maxlength="3" required ng-model="eachSection.estimatedEnrollment" />
+                        <input type="number" class="form-control" id="enrollEstimate" name="enrollEstimate" value="0" min="0" max="999" maxlength="3" ng-model="eachSection.estimatedEnrollment" />
                     </div>
                 </div>
             </div>
@@ -336,7 +336,7 @@
                         <abbr title="A 3-digit code of the course being offered. This number, combined with the Prefix, gives a complete designation for the course, such as BUAD-494.">Course Number:</abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" required ng-model="eachSection.courseNumber" />
+                        <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" ng-model="eachSection.courseNumber" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.instructorName.$invalid && sessionRequestForm.$submitted}">
@@ -346,7 +346,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="instructorName" name="instructorName" maxlength="25" required ng-model="eachSection.instructorName" />
+                        <input type="text" class="form-control" id="instructorName" name="instructorName" maxlength="25" ng-model="eachSection.instructorName" />
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionComment.$invalid && sessionRequestForm.$submitted}">
@@ -356,7 +356,7 @@
                         </abbr>
                     </label>
                     <div class="col-md-6">
-                        <textarea type="text" class="form-control" id="sectionComment" name="sectionComment" maxlength="60" required ng-model="eachSection.comments" />
+                        <textarea type="text" class="form-control" id="sectionComment" name="sectionComment" maxlength="60" ng-model="eachSection.comments" />
                     </div>
                 </div>
             </div>
