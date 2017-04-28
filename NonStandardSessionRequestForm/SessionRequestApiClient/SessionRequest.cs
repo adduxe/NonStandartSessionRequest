@@ -311,6 +311,33 @@ namespace SessionRequestApi.Client
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    Session _tmp_ = null;
+                    if (_httpResponse.Content.Headers.ContentType.MediaType == "application/xml" &&
+                        XmlSerialization.Root(XmlSerialization.ToDeserializer(e => Session.XmlDeserialize(e)))(System.Xml.Linq.XElement.Parse(_responseContent), out _tmp_))
+                    {
+                        _result.Body = _tmp_;
+                    }
+                    else
+                    {
+                        _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Session>(_responseContent, Client.DeserializationSettings);
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
