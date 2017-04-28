@@ -244,12 +244,14 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
 
-        var sessionValue = trim($scope.sessCode.value());
+//        $scope.session.sessionCode = $scope.sessCode.value();
+        var sessionValue = $scope.sessCode.value().trim();
         $scope.session.sessionCode = sessionValue.substring(0, 3);
-        $scope.session.sessionName = str.substring(0, 1)
+        $scope.session.sessionName = sessionValue.substring(3);
+        $scope.session.sessionName = $scope.session.sessionName.trim();
         $http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
             .then(function (response) {
-                alert("Data posted!")
+                alert("Data posted!");
                 $location("www.usc.edu");
             })
 
