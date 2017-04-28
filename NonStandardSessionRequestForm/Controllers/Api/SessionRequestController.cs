@@ -75,14 +75,14 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
-        [Route("submissions/pending")]
-        public async Task<IHttpActionResult> GetPendingSubmissions()
+        [Route("submissions")]
+        public async Task<IHttpActionResult> GetSubmissions(string department = null, string status = null)
         {
             try
             {
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(status: "Pending");
+                    var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(department, status);
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
                     return ResponseMessage(new HttpResponseMessage
                     {
