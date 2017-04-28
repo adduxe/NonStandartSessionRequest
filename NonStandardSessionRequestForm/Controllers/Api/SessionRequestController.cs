@@ -24,6 +24,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
+                    session.SubmitDate = DateTime.Now;
                     var createdSession = await client.SessionRequest.PostBySessionDTOAsync(session);
                     var submission = new Submission
                     {
