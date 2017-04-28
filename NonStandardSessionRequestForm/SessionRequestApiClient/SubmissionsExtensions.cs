@@ -50,6 +50,32 @@ namespace SessionRequestApi.Client
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='submissionDTO'>
+            /// </param>
+            public static Submission PostBySubmissionDTO(this ISubmissions operations, Submission submissionDTO)
+            {
+                return operations.PostBySubmissionDTOAsync(submissionDTO).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='submissionDTO'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Submission> PostBySubmissionDTOAsync(this ISubmissions operations, Submission submissionDTO, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PostBySubmissionDTOWithHttpMessagesAsync(submissionDTO, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='submissionId'>
             /// </param>
             /// <param name='submissionDTO'>

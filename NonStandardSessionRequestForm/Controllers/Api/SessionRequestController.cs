@@ -25,7 +25,14 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var createdSession = await client.SessionRequest.PostBySessionDTOAsync(session);
-                    return Ok(createdSession);
+                    var submission = new Submission
+                    {
+                        RequestId = createdSession.RequestId,                        
+                    };
+
+                    await client.Submissions.PostBySubmissionDTOAsync(submission);
+
+                    return Ok(createdSession.RequestId);
                 }
             }
             catch (HttpOperationException apiEx)
