@@ -243,8 +243,10 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
         // ValidateForm();
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
-        $scope.session.sessionCode = $scope.sessCode.value();
-        $scope.session.sessionName = 
+
+        var sessionValue = trim($scope.sessCode.value());
+        $scope.session.sessionCode = sessionValue.substring(0, 3);
+        $scope.session.sessionName = str.substring(0, 1)
         $http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
             .then(function (response) {
                 alert("Data posted!")
