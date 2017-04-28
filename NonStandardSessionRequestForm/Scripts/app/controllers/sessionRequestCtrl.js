@@ -183,7 +183,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
                 if (value.term == $scope.session.academicTerm) {
                     angular.forEach(value.rateTypes, function (value) {
                         if (value.rateTypeCode == $scope.session.rateType) {
-                            $scope.session.rateFlatAmount = value.rateTypeFlatRate;
+                            $scope.session.flatRateAmount = value.rateTypeFlatRate;
                             $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
                         }
                     })
@@ -249,11 +249,22 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
         $scope.session.sessionCode = sessionValue.substring(0, 3);
         $scope.session.sessionName = sessionValue.substring(3);
         $scope.session.sessionName = $scope.session.sessionName.trim();
-        $http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
-            .then(function (response) {
-                alert("Data posted!");
-                $location("www.usc.edu");
-            })
+
+        Sessions.save($scope.session).$promise.then(
+            function () {
+                window.location.href = "www.usc.edu";
+            }, 
+            function () {
+                alert("Error in writing session.");
+            }
+       );
+
+        alert(postResponse);
+        //$http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
+        //    .then(function (response) {
+        //        alert("Data posted!");
+        //        $location("www.usc.edu");
+        //    })
 
         return;
     }
@@ -348,7 +359,7 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
             otherCampusLocation:    "",
             rateType:               "",
             ratePerUnitAmount:      "",
-            rateFlatAmount:         "",
+            flatRateAmount:         "",
             flatRateUnitsMin:       0,
             flatRateUnitsMax:       0,
             comments:               "",

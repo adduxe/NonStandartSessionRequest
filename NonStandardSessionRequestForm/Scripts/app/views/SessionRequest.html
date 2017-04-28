@@ -133,7 +133,7 @@
                     <abbr title="Tuition per unit rate in dollars">Tuition <br/> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" ng-model="session.ratePerUnitAmount" />
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" readonly ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -188,7 +188,7 @@
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly ng-model="session.rateFlatAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly ng-model="session.flatRateAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.flatUnitsMax.$invalid && sessionRequestForm.$submitted}">
@@ -362,12 +362,12 @@
             </div>
 
             <div class="col-md-12" ng-repeat="eachSched in eachSection.schedules">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group" ng-class="{'has-error': sessionRequestForm.classDay.$invalid && sessionRequestForm.$submitted}">
-                        <label for="classDay" class="col-md-5 control-label">
+                        <label for="classDay" class="col-md-4 control-label">
                             Class Day
                         </label>
-                        <div class="col-md-7">
+                        <div class="col-md-8">
                             <select class="form-control" id="classDay" name="classDay" maxlength="25" ng-model="eachSched.classDayOfWeek">
                                 <option value="" disabled >Select a day</option>
                                 <option value="Sun">Sunday</option>
@@ -402,7 +402,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <a class="uscRedButton" href="javascript:;" ng-click="eachSection.schedules.splice($index,1);" title="Delete this Schedule">
                         [ X ] Remove this Schedule
                     </a>
@@ -418,7 +418,7 @@
         <div class="col-md-5">
         </div>
         <div class="col-md-2">
-            <kendo-button type="submit" class="form-control uscRedButton" ng-click="SubmitForm();">Submit</kendo-button>
+            <input type="submit" class="form-control uscRedButton" ng-click="SubmitForm();" value="Submit" />
         </div>
         <div class="col-md-5">
         </div>
