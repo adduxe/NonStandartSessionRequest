@@ -23,7 +23,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the Submission class.
         /// </summary>
-        public Submission(int? submissionId = default(int?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string))
+        public Submission(int? submissionId = default(int?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), int? requestId = default(int?))
         {
             SubmissionId = submissionId;
             FaoAction = faoAction;
@@ -32,6 +32,7 @@ namespace SessionRequestApi.Client.Models
             RnrAction = rnrAction;
             RnrActionDate = rnrActionDate;
             RnrActionReason = rnrActionReason;
+            RequestId = requestId;
             CustomInit();
         }
 
@@ -76,6 +77,11 @@ namespace SessionRequestApi.Client.Models
         public string RnrActionReason { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "requestId")]
+        public int? RequestId { get; set; }
+
+        /// <summary>
         /// Serializes the object to an XML node
         /// </summary>
         internal XElement XmlSerialize(XElement result)
@@ -107,6 +113,10 @@ namespace SessionRequestApi.Client.Models
             if( null != RnrActionReason )
             {
                 result.Add(new XElement("rnrActionReason", RnrActionReason) );
+            }
+            if( null != RequestId )
+            {
+                result.Add(new XElement("requestId", RequestId) );
             }
             return result;
         }
@@ -162,6 +172,12 @@ namespace SessionRequestApi.Client.Models
             if (deserializeRnrActionReason(payload, "rnrActionReason", out resultRnrActionReason))
             {
                 result.RnrActionReason = resultRnrActionReason;
+            }
+            var deserializeRequestId = XmlSerialization.ToDeserializer(e => (int?)e);
+            int? resultRequestId;
+            if (deserializeRequestId(payload, "requestId", out resultRequestId))
+            {
+                result.RequestId = resultRequestId;
             }
             return result;
         }
