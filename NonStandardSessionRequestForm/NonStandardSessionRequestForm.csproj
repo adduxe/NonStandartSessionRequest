@@ -319,23 +319,21 @@
     <None Include="Properties\PublishProfiles\local debug.pubxml" />
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
+    <Content Include="Scripts\app\controllers\SessionResultCtrl.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
     <Content Include="Scripts\app\services\updateService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
-    <Content Include="Scripts\app\controllers\sessionQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionRequestCtrl.js" />
-    <Content Include="Scripts\app\controllers\sessionSubmissionsCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionReviewCtrl.js" />
     <Content Include="Scripts\app\services\sessionsService.js" />
     <Content Include="Scripts\app\services\temp.js" />
     <Content Include="Scripts\app\SessionModule.js" />
-    <Content Include="Scripts\app\views\SessionQueue.html" />
     <Content Include="Scripts\app\views\SessionRequest.html" />
-    <Content Include="Scripts\app\views\SessionSubmissions.html" />
     <Content Include="Scripts\app\views\SessionReview.html" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\app\views\SubmissionResult.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -356,6 +354,7 @@
     <Content Include="Scripts\kendo\2017.1.118\kendo.core.min.js.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -372,6 +371,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\SessionRequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\GlobalErrorLogger.cs" />

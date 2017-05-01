@@ -1,5 +1,7 @@
 ﻿"use strict";
-sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", "Sessions", function ($scope, $http, RateTable, Sessions) {
+sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope", "$http", "$location",
+
+    function (RateTable, Sessions, $scope, $http, $location) {
     
         // Add Semester Break functionality
     $scope.AddSemesterBreaks = function () {
@@ -238,33 +240,57 @@ sessionModule.controller("sessionRequestCtrl", ["$scope", "$http", "RateTable", 
         $scope.semesters = semChoices;
     }   // PopulateSemesterDropdown
 
+    function IsFormValid() {
 
-    $scope.SubmitForm = function () {
-        // ValidateForm();
+        var formValid = true;
+
+        var reqdFields = [
+            $scope.session.academicTerm,
+            $scope.session.firstDayOfClass,
+            $scope.session.lastDayOfClass,
+            $scope.session.firstDayOfFinals,
+            $scope.session.lastDayOfFinals
+        ];
+
+        for (var i = 0; i < reqdFields.length; ++i){
+            if(reqdFields[i].length == 0){
+                formValid = false; // test
+                break;
+            }
+        };
+        return formValid;
+    }   // IsFormValid()
+
+
+    $scope.SubmitForm = function(){
+
+        if (IsFormValid()) {
+            alert("Please provide required fields.");
+            return;
+        };
+
         var today = new Date();
         $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
 
-//        $scope.session.sessionCode = $scope.sessCode.value();
         var sessionValue = $scope.sessCode.value().trim();
         $scope.session.sessionCode = sessionValue.substring(0, 3);
         $scope.session.sessionName = sessionValue.substring(3);
         $scope.session.sessionName = $scope.session.sessionName.trim();
 
-        Sessions.save($scope.session).$promise.then(
-            function () {
-                window.location.href = "www.usc.edu";
-            }, 
-            function () {
-                alert("Error in writing session.");
-            }
-       );
+        var reqID = Sessions
+            .save($scope.session)
+            .$promise.then(
 
-        alert(postResponse);
-        //$http.post("http://" + window.location.host + "/api/sessionrequests", $scope.session, null)
-        //    .then(function (response) {
-        //        alert("Data posted!");
-        //        $location("www.usc.edu");
-        //    })
+                function () {
+                    //                window.location.href = "successPage.usc.edu";
+                    alert("Submission successful");
+                    $location.url("/Result?requestId=" + reqID);
+                },
+
+                function () {
+                    alert("Error in writing session.");
+                }
+            );
 
         return;
     }

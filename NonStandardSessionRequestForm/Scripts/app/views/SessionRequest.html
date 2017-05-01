@@ -1,5 +1,5 @@
 ﻿
-<form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()">
+<form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()" method="POST" >
 
     <div class="row">
         
@@ -10,27 +10,27 @@
                     <abbr title="Session semester being applied for">For Semester:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="semester" name="semester" required ng-model="session.academicTerm" ng-change="SetRates();">
+                    <select class="form-control" id="semester" name="semester" ng-required="true" ng-model="session.academicTerm" ng-change="SetRates();">
                         <option ng-repeat="eachSem in semesters" value="{{ eachSem.semCode }}">{{ eachSem.semName }}</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesStartDate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classStartDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="classesStartDate" class="col-md-4 control-label">
                     <abbr title="Session Start Date">First day<br>of Classes:</abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="classStartDate" name="classStartDate" 
-                           ng-change="ClassDatesChanged();" maxlength="10" required ng-model="session.firstDayOfClass" />
+                           ng-change="ClassDatesChanged();" maxlength="10" ng-model="session.firstDayOfClass" ng-required="true" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classesEndDate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classEndDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="classesEndDate" class="col-md-4 control-label">
                     <abbr title="Session End Date">Last day<br>of Classes:</abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="classEndDate" name="classEndDate" 
-                           ng-change="ClassDatesChanged();" maxlength="10" required ng-model="session.lastDayOfClass" />
+                           ng-change="ClassDatesChanged();" maxlength="10" ng-model="session.lastDayOfClass"  ng-required="true" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.isClassHeldAtUPC.$invalid && sessionRequestForm.$submitted}">
@@ -93,7 +93,7 @@
                 </label>
                 <div class="col-md-8">
                     <input kendo-auto-complete="sessCode" class="form-control" id="sessionCode" name="sessionCode" maxlength="4" required 
-                           k-ng-model="session.sessionCode" k-data-source="sessionCodes" />
+                           k-ng-model="session.sessionCode" k-data-source="sessionCodes"  ng-required="true" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
@@ -104,7 +104,7 @@
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="10" 
-                           ng-change="FinalsDatesChanged();" required ng-model="session.firstDayOfFinals" />
+                           ng-change="FinalsDatesChanged();" ng-model="session.firstDayOfFinals"  ng-required="true" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
@@ -115,7 +115,7 @@
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="10" 
-                           ng-change="FinalsDatesChanged();" required ng-model="session.lastDayOfFinals" />
+                           ng-change="FinalsDatesChanged();" ng-model="session.lastDayOfFinals"  ng-required="true" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.offCampusLocation.$invalid && sessionRequestForm.$submitted}">
@@ -191,18 +191,19 @@
                     <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly ng-model="session.flatRateAmount" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.flatUnitsMax.$invalid && sessionRequestForm.$submitted}">
-                <label for="flatUnitsMin" class="col-md-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
-                </label>
-                <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" value="1" min="1" max="18" 
-                           ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
-                    &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" value="2" min="2" max="30" 
-                           ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
+            <!--<div class="form-group" ng-class="{'has-error': sessionRequestForm.flatUnitsMax.$invalid && sessionRequestForm.$submitted}">-->
+            <div class="form-group">
+                    <label for="flatUnitsMin" class="col-md-6 control-label">
+                        <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
+                    </label>
+                    <div class="col-md-6" style="align-items:center;">
+                        <input id="flatUnitsMin" name="flatUnitsMin" type="number" value="1" min="1" max="18"
+                               ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
+                        &nbsp;&nbsp;to&nbsp;&nbsp;
+                        <input id="flatUnitsMax" name="flatUnitsMax" type="number" value="2" min="2" max="30"
+                               ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
+                    </div>
                 </div>
-            </div>
         </div>
         <!-- End of 3rd Column -->
     </div> <!-- class="row" -->

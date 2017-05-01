@@ -9,20 +9,15 @@ sessionModule.config([
                 templateUrl: "scripts/app/views/SessionRequest.html",
                 controller: "sessionRequestCtrl"
             })
-            .when("/Queue",
-            {
-                templateUrl: "scripts/app/views/SessionQueue.html",
-                controller: "sessionQueueCtrl"
-            })
-            .when("/Submissions",
-            {
-                templateUrl: "scripts/app/views/SessionSubmissions.html",
-                controller: "sessionSubmissionsCtrl"
-            })
             .when("/Review",
             {
                 templateUrl: "scripts/app/views/SessionReview.html",
                 controller: "sessionReviewCtrl"
+            })
+            .when("/Result",
+            {
+                templateUrl: "scripts/app/views/SubmissionResult.html",
+                controller: "sessionResultCtrl"
             })
             .otherwise({ redirectTo: "/" });
 
