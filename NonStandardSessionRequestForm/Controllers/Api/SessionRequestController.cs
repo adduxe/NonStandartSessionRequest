@@ -1,5 +1,6 @@
 ﻿using Microsoft.Rest;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using SessionRequestApi.Client;
 using SessionRequestApi.Client.Models;
@@ -9,6 +10,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using UvApi.RnrSWebSess.Client;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 {
@@ -16,6 +18,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
     public class SessionRequestController : ApiController
     {
         private readonly Uri _dataApiUri = new Uri(ConfigurationManager.AppSettings["DataApiUrl"]);
+        private readonly Uri _uvApiUri = new Uri(ConfigurationManager.AppSettings["UvApiUrl"]);
 
         [Route("sessionrequests")]
         public async Task<IHttpActionResult> PostSessionRequest(Session session)
@@ -271,27 +274,51 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
+        [Route("rnrswebsess")]
+        public async Task<IHttpActionResult> PostRnrSWebSess(JToken json)
+        {
+            try
+            {
+                using (var client = new UvApiClient(_uvApiUri))
+                {
+                    await client.RnrSWebSess.PostAsync(json.ToString());
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET rate table! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET rate table! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+
+            return Ok();
+        }
+
         //[Route("authorization/users/{uscId}")]
         //public async Task<IHttpActionResult> GetUser(string uscId)
         //{
-            //try
-            //{
-            //    using (var client = new RNRSessionRequestAPI(_dataApiUri))
-            //    {
-            //        await clien
-            //        return Ok();
-            //    }
-            //}
-            //catch (HttpOperationException apiEx)
-            //{
-            //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", apiEx.Message);
-            //    return InternalServerError(apiEx);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", ex.Message);
-            //    return InternalServerError(ex);
-            //}
+        //try
+        //{
+        //    using (var client = new RNRSessionRequestAPI(_dataApiUri))
+        //    {
+        //        await clien
+        //        return Ok();
+        //    }
+        //}
+        //catch (HttpOperationException apiEx)
+        //{
+        //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", apiEx.Message);
+        //    return InternalServerError(apiEx);
+        //}
+        //catch (Exception ex)
+        //{
+        //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", ex.Message);
+        //    return InternalServerError(ex);
+        //}
         //}
 
 
