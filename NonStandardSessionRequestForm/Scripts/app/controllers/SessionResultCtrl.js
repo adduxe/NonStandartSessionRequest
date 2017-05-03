@@ -3,8 +3,7 @@ sessionModule.controller("sessionResultCtrl", ["RateTable", "Sessions", "$scope"
 
     function (RateTable, Sessions, $scope, $location) {
         
-        var reqID = $location.search()["requestId"];
-        alert(reqID);
+        var reqID = $location.search()["requestId"];        // submission ID
 
         $scope.session = Sessions.get({ requestId: reqID });
 

@@ -6,15 +6,16 @@
 </head>
 <body ng-controller="sessionReviewCtrl">
 
-    <kendo-grid options="mainGridOptions">
+    <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions">
         <div k-detail-template>
             <kendo-tabstrip>
                 <ul>
                     <li class="k-state-active">Details</li>
                     <li>Sections</li>
+                    <li>Session Breaks</li>
                     <li>Status</li>
                 </ul>
-                <div>
+                <div id="detailTab">
                     <div class="row" style="padding-top:10px;">
                         <div class="col-md-3">
                             <div class="col-sm-3">
@@ -86,28 +87,6 @@
                                 #= data.lastDayOfClass #&nbsp;
                             </div>
                         </div>
-                        <div class="col-sm-2">
-                            <div>
-                                <b class="red">1st Sem Break</b>
-                            </div>
-                            <div class="borders">
-                                #= data.dateSessBreakStart1 #&nbsp;
-                            </div>
-                            <div class="borders">
-                                #= data.dateSessBreakEnd1 #&nbsp;
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div>
-                                <b class="red">2nd Sem Break</b>
-                            </div>
-                            <div class="borders">
-                                #= data.dateSessBreakStart2 #&nbsp;
-                            </div>
-                            <div class="borders">
-                                #= data.dateSessBreakEnd2 #&nbsp;
-                            </div>
-                        </div>
                         <div class="col-sm-1">
                             <div>
                                 <b class="red">Finals</b>
@@ -153,14 +132,17 @@
                     <tbody>
                     </table>
                 </div>
-                <div>
-                    <kendo-grid k-options="sectionGridOptions(dataItem)">
+                <div id="sectionsTab">
+                    <!--<kendo-grid k-options="sectionGridOptions(dataItem)">
                         <div k-detail-template>
                             <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
                         </div>
-                    </kendo-grid>
+                    </kendo-grid>-->
                 </div>
-                <div>
+                <div id="sessionBreakTab">
+                    <!--<kendo-grid k-options="sessionBrkGridOptions(dataItem)"></kendo-grid>-->
+                </div>
+                <div id="statusTab">
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th></th>
