@@ -110,24 +110,21 @@
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th></th>
-                            <th>Approved</th>
-                            <th>Date Approved</th>
-                            <th>Rejection Email</th>
-                            <th>Reject Reason</th>
+                            <td class="red" align="center">Status</td>
+                            <td class="red" align="center">Status Date</th>
+                            <td class="red" align="center">Status Reason</td>
                         </tr>
                         <tr>
-                            <th>FAO</th>
-                            <td>#= data.isApprovedByFAO ? 'Yes' : 'No' #</td>
-                            <td>#= data.dateApprovedFAO #</td>
-                            <td>#= data.dateSentRejectEmailFAO #</td>
-                            <td>#= data.rejectReasonFAO #</td>
+                            <td class="red" align="center"><b>FAO</b></td>
+                            <td align="center">#= data.faoAction #</td>
+                            <td align="center">#= data.faoActionDate #</td>
+                            <td align="center">#= data.faoActionReason #</td>
                         </tr>
                         <tr>
-                            <th>RNR</th>
-                            <td>#= data.isApprovedByRNR ? 'Yes' : 'No' #</td>
-                            <td>#= data.dateApprovedRNR #</td>
-                            <td>#= data.dateSentRejectEmailRNR #</td>
-                            <td>#= data.rejectReasonRNR #</td>
+                            <td class="red" align="center"><b>RNR</b></td>
+                            <td align="center">#= data.rnrAction #</td>
+                            <td align="center">#= data.rnrActionDate #</td>
+                            <td align="center">#= data.rnrActionReason #</td>
                             
                         </tr>
                     </table>

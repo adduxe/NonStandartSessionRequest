@@ -37,7 +37,13 @@
                                                 requestDate: $filter('date')(subm.session.requestDate, "mediumDate"),
                                                 sections: subm.session.sections,
                                                 sessionBreaks: subm.session.sessionBreaks,
-                                                comments: subm.session.comments                        
+                                                comments: subm.session.comments,
+                                                faoAction: subm.faoAction,
+                                                faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
+                                                faoActionReason: subm.faoActionReason,
+                                                rnrAction: subm.rnrAction,
+                                                rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                                rnrActionReason: subm.rnrActionReason
                                             };
                                         }));
                             }, function (error) {
