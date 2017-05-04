@@ -287,12 +287,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to GET rate table! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to POST session to SIS! Error: {Error}", apiEx.Message);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to GET rate table! Error: {Error}", ex.Message);
+                Log.Logger.Error("Failed to POST session to SIS! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
 
@@ -312,12 +312,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to GET rate table! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to GET Session 001 dates! Error: {Error}", apiEx.Message);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to GET rate table! Error: {Error}", ex.Message);
+                Log.Logger.Error("Failed to GET Session 001 dates! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
         }
