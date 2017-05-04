@@ -19,6 +19,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
     {
         private readonly Uri _dataApiUri = new Uri(ConfigurationManager.AppSettings["DataApiUrl"]);
         private readonly Uri _uvApiUri = new Uri(ConfigurationManager.AppSettings["UvApiUrl"]);
+        private readonly Uri _peApiUri = new Uri(ConfigurationManager.AppSettings["PeApiUrl"]);
 
         [Route("sessionrequests")]
         public async Task<IHttpActionResult> PostSessionRequest(Session session)
@@ -298,6 +299,29 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             return Ok();
         }
 
+        [Route("sessions/{term}/001")]
+        public async Task<IHttpActionResult> GetSession001(string term)
+        {
+            try
+            {
+                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                {
+                    var sessionDate = client.SessionDates.Get(term, "001");
+                    return Ok(sessionDate);
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET rate table! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET rate table! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
         //[Route("authorization/users/{uscId}")]
         //public async Task<IHttpActionResult> GetUser(string uscId)
         //{
@@ -320,7 +344,6 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         //    return InternalServerError(ex);
         //}
         //}
-
 
     }
 }
