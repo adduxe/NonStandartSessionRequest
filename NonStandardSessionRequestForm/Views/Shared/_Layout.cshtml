@@ -14,33 +14,33 @@
     <div id="top-banner" class="hidden-xs">
         <div class="container">
             <div class="row">
-                <div id="information-nav" class="col-md-5">
+                <div id="access-nav" class="col-md-3">
                     <ul class="nav navbar-nav navbar-left">
+                        <li><strong>@ViewBag.ShibUserName</strong></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@ViewBag.ShibPhoneNo</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@ViewBag.ShibEmailAddr</li>
+                    </ul>
+                </div>
+                <div id="information-nav" class="col-md-5" style="align-self:center;">
+                    <ul class="nav navbar-nav">
                         <li><strong>@ViewBag.ShibCollege</strong></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-left">
+                    <ul class="nav navbar-nav">
                         <li>@ViewBag.ShibDepartment</li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <ul class="nav navbar-nav">
-                        <div style="width: 252px;" class="pull-left hidden-xs">
+                <div class="col-md-4 pull-right">
+                    <ul class="nav navbar-nav navbar-right">
+                        <div style="width: 252px;" class="pull-right hidden-xs">
                             <a href="http://usc.edu">
                                 <img src="~/Content/images/usc_230.png" class="img-responsive" alt="University of Southern California" />
                             </a>
                         </div>
                     </ul>
-                </div>
-                <div id="access-nav" class="col-md-3">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><strong>@ViewBag.ShibUserName</strong></li>
-                    </ul>
-                    @*<ul class="nav navbar-nav navbar-right">
-                        <li>@ViewBag.ShibPhoneNo</li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@ViewBag.ShibEmailAddr</li>
-                    </ul>*@
                 </div>
             </div>
         </div>
