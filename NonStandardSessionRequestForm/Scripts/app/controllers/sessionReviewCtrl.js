@@ -8,7 +8,6 @@
                     transport: {
                         read: function (e) {
                             Submissions.query(function (data) {
-//                                $scope.sessions =
                                 e.success(
                                     data.map(
                                         function (subm) {
@@ -42,12 +41,11 @@
                                             };
                                         }));
                             }, function (error) {
-                                alert("Cannot load users. " + error.data.message);
+                                alert("Cannot load submissions. " + error.data.message);
                                 //                                e.error(new Error("Cannot load users. " + error.data.message));
                             });
                         }   // read: function()
                     },      // transport {
-//                    data: $scope.sessions,
                     schema: {
                         model: {
                             fields: {
@@ -69,9 +67,9 @@
                     { field: "academicTerm", title: "Term", width: "7.5%" },
                     { field: "sessionCode", title: "Session", width: "7.5%" },
                     { field: "sessionName", title: "Session Name", width: "15%" },
-                    { field: "owningSchool", title: "School", width: "20%" },
-                    { field: "owningDepartment", title: "Department", width: "10%" },
-                    { field: "requestDate", title: "Request Date", width: "20%" },
+                    { field: "owningSchool", title: "School", width: "15%" },
+                    { field: "owningDepartment", title: "Department", width: "15%" },
+                    { field: "requestDate", title: "Request Date", width: "15%" },
                     {
                         command: [
                             { text: "Approve" },

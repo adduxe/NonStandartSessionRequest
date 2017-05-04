@@ -10,72 +10,14 @@
         <div k-detail-template>
             <kendo-tabstrip>
                 <ul>
-                    <li class="k-state-active">Details</li>
-                    <li>Dates</li>
+                    <li class="k-state-active">Dates</li>
+                    <li>Rates</li>
                     <li>Sections</li>
                     <li>Session Breaks</li>
+                    <li>Class Location</li>
                     <li>Status</li>
+                    <li>Contact Info</li>
                 </ul>
-                <div id="detailTab">
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-md-3">
-                            <div class="col-sm-3">
-                                <b class="red">Contact:</b>
-                            </div>
-                            <div class="col-sm-6">
-                                #= data.userContact #
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="col-sm-3">
-                                <b class="red">Email:</b>
-                            </div>
-                            <div class="col-sm-6">
-                                #= data.userEmail #
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-sm-3">
-                                <b class="red">Phone:</b>
-                            </div>
-                            <div class="col-sm-6">
-                                #= data.userPhone #
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-sm-3">
-                            <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= data.isClassHeldAtUPC ? 'Yes' : 'No' #
-                        </div>
-                        <div class="col-sm-3">
-                            <b class="red">Campus Location</b>&nbsp;&nbsp;#= data.uscCampusLocation #
-                        </div>
-                        <div class="col-sm-4">
-                            <b class="red">Other Campus:</b>&nbsp;&nbsp;#= data.otherCampusLocation #
-                        </div>
-                    </div>
-                    <br/>
-                    <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr class="red">
-                            <th>Rate Type</th>
-                            <th>Rate per Unit</th>
-                            <th>Flat Rate</th>
-                            <th>Flat Rate Min. Units</th>
-                            <th>Flat Rate Max. Units</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="black">
-                            <td>#= data.rateType #</td>
-                            <td>#= data.ratePerUnitAmount #</td>
-                            <td>#= data.flatRateAmount #</td>
-                            <td>#= data.flatRateUnitsMin #</td>
-                            <td>#= data.flatRateUnitsMax #</td>
-                        </tr>
-                    <tbody>
-                    </table>
-                </div>
                 <div id="datesTab">
 
                     <div class="row" style="padding-top:10px;">
@@ -117,6 +59,30 @@
                             </table>
                     </div>
                 </div>
+                <div id="ratesTab">
+                    <div class="row">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="red">
+                                    <th>Rate Type</th>
+                                    <th>Rate per Unit</th>
+                                    <th>Flat Rate</th>
+                                    <th>Flat Rate Min. Units</th>
+                                    <th>Flat Rate Max. Units</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="black">
+                                    <td>#= data.rateType #</td>
+                                    <td>#= data.ratePerUnitAmount #</td>
+                                    <td>#= data.flatRateAmount #</td>
+                                    <td>#= data.flatRateUnitsMin #</td>
+                                    <td>#= data.flatRateUnitsMax #</td>
+                                </tr>
+                            <tbody>
+                        </table>
+                    </div>
+                </div>
                 <div id="sectionsTab">
                     <kendo-grid k-options="sectionGridOptions(dataItem)">
                         <div k-detail-template>
@@ -126,6 +92,19 @@
                 </div>
                 <div id="sessionBreakTab">
                     <kendo-grid k-options="sessionBrkGridOptions(dataItem)"></kendo-grid>
+                </div>
+                <div id="locationTab">
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-sm-3">
+                            <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= data.isClassHeldAtUPC ? 'Yes' : 'No' #
+                        </div>
+                        <div class="col-sm-3">
+                            <b class="red">Campus Location</b>&nbsp;&nbsp;#= data.uscCampusLocation #
+                        </div>
+                        <div class="col-sm-4">
+                            <b class="red">Other Campus:</b>&nbsp;&nbsp;#= data.otherCampusLocation #
+                        </div>
+                    </div>
                 </div>
                 <div id="statusTab">
                     <table class="table table-bordered table-hover">
@@ -152,6 +131,34 @@
                             
                         </tr>
                     </table>
+                </div>
+                <div id="contactTab">
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-md-3">
+                            <div class="col-sm-3">
+                                <b class="red">Contact:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userContact #
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-sm-3">
+                                <b class="red">Email:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userEmail #
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-3">
+                                <b class="red">Phone:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userPhone #
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </kendo-tabstrip>
         </div>
