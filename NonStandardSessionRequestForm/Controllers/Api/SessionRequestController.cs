@@ -287,7 +287,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to POST session to SIS! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to POST session to SIS! Error: {Error}", apiEx.Response.Content);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
