@@ -288,12 +288,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             catch (HttpOperationException apiEx)
             {
                 Log.Logger.Error("Failed to POST session to SIS! Error: {Error}", apiEx.Response.Content);
-                return InternalServerError(apiEx);
+                return Content(System.Net.HttpStatusCode.InternalServerError, apiEx.Response.Content);
             }
             catch (Exception ex)
             {
                 Log.Logger.Error("Failed to POST session to SIS! Error: {Error}", ex.Message);
-                return InternalServerError(ex);
+                return InternalServerError();
             }
 
             return Ok();
