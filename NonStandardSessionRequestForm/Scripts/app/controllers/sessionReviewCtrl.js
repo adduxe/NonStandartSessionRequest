@@ -27,7 +27,7 @@
                                                 lastDayOfFinals: $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
                                                 firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                                 lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                                rateType: subm.session.rateType,
+                                                rateType: getRateTypeDescription(subm.session.rateType),
                                                 ratePerUnitAmount: subm.session.ratePerUnitAmount,
                                                 rateFlatAmount: subm.session.rateFlatAmount,
                                                 flatRateUnitsMin: subm.session.flatRateUnitsMin,
@@ -85,41 +85,68 @@
                     }
                 ],
                 editable: "popup"
-    };
+            };
+
+
+        function getRateTypeDescription(rateTypeCode) {
+
+             var rateTypes = [ // Rate type lookup table
+                { rateCode: "STD", rateName: "Standard (001)" },
+                { rateCode: "GB", rateName: "Graduate Business" },
+                { rateCode: "GCA", rateName: "Graduate Cinematic Arts" },
+                { rateCode: "GE", rateName: "Graduate Engineering" },
+                { rateCode: "DT3", rateName: "Dentistry" },
+                { rateCode: "AD3", rateName: "Advanced Dentistry" },
+                { rateCode: "LAW", rateName: "Law" },
+                { rateCode: "MED", rateName: "Medicine" },
+                { rateCode: "OTH", rateName: "Others" }
+            ];
+
+            var rateDesc = "";
+
+            for (var i = 0; i < rateTypes.length; ++i) {
+                if (rateTypes[i].rateCode == rateTypeCode) {
+                    rateDesc = rateTypes[i].rateName;
+                    break;
+                }
+            }
+            return rateDesc;
+        }   // getRateTypeDescription()
 
     $scope.sectionGridOptions = function (dataItem) {
+
         return {
-                dataSource: {
-                        data: dataItem.sections,
-                        pageSize: 5
-        },
-                scrollable: false,
-                sortable: true,
-                pageable: true,
-                columns: [
-                    { field: "sectionNumber", title: "Section", width: "50px" },
-                    { field: "title", title: "Section Title", width: "200px" },
-                    { field: "unitValue", title: "Units", width: "50px" },
-                    { field: "instructorName", title: " Name", width: "150px" } //,
-        ]
-    };
+            dataSource: {
+                data: dataItem.sections,
+                pageSize: 5
+            },
+            scrollable: false,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: "sectionNumber", title: "Section", width: "50px" },
+                { field: "title", title: "Section Title", width: "200px" },
+                { field: "unitValue", title: "Units", width: "50px" },
+                { field: "instructorName", title: " Name", width: "150px" } //,
+            ]
+        };
     };
 
     $scope.scheduleGridOptions = function (dataItem) {
         return {
-                dataSource: {
-                        data: dataItem.schedules,
-                        pageSize: 5,
-        },
-                scrollable: false,
-                sortable: true,
-                pageable: true,
-                columns: [
-                    { field: "classDayOfWeek", title: "Class Day", width: "100px" },
-                    { field: "classStartTime", title: "Start Time", width: "150px" },
-                    { field: "classEndTime", title: "End Time", width: "150px" }
-        ]
-    };
+            dataSource: {
+                data: dataItem.schedules,
+                pageSize: 5,
+            },
+            scrollable: false,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: "classDayOfWeek", title: "Class Day", width: "100px" },
+                { field: "classStartTime", title: "Start Time", width: "150px" },
+                { field: "classEndTime", title: "End Time", width: "150px" }
+            ]
+        };
     };
 
     $scope.sessionBrkGridOptions = function (dataItem) {
@@ -142,13 +169,10 @@
                 columns: [
                     { field: "startDate", title: "Start Date", format: "{0:MMM dd, yyyy}" },
                     { field: "endDate", title: "End Date", format: "{0:MMM dd, yyyy}" }
-        ]
-    };
-    };
+                ]
+            };
+    };  // $scope.sessionBrkGridOptions
 
-
-
-        //    });
 
         //$scope.notifOptions = {
         //    templates: [{

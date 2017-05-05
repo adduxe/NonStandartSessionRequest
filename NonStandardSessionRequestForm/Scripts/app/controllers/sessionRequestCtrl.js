@@ -1294,15 +1294,15 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
 
         $scope.rateTypes = [                // Populate the Rate Type dropdown
 
-	        {rateCode: "STD", rateName: "Standard" },
-	        {rateCode: "GB",  rateName:"Graduate Business"},
-	        {rateCode: "GCA", rateName:"Graduate Cinematic Arts"},
-	        {rateCode: "GE",  rateName:"Graduate Engineering"},
-	        {rateCode: "DT3", rateName:"Dentistry"},
-	        {rateCode: "AD3", rateName:"Advanced Dentistry"},
-	        {rateCode: "LAW", rateName:"Law"},
-	        {rateCode: "MED", rateName:"Medicine"},
-	        {rateCode: "OTH", rateName:"Others"}
+	        { rateCode: "STD", rateName: "Standard (001)" },
+	        { rateCode: "GB",  rateName:"Graduate Business"},
+	        { rateCode: "GCA", rateName:"Graduate Cinematic Arts"},
+	        { rateCode: "GE",  rateName:"Graduate Engineering"},
+	        { rateCode: "DT3", rateName:"Dentistry"},
+	        { rateCode: "AD3", rateName:"Advanced Dentistry"},
+	        { rateCode: "LAW", rateName:"Law"},
+	        { rateCode: "MED", rateName:"Medicine"},
+	        { rateCode: "OTH", rateName:"Others"}
         ];
 
         $scope.campusLocs = [                                   // Populate the Campus Location dropdown.
