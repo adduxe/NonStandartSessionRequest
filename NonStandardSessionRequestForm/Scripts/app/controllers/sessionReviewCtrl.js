@@ -88,30 +88,30 @@
             };
 
 
-        function getRateTypeDescription(rateTypeCode) {
+    function getRateTypeDescription(rateTypeCode) {
 
-             var rateTypes = [ // Rate type lookup table
-                { rateCode: "STD", rateName: "Standard (001)" },
-                { rateCode: "GB", rateName: "Graduate Business" },
-                { rateCode: "GCA", rateName: "Graduate Cinematic Arts" },
-                { rateCode: "GE", rateName: "Graduate Engineering" },
-                { rateCode: "DT3", rateName: "Dentistry" },
-                { rateCode: "AD3", rateName: "Advanced Dentistry" },
-                { rateCode: "LAW", rateName: "Law" },
-                { rateCode: "MED", rateName: "Medicine" },
-                { rateCode: "OTH", rateName: "Others" }
-            ];
+        var rateTypes = [ // Rate type lookup table
+            { rateCode: "STD", rateName: "Standard (001)" },
+            { rateCode: "GB", rateName: "Graduate Business" },
+            { rateCode: "GCA", rateName: "Graduate Cinematic Arts" },
+            { rateCode: "GE", rateName: "Graduate Engineering" },
+            { rateCode: "DT3", rateName: "Dentistry" },
+            { rateCode: "AD3", rateName: "Advanced Dentistry" },
+            { rateCode: "LAW", rateName: "Law" },
+            { rateCode: "MED", rateName: "Medicine" },
+            { rateCode: "OTH", rateName: "Others" }
+        ];
 
-            var rateDesc = "";
+        var rateDesc = "";
 
-            for (var i = 0; i < rateTypes.length; ++i) {
-                if (rateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = rateTypes[i].rateName;
-                    break;
-                }
+        for (var i = 0; i < rateTypes.length; ++i) {
+            if (rateTypes[i].rateCode == rateTypeCode) {
+                rateDesc = rateTypes[i].rateName;
+                break;
             }
-            return rateDesc;
-        }   // getRateTypeDescription()
+        }
+        return rateDesc;
+    }   // getRateTypeDescription()
 
     $scope.sectionGridOptions = function (dataItem) {
 

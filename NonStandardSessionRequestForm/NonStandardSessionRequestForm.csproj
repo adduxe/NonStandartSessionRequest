@@ -337,6 +337,7 @@
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
     <Content Include="Scripts\app\controllers\sessionResultCtrl.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
+    <Content Include="Scripts\app\services\get001DatesService.js" />
     <Content Include="Scripts\app\services\submissionsService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

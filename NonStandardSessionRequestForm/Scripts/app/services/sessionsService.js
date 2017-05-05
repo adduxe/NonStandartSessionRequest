@@ -2,6 +2,8 @@
 
 sessionModule.factory('Sessions', ['$resource', function ($resource) {
 
-    return $resource('api/sessionrequests/:requestId', {requestId: '@id'} );
+    return $resource(
+        'api/sessionrequests/:requestId', { requestId: '@id' }
+        );
     }
 ])

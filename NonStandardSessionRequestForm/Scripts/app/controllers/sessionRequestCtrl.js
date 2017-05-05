@@ -1,35 +1,37 @@
 ﻿"use strict";
-sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope", "$http", "$location",
+sessionModule.controller("sessionRequestCtrl",
 
-    function (RateTable, Sessions, $scope, $http, $location) {
+    ["RateTable", "Sessions", "Get001Dates", "$scope", "$http", "$location",
+
+    function (RateTable, Sessions, Get001Dates, $scope, $http, $location) {
     
-        // Add Semester Break functionality
-    $scope.AddSemesterBreaks = function () {
+            // Add Semester Break functionality
+        $scope.AddSemesterBreaks = function () {
 
-        var semBreak = { startDate: "", endDate: "" };
+            var semBreak = { startDate: "", endDate: "" };
 
-        if ($scope.session.sessionBreaks.length == 2) {
-            alert("A maximum of 2 semester breaks are allowed per session.");
-        } else {
-            $scope.session.sessionBreaks.push(semBreak);
-        }
-        return;
-    }   // AddSemesterBreaks()
+            if ($scope.session.sessionBreaks.length == 2) {
+                alert("A maximum of 2 semester breaks are allowed per session.");
+            } else {
+                $scope.session.sessionBreaks.push(semBreak);
+            }
+            return;
+        }   // AddSemesterBreaks()
 
-        // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
-    Date.dateDiff = function (datepart, fromdate, todate) {
-        datepart = datepart.toLowerCase();
-        var diff = todate - fromdate;
-        var divideBy = {
-            w: 604800000,   // weeks
-            d: 86400000,    // days
-            h: 3600000,     // hours
-            m: 60000,       // minutes
-            s: 1000         // seconds
-        };
+            // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
+        Date.dateDiff = function (datepart, fromdate, todate) {
+            datepart = datepart.toLowerCase();
+            var diff = todate - fromdate;
+            var divideBy = {
+                w: 604800000,   // weeks
+                d: 86400000,    // days
+                h: 3600000,     // hours
+                m: 60000,       // minutes
+                s: 1000         // seconds
+            };
 
-        return Math.floor(diff / divideBy[datepart]);
-    }   // Date.dateDiff
+            return Math.floor(diff / divideBy[datepart]);
+        }   // Date.dateDiff
 
 
     //  1) Calculates computed dates given the:
@@ -48,6 +50,7 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
         var newDtmonthDay = '';
 
         newDate.setDate(startDate.getDate() + daysToAdd - 1);
+
         do {
             switch (newDate.getDay()) {
                 case 0:                                         // if the computed day falls on a Sunday
@@ -61,6 +64,7 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
             }   // switch()
 
             newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+
             if (holidays.indexOf(newDtmonthDay) > -1) {         // if the new date falls on a holiday, add a day
                 newDate.setDate(newDate.getDate() + 1);
                 newDtmonthDay = newDate.getMonth() +1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
@@ -75,7 +79,10 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }   // ComputeDate()
 
-
+    function convDateToString(givenDate) {
+        var newDate = new Date(givenDate);
+        return newDate.toDateString();
+    }
             // Validate the Class Start and End dates
     $scope.ClassDatesChanged = function () {
 
@@ -90,14 +97,36 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
 
             } else {        // dates OK.  Calculate computed date fields.
 
-                $scope.session.lastDayForAddDrop                = ComputeDate(startDt, endDt, 20);    // Last day to Add/Drop (20%)
-                $scope.session.lastDayForEnrollmentOptionChange = ComputeDate(startDt, endDt, 45);    // Last day to Change Enrollment Options (40%)
-                $scope.session.lastDayForWithdrawal             = ComputeDate(startDt, endDt, 80);    // Last Day to Withdraw (80%)
+                if (($scope.stdDates.firstDayOfClass > '') && ($scope.stdDates.lastDayOfClass > ''))        // 001 dates exists for semester
+                {
+                    var stdStartDate = new Date($scope.stdDates.firstDayOfClass);
+                    var stdEndDate = new Date($scope.stdDates.lastDayOfClass);
 
+                    if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
+
+                        $scope.session.lastDayForAddDrop = $scope.stdDates.lastDayForAddDrop;
+                        $scope.session.lastDayForEnrollmentOptionChange = $scope.stdDates.lastDayForEnrollmentOptionChange;
+                        $scope.session.lastDayForWithdrawal = $scope.stdDates.lastDayForWithdrawal;
+
+                    } else {            // if the Class start and end dates don't match, compute the dates.
+                        ComputeDates(startDt, endDt);
+                    }
+                } else {        // If there are no 001 dates, compute the dates
+                    ComputeDates(startDt, endDt);
+                }
             }   // if (startDt...
         }   // if (($scope...
         return;
     }       // ClassDateChanged()
+
+
+    function ComputeDates(beginDate, endDate) {
+
+        $scope.session.lastDayForAddDrop = ComputeDate(beginDate, endDate, 20);                 // Last day to Add/Drop (20%)
+        $scope.session.lastDayForEnrollmentOptionChange = ComputeDate(beginDate, endDate, 40);  // Last day to Change Enrollment Options (40%)
+        $scope.session.lastDayForWithdrawal = ComputeDate(beginDate, endDate, 80);              // Last Day to Withdraw (80%)
+        return;
+    }   // ComputeDates()
 
 
     $scope.FinalsDatesChanged = function () {
@@ -1149,27 +1178,59 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
             "997  PHAR",
             "998  PHAR",
             "999  DENT- OT"
-    ];
+        ];
     };  // PopulateSessionCodes()
 
 
     $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
 
-        if (($scope.session.academicTerm > '') && ($scope.session.rateType > '')) {
+        if ($scope.session.academicTerm > '') {
 
-            $scope.session.rateFlatAmount = "";
-            $scope.session.ratePerUnitAmount = "";
+            $scope.stdDates.firstDayOfClass = "";
+            $scope.stdDates.lastDayOfClass = "";
+            $scope.stdDates.lastDayForAddDrop = "";
+            $scope.stdDates.lastDayForWithdrawal = "";
+            $scope.stdDates.lastDayForEnrollmentOptionChange = "";
+            $scope.stdDates.firstDayForFinalGrading = "";
+            $scope.stdDates.lastDayForFinalGrading = "";
 
-            angular.forEach($scope.rates, function (value) {
-                if (value.term == $scope.session.academicTerm) {
-                    angular.forEach(value.rateTypes, function (value) {
-                        if (value.rateTypeCode == $scope.session.rateType) {
-                            $scope.session.flatRateAmount = value.rateTypeFlatRate;
-                            $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+            Get001Dates.get({semester: $scope.session.academicTerm},
+
+                function (data) {
+
+                    if (data.classBeginDate == undefined){
+                        alert("data is undefined");
+                    } else {
+                        $scope.stdDates.firstDayOfClass                     = convDateToString(data.classBeginDate.trim());
+                        $scope.stdDates.lastDayOfClass                      = convDateToString(data.classEndDate.trim());
+                        $scope.stdDates.lastDayForAddDrop                   = convDateToString(data.lastAddDropDate.trim());
+                        $scope.stdDates.lastDayForWithdrawal                = convDateToString(data.withdrawWithWDate.trim());
+                        $scope.stdDates.lastDayForEnrollmentOptionChange    = convDateToString(data.lastEnrollmentOptionDate.trim());
+                    }
+                        //                    $scope.stdDates.firstDayForFinalGrading = data.finalGradeBeginDate.trim();
+                    //                    $scope.stdDates.lastDayForFinalGrading = data.finalGradeEndDate.trim();
+                },
+                function() {
+                    alert("No dates found.")
+                }
+            );
+
+            if ($scope.session.rateType > '') {
+
+                $scope.session.rateFlatAmount = "";
+                $scope.session.ratePerUnitAmount = "";
+
+                angular.forEach($scope.rates, function (value) {
+                    if (value.term == $scope.session.academicTerm) {
+                        angular.forEach(value.rateTypes, function (value) {
+                            if (value.rateTypeCode == $scope.session.rateType) {
+                                $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                                $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
                         }
                     })
                 }
             });
+                }
         }
         return;
     }
@@ -1320,7 +1381,7 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
             { campusCode: "ATT", campusName: "AT&T Center" },
             { campusCode: "SKB", campusName: "No Tuition or Fees" },
             { campusCode: "OTH", campusName: "Others" }
-         ];
+        ];
 
         /*
                                 2017 	                2018 	                2019 	                2020
@@ -1372,6 +1433,16 @@ sessionModule.controller("sessionRequestCtrl", ["RateTable", "Sessions", "$scope
             sections:               [],
             submitDate:             "",
         };
+
+        $scope.stdDates = {
+            firstDayOfClass : "",
+            lastDayOfClass : "",
+            lastDayForAddDrop : "",
+            lastDayForWithdrawal : "",
+            lastDayForEnrollmentOptionChange : "",
+            firstDayForFinalGrading : "",
+            lastDayForFinalGrading : ""
+        }
 
     }); // document.ready()
 
