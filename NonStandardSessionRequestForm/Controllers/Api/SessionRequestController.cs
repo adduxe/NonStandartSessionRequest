@@ -354,6 +354,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
                 {
                     var sessionDate = client.SessionDates.Get(term, "001");
+                    if (sessionDate == null)
+                    {
+                        return NotFound();
+                    }
                     return Ok(sessionDate);
                 }
             }
