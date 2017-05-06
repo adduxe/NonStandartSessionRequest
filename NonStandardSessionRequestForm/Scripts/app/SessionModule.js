@@ -16,7 +16,7 @@ sessionModule.config([
             })
             .when("/Result",
             {
-                templateUrl: "scripts/app/views/SubmissionResult.html",
+                templateUrl: "scripts/app/views/SessionResult.html",
                 controller: "sessionResultCtrl"
             })
             .otherwise({ redirectTo: "/" });

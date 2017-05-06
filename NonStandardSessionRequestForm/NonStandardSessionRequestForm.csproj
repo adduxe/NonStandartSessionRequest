@@ -349,7 +349,7 @@
     <Content Include="Scripts\app\views\SessionRequest.html" />
     <Content Include="Scripts\app\views\SessionReview.html" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
-    <Content Include="Scripts\app\views\SubmissionResult.html" />
+    <Content Include="Scripts\app\views\SessionResult.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
