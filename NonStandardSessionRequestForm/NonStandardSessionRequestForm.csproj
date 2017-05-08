@@ -333,6 +333,11 @@
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-Bold.ttf" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Fao.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Rnr.cshtml" />
     <None Include="Properties\PublishProfiles\local debug.pubxml" />
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
@@ -349,6 +354,9 @@
     <Content Include="Scripts\app\SessionModule.js" />
     <Content Include="Scripts\app\views\SessionRequest.html" />
     <Content Include="Scripts\app\views\SessionReview.html" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\views\SessionResult.html" />
     <Content Include="Scripts\bootstrap.js" />
@@ -363,6 +371,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\kendo\2017.1.118\kendo.core.min.js" />
     <Content Include="Scripts\kendo\2017.1.118\kendo.web.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -371,7 +380,6 @@
     <Content Include="Scripts\kendo\2017.1.118\kendo.core.min.js.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -389,7 +397,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Controllers\Api\SessionRequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\GlobalErrorLogger.cs" />
@@ -421,9 +429,7 @@
     <Compile Include="UvApiClient\UvApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

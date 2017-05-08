@@ -16,8 +16,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin
         {
             context.MapRoute(
                 "Admin_default",
-                "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "Admin/{action}/{id}",
+                new {controller="Admin", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
