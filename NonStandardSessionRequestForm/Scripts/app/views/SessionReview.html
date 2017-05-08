@@ -6,6 +6,7 @@
 </head>
 <body ng-controller="sessionReviewCtrl">
 
+    <div id="details"></div>
     <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions">
         <div k-detail-template>
             <kendo-tabstrip>
@@ -161,13 +162,11 @@
         </div>
     </kendo-grid>
    
+    <script type="text/x-kendo-template" id="template">
+        <textarea>#= data.userEmail #</textarea>
+        <br />
+        <button onclick="alert('#= data.userEmail #');">Submit</button>
+    </script>
 
-    <div kendo-dialog="dialog" k-title="'Rejection Reason'" k-width="250" k-height="150" k-visible='false' k-actions="actions" k-modal="false">
-        <p><textarea></textarea><p>
-    </div>
-    
-    <div kendo-dialog="approveDialog" k-width="250" k-height="150" k-visible='false' k-modal="false">
-        Approved!
-    </div>
 </body>
 </html>

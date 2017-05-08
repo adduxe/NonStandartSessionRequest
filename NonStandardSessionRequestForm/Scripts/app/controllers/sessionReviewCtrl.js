@@ -72,15 +72,14 @@
                 columns: [
                     { field: "academicTerm", title: "Term", width: "7.5%" },
                     { field: "sessionCode", title: "Session", width: "7.5%" },
-                    { field: "sessionName", title: "Session Name", width: "15%" },
-                    { field: "owningSchool", title: "School", width: "15%" },
+                    { field: "sessionName", title: "Session Name", width: "20%" },
+                    { field: "owningSchool", title: "School", width: "20%" },
                     { field: "owningDepartment", title: "Department", width: "15%" },
-                    { field: "requestDate", title: "Request Date", width: "15%" },
+                    { field: "requestDate", title: "Date", width: "10%" },
                     {
                         command: [
                             { text: "Approve" },
-                            { text: "Reject" },
-                            //{ text: "Reject", click: showPopup }
+                            { text: "Reject", click: openRejectPopup }
                         ]
                     }
                 ],
@@ -90,7 +89,7 @@
 
     function getRateTypeDescription(rateTypeCode) {
 
-        var rateTypes = [ // Rate type lookup table
+        var rateTypes = [   // Rate type lookup table
             { rateCode: "STD", rateName: "Standard (001)" },
             { rateCode: "GB", rateName: "Graduate Business" },
             { rateCode: "GCA", rateName: "Graduate Cinematic Arts" },
@@ -173,33 +172,27 @@
             };
     };  // $scope.sessionBrkGridOptions
 
+    function openRejectPopup(e) {
 
-        //$scope.notifOptions = {
-        //    templates: [{
-        //        type: "ngTemplate",
-        //        template: $("#rejectPopup").html()
-        //    }]
-        //};
+        var detailsTemplate = kendo.template($("#template").html());
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        $scope.wnd.content(detailsTemplate(dataItem));
+        $scope.wnd.center().open();
 
-        //function showPopup() {
-        //    $scope.notif.show({kValue: "Sonny"}, "ngTemplate");
-        //};
+        return;
+    }
 
-        //    // Configure the pop-up window for the details
-        //function showDetails(e) {
-        //    e.preventDefault();
-        //    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        //    wnd.content(detailsTemplate(dataItem));
-        //    wnd.center().open();
-        //}
+    $(document).ready(function () {
 
-        //var detailsTemplate = kendo.template($("#template").html());
+        $scope.wnd = $("#details").kendoWindow({
+            title: "Rejection Reason",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
 
-        //var wnd = $("#details").kendoWindow({
-        //    title: "Reason for Rejection",
-        //    modal: true,
-        //    visible: false,
-        //    resizable: true,
-        //    width: "15%"
-        //}).data("kendoWindow");
+    });
+
 }]);
