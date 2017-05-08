@@ -7,7 +7,9 @@
                 dataSource: {
                     transport: {
                         read: function (e) {
+
                             Submissions.query(function (data) {
+                                $scope.submissions = data;
                                 e.success(
                                     data.map(
                                         function (subm) {
@@ -43,7 +45,9 @@
                                                 faoActionReason: subm.faoActionReason,
                                                 rnrAction: subm.rnrAction,
                                                 rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                                rnrActionReason: subm.rnrActionReason
+                                                rnrActionReason: subm.rnrActionReason,
+                                                submissionId: subm.submissionId,
+                                                requestId: subm.requestId
                                             };
                                         }));
                             }, function (error) {
@@ -76,12 +80,13 @@
                     { field: "owningSchool", title: "School", width: "20%" },
                     { field: "owningDepartment", title: "Department", width: "15%" },
                     { field: "requestDate", title: "Date", width: "10%" },
-                    {
-                        command: [
-                            { text: "Approve" },
-                            { text: "Reject", click: openRejectPopup }
-                        ]
-                    }
+                    //{
+                    //    command: [
+                    //        { text: "Approve" },
+                    //        { text: "Reject", click: openRejectPopup }
+                    //    ]
+                    //},
+                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Update</button>" }
                 ],
                 editable: "popup"
             };
@@ -172,26 +177,50 @@
             };
     };  // $scope.sessionBrkGridOptions
 
-    function openRejectPopup(e) {
+    //function openRejectPopup(e) {
 
-        var detailsTemplate = kendo.template($("#template").html());
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        $scope.wnd.content(detailsTemplate(dataItem));
-        $scope.wnd.center().open();
+    //    var detailsTemplate = kendo.template($("#template").html());
+    //    e.preventDefault();
+    //    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    //    $scope.wnd.content(detailsTemplate(dataItem));
+    //    $scope.wnd.center().open();
 
+    //    return;
+    //}
+
+    //function updateRequest(a, b) {
+    //    alert("subm id: " + a + " |  req id: " + b);
+    //    return;
+    //}
+    $scope.rejectSess = {};
+
+    $scope.openRejectPopup = function (a) {
+
+        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": a }, true)[0];
+        if (selectedSess != null)
+            $scope.rejectSess = selectedSess;
+
+        $scope.rejectWindow.center().open();
         return;
     }
 
+    $scope.updateRequest = function () {
+
+        console.log($scope.rejectSess.submissionId);
+        
+        $scope.rejectWindow.close();
+    }
+
+
     $(document).ready(function () {
 
-        $scope.wnd = $("#details").kendoWindow({
-            title: "Rejection Reason",
-            modal: true,
-            visible: false,
-            resizable: false,
-            width: 300
-        }).data("kendoWindow");
+        //$scope.wnd = $("#details").kendoWindow({
+        //    title: "Rejection Reason",
+        //    modal: true,
+        //    visible: false,
+        //    resizable: false,
+        //    width: 300
+        //}).data("kendoWindow");
 
     });
 

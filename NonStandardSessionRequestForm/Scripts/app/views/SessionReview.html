@@ -162,11 +162,13 @@
         </div>
     </kendo-grid>
    
-    <script type="text/x-kendo-template" id="template">
-        <textarea>#= data.userEmail #</textarea>
+    <div kendo-window="rejectWindow" style="display: none;" >
+        <!--<p>{{ rejectSess }}</p>-->
+        <textarea ng-model="rejectSess.reason"></textarea>
         <br />
-        <button onclick="alert('#= data.userEmail #');">Submit</button>
-    </script>
+        <button ng-click="updateRequest()">Submit</button>
+    </div>
+
 
 </body>
 </html>
