@@ -80,12 +80,7 @@
                     { field: "owningSchool", title: "School", width: "20%" },
                     { field: "owningDepartment", title: "Department", width: "15%" },
                     { field: "requestDate", title: "Date", width: "10%" },
-                    //{
-                    //    command: [
-                    //        { text: "Approve" },
-                    //        { text: "Reject", click: openRejectPopup }
-                    //    ]
-                    //},
+                        // Approve/Reject buttons
                     { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
                     { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
                 ],
@@ -195,7 +190,6 @@
         return;
     }
 
-
     $scope.updateRequest = function (actionCode) {
 
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
@@ -218,11 +212,5 @@
 
         $scope.rejectWindow.close();
     }
-
-
-    $(document).ready(function () {
-
-
-    });
 
 }]);

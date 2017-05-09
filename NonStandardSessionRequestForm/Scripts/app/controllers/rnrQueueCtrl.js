@@ -74,19 +74,16 @@
                 sortable: true,
                 pageable: true,
                 columns: [
+
                     { field: "academicTerm", title: "Term", width: "7.5%" },
                     { field: "sessionCode", title: "Session", width: "7.5%" },
                     { field: "sessionName", title: "Session Name", width: "20%" },
                     { field: "owningSchool", title: "School", width: "20%" },
                     { field: "owningDepartment", title: "Department", width: "15%" },
                     { field: "requestDate", title: "Date", width: "10%" },
-                    //{
-                    //    command: [
-                    //        { text: "Approve" },
-                    //        { text: "Reject", click: openRejectPopup }
-                    //    ]
-                    //},
-                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Update</button>" }
+                        // Approve/Reject buttons
+                    { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
+                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
                 ],
                 editable: "popup"
             };
@@ -179,27 +176,39 @@
 
     $scope.rejectSess = {};
 
-    $scope.openRejectPopup = function (a) {
-
-        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": a }, true)[0];
-        if (selectedSess != null)
-            $scope.rejectSess = selectedSess;
-
+    $scope.openRejectPopup = function (submID) {
+        $scope.submID = submID;
         $scope.rejectWindow.center().open();
         return;
     }
 
-    $scope.updateRequest = function () {
-
-        console.log($scope.rejectSess.submissionId);
-        
-        $scope.rejectWindow.close();
+    $scope.approveRequest = function (submID) {
+        $scope.submID = submID;
+        $scope.updateRequest('A');
+        return;
     }
 
+    $scope.updateRequest = function (actionCode) {
 
-    $(document).ready(function () {
+        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
+        if (selectedSess != null)
+            $scope.rejectSess = selectedSess;
 
+        var todaysDate = new Date();
 
-    });
+        var status = {
+            submissionId: $scope.submID,
+            faoAction: $scope.rejectSess.faoAction,
+            faoActionDate: $scope.rejectSess.faoActionDate,
+            faoActionReason: $scope.rejectSess.faoActionReason,
+            rnrAction: actionCode,
+            rnrActionDate: todaysDate.toDateString,
+            rnrActionReason: $scope.rejectSess.reason
+        };
+
+        Submissions.update({ submID: status.submissionId }, status);
+
+        $scope.rejectWindow.close();
+    }
 
 }]);
