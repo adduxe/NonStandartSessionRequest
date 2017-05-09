@@ -208,6 +208,14 @@
 
         Submissions.update({ submID: status.submissionId }, status);
 
+            // remove the submission from the list
+        for (var i = 0; i < Submissions.length; ++i) {
+            if (Submissions[i].submissionId == $scope.submID) {
+                Submissions.splice(i, 1);
+                break;
+            }
+        }   // for (var i...
+
         $scope.rejectWindow.close();
     }
 
