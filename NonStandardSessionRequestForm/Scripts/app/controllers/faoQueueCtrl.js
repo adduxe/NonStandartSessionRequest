@@ -3,7 +3,6 @@
     function ($scope, $filter, Submissions, RateTable) {
         
         $scope.dataSource = new kendo.data.DataSource({
-            //data: {
                 transport: {
                     read: function (e) {
                         Submissions.query(function (data) {
@@ -68,7 +67,6 @@
                 pageSize: 5,
                 serverPaging: true,
                 serverSorting: true
-            //}
         });
 
         $scope.mainGridOptions = {
