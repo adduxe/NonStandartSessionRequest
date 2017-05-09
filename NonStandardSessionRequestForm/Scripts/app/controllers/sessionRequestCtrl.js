@@ -1211,7 +1211,7 @@ sessionModule.controller("sessionRequestCtrl",
                     //                    $scope.stdDates.lastDayForFinalGrading = data.finalGradeEndDate.trim();
                 },
                 function() {
-                    alert("No dates found.")
+                    console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);
                 }
             );
 
@@ -1353,17 +1353,19 @@ sessionModule.controller("sessionRequestCtrl",
 
         GetRateTable();                     // Reads the rate table from the database
 
-        $scope.rateTypes = [                // Populate the Rate Type dropdown
-
-	        { rateCode: "STD", rateName: "Standard (001)" },
-	        { rateCode: "GB",  rateName:"Graduate Business"},
-	        { rateCode: "GCA", rateName:"Graduate Cinematic Arts"},
-	        { rateCode: "GE",  rateName:"Graduate Engineering"},
-	        { rateCode: "DT3", rateName:"Dentistry"},
-	        { rateCode: "AD3", rateName:"Advanced Dentistry"},
-	        { rateCode: "LAW", rateName:"Law"},
-	        { rateCode: "MED", rateName:"Medicine"},
-	        { rateCode: "OTH", rateName:"Others"}
+        $scope.rateTypes = [   // Rate type lookup table
+            { rateCode: "STD", rateName: "Standard (session 001)" },
+            { rateCode: "GBUS", rateName: "Graduate Business" },
+            { rateCode: "GCINA", rateName: "Graduate Cinematic Arts" },
+            { rateCode: "GENGR", rateName: "Graduate Engineering" },
+            { rateCode: "MRED", rateName: "Master of Real Estate Development" },
+            { rateCode: "PHAR", rateName: "Pharmacy" },
+            { rateCode: "DENT", rateName: "Dentistry" },
+            { rateCode: "DH", rateName: "Dental Hygiene" },
+            { rateCode: "ADVDE", rateName: "Advanced Dentistry" },
+            { rateCode: "LAW", rateName: "Law" },
+            { rateCode: "MED", rateName: "Medicine" },
+            { rateCode: "OTH", rateName: "Others" }
         ];
 
         $scope.campusLocs = [                                   // Populate the Campus Location dropdown.

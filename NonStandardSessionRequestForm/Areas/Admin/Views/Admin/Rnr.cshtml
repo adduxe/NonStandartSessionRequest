@@ -3,7 +3,7 @@
     ViewBag.Title = "Records and Registration Request Queue";
 }
 
-<div ng-app="sessionModule" ng-controller="sessionReviewCtrl">
+<div ng-app="sessionModule" ng-controller="rnrQueueCtrl">
     <div id="details"></div>
     <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions">
         <div k-detail-template>
@@ -164,6 +164,6 @@
         <!--<p>{{ rejectSess }}</p>-->
         <textarea ng-model="rejectSess.reason"></textarea>
         <br />
-        <button ng-click="updateRequest()">Submit</button>
+        <button ng-click="updateRequest('R')">Submit</button>
     </div>
 </div>
