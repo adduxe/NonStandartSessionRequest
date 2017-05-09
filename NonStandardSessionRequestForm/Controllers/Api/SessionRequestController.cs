@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers;
 using UvApi.RnrSWebSess.Client;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
@@ -80,10 +82,37 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("submissions")]
-        public async Task<IHttpActionResult> GetSubmissions(string department = null, string status = null)
+        public async Task<IHttpActionResult> GetSubmissions()
         {
+            string department = null;
+            string status = "Pending";
+
             try
             {
+                var userRole = new UserRoleHelper();
+
+                //if (userRole.IsAdmin() == false)
+                //{
+                //    return NotFound();
+                //}
+
+                //if (userRole.IsFao())
+                //{
+                //    department = "Fao";
+                //}
+
+                //if (userRole.IsRnr())
+                //{
+                //    department = "Rnr";
+                //}
+
+                //if (userRole.IsBur())
+                //{
+                //    status = "Approved";
+                //}
+
+                department = "Fao";
+
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(department, status);
