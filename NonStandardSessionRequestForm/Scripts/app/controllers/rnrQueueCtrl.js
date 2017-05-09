@@ -8,7 +8,7 @@
                     transport: {
                         read: function (e) {
 
-                            Submissions.query({department:"rnr"}, function (data) {
+                            Submissions.query(function (data) {
                                 $scope.submissions = data;
                                 e.success(
                                     data.map(

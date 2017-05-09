@@ -8,7 +8,7 @@
                     transport: {
                         read: function (e) {
 
-                            Submissions.query({department:"fao"}, function (data) {
+                            Submissions.query(function (data) {
                                 $scope.submissions = data;
                                 e.success(
                                     data.map(
@@ -86,7 +86,8 @@
                     //        { text: "Reject", click: openRejectPopup }
                     //    ]
                     //},
-                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Update</button>" }
+                    { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
+                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
                 ],
                 editable: "popup"
             };
@@ -95,15 +96,18 @@
     function getRateTypeDescription(rateTypeCode) {
 
         var rateTypes = [   // Rate type lookup table
-            { rateCode: "STD", rateName: "Standard (001)" },
-            { rateCode: "GB", rateName: "Graduate Business" },
-            { rateCode: "GCA", rateName: "Graduate Cinematic Arts" },
-            { rateCode: "GE", rateName: "Graduate Engineering" },
-            { rateCode: "DT3", rateName: "Dentistry" },
-            { rateCode: "AD3", rateName: "Advanced Dentistry" },
-            { rateCode: "LAW", rateName: "Law" },
-            { rateCode: "MED", rateName: "Medicine" },
-            { rateCode: "OTH", rateName: "Others" }
+            { rateCode: "STD",  rateName: "Standard (session 001)" },
+            { rateCode: "GBUS", rateName: "Graduate Business" },
+            { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
+            { rateCode: "GENGR",rateName: "Graduate Engineering" },
+            { rateCode: "MRED", rateName: "Master of Real Estate Development" },
+            { rateCode: "PHAR", rateName: "Pharmacy" },
+            { rateCode: "DENT", rateName: "Dentistry" },
+            { rateCode: "DH",   rateName: "Dental Hygiene" },
+            { rateCode: "ADVDE",rateName: "Advanced Dentistry" },
+            { rateCode: "LAW",  rateName: "Law" },
+            { rateCode: "MED",  rateName: "Medicine" },
+            { rateCode: "OTH",  rateName: "Others" }
         ];
 
         var rateDesc = "";
@@ -179,20 +183,39 @@
 
     $scope.rejectSess = {};
 
-    $scope.openRejectPopup = function (a) {
-
-        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": a }, true)[0];
-        if (selectedSess != null)
-            $scope.rejectSess = selectedSess;
-
+    $scope.openRejectPopup = function (submID) {
+        $scope.submID = submID;
         $scope.rejectWindow.center().open();
         return;
     }
 
-    $scope.updateRequest = function () {
+    $scope.approveRequest = function (submID) {
+        $scope.submID = submID;
+        $scope.updateRequest('A');
+        return;
+    }
 
-        console.log($scope.rejectSess.submissionId);
-        
+
+    $scope.updateRequest = function (actionCode) {
+
+        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
+        if (selectedSess != null)
+            $scope.rejectSess = selectedSess;
+
+        var todaysDate = new Date();
+
+        var status = {
+            submissionId: $scope.submID,
+            faoAction: actionCode,
+            faoActionDate: todaysDate.toDateString,
+            faoActionReason: $scope.rejectSess.reason,
+            rnrAction: $scope.rejectSess.rnrAction,
+            rnrActionDate: $scope.rejectSess.rnrActionDate,
+            rnrActionReason: $scope.rejectSess.rnrActionReason
+        };
+
+        Submissions.update({ submID: status.submissionId }, status);
+
         $scope.rejectWindow.close();
     }
 

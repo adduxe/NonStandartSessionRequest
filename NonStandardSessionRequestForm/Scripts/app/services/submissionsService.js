@@ -3,6 +3,6 @@
 sessionModule.factory('Submissions', ['$resource', function ($resource) {
 
     return $resource(
-        "api/submissions?:dept", { dept: '@id' }
+        "api/submissions/:submissionId", { submissionId: '@id' }
     );
 }])
