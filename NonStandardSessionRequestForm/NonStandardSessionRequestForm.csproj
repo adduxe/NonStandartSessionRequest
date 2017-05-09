@@ -342,6 +342,8 @@
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
     <Content Include="Scripts\app\controllers\sessionResultCtrl.js" />
+    <Content Include="Scripts\app\controllers\faoQueueCtrl.js" />
+    <Content Include="Scripts\app\controllers\rnrQueueCtrl.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
     <Content Include="Scripts\app\services\get001DatesService.js" />
     <Content Include="Scripts\app\services\submissionsService.js" />

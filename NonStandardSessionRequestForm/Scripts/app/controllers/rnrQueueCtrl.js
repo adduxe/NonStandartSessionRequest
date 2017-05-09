@@ -1,16 +1,14 @@
-﻿sessionModule.controller("sessionReviewCtrl", ["$scope", "$filter", "Submissions", "RateTable",
+﻿sessionModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "RateTable",
 
     function ($scope, $filter, Submissions, RateTable) {
         
-        var deptSource = "fao"; 
-    
         $scope.mainGridOptions =
             {
                 dataSource: {
                     transport: {
                         read: function (e) {
 
-                            Submissions.query({department:deptSource}, function (data) {
+                            Submissions.query({department:"rnr"}, function (data) {
                                 $scope.submissions = data;
                                 e.success(
                                     data.map(
