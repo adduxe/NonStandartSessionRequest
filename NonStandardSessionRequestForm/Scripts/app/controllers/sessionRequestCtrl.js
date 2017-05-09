@@ -81,7 +81,7 @@ sessionModule.controller("sessionRequestCtrl",
 
     function convDateToString(givenDate) {
         var newDate = new Date(givenDate);
-        return newDate.toDateString();
+        return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }
             // Validate the Class Start and End dates
     $scope.ClassDatesChanged = function () {
@@ -1304,7 +1304,7 @@ sessionModule.controller("sessionRequestCtrl",
 
     $scope.SubmitForm = function(){
 
-        if (IsFormValid()) {
+        if (!IsFormValid()) {
             alert("Please provide required fields.");
             return;
         };

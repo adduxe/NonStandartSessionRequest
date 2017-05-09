@@ -1,11 +1,8 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Submission Queue</title>
-	<meta charset="utf-8" />
-</head>
-<body ng-controller="sessionReviewCtrl">
+﻿@{
+    ViewBag.Title = "All Requests Queue";
+}
 
+<div ng-app="sessionModule" ng-controller="sessionReviewCtrl">
     <div id="details"></div>
     <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions">
         <div k-detail-template>
@@ -126,7 +123,7 @@
                             <td align="center">#= data.rnrAction #</td>
                             <td align="center">#= data.rnrActionDate #</td>
                             <td align="center">#= data.rnrActionReason #</td>
-                            
+
                         </tr>
                     </table>
                 </div>
@@ -161,14 +158,11 @@
             </kendo-tabstrip>
         </div>
     </kendo-grid>
-   
-    <div kendo-window="rejectWindow" style="display: none;" >
+
+    <div kendo-window="rejectWindow" style="display: none;">
         <!--<p>{{ rejectSess }}</p>-->
         <textarea ng-model="rejectSess.reason"></textarea>
         <br />
         <button ng-click="updateRequest()">Submit</button>
     </div>
-
-
-</body>
-</html>
+</div>

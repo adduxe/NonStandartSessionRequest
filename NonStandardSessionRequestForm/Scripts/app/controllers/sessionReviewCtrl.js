@@ -7,7 +7,9 @@
                 dataSource: {
                     transport: {
                         read: function (e) {
+
                             Submissions.query(function (data) {
+                                $scope.submissions = data;
                                 e.success(
                                     data.map(
                                         function (subm) {
@@ -43,7 +45,9 @@
                                                 faoActionReason: subm.faoActionReason,
                                                 rnrAction: subm.rnrAction,
                                                 rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                                rnrActionReason: subm.rnrActionReason
+                                                rnrActionReason: subm.rnrActionReason,
+                                                submissionId: subm.submissionId,
+                                                requestId: subm.requestId
                                             };
                                         }));
                             }, function (error) {
@@ -72,17 +76,17 @@
                 columns: [
                     { field: "academicTerm", title: "Term", width: "7.5%" },
                     { field: "sessionCode", title: "Session", width: "7.5%" },
-                    { field: "sessionName", title: "Session Name", width: "15%" },
-                    { field: "owningSchool", title: "School", width: "15%" },
+                    { field: "sessionName", title: "Session Name", width: "20%" },
+                    { field: "owningSchool", title: "School", width: "20%" },
                     { field: "owningDepartment", title: "Department", width: "15%" },
-                    { field: "requestDate", title: "Request Date", width: "15%" },
-                    {
-                        command: [
-                            { text: "Approve" },
-                            { text: "Reject" },
-                            //{ text: "Reject", click: showPopup }
-                        ]
-                    }
+                    { field: "requestDate", title: "Date", width: "10%" },
+                    //{
+                    //    command: [
+                    //        { text: "Approve" },
+                    //        { text: "Reject", click: openRejectPopup }
+                    //    ]
+                    //},
+                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Update</button>" }
                 ],
                 editable: "popup"
             };
@@ -90,7 +94,7 @@
 
     function getRateTypeDescription(rateTypeCode) {
 
-        var rateTypes = [ // Rate type lookup table
+        var rateTypes = [   // Rate type lookup table
             { rateCode: "STD", rateName: "Standard (001)" },
             { rateCode: "GB", rateName: "Graduate Business" },
             { rateCode: "GCA", rateName: "Graduate Cinematic Arts" },
@@ -173,33 +177,51 @@
             };
     };  // $scope.sessionBrkGridOptions
 
+    //function openRejectPopup(e) {
 
-        //$scope.notifOptions = {
-        //    templates: [{
-        //        type: "ngTemplate",
-        //        template: $("#rejectPopup").html()
-        //    }]
-        //};
+    //    var detailsTemplate = kendo.template($("#template").html());
+    //    e.preventDefault();
+    //    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    //    $scope.wnd.content(detailsTemplate(dataItem));
+    //    $scope.wnd.center().open();
 
-        //function showPopup() {
-        //    $scope.notif.show({kValue: "Sonny"}, "ngTemplate");
-        //};
+    //    return;
+    //}
 
-        //    // Configure the pop-up window for the details
-        //function showDetails(e) {
-        //    e.preventDefault();
-        //    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        //    wnd.content(detailsTemplate(dataItem));
-        //    wnd.center().open();
-        //}
+    //function updateRequest(a, b) {
+    //    alert("subm id: " + a + " |  req id: " + b);
+    //    return;
+    //}
+    $scope.rejectSess = {};
 
-        //var detailsTemplate = kendo.template($("#template").html());
+    $scope.openRejectPopup = function (a) {
 
-        //var wnd = $("#details").kendoWindow({
-        //    title: "Reason for Rejection",
+        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": a }, true)[0];
+        if (selectedSess != null)
+            $scope.rejectSess = selectedSess;
+
+        $scope.rejectWindow.center().open();
+        return;
+    }
+
+    $scope.updateRequest = function () {
+
+        console.log($scope.rejectSess.submissionId);
+        
+        $scope.rejectWindow.close();
+    }
+
+
+    $(document).ready(function () {
+
+        //$scope.wnd = $("#details").kendoWindow({
+        //    title: "Rejection Reason",
         //    modal: true,
         //    visible: false,
-        //    resizable: true,
-        //    width: "15%"
+        //    resizable: false,
+        //    width: 300
         //}).data("kendoWindow");
+
+    });
+
 }]);

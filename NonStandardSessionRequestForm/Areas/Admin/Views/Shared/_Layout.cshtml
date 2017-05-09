@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <base href="@Url.Content("~")" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/kendocss")
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <header>
+        <div id="top-banner" class="hidden-xs">
+            <div class="container">
+                <div class="row">
+                    <div id="access-nav" class="col-md-3">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li><strong>@ViewBag.ShibUserName</strong></li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>@ViewBag.ShibPhoneNo</li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>@ViewBag.ShibEmailAddr</li>
+                        </ul>
+                    </div>
+                    <div id="information-nav" class="col-md-5" style="align-self:center;">
+                        <ul class="nav navbar-nav">
+                            <li><strong>@ViewBag.ShibCollege</strong></li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>@ViewBag.ShibDepartment</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <ul class="nav navbar-nav navbar-right">
+                            <div style="width: 252px;" class="pull-right hidden-xs">
+                                <a href="http://usc.edu">
+                                    <img src="~/Content/images/usc_230.png" class="img-responsive" alt="University of Southern California" />
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="clearfix">
+                <div class="">
+                    <div class="hidden-xs"><h2 style="color:#ffcc00;">@ViewBag.Title</h2></div>
+                    <div class="visible-xs"><img src="~/Content/images/USC logo-xs.png" class="img-responsive"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+
+            <div class="mainContent">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+    <footer class="text-center">
+        <div class="container">
+            <div>
+                ©2017 The University of Southern California
+            </div>
+        </div>
+    </footer>
+
+    <script id="infoTemplate" type="text/x-kendo-template">
+        <div class="notification-info">
+            <h3>
+                <span class="glyphicon glyphicon-info-sign icon" aria-hidden="true"></span>
+                #= title #
+            </h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+
+    <script id="errorTemplate" type="text/x-kendo-template">
+        <div class="notification-error">
+            <h3>
+                <span class="glyphicon glyphicon-remove-sign icon" aria-hidden="true"></span>
+                #= title #
+            </h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+
+    <script id="successTemplate" type="text/x-kendo-template">
+        <div class="notification-success">
+            <h3>
+                <span class="glyphicon glyphicon glyphicon-ok-sign icon" aria-hidden="true"></span>
+                #= title #
+            </h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+
+    <script id="warningTemplate" type="text/x-kendo-template">
+        <div class="notification-warning">
+            <h3>
+                <span class="glyphicon glyphicon glyphicon-exclamation-sign icon" aria-hidden="true"></span>
+                #= title #
+            </h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+    var rootPath = '@Url.Content("~/")';
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/sessionModule")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
