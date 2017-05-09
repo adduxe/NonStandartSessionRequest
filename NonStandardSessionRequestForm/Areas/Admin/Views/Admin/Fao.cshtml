@@ -1,7 +1,168 @@
-﻿
-@{
-    ViewBag.Title = "Fao";
+﻿@{
+    ViewBag.Title = "Financial Aid Session Requests";
 }
 
-<h2>Fao</h2>
+<div ng-app="sessionModule" ng-controller="sessionReviewCtrl">
+    <div id="details"></div>
+    <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions">
+        <div k-detail-template>
+            <kendo-tabstrip>
+                <ul>
+                    <li class="k-state-active">Dates</li>
+                    <li>Rates</li>
+                    <li>Sections</li>
+                    <li>Session Breaks</li>
+                    <li>Class Location</li>
+                    <li>Status</li>
+                    <li>Contact Info</li>
+                </ul>
+                <div id="datesTab">
 
+                    <div class="row" style="padding-top:10px;">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th width="15%"></th>
+                                <td width="25%" class="red" align="center"><b>To Add/Drop</b></td>
+                                <td width="25%" class="red" align="center"><b>To Withdraw</b></td>
+                                <td width="30%" class="red" align="center"><b>Change Enrollment Option</b></td>
+                            </tr>
+                            <tr>
+                                <td class="red" align="center">Deadline Dates</td>
+                                <td align="center">#= data.lastDayForAddDrop #</td>
+                                <td align="center">#= data.lastDayForWithdrawal #</td>
+                                <td align="center">#= data.lastDayForEnrollmentOptionChange #</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <table class="table table-bordered table-hover">
+                            <tr class="red">
+                                <th width="15%"></th>
+                                <td width="25%" class="red" align="center"><b>Classes</b></td>
+                                <td width="25%" class="red" align="center"><b>Finals</b></td>
+                                <td width="30%" class="red" align="center"><b>Final Grading</b></td>
+                            </tr>
+                            <tr>
+                                <td class="red" align="center">Start</td>
+                                <td align="center">#= data.firstDayOfClass #</td>
+                                <td align="center">#= data.firstDayOfFinals #</td>
+                                <td align="center">#= data.firstDayForFinalGrading #</td>
+                            </tr>
+                            <tr>
+                                <td class="red" align="center">End</td>
+                                <td align="center">#= data.lastDayOfClass #</td>
+                                <td align="center">#= data.lastDayOfFinals #</td>
+                                <td align="center">#= data.lastDayForFinalGrading #</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="ratesTab">
+                    <div class="row">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="red">
+                                    <th>Rate Type</th>
+                                    <th>Rate per Unit</th>
+                                    <th>Flat Rate</th>
+                                    <th>Flat Rate Min. Units</th>
+                                    <th>Flat Rate Max. Units</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="black">
+                                    <td>#= data.rateType #</td>
+                                    <td>#= data.ratePerUnitAmount #</td>
+                                    <td>#= data.flatRateAmount #</td>
+                                    <td>#= data.flatRateUnitsMin #</td>
+                                    <td>#= data.flatRateUnitsMax #</td>
+                                </tr>
+                            <tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="sectionsTab">
+                    <kendo-grid k-options="sectionGridOptions(dataItem)">
+                        <div k-detail-template>
+                            <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+                        </div>
+                    </kendo-grid>
+                </div>
+                <div id="sessionBreakTab">
+                    <kendo-grid k-options="sessionBrkGridOptions(dataItem)"></kendo-grid>
+                </div>
+                <div id="locationTab">
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-sm-3">
+                            <b class="red">Classes held on campus?</b>&nbsp;&nbsp;#= data.isClassHeldAtUPC ? 'Yes' : 'No' #
+                        </div>
+                        <div class="col-sm-3">
+                            <b class="red">Campus Location</b>&nbsp;&nbsp;#= data.uscCampusLocation #
+                        </div>
+                        <div class="col-sm-4">
+                            <b class="red">Other Campus:</b>&nbsp;&nbsp;#= data.otherCampusLocation #
+                        </div>
+                    </div>
+                </div>
+                <div id="statusTab">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th></th>
+                            <td class="red" align="center">Status</td>
+                            <td class="red" align="center">Status Date</th>
+                            <td class="red" align="center">Status Reason</td>
+                        </tr>
+                        <tr>
+                            <td class="red" align="center"><b>FAO</b></td>
+                            <td align="center">#= data.faoAction #</td>
+                            <td align="center">#= data.faoActionDate #</td>
+                            <td align="center">#= data.faoActionReason #</td>
+                        </tr>
+                        <tr>
+                            <td class="red" align="center"><b>RNR</b></td>
+                            <td align="center">#= data.rnrAction #</td>
+                            <td align="center">#= data.rnrActionDate #</td>
+                            <td align="center">#= data.rnrActionReason #</td>
+
+                        </tr>
+                    </table>
+                </div>
+                <div id="contactTab">
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-md-3">
+                            <div class="col-sm-3">
+                                <b class="red">Contact:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userContact #
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-sm-3">
+                                <b class="red">Email:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userEmail #
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-sm-3">
+                                <b class="red">Phone:</b>
+                            </div>
+                            <div class="col-sm-6">
+                                #= data.userPhone #
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </kendo-tabstrip>
+        </div>
+    </kendo-grid>
+
+    <div kendo-window="rejectWindow" style="display: none;">
+        <!--<p>{{ rejectSess }}</p>-->
+        <textarea ng-model="rejectSess.reason"></textarea>
+        <br />
+        <button ng-click="updateRequest()">Submit</button>
+    </div>
+</div>
