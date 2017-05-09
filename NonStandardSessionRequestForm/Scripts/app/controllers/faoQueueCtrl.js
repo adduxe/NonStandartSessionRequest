@@ -2,6 +2,7 @@
 
     function ($scope, $filter, Submissions, RateTable) {
         
+
         $scope.mainGridOptions =
             {
                 dataSource: {
@@ -187,11 +188,11 @@
 
     $scope.approveRequest = function (submID) {
         $scope.submID = submID;
-        $scope.updateRequest('A');
+        $scope.updateRequest('A', 'Approved');
         return;
     }
 
-    $scope.updateRequest = function (actionCode) {
+    $scope.updateRequest = function (actionCode, rejectReason) {
 
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
         if (selectedSess != null)
@@ -202,19 +203,19 @@
         var status = {
             submissionId: $scope.submID,
             faoAction: actionCode,
-            faoActionDate: todaysDate.toDateString,
-            faoActionReason: $scope.rejectSess.reason,
+            faoActionDate: todaysDate.toDateString(),
+            faoActionReason: rejectReason,
             rnrAction: $scope.rejectSess.rnrAction,
             rnrActionDate: $scope.rejectSess.rnrActionDate,
             rnrActionReason: $scope.rejectSess.rnrActionReason
         };
 
-        Submissions.update({ submID: $scope.submID }, status);
+        Submissions.update({ submissionId: $scope.submID }, status);
 
             // remove the submission from the list
-        for (var i = 0; i < Submissions.length; ++i) {
-            if (Submissions[i].submissionId == $scope.submID) {
-                Submissions.splice(i, 1);
+        for (var i = 0; i < $scope.submissions.length; ++i) {
+            if ($scope.submissions[i].submissionId == $scope.submID) {
+                $scope.submissions.splice(i, 1);
                 break;
             }
         }   // for (var i...

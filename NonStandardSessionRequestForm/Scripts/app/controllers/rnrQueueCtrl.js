@@ -7,7 +7,6 @@
                 dataSource: {
                     transport: {
                         read: function (e) {
-
                             Submissions.query(function (data) {
                                 $scope.submissions = data;
                                 e.success(
@@ -184,11 +183,11 @@
 
     $scope.approveRequest = function (submID) {
         $scope.submID = submID;
-        $scope.updateRequest('A');
+        $scope.updateRequest('A', 'Approved');
         return;
     }
 
-    $scope.updateRequest = function (actionCode) {
+    $scope.updateRequest = function (actionCode, rejectReason) {
 
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
         if (selectedSess != null)
@@ -202,16 +201,16 @@
             faoActionDate: $scope.rejectSess.faoActionDate,
             faoActionReason: $scope.rejectSess.faoActionReason,
             rnrAction: actionCode,
-            rnrActionDate: todaysDate.toDateString,
-            rnrActionReason: $scope.rejectSess.reason
+            rnrActionDate: todaysDate.toDateString(),
+            rnrActionReason: rejectReason
         };
 
-        Submissions.update({ submID: status.submissionId }, status);
+        Submissions.update({ submissionId: status.submissionId }, status);
 
             // remove the submission from the list
-        for (var i = 0; i < Submissions.length; ++i) {
-            if (Submissions[i].submissionId == $scope.submID) {
-                Submissions.splice(i, 1);
+        for (var i = 0; i < $scope.submissions.length; ++i) {
+            if ($scope.submissions[i].submissionId == $scope.submID) {
+                $scope.submissions.splice(i, 1);
                 break;
             }
         }   // for (var i...
