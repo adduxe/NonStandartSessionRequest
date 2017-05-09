@@ -3,8 +3,9 @@
 }
 
 <div ng-app="sessionModule" ng-controller="faoQueueCtrl">
+
     <div id="details"></div>
-    <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions">
+    <kendo-grid options="mainGridOptions" k-rebind="mainGridOptions" >
         <div k-detail-template>
             <kendo-tabstrip>
                 <ul>
@@ -163,6 +164,6 @@
         <!--<p>{{ rejectSess }}</p>-->
         <textarea ng-model="rejectSess.reason"></textarea>
         <br />
-        <button ng-click="updateRequest('R')">Submit</button>
+        <button ng-click="updateRequest('R', rejectSess.reason)">Submit</button>
     </div>
 </div>
