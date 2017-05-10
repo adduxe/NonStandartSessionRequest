@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-sessionModule.factory('Submissions', ['$resource', function ($resource) {
+adminModule.factory('Submissions', ['$resource', function ($resource) {
 
     return $resource(
         "api/submissions/:submissionId", { submissionId: '@id' },

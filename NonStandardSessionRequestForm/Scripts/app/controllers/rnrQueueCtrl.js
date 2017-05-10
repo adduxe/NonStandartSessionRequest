@@ -1,4 +1,4 @@
-﻿sessionModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "RateTable",
+﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions",
 
     function ($scope, $filter, Submissions, RateTable) {
 

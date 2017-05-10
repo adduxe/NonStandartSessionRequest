@@ -42,7 +42,7 @@ namespace USC.RNR.NonStandardSessionRequestForm
                 .IncludeDirectory("~/Scripts/app/services", "*.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/adminSessModule")
-                .Include("~/Scripts/app/sessionModule.js")
+                .Include("~/Scripts/app/AdminModule.js")
                 .IncludeDirectory("~/Scripts/app/controllers", "*.js")
                 .IncludeDirectory("~/Scripts/app/services", "*.js"));
 
