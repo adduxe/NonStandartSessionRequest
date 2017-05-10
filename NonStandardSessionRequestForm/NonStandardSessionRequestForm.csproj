@@ -342,12 +342,12 @@
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
     <Content Include="Scripts\app\controllers\sessionResultCtrl.js" />
-    <Content Include="Scripts\app\controllers\faoQueueCtrl.js" />
-    <Content Include="Scripts\app\controllers\rnrQueueCtrl.js" />
+    <Content Include="Scripts\app\controllers\admin\faoQueueCtrl.js" />
+    <Content Include="Scripts\app\controllers\admin\rnrQueueCtrl.js" />
     <Content Include="Scripts\app\services\sessionTableService.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
     <Content Include="Scripts\app\services\get001DatesService.js" />
-    <Content Include="Scripts\app\services\submissionsService.js" />
+    <Content Include="Scripts\app\services\admin\submissionsService.js" />
     <Content Include="Scripts\app\AdminModule.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
