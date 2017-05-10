@@ -1,6 +1,6 @@
 ﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions",
 
-    function ($scope, $filter, Submissions, RateTable) {
+    function ($scope, $filter, Submissions) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -84,7 +84,7 @@
                     { field: "owningDepartment", title: "Department", width: "15%" },
                     { field: "requestDate", title: "Date", width: "10%" },
                         // Approve/Reject buttons
-                    { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
+                    { template: "<button ng-click='updateRequest(\'A\', \'Approve\', #= data.submissionId #)'>Approve</button>" },
                     { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
                 ],
                 editable: "popup"
@@ -188,8 +188,29 @@
     }
 
     $scope.approveRequest = function (submID) {
-        $scope.submID = submID;
-        $scope.updateRequest('A', 'Approved');
+
+        var sisDatesPacket = {
+            academicTerm: $scope.session.academicTerm,
+            sessionCode: $scope.session.sessionCode,
+            firstDayOfClass: $scope.session.firstDayOfClass,
+            lastDayOfClass: $scope.session.lastDayOfClass,
+            firstDayOfFinals: $scope.session.firstDayOfFinals,
+            lastDayOfFinals: $scope.session.lastDayOfFinals,
+            lastDayForAddDrop: $scope.session.lastDayForAddDrop,
+            lastDayForWithdrawal: $scope.session.lastDayForWithdrawal,
+            lastDayForEnrollmentOptionChange: $scope.session.lastDayForEnrollmentOptionChange,
+            firstDayForFinalGrading: $scope.session.firstDayForFinalGrading,
+            lastDayForFinalGrading: $scope.session.lastDayForFinalGrading
+        };
+
+        WriteToSis.save(sisDatesPacket,
+            function () {
+                $scope.submID = submID;
+                $scope.updateRequest('A', 'Approved');
+            }, function () {
+                alert("Failed to update SIS. Please retry.");
+            }
+        );
         return;
     }
 
@@ -197,32 +218,38 @@
 
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
 
-        if (selectedSess != null)
+        if (selectedSess != null) {
+
             $scope.rejectSess = selectedSess;
 
-        var todaysDate = new Date();
+            var todaysDate = new Date();
 
-        var status = {
-            submissionId: $scope.submID,
-            faoAction: $scope.rejectSess.faoAction,
-            faoActionDate: $scope.rejectSess.faoActionDate,
-            faoActionReason: $scope.rejectSess.faoActionReason,
-            rnrAction: actionCode,
-            rnrActionDate: todaysDate.toDateString(),
-            rnrActionReason: rejectReason
-        };
+            var status = {
+                submissionId: $scope.submID,
+                faoAction: $scope.rejectSess.faoAction,
+                faoActionDate: $scope.rejectSess.faoActionDate,
+                faoActionReason: $scope.rejectSess.faoActionReason,
+                rnrAction: actionCode,
+                rnrActionDate: todaysDate.toDateString(),
+                rnrActionReason: rejectReason
+            };
 
-        Submissions.update({ submissionId: $scope.submID }, status);
+            Submissions.update({ submissionId: $scope.submID }, status);
+            if (actionCode == 'A') {
+                $scope.approveRequest($scope.submID);
+            }
 
             // remove the submission from the list
-        for (var i = 0; i < $scope.dataSource._data.length; ++i) {
-            if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                $scope.dataSource._data.splice(i, 1);
-                break;
-            }
-        }   // for (var i...
+            for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+                if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                    $scope.dataSource._data.splice(i, 1);
+                    break;
+                }
+            }   // for (var i...
 
-        $scope.rejectWindow.close();
-    }
+            $scope.rejectWindow.close();
+        }
+
+    }   // $scope.updateRequest()
 
 }]);

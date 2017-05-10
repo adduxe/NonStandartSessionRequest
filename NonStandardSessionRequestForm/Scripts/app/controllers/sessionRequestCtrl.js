@@ -319,25 +319,8 @@ sessionModule.controller("sessionRequestCtrl",
                 function () {
 
                     //                window.location.href = "successPage.usc.edu";
-
-                    var sisDatesPacket = {
-                            academicTerm        : $scope.session.academicTerm,
-                            sessionCode         : $scope.session.sessionCode,
-                            firstDayOfClass     : $scope.session.firstDayOfClass,
-                            lastDayOfClass      : $scope.session.lastDayOfClass,
-                            firstDayOfFinals    : $scope.session.firstDayOfFinals,
-                            lastDayOfFinals     : $scope.session.lastDayOfFinals,
-                            lastDayForAddDrop   : $scope.session.lastDayForAddDrop,
-                            lastDayForWithdrawal: $scope.session.lastDayForWithdrawal,
-                            lastDayForEnrollmentOptionChange:   $scope.session.lastDayForEnrollmentOptionChange,
-                            firstDayForFinalGrading:    $scope.session.firstDayForFinalGrading,
-                            lastDayForFinalGrading:     $scope.session.lastDayForFinalGrading
-                        };
-
-                    WriteToSis.save(sisDatesPacket);
-
                     alert("Submission successful");
-                    $location.url("/Result?requestId=" +reqID);
+                    $location.url("/Result?requestId=" + reqID);
                 },
 
                 function () {
