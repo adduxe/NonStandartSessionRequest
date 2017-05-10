@@ -89,24 +89,24 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
             try
             {
-                var userRole = new UserRoleHelper();
+                var user = new UserHelper();
 
-                //if (userRole.IsAdmin() == false)
+                //if (user.IsAdmin == false)
                 //{
                 //    return NotFound();
                 //}
 
-                //if (userRole.IsFao())
+                //if (user.IsFao)
                 //{
                 //    department = "Fao";
                 //}
 
-                //if (userRole.IsRnr())
+                //if (user.IsRnr)
                 //{
                 //    department = "Rnr";
                 //}
 
-                //if (userRole.IsBur())
+                //if (user.IsBur)
                 //{
                 //    status = "Approved";
                 //}
