@@ -349,6 +349,7 @@
     <Content Include="Scripts\app\services\get001DatesService.js" />
     <Content Include="Scripts\app\services\admin\submissionsService.js" />
     <Content Include="Scripts\app\AdminModule.js" />
+    <Content Include="Scripts\app\services\admin\writeToSisService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\controllers\indexCtrl.js" />

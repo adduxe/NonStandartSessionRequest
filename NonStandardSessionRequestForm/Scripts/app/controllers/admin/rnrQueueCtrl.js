@@ -1,6 +1,6 @@
-﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions",
+﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis",
 
-    function ($scope, $filter, Submissions) {
+    function ($scope, $filter, Submissions, WriteToSis) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -84,7 +84,7 @@
                     { field: "owningDepartment", title: "Department", width: "15%" },
                     { field: "requestDate", title: "Date", width: "10%" },
                         // Approve/Reject buttons
-                    { template: "<button ng-click='updateRequest(\'A\', \'Approve\', #= data.submissionId #)'>Approve</button>" },
+                    { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
                     { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
                 ],
                 editable: "popup"
@@ -184,28 +184,38 @@
     $scope.openRejectPopup = function (submID) {
         $scope.submID = submID;
         $scope.rejectWindow.center().open();
+        $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
         return;
+    }
+
+    function convDateToString(givenDate) {
+        var newDate = new Date(givenDate);
+        return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }
 
     $scope.approveRequest = function (submID) {
 
+        $scope.submID = submID;
+        $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
+
+        var session = $scope.selectedSess.session;
+
         var sisDatesPacket = {
-            academicTerm: $scope.session.academicTerm,
-            sessionCode: $scope.session.sessionCode,
-            firstDayOfClass: $scope.session.firstDayOfClass,
-            lastDayOfClass: $scope.session.lastDayOfClass,
-            firstDayOfFinals: $scope.session.firstDayOfFinals,
-            lastDayOfFinals: $scope.session.lastDayOfFinals,
-            lastDayForAddDrop: $scope.session.lastDayForAddDrop,
-            lastDayForWithdrawal: $scope.session.lastDayForWithdrawal,
-            lastDayForEnrollmentOptionChange: $scope.session.lastDayForEnrollmentOptionChange,
-            firstDayForFinalGrading: $scope.session.firstDayForFinalGrading,
-            lastDayForFinalGrading: $scope.session.lastDayForFinalGrading
+            academicTerm: session.academicTerm,
+            sessionCode: session.sessionCode,
+            firstDayOfClass: convDateToString(session.firstDayOfClass),
+            lastDayOfClass: convDateToString(session.lastDayOfClass),
+            firstDayOfFinals: convDateToString(session.firstDayOfFinals),
+            lastDayOfFinals: convDateToString(session.lastDayOfFinals),
+            lastDayForAddDrop: convDateToString(session.lastDayForAddDrop),
+            lastDayForWithdrawal: convDateToString(session.lastDayForWithdrawal),
+            lastDayForEnrollmentOptionChange: convDateToString(session.lastDayForEnrollmentOptionChange),
+            firstDayForFinalGrading: convDateToString(session.firstDayForFinalGrading),
+            lastDayForFinalGrading: convDateToString(session.lastDayForFinalGrading)
         };
 
         WriteToSis.save(sisDatesPacket,
             function () {
-                $scope.submID = submID;
                 $scope.updateRequest('A', 'Approved');
             }, function () {
                 alert("Failed to update SIS. Please retry.");
@@ -216,39 +226,30 @@
 
     $scope.updateRequest = function (actionCode, rejectReason) {
 
-        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
+        var todaysDate = new Date();
 
-        if (selectedSess != null) {
+        var status = {
+            submissionId: $scope.submID,
+            faoAction: $scope.selectedSess.faoAction,
+            faoActionDate: $scope.selectedSess.faoActionDate,
+            faoActionReason: $scope.selectedSess.faoActionReason,
+            rnrAction: actionCode,
+            rnrActionDate: todaysDate.toDateString(),
+            rnrActionReason: rejectReason
+        };
 
-            $scope.rejectSess = selectedSess;
-
-            var todaysDate = new Date();
-
-            var status = {
-                submissionId: $scope.submID,
-                faoAction: $scope.rejectSess.faoAction,
-                faoActionDate: $scope.rejectSess.faoActionDate,
-                faoActionReason: $scope.rejectSess.faoActionReason,
-                rnrAction: actionCode,
-                rnrActionDate: todaysDate.toDateString(),
-                rnrActionReason: rejectReason
-            };
-
-            Submissions.update({ submissionId: $scope.submID }, status);
-            if (actionCode == 'A') {
-                $scope.approveRequest($scope.submID);
-            }
+        Submissions.update({ submissionId: $scope.submID }, status);
 
             // remove the submission from the list
-            for (var i = 0; i < $scope.dataSource._data.length; ++i) {
-                if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                    $scope.dataSource._data.splice(i, 1);
-                    break;
-                }
-            }   // for (var i...
+        for (var i = 0; i < $scope.dataSource._data.length; ++i) {
 
-            $scope.rejectWindow.close();
-        }
+            if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                $scope.dataSource._data.splice(i, 1);
+                break;
+            }
+        }   // for (var i...
+
+        if (actionCode == 'R') $scope.rejectWindow.close();
 
     }   // $scope.updateRequest()
 
