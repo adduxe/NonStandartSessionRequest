@@ -69,12 +69,14 @@
                 serverSorting: true
         });
 
+
         $scope.mainGridOptions = {
 
             dataSource: $scope.dataSource,
             sortable: true,
             pageable: true,
             columns: [
+
                 { field: "academicTerm", title: "Term", width: "7.5%" },
                 { field: "sessionCode", title: "Session", width: "7.5%" },
                 { field: "sessionName", title: "Session Name", width: "20%" },
@@ -195,8 +197,10 @@
     $scope.updateRequest = function (actionCode, rejectReason) {
 
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
-        if (selectedSess != null)
+
+        if (selectedSess != null) {
             $scope.rejectSess = selectedSess;
+        }
 
         var todaysDate = new Date();
 
@@ -213,9 +217,9 @@
         Submissions.update({ submissionId: $scope.submID }, status);
 
             // remove the submission from the list
-        for (var i = 0; i < $scope.submissions.length; ++i) {
-            if ($scope.submissions[i].submissionId == $scope.submID) {
-                $scope.submissions.splice(i, 1);
+        for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+            if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                $scope.dataSource._data.splice(i, 1);
                 break;
             }
         }   // for (var i...
