@@ -9,5 +9,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers
         {
             return View();
         }
-    }
+
+        public ActionResult Result()
+        {
+            return View();
+        }
+    }   
 }

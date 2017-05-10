@@ -347,6 +347,7 @@
     <Content Include="Scripts\app\services\sessionTableService.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
     <Content Include="Scripts\app\services\get001DatesService.js" />
+    <Content Include="Scripts\app\services\writeToSisService.js" />
     <Content Include="Scripts\app\services\submissionsService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -383,6 +384,7 @@
     <Content Include="Scripts\kendo\2017.1.118\kendo.core.min.js.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Home\Result.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -450,7 +452,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2311</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2311//NonStandardSessionRequest/</IISUrl>
+          <IISUrl>http://localhost:2311/NonStandardSessionRequest/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

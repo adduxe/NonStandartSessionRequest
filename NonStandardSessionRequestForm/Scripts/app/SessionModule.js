@@ -1,9 +1,11 @@
 ﻿"use strict";
+
 var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
 
-//sessionModule.config([
-//    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
-//        $routeProvider
+sessionModule.config([
+
+    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+        $routeProvider
 //            .when("/",
 //            {
 //                templateUrl: "scripts/app/views/SessionRequest.html",
@@ -14,13 +16,13 @@ var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "k
 //                templateUrl: "scripts/app/views/SessionReview.html",
 //                controller: "sessionReviewCtrl"
 //            })
-//            .when("/Result",
-//            {
-//                templateUrl: "scripts/app/views/SessionResult.html",
-//                controller: "sessionResultCtrl"
-//            })
+            .when("/Result",
+            {
+                templateUrl: "scripts/app/views/SessionResult.html",
+                controller: "sessionResultCtrl"
+            })
 //            .otherwise({ redirectTo: "/" });
 
-//        $locationProvider.html5Mode(true);
-//    }
-//]);
+        $locationProvider.html5Mode(true);
+    }
+]);

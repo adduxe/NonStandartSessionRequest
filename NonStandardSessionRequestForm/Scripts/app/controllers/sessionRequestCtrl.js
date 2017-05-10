@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "$scope", "$http", "$location",
+    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "WriteToSis", "$scope", "$http", "$location",
 
-    function (RateTable, Sessions, Get001Dates, SessionCodes, $scope, $http, $location) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, WriteToSis, $scope, $http, $location) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -317,13 +317,31 @@ sessionModule.controller("sessionRequestCtrl",
             .$promise.then(
 
                 function () {
+
                     //                window.location.href = "successPage.usc.edu";
+
+                    var sisDatesPacket = {
+                            academicTerm        : $scope.session.academicTerm,
+                            sessionCode         : $scope.session.sessionCode,
+                            firstDayOfClass     : $scope.session.firstDayOfClass,
+                            lastDayOfClass      : $scope.session.lastDayOfClass,
+                            firstDayOfFinals    : $scope.session.firstDayOfFinals,
+                            lastDayOfFinals     : $scope.session.lastDayOfFinals,
+                            lastDayForAddDrop   : $scope.session.lastDayForAddDrop,
+                            lastDayForWithdrawal: $scope.session.lastDayForWithdrawal,
+                            lastDayForEnrollmentOptionChange:   $scope.session.lastDayForEnrollmentOptionChange,
+                            firstDayForFinalGrading:    $scope.session.firstDayForFinalGrading,
+                            lastDayForFinalGrading:     $scope.session.lastDayForFinalGrading
+                        };
+
+                    WriteToSis.save(sisDatesPacket);
+
                     alert("Submission successful");
-                    $location.url("/Result?requestId=" + reqID);
+                    $location.url("/Result?requestId=" +reqID);
                 },
 
                 function () {
-                    alert("Error in writing session.");
+                    alert("Error in submitting the form.");
                 }
             );
 
@@ -424,8 +442,8 @@ sessionModule.controller("sessionRequestCtrl",
             rateType:               "",
             ratePerUnitAmount:      "",
             flatRateAmount:         "",
-            flatRateUnitsMin:       0,
-            flatRateUnitsMax:       0,
+            flatRateUnitsMin:       "",
+            flatRateUnitsMax:       "",
             comments:               "",
             sessionBreaks:          [],
             sections:               [],
