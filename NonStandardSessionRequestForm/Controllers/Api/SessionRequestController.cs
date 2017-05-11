@@ -31,6 +31,11 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
+                    var user = new UserHelper();
+                    session.OwningDepartment = user.Department;
+                    session.UserContact = user.FirstName + " " + user.Surname;
+                    session.UserEmail = user.Email;
+                    session.UserPhone = user.Phone;
                     session.SubmitDate = DateTime.Now;
                     var createdSession = await client.SessionRequest.PostBySessionDTOAsync(session);
                     var submission = new Submission
