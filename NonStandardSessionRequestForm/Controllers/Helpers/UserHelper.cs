@@ -7,11 +7,6 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
 {
     public class UserHelper
     {
-        private static List<string> _superUsers = new List<string>
-        {
-            "6768358816", "3147921339", "2544635785", null
-        };
-
         public UserHelper()
         {
             this.UscId = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONUSCID"];
