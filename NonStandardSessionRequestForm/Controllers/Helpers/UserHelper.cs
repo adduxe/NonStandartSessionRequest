@@ -12,6 +12,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
             this.UscId = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONUSCID"];
             this.FirstName = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONFIRSTNAME"];
             this.Surname = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONSURNAME"];
+            this.School = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDIVISION"];
             this.Department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
             this.Email = HttpContext.Current.Request.ServerVariables["HTTP_SHIBPERSONMAIL"];
             this.Phone = HttpContext.Current.Request.ServerVariables["HTTP_SHIBPERSONTELEPHONENUMBER"];
@@ -50,7 +51,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "FAO Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
-                    this.Email = "test@usc.edu"
+                    this.Email = "test@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = true;
@@ -63,7 +64,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "RNR Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
-                    this.Email = "test@usc.edu"
+                    this.Email = "test@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = false;
@@ -87,7 +88,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "Forbidden";
                     this.Surname = "User";
                     this.Department = "Department of Hacking";
-                    this.Email = "test@usc.edu"
+                    this.Email = "test@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = false;
                     this.IsFao = false;
@@ -104,11 +105,13 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
 
         internal string Surname { get; private set; }
 
+        internal string School { get; private set; } 
+
         internal string Department { get; private set; }
 
-        internal string Email { get; set; }
+        internal string Email { get; private set; }
 
-        internal string Phone { get; set; }
+        internal string Phone { get; private set; }
 
         internal bool IsAdmin { get; private set; }
 
