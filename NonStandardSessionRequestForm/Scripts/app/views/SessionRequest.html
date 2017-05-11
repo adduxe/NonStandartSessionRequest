@@ -39,7 +39,7 @@
                 </label>
                 <div class="col-md-8">
                     <label class="radio-inline">
-                        <input type="radio" name="isClassAtUPC" value="Y" ng-model="isClassHeldAtUPC" />Yes
+                        <input type="radio" name="isClassAtUPC" value="Y" ng-model="isClassHeldAtUPC" ng-click="session.uscCampusLocation = ''"/>Yes
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="isClassAtUPC" value="N" ng-model="isClassHeldAtUPC" />No
@@ -122,7 +122,7 @@
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" ng-disabled="(isClassHeldAtUPC != 'N')" ng-model="session.uscCampusLocation">
+                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" ng-disabled="(isClassHeldAtUPC != 'N')" ng-model="session.uscCampusLocation" >
                         <option ng-repeat="eachCampus in campusLocs" value="{{ eachCampus.campusCode }}">{{ eachCampus.campusName }}</option>
                     </select>
                 </div>
@@ -423,4 +423,6 @@
     </div>
     <input type="hidden" ng-model="session.firstDayForFinalGrading" value="" />
     <input type="hidden" ng-model="session.lastDayForFinalGrading" value="" />
+    <input type="hidden" ng-model="session.userContact" value="@(ViewBag.ShibUserName)" />
+
 </form>

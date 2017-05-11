@@ -317,7 +317,6 @@ sessionModule.controller("sessionRequestCtrl",
             .$promise.then(
 
                 function () {
-
                     //                window.location.href = "successPage.usc.edu";
                     alert("Submission successful");
                     $location.url("/Result?requestId=" + reqID);
@@ -406,11 +405,11 @@ sessionModule.controller("sessionRequestCtrl",
             academicTerm: "",
             sessionCode: "",
             sessionName: "",
-            owningSchool:           "Engineering",     // from Shib
-            owningDepartment:       "Environmental",     // from Shib
-            userContact:            "Jessie James",     // from Shib
-            userEmail:              "jjames@usc.edu",     // from Shib
-            userPhone:              "818.310.5689",     // from Shib
+            owningSchool:           "",          // from Shib
+            owningDepartment:       "",        // from Shib
+            userContact:            "",// from Shib
+            userEmail:              "",       // from Shib
+            userPhone:              "",         // from Shib
             firstDayOfClass:        "",
             lastDayOfClass:         "",
             lastDayForAddDrop:      "",

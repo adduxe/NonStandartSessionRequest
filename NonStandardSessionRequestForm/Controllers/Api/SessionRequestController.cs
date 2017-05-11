@@ -171,172 +171,172 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var json = @"[
-       {
-           ""term"": ""20172"",
-           ""rateTypes"": [
-             {
-                 ""rateTypeCode"": ""STD"",
-                 ""rateTypeDesc"": ""Standard (session 001)"",
-                 ""rateTypeUnitRate"": ""1733"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""GBUS"",
-                 ""rateTypeDesc"": ""Graduate Business"",
-                 ""rateTypeUnitRate"": ""1778"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""GCINA"",
-                 ""rateTypeDesc"": ""Graduate Cinematic Arts"",
-                 ""rateTypeUnitRate"": ""1843"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""GENGR"",
-                 ""rateTypeDesc"": ""Graduate Engineering"",
-                 ""rateTypeUnitRate"": ""1845"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""LAW"",
-                 ""rateTypeDesc"": ""Law"",
-                 ""rateTypeUnitRate"": ""2303"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""MRED"",
-                 ""rateTypeDesc"": ""Master of Real Estate Development"",
-                 ""rateTypeUnitRate"": ""1921"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""PHAR"",
-                 ""rateTypeDesc"": ""Pharmacy"",
-                 ""rateTypeUnitRate"": ""1761"",
-                 ""rateTypeFlatRate"": """"
-             }
-           ]        
-       },
-       {
-           ""term"": ""20173"",
-           ""rateTypes"": [
-             {
-                 ""rateTypeCode"": ""STD"",
-                 ""rateTypeDesc"": ""Standard (session 001)"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""26724""
-             },
-             {
-                 ""rateTypeCode"": ""GBUS"",
-                 ""rateTypeDesc"": ""Graduate Business"",
-                 ""rateTypeUnitRate"": ""1847"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""GCINA"",
-                 ""rateTypeDesc"": ""Graduate Cinematic Arts"",
-                 ""rateTypeUnitRate"": ""1915"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""ADVDE"",
-                 ""rateTypeDesc"": ""Advanced Dentistry"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""30736""
-             },
-             {
-                 ""rateTypeCode"": ""DENT"",
-                 ""rateTypeDesc"": ""Dentistry"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""30409""
-             },
-             {
-                 ""rateTypeCode"": ""DH"",
-                 ""rateTypeDesc"": ""Dental Hygiene"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""24769""
-             },
-             {
-                 ""rateTypeCode"": ""GENGR"",
-                 ""rateTypeDesc"": ""Graduate Engineering"",
-                 ""rateTypeUnitRate"": ""1937"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""LAW"",
-                 ""rateTypeDesc"": ""Law"",
-                 ""rateTypeUnitRate"": ""2393"",
-                 ""rateTypeFlatRate"": ""30949""
-             },
-             {
-                 ""rateTypeCode"": ""MED"",
-                 ""rateTypeDesc"": ""Medicine"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""30714""
-             }
-           ]     
-       },
-       {
-           ""term"": ""20181"",
-           ""rateTypes"": [
-             {
-                 ""rateTypeCode"": ""STD"",
-                 ""rateTypeDesc"": ""Standard (session 001)"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""26724""
-             },
-             {
-                 ""rateTypeCode"": ""GBUS"",
-                 ""rateTypeDesc"": ""Graduate Business"",
-                 ""rateTypeUnitRate"": ""1847"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""GCINA"",
-                 ""rateTypeDesc"": ""Graduate Cinematic Arts"",
-                 ""rateTypeUnitRate"": ""1915"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""ADVDE"",
-                 ""rateTypeDesc"": ""Advanced Dentistry"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""30736""
-             },
-             {
-                 ""rateTypeCode"": ""DENT"",
-                 ""rateTypeDesc"": ""Dentistry"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""30409""
-             },
-             {
-                 ""rateTypeCode"": ""DH"",
-                 ""rateTypeDesc"": ""Dental Hygiene"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""24769""
-             },
-             {
-                 ""rateTypeCode"": ""GENGR"",
-                 ""rateTypeDesc"": ""Graduate Engineering"",
-                 ""rateTypeUnitRate"": ""1937"",
-                 ""rateTypeFlatRate"": """"
-             },
-             {
-                 ""rateTypeCode"": ""LAW"",
-                 ""rateTypeDesc"": ""Law"",
-                 ""rateTypeUnitRate"": ""2393"",
-                 ""rateTypeFlatRate"": ""30949""
-             },
-             {
-                 ""rateTypeCode"": ""MED"",
-                 ""rateTypeDesc"": ""Medicine"",
-                 ""rateTypeUnitRate"": ""1800"",
-                 ""rateTypeFlatRate"": ""30714""
-             }
-           ]     
-       }
-    ]";
+                           {
+                               ""term"": ""20172"",
+                               ""rateTypes"": [
+                                 {
+                                     ""rateTypeCode"": ""STD"",
+                                     ""rateTypeDesc"": ""Standard (session 001)"",
+                                     ""rateTypeUnitRate"": ""1733"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GBUS"",
+                                     ""rateTypeDesc"": ""Graduate Business"",
+                                     ""rateTypeUnitRate"": ""1778"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GCINA"",
+                                     ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                                     ""rateTypeUnitRate"": ""1843"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GENGR"",
+                                     ""rateTypeDesc"": ""Graduate Engineering"",
+                                     ""rateTypeUnitRate"": ""1845"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""LAW"",
+                                     ""rateTypeDesc"": ""Law"",
+                                     ""rateTypeUnitRate"": ""2303"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MRED"",
+                                     ""rateTypeDesc"": ""Master of Real Estate Development"",
+                                     ""rateTypeUnitRate"": ""1921"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""PHAR"",
+                                     ""rateTypeDesc"": ""Pharmacy"",
+                                     ""rateTypeUnitRate"": ""1761"",
+                                     ""rateTypeFlatRate"": """"
+                                 }
+                               ]        
+                           },
+                           {
+                               ""term"": ""20173"",
+                               ""rateTypes"": [
+                                 {
+                                     ""rateTypeCode"": ""STD"",
+                                     ""rateTypeDesc"": ""Standard (session 001)"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""26724""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GBUS"",
+                                     ""rateTypeDesc"": ""Graduate Business"",
+                                     ""rateTypeUnitRate"": ""1847"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GCINA"",
+                                     ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                                     ""rateTypeUnitRate"": ""1915"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ADVDE"",
+                                     ""rateTypeDesc"": ""Advanced Dentistry"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30736""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENT"",
+                                     ""rateTypeDesc"": ""Dentistry"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30409""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DH"",
+                                     ""rateTypeDesc"": ""Dental Hygiene"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""24769""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GENGR"",
+                                     ""rateTypeDesc"": ""Graduate Engineering"",
+                                     ""rateTypeUnitRate"": ""1937"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""LAW"",
+                                     ""rateTypeDesc"": ""Law"",
+                                     ""rateTypeUnitRate"": ""2393"",
+                                     ""rateTypeFlatRate"": ""30949""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MED"",
+                                     ""rateTypeDesc"": ""Medicine"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30714""
+                                 }
+                               ]     
+                           },
+                           {
+                               ""term"": ""20181"",
+                               ""rateTypes"": [
+                                 {
+                                     ""rateTypeCode"": ""STD"",
+                                     ""rateTypeDesc"": ""Standard (session 001)"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""26724""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GBUS"",
+                                     ""rateTypeDesc"": ""Graduate Business"",
+                                     ""rateTypeUnitRate"": ""1847"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GCINA"",
+                                     ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                                     ""rateTypeUnitRate"": ""1915"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ADVDE"",
+                                     ""rateTypeDesc"": ""Advanced Dentistry"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30736""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENT"",
+                                     ""rateTypeDesc"": ""Dentistry"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30409""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DH"",
+                                     ""rateTypeDesc"": ""Dental Hygiene"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""24769""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""GENGR"",
+                                     ""rateTypeDesc"": ""Graduate Engineering"",
+                                     ""rateTypeUnitRate"": ""1937"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""LAW"",
+                                     ""rateTypeDesc"": ""Law"",
+                                     ""rateTypeUnitRate"": ""2393"",
+                                     ""rateTypeFlatRate"": ""30949""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MED"",
+                                     ""rateTypeDesc"": ""Medicine"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30714""
+                                 }
+                               ]     
+                           }
+                        ]";
 
                     return ResponseMessage(new HttpResponseMessage
                     {
