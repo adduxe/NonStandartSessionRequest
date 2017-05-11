@@ -93,20 +93,20 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 var user = new UserHelper();
 
-                //if (user.IsAdmin == false)
-                //{
-                //    return NotFound();
-                //}
+                if (user.IsAdmin == false)
+                {
+                    return NotFound();
+                }
 
-                //if (user.IsFao)
-                //{
-                //    department = "Fao";
-                //}
+                if (user.IsFao)
+                {
+                    department = "Fao";
+                }
 
-                //if (user.IsRnr)
-                //{
-                //    department = "Rnr";
-                //}
+                if (user.IsRnr)
+                {
+                    department = "Rnr";
+                }
 
                 //if (user.IsBur)
                 //{

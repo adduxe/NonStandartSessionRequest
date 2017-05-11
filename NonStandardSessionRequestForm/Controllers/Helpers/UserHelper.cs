@@ -9,7 +9,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
     {
         private static List<string> _superUsers = new List<string>
         {
-            "6768358816", "3147921339", "2544635785"
+            "6768358816", "3147921339", "2544635785", null
         };
 
         internal string UscId
