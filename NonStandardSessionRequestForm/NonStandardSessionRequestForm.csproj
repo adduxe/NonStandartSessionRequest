@@ -338,6 +338,7 @@
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Fao.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Rnr.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Forbidden.cshtml" />
     <None Include="Properties\PublishProfiles\local debug.pubxml" />
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />

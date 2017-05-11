@@ -19,25 +19,44 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
 
             var user = new UserHelper();
 
-            ViewBag.Title = "Financial Aid Request Queue";
-            ViewBag.ShibDepartment = user.Department;
-            ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
-
-            return View();
+            if (user.IsAdmin && user.IsFao)
+            {
+                ViewBag.Title = "Financial Aid Request Queue";
+                ViewBag.ShibDepartment = user.Department;
+                ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
+                return View();
+            }
+            else
+            {
+                return View("Forbidden");
+            }
         }
         public ActionResult Rnr()
         {
             var user = new UserHelper();
 
-            ViewBag.Title = "Records and Registration Request Queue";
-            ViewBag.ShibDepartment = user.Department;
-            ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
+            if (user.IsAdmin && user.IsRnr)
+            {
 
-            return View();
+                ViewBag.Title = "Records and Registration Request Queue";
+                ViewBag.ShibDepartment = user.Department;
+                ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
+                return View();
+            }
+            else
+            {
+                return View("Forbidden");
+            }
         }
+
         public ActionResult Bur()
         {
             return View();
         }
+
+        //public ActionResult Forbidden()
+        //{
+        //    return View();
+        //}
     }
 }

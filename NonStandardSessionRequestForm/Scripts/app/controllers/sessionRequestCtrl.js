@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "WriteToSis", "$scope", "$http", "$location",
+    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "$scope", "$http", "$location",
 
-    function (RateTable, Sessions, Get001Dates, SessionCodes, WriteToSis, $scope, $http, $location) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, $scope, $http, $location) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
