@@ -7,6 +7,18 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
 {
     public class UserHelper
     {
+        private static List<string> _superUsers = new List<string>
+        {
+            "6768358816", "3147921339", "2544635785"
+        };
+
+        internal string UscId
+        {
+            get
+            {
+                return HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONUSCID"];
+            }
+        }
         internal string FirstName
         {
             get
@@ -35,8 +47,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
         {
             get
             {
-                var entitlements = HttpContext.Current.Request.ServerVariables["HTTP_SHIBEPENTITLEMENT"];
+                if (_superUsers.Any(u => u == this.UscId))
+                {
+                    return true;
+                }
 
+                var entitlements = HttpContext.Current.Request.ServerVariables["HTTP_SHIBEPENTITLEMENT"];
                 if (entitlements != null && entitlements.Contains("urn:mace:usc.edu:gds:entitlement:scwk8kd3@scgw6st3"))
                 {
                     return true;
@@ -50,8 +66,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
         {
             get
             {
-                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+                if (_superUsers.Any(u => u == this.UscId))
+                {
+                    return true;
+                }
 
+                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
                 if (department != null && department.Contains("Financial Aid"))
                 {
                     return true;
@@ -65,8 +85,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
         {
             get
             {
-                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+                if (_superUsers.Any(u => u == this.UscId))
+                {
+                    return true;
+                }
 
+                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
                 if (department != null && department.Contains("Academic Records & Registrar"))
                 {
                     return true;
@@ -80,8 +104,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
         {
             get
             {
-                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+                if (_superUsers.Any(u => u == this.UscId))
+                {
+                    return true;
+                }
 
+                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
                 if (department != null && department.Contains("Financial Services"))
                 {
                     return true;
