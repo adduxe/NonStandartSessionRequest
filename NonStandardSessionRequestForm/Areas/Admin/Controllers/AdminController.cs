@@ -12,7 +12,16 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
         // GET: Admin/Admin
         public ActionResult Index()
         {
-            return View();
+            var user = new UserHelper();
+
+            if (user.IsAdmin && user.IsFao)
+                return View("Fao");
+            else
+                if (user.IsAdmin && user.IsRnr) return View("Rnr");
+            //else
+            //    if (user.IsAdmin && user.IsBur) return View("Bur");
+            else
+                return View("Forbidden");
         }
 
         public ActionResult Fao() {

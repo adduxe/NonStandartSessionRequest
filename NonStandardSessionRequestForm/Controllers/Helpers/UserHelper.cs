@@ -46,35 +46,55 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 
-            // Test as FAO
-            this.UscId = "this is a test";
-            this.FirstName = "FAO Admin";
-            this.Surname = "Tester";
-            this.Department = "Department of Testing";
-            this.IsAdmin = true;
-            this.IsFao = true;
-            this.IsRnr = false;
-            this.IsBur = false;
+            string user = "F";
 
-            // Test as RNR
-            //this.UscId = "this is a test";
-            //this.FirstName = "RNR Admin";
-            //this.Surname = "Tester";
-            //this.Department = "Department of Testing";
-            //this.IsAdmin = true;
-            //this.IsFao = false;
-            //this.IsRnr = true;
-            //this.IsBur = false;
+            switch (user.ToUpper()){
+                 
+                case "F": // Test as FAO
+                    this.UscId = "this is a test";
+                    this.FirstName = "FAO Admin";
+                    this.Surname = "Tester";
+                    this.Department = "Department of Testing";
+                    this.IsAdmin = true;
+                    this.IsFao = true;
+                    this.IsRnr = false;
+                    this.IsBur = false;
+                    break;
 
-            //// Test as BUR
-            //this.UscId = "this is a test";
-            //this.FirstName = "BUR Admin";
-            //this.Surname = "Tester";
-            //this.Department = "Department of Testing";
-            //this.IsAdmin = true;
-            //this.IsFao = false;
-            //this.IsRnr = false;
-            //this.IsBur = true;
+                case "R": // Test as RNR
+                    this.UscId = "this is a test";
+                    this.FirstName = "RNR Admin";
+                    this.Surname = "Tester";
+                    this.Department = "Department of Testing";
+                    this.IsAdmin = true;
+                    this.IsFao = false;
+                    this.IsRnr = true;
+                    this.IsBur = false;
+                    break;
+
+                case "B": // Test as Bursar
+                    this.UscId = "this is a test";
+                    this.FirstName = "BUR Admin";
+                    this.Surname = "Tester";
+                    this.Department = "Department of Testing";
+                    this.IsAdmin = true;
+                    this.IsFao = false;
+                    this.IsRnr = false;
+                    this.IsBur = true;
+                    break;
+
+                default:    // Illegal User
+                    this.UscId = "Illegal User";
+                    this.FirstName = "Forbidden";
+                    this.Surname = "User";
+                    this.Department = "Department of Hacking";
+                    this.IsAdmin = false;
+                    this.IsFao = false;
+                    this.IsRnr = false;
+                    this.IsBur = false;
+                    break;
+            }
+
         }
 
         internal string UscId { get; private set; }
