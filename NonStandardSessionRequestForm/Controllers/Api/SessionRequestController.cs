@@ -32,6 +32,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var user = new UserHelper();
+                    session.OwningSchool = user.School;
                     session.OwningDepartment = user.Department;
                     session.UserContact = user.FirstName + " " + user.Surname;
                     session.UserEmail = user.Email;
