@@ -160,10 +160,19 @@
         </div>
     </kendo-grid>
 
-    <div kendo-window="rejectWindow" style="display: none;">
-        <!--<p>{{ rejectSess }}</p>-->
-        <textarea ng-model="rejectSess.reason"></textarea>
-        <br />
-        <button ng-click="updateRequest('R', rejectSess.reason)">Submit</button>
+    <!-- Pop-up Window -->
+    <div kendo-window="rejectWindow" style="display: none;" k-title="'Rejection Reason'" k-width="200" k-height="125">
+        <table align="center">
+        <tr>
+            <td align="center">
+                <textarea ng-model="rejectSess.reason" maxlength="100" cols="20" rows="4"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <button ng-click="updateRequest('R', rejectSess.reason)">Submit</button>
+            </td>
+        </tr>
+        </table>
     </div>
 </div>
