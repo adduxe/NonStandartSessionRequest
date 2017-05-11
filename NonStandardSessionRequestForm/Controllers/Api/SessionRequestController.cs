@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Http;
 using USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers;
 using UvApi.RnrSWebSess.Client;
+using System.Net.Mail;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 {
@@ -80,6 +81,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 return InternalServerError(ex);
             }
         }
+
 
         [Route("submissions")]
         public async Task<IHttpActionResult> GetSubmissions()
@@ -402,28 +404,37 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
-        //[Route("authorization/users/{uscId}")]
-        //public async Task<IHttpActionResult> GetUser(string uscId)
-        //{
-        //try
-        //{
-        //    using (var client = new RNRSessionRequestAPI(_dataApiUri))
-        //    {
-        //        await clien
-        //        return Ok();
-        //    }
-        //}
-        //catch (HttpOperationException apiEx)
-        //{
-        //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", apiEx.Message);
-        //    return InternalServerError(apiEx);
-        //}
-        //catch (Exception ex)
-        //{
-        //    Log.Logger.Error("Failed to PUT submission! Error: {Error}", ex.Message);
-        //    return InternalServerError(ex);
-        //}
-        //}
+//        [Route("email")]
+//        public IHttpActionResult PostEmail(object sender, EventArgs e)
+//        {
+
+//            string returnVal = "";
+
+//            try
+//            {
+//                MailMessage mail = new MailMessage();
+//                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+//                mail.From = new MailAddress("donotreply@usc.edu");
+//                mail.To.Add("adduxe@yahoo.com");
+//                mail.Subject = "Test Mail";
+//                mail.Body = "This is for testing SMTP mail from GMAIL";
+
+//                SmtpServer.Port = 587;
+//                SmtpServer.Credentials = new System.Net.NetworkCredential("adduxe", "Al@d5150");
+//                SmtpServer.EnableSsl = true;
+
+//                SmtpServer.Send(mail);
+//                // MessageBox.Show("mail Send");
+//                returnVal = ("mail Send");
+//            }
+//            catch (Exception ex)
+//            {
+//                // MessageBox.Show(ex.ToString());
+//                returnVal = (ex.ToString());
+//            }
+////            return returnVal;
+//        }   // email
 
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
 {
     public class UserHelper
-    {       
+    {
         internal string FirstName
         {
             get
