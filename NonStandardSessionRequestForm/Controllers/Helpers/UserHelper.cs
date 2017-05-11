@@ -13,6 +13,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
             this.FirstName = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONFIRSTNAME"];
             this.Surname = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONSURNAME"];
             this.Department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+            this.Email = HttpContext.Current.Request.ServerVariables["HTTP_SHIBPERSONMAIL"];
+            this.Phone = HttpContext.Current.Request.ServerVariables["HTTP_SHIBPERSONTELEPHONENUMBER"];
 
             this.IsAdmin = false;
             var entitlements = HttpContext.Current.Request.ServerVariables["HTTP_SHIBEPENTITLEMENT"];
@@ -21,22 +23,20 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsAdmin = true;
             }
 
-            var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
-
             this.IsFao = false;
-            if (department != null && department.Contains("Financial Aid"))
+            if (this.Department != null && this.Department.Contains("Financial Aid"))
             {
                 this.IsFao = true;
             }
 
             this.IsRnr = false;
-            if (department != null && department.Contains("Academic Records & Registrar"))
+            if (this.Department != null && this.Department.Contains("Academic Records & Registrar"))
             {
                 this.IsRnr = true;
             }
 
             this.IsBur = false;
-            if (department != null && department.Contains("Financial Services"))
+            if (this.Department != null && this.Department.Contains("Financial Services"))
             {
                 this.IsBur = true;
             }
@@ -50,6 +50,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "FAO Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
+                    this.Email = "test@usc.edu"
+                    this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = true;
                     this.IsRnr = false;
@@ -61,6 +63,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "RNR Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
+                    this.Email = "test@usc.edu"
+                    this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = false;
                     this.IsRnr = true;
@@ -83,6 +87,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "Forbidden";
                     this.Surname = "User";
                     this.Department = "Department of Hacking";
+                    this.Email = "test@usc.edu"
+                    this.Phone = "+1 213 111 1111";
                     this.IsAdmin = false;
                     this.IsFao = false;
                     this.IsRnr = false;
@@ -99,6 +105,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
         internal string Surname { get; private set; }
 
         internal string Department { get; private set; }
+
+        internal string Email { get; set; }
+
+        internal string Phone { get; set; }
 
         internal bool IsAdmin { get; private set; }
 
