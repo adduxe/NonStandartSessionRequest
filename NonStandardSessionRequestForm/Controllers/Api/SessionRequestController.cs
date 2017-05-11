@@ -108,12 +108,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     department = "Rnr";
                 }
 
-                //if (user.IsBur)
-                //{
-                //    status = "Approved";
-                //}
-
-                department = "Fao";
+                if (user.IsBur)
+                {
+                    status = "Approved";
+                }
 
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {

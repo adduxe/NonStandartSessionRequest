@@ -12,111 +12,85 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
             "6768358816", "3147921339", "2544635785", null
         };
 
-        internal string UscId
+        public UserHelper()
         {
-            get
+            this.UscId = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONUSCID"];
+            this.FirstName = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONFIRSTNAME"];
+            this.Surname = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONSURNAME"];
+            this.Department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+
+            this.IsAdmin = false;
+            var entitlements = HttpContext.Current.Request.ServerVariables["HTTP_SHIBEPENTITLEMENT"];
+            if (entitlements != null && entitlements.Contains("urn:mace:usc.edu:gds:entitlement:scwk8kd3@scgw6st3"))
             {
-                return HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONUSCID"];
+                this.IsAdmin = true;
             }
-        }
-        internal string FirstName
-        {
-            get
+
+            var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+
+            this.IsFao = false;
+            if (department != null && department.Contains("Financial Aid"))
             {
-                return HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONFIRSTNAME"];
+                this.IsFao = true;
             }
-        }
 
-        internal string Surname
-        {
-            get
+            this.IsRnr = false;
+            if (department != null && department.Contains("Academic Records & Registrar"))
             {
-                return HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONSURNAME"];
+                this.IsRnr = true;
             }
-        }
 
-        internal string Department
-        {
-            get
+            this.IsBur = false;
+            if (department != null && department.Contains("Financial Services"))
             {
-                return HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
+                this.IsBur = true;
             }
-        }
 
-        internal bool IsAdmin
-        {
-            get
-            {
-                if (_superUsers.Any(u => u == this.UscId))
-                {
-                    return true;
-                }
+            // Test as FAO
+            this.UscId = "this is a test";
+            this.FirstName = "FAO Admin";
+            this.Surname = "Tester";
+            this.Department = "Department of Testing";
+            this.IsAdmin = true;
+            this.IsFao = true;
+            this.IsRnr = false;
+            this.IsBur = false;
 
-                var entitlements = HttpContext.Current.Request.ServerVariables["HTTP_SHIBEPENTITLEMENT"];
-                if (entitlements != null && entitlements.Contains("urn:mace:usc.edu:gds:entitlement:scwk8kd3@scgw6st3"))
-                {
-                    return true;
-                }
+            // Test as RNR
+            //this.UscId = "this is a test";
+            //this.FirstName = "RNR Admin";
+            //this.Surname = "Tester";
+            //this.Department = "Department of Testing";
+            //this.IsAdmin = true;
+            //this.IsFao = false;
+            //this.IsRnr = true;
+            //this.IsBur = false;
 
-                return false;
-            }
-        }
-
-        internal bool IsFao
-        {
-            get
-            {
-                if (_superUsers.Any(u => u == this.UscId))
-                {
-                    return true;
-                }
-
-                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
-                if (department != null && department.Contains("Financial Aid"))
-                {
-                    return true;
-                }
-
-                return false;
-            }
+            //// Test as BUR
+            //this.UscId = "this is a test";
+            //this.FirstName = "BUR Admin";
+            //this.Surname = "Tester";
+            //this.Department = "Department of Testing";
+            //this.IsAdmin = true;
+            //this.IsFao = false;
+            //this.IsRnr = false;
+            //this.IsBur = true;
         }
 
-        internal bool IsRnr
-        {
-            get
-            {
-                if (_superUsers.Any(u => u == this.UscId))
-                {
-                    return true;
-                }
+        internal string UscId { get; private set; }
 
-                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
-                if (department != null && department.Contains("Academic Records & Registrar"))
-                {
-                    return true;
-                }
+        internal string FirstName { get; private set; }
 
-                return false;
-            }
-        }
+        internal string Surname { get; private set; }
 
-        internal bool IsBur
-        {
-            get
-            {
-                if (_superUsers.Any(u => u == this.UscId))
-                {
-                    return true;
-                }
+        internal string Department { get; private set; }
 
-                var department = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONDEPARTMENT"];
-                if (department != null && department.Contains("Financial Services"))
-                {
-                    return true;
-                }
+        internal bool IsAdmin { get; private set; }
 
-                return false;
-            }
-        }
+        internal bool IsFao { get; private set; }
+
+        internal bool IsRnr { get; private set; }
+
+        internal bool IsBur { get; private set; }
     }
 }
