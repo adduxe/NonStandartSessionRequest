@@ -84,7 +84,7 @@
                 { field: "owningDepartment", title: "Department", width: "15%" },
                 { field: "requestDate", title: "Date", width: "10%" },
                     // Approve/Reject buttons
-                { template: "<button ng-click='updateRequest(#= data.submissionId #)'>Approve</button>" },
+                { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
                 { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
             ],
             editable: "popup"

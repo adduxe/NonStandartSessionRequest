@@ -10,7 +10,7 @@
                     <abbr title="Session semester being applied for">For Semester:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="semester" name="semester" ng-required="true" ng-model="session.academicTerm" ng-change="SetRates();">
+                    <select class="form-control" id="semester" name="semester" ng-required="true" ng-model="session.academicTerm" ng-change="GetDatesAndRates();">
                         <option ng-repeat="eachSem in semesters" value="{{ eachSem.semCode }}">{{ eachSem.semName }}</option>
                     </select>
                 </div>

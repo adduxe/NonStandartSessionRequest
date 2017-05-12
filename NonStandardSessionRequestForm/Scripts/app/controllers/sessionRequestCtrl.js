@@ -176,86 +176,91 @@ sessionModule.controller("sessionRequestCtrl",
         return;
     }
 
+    $scope.GetDatesAndRates = function () {
+
+        $scope.stdDates.firstDayOfClass = "";
+        $scope.stdDates.lastDayOfClass = "";
+        $scope.stdDates.lastDayForAddDrop = "";
+        $scope.stdDates.lastDayForWithdrawal = "";
+        $scope.stdDates.lastDayForEnrollmentOptionChange = "";
+        $scope.stdDates.firstDayForFinalGrading = "";
+        $scope.stdDates.lastDayForFinalGrading = "";
+
+        Get001Dates.get({
+            semester: $scope.session.academicTerm
+        },
+
+            function (data) {
+
+                if (data.classBeginDate == undefined) {
+                    alert("data is undefined");
+                } else {
+                    $scope.stdDates.firstDayOfClass = convDateToString(data.classBeginDate.trim());
+                    $scope.stdDates.lastDayOfClass = convDateToString(data.classEndDate.trim());
+                    $scope.stdDates.lastDayForAddDrop = convDateToString(data.lastAddDropDate.trim());
+                    $scope.stdDates.lastDayForWithdrawal = convDateToString(data.withdrawWithWDate.trim());
+                    $scope.stdDates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate.trim());
+                }
+            },
+            function () {
+                console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);
+            }
+        );
+
+        if ($scope.session.rateType > '')
+            SetRates();
+
+        return;
+    }   // GetDatesAndRates()
+
 
     $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
 
         if ($scope.session.academicTerm > '') {
 
-            $scope.stdDates.firstDayOfClass = "";
-            $scope.stdDates.lastDayOfClass = "";
-            $scope.stdDates.lastDayForAddDrop = "";
-            $scope.stdDates.lastDayForWithdrawal = "";
-            $scope.stdDates.lastDayForEnrollmentOptionChange = "";
-            $scope.stdDates.firstDayForFinalGrading = "";
-            $scope.stdDates.lastDayForFinalGrading = "";
+            $scope.session.rateFlatAmount = "";
+            $scope.session.ratePerUnitAmount = "";
 
-            Get001Dates.get({semester: $scope.session.academicTerm},
-
-                function (data) {
-
-                    if (data.classBeginDate == undefined){
-                        alert("data is undefined");
-                    } else {
-                        $scope.stdDates.firstDayOfClass                     = convDateToString(data.classBeginDate.trim());
-                        $scope.stdDates.lastDayOfClass                      = convDateToString(data.classEndDate.trim());
-                        $scope.stdDates.lastDayForAddDrop                   = convDateToString(data.lastAddDropDate.trim());
-                        $scope.stdDates.lastDayForWithdrawal                = convDateToString(data.withdrawWithWDate.trim());
-                        $scope.stdDates.lastDayForEnrollmentOptionChange    = convDateToString(data.lastEnrollmentOptionDate.trim());
-                    }
-                        //                    $scope.stdDates.firstDayForFinalGrading = data.finalGradeBeginDate.trim();
-                    //                    $scope.stdDates.lastDayForFinalGrading = data.finalGradeEndDate.trim();
-                },
-                function() {
-                    console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);
-                }
-            );
-
-            if ($scope.session.rateType > '') {
-
-                $scope.session.rateFlatAmount = "";
-                $scope.session.ratePerUnitAmount = "";
-
-                angular.forEach($scope.rates, function (value) {
-                    if (value.term == $scope.session.academicTerm) {
-                        angular.forEach(value.rateTypes, function (value) {
-                            if (value.rateTypeCode == $scope.session.rateType) {
-                                $scope.session.flatRateAmount = value.rateTypeFlatRate;
-                                $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+            angular.forEach($scope.rates, function (value) {
+                if (value.term == $scope.session.academicTerm) {
+                    angular.forEach(value.rateTypes, function (value) {
+                        if (value.rateTypeCode == $scope.session.rateType) {
+                            $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                            $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
                         }
                     })
                 }
             });
-                }
         }
         return;
-    }
+    }   // SetRates
 
-    var holidays = [];
+    var holidays =[];
 
-    function PopulateSemesterDropdown (){
+        function PopulateSemesterDropdown() {
 
         var currDate = new Date();
         var currYear = currDate.getFullYear();
-        var nextYear = parseInt(currYear) + 1;
+        var nextYear = parseInt(currYear) +1;
 
-        var springDate = new Date("01/01/" + currYear);
-        var summerDate = new Date("05/01/" + currYear);
-        var fallDate = new Date("08/01/" + currYear);
+        var springDate = new Date("01/01/" +currYear);
+        var summerDate = new Date("05/01/" +currYear);
+        var fallDate = new Date("08/01/" +currYear);
 
-        var semChoices = [];
+        var semChoices =[];
 
         if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
 
-            semChoices = [
+            semChoices =[
                 { semName: currYear + " Spring",    semCode: currYear + "1" },
                 { semName: currYear + " Summer",    semCode: currYear + "2" },
                 { semName: currYear + " Fall",      semCode: currYear + "3" },
                 { semName: nextYear + " Spring",    semCode: nextYear + "1" }
             ];
 
-        } else if ((currDate >= summerDate) && (currDate < fallDate)){  // Display Summer Current Year to Summer Next Year
+        } else if ((currDate >= summerDate) && (currDate < fallDate)) {  // Display Summer Current Year to Summer Next Year
 
-            semChoices = [
+            semChoices =[
                 { semName: currYear + " Summer",    semCode: currYear + "2" },
                 { semName: currYear + " Fall",      semCode: currYear + "3" },
                 { semName: nextYear + " Spring",    semCode: nextYear + "1" },
@@ -263,12 +268,12 @@ sessionModule.controller("sessionRequestCtrl",
             ];
 
         } else {                                                        // Display Current Fall to Next Year Fall
-            
-            semChoices = [
-                { semName: currYear + " Fall",      semCode: currYear + "3" },
-                { semName: nextYear + " Spring",    semCode: nextYear + "1" },
-                { semName: nextYear + " Summer",    semCode: nextYear + "2" },
-                { semName: nextYear + " Fall",      semCode: nextYear + "3" }
+
+            semChoices =[
+                    { semName: currYear + " Fall",  semCode: currYear + "3" },
+                    { semName: nextYear + " Spring",semCode: nextYear + "1" },
+                    { semName: nextYear + " Summer",semCode: nextYear + "2" },
+                    { semName: nextYear + " Fall",  semCode: nextYear + "3" }
             ];
         }
 
@@ -279,7 +284,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         var formValid = true;
 
-        var reqdFields = [
+        var reqdFields =[
             $scope.session.academicTerm,
             $scope.session.firstDayOfClass,
             $scope.session.lastDayOfClass,
@@ -287,8 +292,8 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.lastDayOfFinals
         ];
 
-        for (var i = 0; i < reqdFields.length; ++i){
-            if(reqdFields[i].length == 0){
+        for (var i = 0; i < reqdFields.length; ++i) {
+            if (reqdFields[i].length == 0) {
                 formValid = false; // test
                 break;
             }
@@ -297,16 +302,16 @@ sessionModule.controller("sessionRequestCtrl",
     }   // IsFormValid()
 
 
-    $scope.BlankOtherLocation = function(){
+    $scope.BlankOtherLocation = function () {
 
-        if (($scope.session.uscCampusLocation != "OTH") && ($scope.session.otherCampusLocation > "")){
+        if (($scope.session.uscCampusLocation != "OTH") && ($scope.session.otherCampusLocation > "")) {
             $scope.session.otherCampusLocation = "";
         }
         return;
     }
 
 
-    $scope.SubmitForm = function(){
+    $scope.SubmitForm = function () {
 
         if (!IsFormValid()) {
             alert("Please provide required fields.");
@@ -314,7 +319,7 @@ sessionModule.controller("sessionRequestCtrl",
         };
 
         var today = new Date();
-        $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
+        $scope.session.submitDate = today.getMonth() + 1 + '/' +today.getDate() + '/' +today.getFullYear();
 
         var sessionValue = $scope.sessCode.value().trim();
         $scope.session.sessionCode = sessionValue.substring(0, 3);
@@ -328,25 +333,24 @@ sessionModule.controller("sessionRequestCtrl",
                 function () {
                     //                window.location.href = "successPage.usc.edu";
                     alert("Submission successful");
-                    $location.url("/Result?requestId=" + reqID);
+                    $location.url("/Result?requestId=" +reqID);
                 },
 
                 function () {
                     alert("Error in submitting the form.");
                 }
             );
-
         return;
-    }
+    }   // SubmitForm()
 
-    $scope.rates = [];
+    $scope.rates =[];
 
-    function GetRateTable() {
+        function GetRateTable() {
 
         $scope.rates = RateTable.query(function () {
             ;       // just load the table
         });
-        return;
+            return;
     }   // GetRateTable()
 
     $(document).ready(function () {
@@ -357,36 +361,36 @@ sessionModule.controller("sessionRequestCtrl",
 
         GetRateTable();                         // Reads the rate table from the database
 
-        $scope.rateTypes = [                    // Rate type lookup table
+        $scope.rateTypes =[                    // Rate type lookup table
 
-            { rateCode: "STD",  rateName: "Standard (session 001)" },
-            { rateCode: "GBUS", rateName: "Graduate Business" },
+            { rateCode: "STD", rateName: "Standard (session 001)" },
+            { rateCode: "GBUS", rateName:   "Graduate Business" },
             { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
             { rateCode: "GENGR",rateName: "Graduate Engineering" },
             { rateCode: "MRED", rateName: "Master of Real Estate Development" },
             { rateCode: "PHAR", rateName: "Pharmacy" },
             { rateCode: "DENT", rateName: "Dentistry" },
             { rateCode: "DH",   rateName: "Dental Hygiene" },
-            { rateCode: "ADVDE",rateName: "Advanced Dentistry" },
-            { rateCode: "LAW",  rateName: "Law" },
-            { rateCode: "MED",  rateName: "Medicine" },
-            { rateCode: "OTH",  rateName: "Others" }
+            { rateCode: "ADVDE", rateName: "Advanced Dentistry" },
+            { rateCode: "LAW", rateName: "Law" },
+            { rateCode: "MED", rateName: "Medicine" },
+            { rateCode: "OTH", rateName: "Others" }
         ];
 
-        $scope.campusLocs = [                                   // Populate the Campus Location dropdown.
+        $scope.campusLocs =[                                   // Populate the Campus Location dropdown.
 
             { campusCode: "HSC", campusName: "Health Science Campus" },
-            { campusCode: "OCC", campusName: "Orange County Campus" },
-            { campusCode: "OVS", campusName: "Overseas" },
-            { campusCode: "DC", campusName: "Washington D.C." },
-            { campusCode: "SAC", campusName: "Sacramento" },
-            { campusCode: "USA", campusName: "Off-campus in U.S." },
-            { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
-            { campusCode: "CAT", campusName: "Catalina" },
-            { campusCode: "LAC", campusName: "L.A. Center" },
-            { campusCode: "SD", campusName: "San Diego" },
-            { campusCode: "ATT", campusName: "AT&T Center" },
-            { campusCode: "SKB", campusName: "No Tuition or Fees" },
+            { campusCode: "OCC", campusName: "Orange County Campus"},
+            { campusCode: "OVS", campusName: "Overseas"},
+            { campusCode: "DC", campusName: "Washington D.C."},
+            { campusCode: "SAC", campusName: "Sacramento"},
+            { campusCode: "USA", campusName: "Off-campus in U.S."},
+            { campusCode: "VIR", campusName: "Virtual(DEN/Online)"},
+            { campusCode: "CAT", campusName: "Catalina"},
+            { campusCode: "LAC", campusName: "L.A. Center"},
+            { campusCode: "SD", campusName: "San Diego"},
+            { campusCode: "ATT", campusName: "AT&T Center"},
+            { campusCode: "SKB", campusName: "No Tuition or Fees"},
             { campusCode: "OTH", campusName: "Others" }
         ];
 
@@ -402,7 +406,7 @@ sessionModule.controller("sessionRequestCtrl",
         Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
         Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
 */
-        holidays = [
+        holidays =[
             "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
             "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018", "11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
             "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019", "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
@@ -414,41 +418,42 @@ sessionModule.controller("sessionRequestCtrl",
             academicTerm: "",
             sessionCode: "",
             sessionName: "",
-            owningSchool:           "",          // from Shib
-            owningDepartment:       "",        // from Shib
-            userContact:            "",// from Shib
-            userEmail:              "",       // from Shib
-            userPhone:              "",         // from Shib
-            firstDayOfClass:        "",
-            lastDayOfClass:         "",
-            lastDayForAddDrop:      "",
+            owningSchool: "",          // from Shib
+            owningDepartment: "",        // from Shib
+            userContact: "",// from Shib
+            userEmail: "",       // from Shib
+            userPhone: "",         // from Shib
+            firstDayOfClass: "",
+            lastDayOfClass: "",
+            lastDayForAddDrop: "",
             lastDayForEnrollmentOptionChange: "",
-            lastDayForWithdrawal:   "",
-            firstDayOfFinals:       "",
+            lastDayForWithdrawal: "",
+            firstDayOfFinals: "",
             firstDayForFinalGrading: "",
             lastDayForFinalGrading: "",
-            isClassHeldAtUpc:       false,
-            uscCampusLocation:      "",
-            otherCampusLocation:    "",
-            rateType:               "",
-            ratePerUnitAmount:      "",
-            flatRateAmount:         "",
-            flatRateUnitsMin:       "",
-            flatRateUnitsMax:       "",
-            comments:               "",
-            sessionBreaks:          [],
-            sections:               [],
-            submitDate:             "",
+            isClassHeldAtUpc: false,
+            uscCampusLocation: "",
+            otherCampusLocation: "",
+            rateType: "",
+            ratePerUnitAmount: "",
+            flatRateAmount: "",
+            flatRateUnitsMin: "",
+            flatRateUnitsMax: "",
+            comments: "",
+            sessionBreaks: [],
+            sections: [],
+            submitDate: "",
         };
 
         $scope.stdDates = {
-            firstDayOfClass : "",
-            lastDayOfClass : "",
-            lastDayForAddDrop : "",
-            lastDayForWithdrawal : "",
-            lastDayForEnrollmentOptionChange : "",
-            firstDayForFinalGrading : "",
-            lastDayForFinalGrading : ""
+
+                firstDayOfClass: "",
+                lastDayOfClass: "",
+                lastDayForAddDrop: "",
+                lastDayForWithdrawal: "",
+                lastDayForEnrollmentOptionChange: "",
+                firstDayForFinalGrading: "",
+                lastDayForFinalGrading: ""
         }
 
     }); // document.ready()
