@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Mail;
 using System.Web;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
@@ -123,5 +122,6 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
         internal bool IsRnr { get; private set; }
 
         internal bool IsBur { get; private set; }
+
     }
 }
