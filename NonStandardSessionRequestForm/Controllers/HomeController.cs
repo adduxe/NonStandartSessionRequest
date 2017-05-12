@@ -12,9 +12,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers
             var user = new UserHelper();
 
             ViewBag.Title = "Non-standard Session Request";
-            //            ViewBag.ShibCollege = "Viterbi School of Engineering";
+            ViewBag.ShibCollege = user.School;
             ViewBag.ShibDepartment = user.Department;
             ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
+//            ViewBag.ShibPhone = user.Phone;
 
             return View();
         }
