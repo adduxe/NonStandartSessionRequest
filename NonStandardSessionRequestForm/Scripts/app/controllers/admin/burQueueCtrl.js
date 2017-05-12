@@ -76,9 +76,8 @@
             sortable: true,
             pageable: true,
             columns: [
-
-                { field: "academicTerm", title: "Term", width: "7.5%" },
-                { field: "sessionCode", title: "Session", width: "7.5%" },
+                { field: "academicTerm", title: "Term", width: "10%" },
+                { field: "sessionCode", title: "Session", width: "10%" },
                 { field: "sessionName", title: "Session Name", width: "20%" },
                 { field: "owningSchool", title: "School", width: "20%" },
                 { field: "owningDepartment", title: "Department", width: "15%" },

@@ -12,10 +12,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
             var user = new UserHelper();
             string viewName = "Forbidden";  // default view if none found.
 
+            ViewBag.ShibDepartment = user.Department;
+            ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
+            @ViewBag.ShibCollege = user.School;
+
             if (user.IsAdmin)
             {
-                ViewBag.ShibDepartment = user.Department;
-                ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
 
                 if (user.IsFao)
                 {
@@ -40,47 +42,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
 
         }   // Index()
 
-        //public ActionResult Fao() {
-
-        //    var user = new UserHelper();
-
-        //    if (user.IsAdmin && user.IsFao)
-        //    {
-        //        ViewBag.Title = "Financial Aid Request Queue";
-        //        ViewBag.ShibDepartment = user.Department;
-        //        ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
-        //        return View();
-        //    }
-        //    else
-        //    {
-        //        return View("Forbidden");
-        //    }
-        //}
-        //public ActionResult Rnr()
-        //{
-        //    var user = new UserHelper();
-
-        //    if (user.IsAdmin && user.IsRnr)
-        //    {
-        //        ViewBag.Title = "Records and Registration Request Queue";
-        //        ViewBag.ShibDepartment = user.Department;
-        //        ViewBag.ShibUserName = user.FirstName + " " + user.Surname;
-        //        return View();
-        //    }
-        //    else
-        //    {
-        //        return View("Forbidden");
-        //    }
-        //}
-
-        //public ActionResult Bur()
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult Forbidden()
-        //{
-        //    return View();
-        //}
+        public ActionResult Forbidden()
+        {
+            return View();
+        }
     }
 }
