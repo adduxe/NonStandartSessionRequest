@@ -506,17 +506,20 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("email")]
-        public IHttpActionResult PostEmail(int requestID)
+        public async Task<IHttpActionResult> PostEmail(int requestID)
         {
-            var client = new RNRSessionRequestAPI(_dataApiUri);
-            var sessionRequest = client.SessionRequest.GetByRequestIdAsync(requestID);
-            
             try
             {
+                Session sessionRequest;
+                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                {
+                    sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestID);
+                }
+
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
                 mail.From = new MailAddress("donotreply@usc.edu");
-                mail.To.Add("adduxe@yahoo.com");
+                mail.To.Add(sessionRequest.UserEmail);
                 mail.Subject = "Session Request Result";
                 mail.Body = "Session Request";
 
@@ -528,6 +531,11 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 // MessageBox.Show("mail Send");
 //                returnVal = ("mail Send");
                 return Ok();
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET session! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {

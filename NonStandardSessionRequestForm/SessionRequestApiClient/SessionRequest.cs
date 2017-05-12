@@ -60,7 +60,7 @@ namespace SessionRequestApi.Client
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetByRequestIdWithHttpMessagesAsync(int requestId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Session>> GetByRequestIdWithHttpMessagesAsync(int requestId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -136,7 +136,7 @@ namespace SessionRequestApi.Client
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<object>();
+            var _result = new HttpOperationResponse<Session>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -145,15 +145,15 @@ namespace SessionRequestApi.Client
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    object _tmp_ = null;
+                    Session _tmp_ = null;
                     if (_httpResponse.Content.Headers.ContentType.MediaType == "application/xml" &&
-                        XmlSerialization.Root(XmlSerialization.ToDeserializer(e => (object)e))(System.Xml.Linq.XElement.Parse(_responseContent), out _tmp_))
+                        XmlSerialization.Root(XmlSerialization.ToDeserializer(e => Session.XmlDeserialize(e)))(System.Xml.Linq.XElement.Parse(_responseContent), out _tmp_))
                     {
                         _result.Body = _tmp_;
                     }
                     else
                     {
-                        _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
+                        _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Session>(_responseContent, Client.DeserializationSettings);
                     }
                 }
                 catch (JsonException ex)
