@@ -339,9 +339,11 @@
     <Content Include="Areas\Admin\Views\Admin\Fao.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Rnr.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Forbidden.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Bur.cshtml" />
     <None Include="Properties\PublishProfiles\local debug.pubxml" />
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
+    <Content Include="Scripts\app\controllers\admin\burQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionResultCtrl.js" />
     <Content Include="Scripts\app\controllers\admin\faoQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\admin\rnrQueueCtrl.js" />

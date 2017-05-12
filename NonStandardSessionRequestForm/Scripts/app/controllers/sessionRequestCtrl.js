@@ -297,6 +297,15 @@ sessionModule.controller("sessionRequestCtrl",
     }   // IsFormValid()
 
 
+    $scope.BlankOtherLocation = function(){
+
+        if (($scope.session.uscCampusLocation != "OTH") && ($scope.session.otherCampusLocation > "")){
+            $scope.session.otherCampusLocation = "";
+        }
+        return;
+    }
+
+
     $scope.SubmitForm = function(){
 
         if (!IsFormValid()) {

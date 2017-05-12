@@ -122,7 +122,8 @@
                     <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" ng-disabled="(isClassHeldAtUPC != 'N')" ng-model="session.uscCampusLocation" >
+                    <select class="form-control" id="offCampusLocation" name="offCampusLocation" ng-change="BlankOtherLocation()"
+                            ng-disabled="(isClassHeldAtUPC != 'N')" ng-model="session.uscCampusLocation" >
                         <option ng-repeat="eachCampus in campusLocs" value="{{ eachCampus.campusCode }}">{{ eachCampus.campusName }}</option>
                     </select>
                 </div>
@@ -178,7 +179,8 @@
                     <abbr title="Indicate a campus other than the ones listed in the dropdown">Other campus<br />location:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20" ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
+                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20" 
+                           ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">

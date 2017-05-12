@@ -42,7 +42,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 
-            string user = "F";
+            string user = "B";
 
             switch (user.ToUpper()){
                  
