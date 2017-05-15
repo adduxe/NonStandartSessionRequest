@@ -201,6 +201,12 @@
         $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
 
         var session = $scope.selectedSess.session;
+        var sessDates = {"Sess1Start": 0, "Sess1End": 1, "Sess2Start": 2, "Sess2End": 3};
+        var sessBreaks = ["", "", "", ""];
+
+        //if (session.sessionBreaks.length > 0){
+        //    sessBreaks[sessDates.Sess1Start] = session.sessionBreaks[0].
+        //}
 
         var sisDatesPacket = {
             academicTerm: session.academicTerm,
