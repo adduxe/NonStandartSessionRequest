@@ -97,16 +97,16 @@ sessionModule.controller("sessionRequestCtrl",
 
             } else {        // dates OK.  Calculate computed date fields.
 
-                if (($scope.stdDates.firstDayOfClass > '') && ($scope.stdDates.lastDayOfClass > ''))        // 001 dates exists for semester
+                if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > ''))        // 001 dates exists for semester
                 {
-                    var stdStartDate = new Date($scope.stdDates.firstDayOfClass);
-                    var stdEndDate = new Date($scope.stdDates.lastDayOfClass);
+                    var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
+                    var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
 
-                    if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
-
-                        $scope.session.lastDayForAddDrop = $scope.stdDates.lastDayForAddDrop;
-                        $scope.session.lastDayForEnrollmentOptionChange = $scope.stdDates.lastDayForEnrollmentOptionChange;
-                        $scope.session.lastDayForWithdrawal = $scope.stdDates.lastDayForWithdrawal;
+                            // if class start and end dates match Session 001 dates
+                    if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())){
+                        $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
+                        $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
+                        $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
 
                     } else {            // if the Class start and end dates don't match, compute the dates.
                         ComputeDates(startDt, endDt);
@@ -178,14 +178,6 @@ sessionModule.controller("sessionRequestCtrl",
 
     $scope.GetDatesAndRates = function () {
 
-        $scope.stdDates.firstDayOfClass = "";
-        $scope.stdDates.lastDayOfClass = "";
-        $scope.stdDates.lastDayForAddDrop = "";
-        $scope.stdDates.lastDayForWithdrawal = "";
-        $scope.stdDates.lastDayForEnrollmentOptionChange = "";
-        $scope.stdDates.firstDayForFinalGrading = "";
-        $scope.stdDates.lastDayForFinalGrading = "";
-
         Get001Dates.get({
             semester: $scope.session.academicTerm
         },
@@ -193,17 +185,32 @@ sessionModule.controller("sessionRequestCtrl",
             function (data) {
 
                 if (data.classBeginDate == undefined) {
-                    alert("data is undefined");
+                    alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
                 } else {
-                    $scope.stdDates.firstDayOfClass = convDateToString(data.classBeginDate.trim());
-                    $scope.stdDates.lastDayOfClass = convDateToString(data.classEndDate.trim());
-                    $scope.stdDates.lastDayForAddDrop = convDateToString(data.lastAddDropDate.trim());
-                    $scope.stdDates.lastDayForWithdrawal = convDateToString(data.withdrawWithWDate.trim());
-                    $scope.stdDates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate.trim());
-                }
+                    $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate.trim());
+                    $scope.sess001Dates.lastDayOfClass      = convDateToString(data.classEndDate.trim());
+                    $scope.sess001Dates.lastDayForAddDrop   = convDateToString(data.lastAddDropDate.trim());
+                    $scope.sess001Dates.lastDayForWithdrawal= convDateToString(data.withdrawWithWDate.trim());
+                    $scope.sess001Dates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate.trim());
+                    $scope.sess001Dates.sessBreak1Begin     = convDateToString(data.Break1BeginDate.trim());
+                    $scope.sess001Dates.sessBreak1End       = convDateToString(data.Break1EndDate.trim());
+                    $scope.sess001Dates.sessBreak2Begin     = convDateToString(data.Break2BeginDate.trim());
+                    $scope.sess001Dates.sessBreak2End       = convDateToString(data.Break2EndDate.trim());
+            }
             },
             function () {
                 console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);
+                $scope.sess001Dates.firstDayOfClass         = "";
+                $scope.sess001Dates.lastDayOfClass          = "";
+                $scope.sess001Dates.lastDayForAddDrop       = "";
+                $scope.sess001Dates.lastDayForWithdrawal    = "";
+                $scope.sess001Dates.lastDayForEnrollmentOptionChange = "";
+                $scope.sess001Dates.firstDayForFinalGrading = "";
+                $scope.sess001Dates.lastDayForFinalGrading  = "";
+                $scope.sess001Dates.sessBreak1Begin         = "";
+                $scope.sess001Dates.sessBreak1End           = "";
+                $scope.sess001Dates.sessBreak2Begin         = "";
+                $scope.sess001Dates.sessBreak2End           = "";
             }
         );
 
@@ -323,6 +330,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         var sessionValue = $scope.sessCode.value().trim();
         $scope.session.sessionCode = sessionValue.substring(0, 3);
+
         $scope.session.sessionName = sessionValue.substring(3);
         $scope.session.sessionName = $scope.session.sessionName.trim();
 
@@ -445,15 +453,19 @@ sessionModule.controller("sessionRequestCtrl",
             submitDate: "",
         };
 
-        $scope.stdDates = {
+        $scope.sess001Dates = {
 
-                firstDayOfClass: "",
-                lastDayOfClass: "",
-                lastDayForAddDrop: "",
-                lastDayForWithdrawal: "",
-                lastDayForEnrollmentOptionChange: "",
-                firstDayForFinalGrading: "",
-                lastDayForFinalGrading: ""
+            firstDayOfClass     : "",
+            lastDayOfClass      : "",
+            lastDayForAddDrop   : "",
+            lastDayForWithdrawal: "",
+            lastDayForEnrollmentOptionChange: "",
+            firstDayForFinalGrading: "",
+            lastDayForFinalGrading: "",
+            sessBreak1Begin     : "",
+            sessBreak1End       : "",
+            sessBreak2Begin     : "",
+            sessBreak2End       : ""
         }
 
     }); // document.ready()
