@@ -24,100 +24,100 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         private readonly Uri _peApiUri = new Uri(ConfigurationManager.AppSettings["PeApiUrl"]);
 
         [Route("emailApproval")]
-        public Task<IHttpActionResult> PostApproveEmail(int requestID)
-        {
-            // allowed options:  HTML
-            // note, multiple email address can be specified, separated by a comma
-            string errMsg = null;
-            var user = new UserHelper();
+        //public Task<IHttpActionResult> PostApproveEmail(int requestID)
+        //{
+        //    // allowed options:  HTML
+        //    // note, multiple email address can be specified, separated by a comma
+        //    string errMsg = null;
+        //    var user = new UserHelper();
 
-            string toEmail      = user.Email;
-            string ccEmail      = "anthondd@usc.edu,billsun@usc.edu";
-            string fromEmail    = "DoNotReply@usc.edu"; // default from/reply-to email
-            string fromName     = "Session Request Form"; // default from name
-            string subject      = "Session Request Approval";
+        //    string toEmail      = user.Email;
+        //    string ccEmail      = "anthondd@usc.edu,billsun@usc.edu";
+        //    string fromEmail    = "DoNotReply@usc.edu"; // default from/reply-to email
+        //    string fromName     = "Session Request Form"; // default from name
+        //    string subject      = "Session Request Approval";
 
-            // send the email
-            MailMessage mailMsgObj = new MailMessage();
+        //    // send the email
+        //    MailMessage mailMsgObj = new MailMessage();
 
-            if (ccEmail != null && ccEmail != "")
-            {
-                string[] ccArray = ccEmail.Split(',');
-                foreach (string curEmail in ccArray)
-                {
-                    mailMsgObj.CC.Add(new MailAddress(curEmail.Trim()));
-                }
-            }
+        //    if (ccEmail != null && ccEmail != "")
+        //    {
+        //        string[] ccArray = ccEmail.Split(',');
+        //        foreach (string curEmail in ccArray)
+        //        {
+        //            mailMsgObj.CC.Add(new MailAddress(curEmail.Trim()));
+        //        }
+        //    }
 
-            if (fromName == null || fromName == "")
-                mailMsgObj.From = new MailAddress(fromEmail);
-            else
-                mailMsgObj.From = new MailAddress(fromEmail, fromName);
+        //    if (fromName == null || fromName == "")
+        //        mailMsgObj.From = new MailAddress(fromEmail);
+        //    else
+        //        mailMsgObj.From = new MailAddress(fromEmail, fromName);
 
-            mailMsgObj.Subject = subject;
-            mailMsgObj.Body = body;
-            mailMsgObj.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient("email.usc.edu");
+        //    mailMsgObj.Subject = subject;
+        //    mailMsgObj.Body = body;
+        //    mailMsgObj.IsBodyHtml = true;
+        //    SmtpClient client = new SmtpClient("email.usc.edu");
 
-            try
-            {
-                client.Send(mailMsgObj);
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error("Error sending e-mail to " + toEmail + " - " + ex.Message);
-                return (ex);
-            }
-        }   // PostApproveEmail()
+        //    try
+        //    {
+        //        client.Send(mailMsgObj);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Logger.Error("Error sending e-mail to " + toEmail + " - " + ex.Message);
+        //        return (ex);
+        //    }
+        //}   // PostApproveEmail()
 
 
         [Route("emailRejection")]
-        public Task<IHttpActionResult> PostRejectEmail(int requestID)
-        {
-            // allowed options:  HTML
-            // note, multiple email address can be specified, separated by a comma
-            string errMsg = null;
+//        public Task<IHttpActionResult> PostRejectEmail(int requestID)
+//        {
+//            // allowed options:  HTML
+//            // note, multiple email address can be specified, separated by a comma
+//            string errMsg = null;
 
-            var sessionRequest = SessionRequest.GetByRequestIdAsync(requestId);
-//            var user = new UserHelper();
+//            var sessionRequest = SessionRequest.GetByRequestIdAsync(requestId);
+////            var user = new UserHelper();
 
-            string toEmail      = user.Email;
-            string fromEmail    = "DoNotReply@usc.edu";                    // default from/reply-to email
-            string fromName     = "Session Request Form";                   // default from name
-            string subject      = "Session Request Rejection";
+//            string toEmail      = user.Email;
+//            string fromEmail    = "DoNotReply@usc.edu";                    // default from/reply-to email
+//            string fromName     = "Session Request Form";                   // default from name
+//            string subject      = "Session Request Rejection";
 
-            // send the email
-            MailMessage mailMsgObj = new MailMessage();
+//            // send the email
+//            MailMessage mailMsgObj = new MailMessage();
 
-            if (ccEmail != null && ccEmail != "")
-            {
-                string[] ccArray = ccEmail.Split(',');
-                foreach (string curEmail in ccArray)
-                {
-                    mailMsgObj.CC.Add(new MailAddress(curEmail.Trim()));
-                }
-            }
+//            if (ccEmail != null && ccEmail != "")
+//            {
+//                string[] ccArray = ccEmail.Split(',');
+//                foreach (string curEmail in ccArray)
+//                {
+//                    mailMsgObj.CC.Add(new MailAddress(curEmail.Trim()));
+//                }
+//            }
 
-            if (fromName == null || fromName == "")
-                mailMsgObj.From = new MailAddress(fromEmail);
-            else
-                mailMsgObj.From = new MailAddress(fromEmail, fromName);
+//            if (fromName == null || fromName == "")
+//                mailMsgObj.From = new MailAddress(fromEmail);
+//            else
+//                mailMsgObj.From = new MailAddress(fromEmail, fromName);
 
-            mailMsgObj.Subject = subject;
-            mailMsgObj.Body = body;
-            mailMsgObj.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient("email.usc.edu");
+//            mailMsgObj.Subject = subject;
+//            mailMsgObj.Body = body;
+//            mailMsgObj.IsBodyHtml = true;
+//            SmtpClient client = new SmtpClient("email.usc.edu");
 
-            try
-            {
-                client.Send(mailMsgObj);
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error("Error sending e-mail to " + toEmail + " - " + ex.Message);
-                return (ex);
-            }
-        }   // PostRejectEmail()
+//            try
+//            {
+//                client.Send(mailMsgObj);
+//            }
+//            catch (Exception ex)
+//            {
+//                Log.Logger.Error("Error sending e-mail to " + toEmail + " - " + ex.Message);
+//                return (ex);
+//            }
+//        }   // PostRejectEmail()
 
 
 
