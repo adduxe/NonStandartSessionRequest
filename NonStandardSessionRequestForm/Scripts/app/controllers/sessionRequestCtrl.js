@@ -79,11 +79,20 @@ sessionModule.controller("sessionRequestCtrl",
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }   // ComputeDate()
 
+
     function convDateToString(givenDate) {
-        var newDate = new Date(givenDate);
-        return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
-    }
-            // Validate the Class Start and End dates
+
+        var dateString = "";
+
+        if (givenDate.trim() > "") {
+            var newDate = new Date(givenDate);
+            dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+        }
+        return dateString;
+    }   // convDateToString()
+
+
+        // Validate the Class Start and End dates
     $scope.ClassDatesChanged = function () {
 
         if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {

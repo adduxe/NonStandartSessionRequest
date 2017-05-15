@@ -194,6 +194,7 @@
     $scope.approveRequest = function (submID) {
         $scope.submID = submID;
         $scope.updateRequest('A', 'Approved');
+        alert("Session Request Approved!");
         return;
     }
 

@@ -81,8 +81,8 @@
                     { field: "requestId", title: "Request", width: "7.5%" },
                     { field: "academicTerm", title: "Term", width: "7.5%" },
                     { field: "sessionCode", title: "Session", width: "7.5%" },
-                    { field: "sessionName", title: "Session Name", width: "20%" },
-                    { field: "owningSchool", title: "School", width: "20%" },
+                    { field: "sessionName", title: "Session Name", width: "15%" },
+                    { field: "owningSchool", title: "School", width: "15%" },
                     { field: "owningDepartment", title: "Department", width: "15%" },
                     { field: "requestDate", title: "Date", width: "10%" },
                         // Approve/Reject buttons
@@ -191,46 +191,70 @@
     }
 
     function convDateToString(givenDate) {
-        var newDate = new Date(givenDate);
-        return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
-    }
+
+        var dateString = "";
+
+        if (givenDate.trim() > "") {
+            var newDate = new Date(givenDate);
+            dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+        }
+        return dateString;
+    }   // convDateToString()
 
     $scope.approveRequest = function (submID) {
 
         $scope.submID = submID;
         $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
 
+            // Get the Session Breaks
         var session = $scope.selectedSess.session;
         var sessDates = {"Sess1Start": 0, "Sess1End": 1, "Sess2Start": 2, "Sess2End": 3};
         var sessBreaks = ["", "", "", ""];
 
-        //if (session.sessionBreaks.length > 0){
-        //    sessBreaks[sessDates.Sess1Start] = session.sessionBreaks[0].
-        //}
+        switch (session.sessionBreaks.length) {
+
+            case 2:      // if there are two session breaks, it will fall through case 1
+                sessBreaks[sessDates.Sess2Start]    = session.sessionBreaks[1].startDate;
+                sessBreaks[sessDates.Sess2End]      = session.sessionBreaks[1].endDate;
+
+            case 1:     // if there is only one break, it will only get the first one
+                sessBreaks[sessDates.Sess1Start]    = session.sessionBreaks[0].startDate;
+                sessBreaks[sessDates.Sess1End]      = session.sessionBreaks[0].endDate;
+                break;
+
+            default:
+                break;
+        }   // end of switch()
 
         var sisDatesPacket = {
-            academicTerm: session.academicTerm,
-            sessionCode: session.sessionCode,
-            firstDayOfClass: convDateToString(session.firstDayOfClass),
-            lastDayOfClass: convDateToString(session.lastDayOfClass),
-            firstDayOfFinals: convDateToString(session.firstDayOfFinals),
-            lastDayOfFinals: convDateToString(session.lastDayOfFinals),
-            lastDayForAddDrop: convDateToString(session.lastDayForAddDrop),
-            lastDayForWithdrawal: convDateToString(session.lastDayForWithdrawal),
+            academicTerm            : session.academicTerm,
+            sessionCode             : session.sessionCode,
+            firstDayOfClass         : convDateToString(session.firstDayOfClass),
+            lastDayOfClass          : convDateToString(session.lastDayOfClass),
+            firstDayOfFinals        : convDateToString(session.firstDayOfFinals),
+            lastDayOfFinals         : convDateToString(session.lastDayOfFinals),
+            lastDayForAddDrop       : convDateToString(session.lastDayForAddDrop),
+            lastDayForWithdrawal    : convDateToString(session.lastDayForWithdrawal),
             lastDayForEnrollmentOptionChange: convDateToString(session.lastDayForEnrollmentOptionChange),
-            firstDayForFinalGrading: convDateToString(session.firstDayForFinalGrading),
-            lastDayForFinalGrading: convDateToString(session.lastDayForFinalGrading)
+            firstDayForFinalGrading : convDateToString(session.firstDayForFinalGrading),
+            lastDayForFinalGrading  : convDateToString(session.lastDayForFinalGrading),
+            sessionBreak1BeginDate  : convDateToString(sessBreaks[sessDates.Sess1Start]),
+            sessionBreak1EndDate    : convDateToString(sessBreaks[sessDates.Sess1End]),
+            sessionBreak2BeginDate  : convDateToString(sessBreaks[sessDates.Sess2Start]),
+            sessionBreak2EndDate    : convDateToString(sessBreaks[sessDates.Sess2End])
         };
 
         WriteToSis.save(sisDatesPacket,
             function () {
                 $scope.updateRequest('A', 'Approved');
+                alert("Session Request Approved!");
             }, function () {
                 alert("Failed to update SIS. Please retry.");
             }
         );
         return;
-    }
+    }   // approveRequest()
+
 
     $scope.updateRequest = function (actionCode, rejectReason) {
 
