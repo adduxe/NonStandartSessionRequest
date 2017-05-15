@@ -11,6 +11,8 @@
                                 data.map(
                                     function (subm) {
                                         return {
+                                            requestId: subm.requestId,
+                                            submissionId: subm.submissionId,
                                             academicTerm: subm.session.academicTerm,
                                             sessionCode: subm.session.sessionCode,
                                             sessionName: subm.session.sessionName,
@@ -44,9 +46,7 @@
                                             faoActionReason: subm.faoActionReason,
                                             rnrAction: subm.rnrAction,
                                             rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason: subm.rnrActionReason,
-                                            submissionId: subm.submissionId,
-                                            requestId: subm.requestId
+                                            rnrActionReason: subm.rnrActionReason
                                         };
                                     }));
                         }, function (error) {
@@ -78,6 +78,7 @@
             sortable: true,
             pageable: true,
             columns: [
+                { field: "requestId", title: "Request", width: "7.5%" },
                 { field: "academicTerm", title: "Term", width: "10%" },
                 { field: "sessionCode", title: "Session", width: "10%" },
                 { field: "sessionName", title: "Session Name", width: "20%" },
