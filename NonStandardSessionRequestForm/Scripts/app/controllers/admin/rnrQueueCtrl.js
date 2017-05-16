@@ -66,9 +66,7 @@
                     }
                 }
             },
-            pageSize: 5,
-            serverPaging: true,
-            serverSorting: true
+            pageSize: 5
         });
 
 

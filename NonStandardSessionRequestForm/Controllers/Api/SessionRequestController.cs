@@ -415,38 +415,89 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
-        private string ComposeEmail(Session sessionRec)
+        private string FormatDate(DateTime? givenDate)
         {
-            string emailBody = "";
-
-            emailBody = "<b>" + sessionRec.Comments + "</b>";
-            return emailBody;
+            return String.Format("{0:MMMM dd, yyyy}", givenDate);
         }
 
-        [Route("email")]
-        public async Task<IHttpActionResult> PostEmail([FromBody]int requestID)
+        private string ComposeEmail(Session sessionRec)
         {
+            /*
+                Semester
+                First day of classes
+                Last day of classes
+                Session Code
+                Last day to add/drop
+                last day for Enrollment Change
+                Last day to withdraw
+                First Day of Finals
+                Last day of Finals
+                Campus location
+            */
+
+            string emailBody = "";
+            emailBody =
+                "<table align='center'>" +
+                "<tr>" +
+                "	<th>Academic Term</th>" +
+                "	<td>" + sessionRec.AcademicTerm + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Session Code</th>" +
+                "	<td>" + sessionRec.SessionCode + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>First Day of Classes</th>" +
+                "	<td>" + FormatDate(sessionRec.FirstDayOfClass) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Last Day of Classes</th>" +
+                "	<td>" + FormatDate(sessionRec.LastDayOfClass) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Last Day to Add/Drop</th>" +
+                "	<td>" + FormatDate(sessionRec.LastDayForAddDrop) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Last Day to Withdraw</th>" +
+                "	<td>" + FormatDate(sessionRec.LastDayForWithdrawal) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Last Day for Enrollment Change</th>" +
+                "	<td>" + FormatDate(sessionRec.LastDayForEnrollmentOptionChange) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>First Day of Finals</th>" +
+                "	<td>" + FormatDate(sessionRec.FirstDayOfFinals) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Last Day of Finals</th>" +
+                "	<td>" + FormatDate(sessionRec.LastDayOfFinals) + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Campus Location</th>" +
+                "	<td>" + sessionRec.OtherCampusLocation + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "	<th>Comments</th>" +
+                "	<td>" + sessionRec.Comments + "</td>" +
+                "</tr>" +
+                "</table>";
+
+            return emailBody;
+
+        }   // ComposeEmail()
+
+        [Route("email/{requestId}")]
+        public async Task<IHttpActionResult> PostEmail(int requestID)
+        {
+
             try
             {
                 Session sessionRequest;
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestID);
-                }
-
-                string requestAction = "A";
-
-                switch (requestAction) {
-
-                    case "A":
-
-                        break;
-
-                    case "R":
-                        break;
-
-                    default:
-                        break;
+                    sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestId);
                 }
 
                 MailMessage mail = new MailMessage();

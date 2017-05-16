@@ -68,9 +68,7 @@
                         }
                     }
                 },
-                pageSize: 5,
-                serverPaging: true,
-                serverSorting: true
+                pageSize: 10
         });
 
 
@@ -201,8 +199,9 @@
     }
 
     $scope.EmailUser = function (reqID) {
-//        alert(reqID);
-        EmailResult.save(reqID);                      // Email requestor upon approval or rejection
+        EmailResult.save({id: reqID});                      // Email requestor upon approval or rejection
+//        EmailResult.update({id: reqID}, null);                      // Email requestor upon approval or rejection
+        alert("Email sent for Request ID: " + reqID);
     }
 
     $scope.updateRequest = function (actionCode, rejectReason) {
@@ -225,9 +224,23 @@
             rnrActionReason: $scope.rejectSess.rnrActionReason
         };
 
-        Submissions.update({ submissionId: $scope.submID }, status);        // update the request's status 
+        Submissions.update({ submissionId: $scope.submID }, status);        // update the request's status
 
-//        EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
+        switch (actionCode) {
+
+            case "A":
+                // EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
+                break;
+
+            case "R":
+                // EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
+                break;
+
+            default:
+                break;
+        }
+
+
 
         $scope.rejectWindow.close();
 
