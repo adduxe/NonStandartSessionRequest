@@ -51,7 +51,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
                     this.School = "School of Rock";
-                    this.Email = "test@usc.edu";
+                    this.Email = "anthondd@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = true;
@@ -65,7 +65,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
                     this.School = "School of Rock";
-                    this.Email = "test@usc.edu";
+                    this.Email = "anthondd@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = false;

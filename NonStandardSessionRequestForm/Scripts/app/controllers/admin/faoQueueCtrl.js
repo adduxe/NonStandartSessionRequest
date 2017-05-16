@@ -200,6 +200,11 @@
         return;
     }
 
+    $scope.EmailUser = function (reqID) {
+//        alert(reqID);
+        EmailResult.save(reqID);                      // Email requestor upon approval or rejection
+    }
+
     $scope.updateRequest = function (actionCode, rejectReason) {
 
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
@@ -222,7 +227,7 @@
 
         Submissions.update({ submissionId: $scope.submID }, status);        // update the request's status 
 
-        EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
+//        EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
 
         $scope.rejectWindow.close();
 

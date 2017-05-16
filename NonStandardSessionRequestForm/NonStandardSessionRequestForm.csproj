@@ -340,6 +340,7 @@
     <Content Include="Areas\Admin\Views\Admin\Rnr.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Forbidden.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Bur.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EmailBody.html" />
     <None Include="Properties\PublishProfiles\local debug.pubxml" />
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />

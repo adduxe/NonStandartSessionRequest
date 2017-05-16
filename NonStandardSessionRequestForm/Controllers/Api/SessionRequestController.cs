@@ -417,6 +417,14 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
+        private string ComposeEmail(Session sessionRec)
+        {
+            string emailBody = "";
+
+            emailBody = "<b>" + sessionRec.Comments + "</b>";
+            return emailBody;
+        }
+
         [Route("email")]
         public async Task<IHttpActionResult> PostEmail([FromBody]int requestID)
         {
@@ -428,7 +436,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestID);
                 }
 
-                string requestAction = sessionRequest.RequestId;
+                string requestAction = "A";
 
                 switch (requestAction) {
 
@@ -446,10 +454,11 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
                 mail.From = new MailAddress("donotreply@usc.edu");
-//                mail.To.Add(sessionRequest.UserEmail);
-                mail.To.Add("anthondd@usc.edu");
+                mail.To.Add(sessionRequest.UserEmail);
+//                mail.To.Add("anthondd@usc.edu");
                 mail.Subject = "Session Request Result";
-                mail.Body = "Session Request";
+                mail.IsBodyHtml = true;
+                mail.Body = ComposeEmail(sessionRequest);
 
                 SmtpServer.Send(mail);
                 return Ok();

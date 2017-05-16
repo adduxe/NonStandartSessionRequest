@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "EmailResult", "$scope", "$http", "$location",
+        ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "$scope", "$http", "$location",
 
-    function (RateTable, Sessions, Get001Dates, SessionCodes, EmailResult, $scope, $http, $location) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, $scope, $http, $location) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -371,8 +371,6 @@ sessionModule.controller("sessionRequestCtrl",
     }   // GetRateTable()
 
     $(document).ready(function () {
-
-        EmailResult.save(1071);
 
         $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
 
