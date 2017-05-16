@@ -10,23 +10,22 @@ namespace SessionRequestApi.Client.Models
     using System.Xml;
     using System.Xml.Linq;
 
-    public partial class SessionBreak
+    public partial class SessionBreakDTO
     {
         /// <summary>
-        /// Initializes a new instance of the SessionBreak class.
+        /// Initializes a new instance of the SessionBreakDTO class.
         /// </summary>
-        public SessionBreak()
+        public SessionBreakDTO()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SessionBreak class.
+        /// Initializes a new instance of the SessionBreakDTO class.
         /// </summary>
-        public SessionBreak(int? id = default(int?), System.DateTime? lastUpdateTimeStamp = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), int? requestId = default(int?), Session session = default(Session))
+        public SessionBreakDTO(int? id = default(int?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), int? requestId = default(int?), SessionDTO session = default(SessionDTO))
         {
             Id = id;
-            LastUpdateTimeStamp = lastUpdateTimeStamp;
             StartDate = startDate;
             EndDate = endDate;
             RequestId = requestId;
@@ -46,11 +45,6 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTimeStamp")]
-        public System.DateTime? LastUpdateTimeStamp { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "startDate")]
         public System.DateTime? StartDate { get; set; }
 
@@ -67,21 +61,8 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "session")]
-        public Session Session { get; set; }
+        public SessionDTO Session { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Session != null)
-            {
-                Session.Validate();
-            }
-        }
         /// <summary>
         /// Serializes the object to an XML node
         /// </summary>
@@ -90,10 +71,6 @@ namespace SessionRequestApi.Client.Models
             if( null != Id )
             {
                 result.Add(new XElement("id", Id) );
-            }
-            if( null != LastUpdateTimeStamp )
-            {
-                result.Add(new XElement("lastUpdateTimeStamp", LastUpdateTimeStamp) );
             }
             if( null != StartDate )
             {
@@ -114,27 +91,21 @@ namespace SessionRequestApi.Client.Models
             return result;
         }
         /// <summary>
-        /// Deserializes an XML node to an instance of SessionBreak
+        /// Deserializes an XML node to an instance of SessionBreakDTO
         /// </summary>
-        internal static SessionBreak XmlDeserialize(string payload)
+        internal static SessionBreakDTO XmlDeserialize(string payload)
         {
             // deserialize to xml and use the overload to do the work
             return XmlDeserialize( XElement.Parse( payload ) );
         }
-        internal static SessionBreak XmlDeserialize(XElement payload)
+        internal static SessionBreakDTO XmlDeserialize(XElement payload)
         {
-            var result = new SessionBreak();
+            var result = new SessionBreakDTO();
             var deserializeId = XmlSerialization.ToDeserializer(e => (int?)e);
             int? resultId;
             if (deserializeId(payload, "id", out resultId))
             {
                 result.Id = resultId;
-            }
-            var deserializeLastUpdateTimeStamp = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultLastUpdateTimeStamp;
-            if (deserializeLastUpdateTimeStamp(payload, "lastUpdateTimeStamp", out resultLastUpdateTimeStamp))
-            {
-                result.LastUpdateTimeStamp = resultLastUpdateTimeStamp;
             }
             var deserializeStartDate = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
             System.DateTime? resultStartDate;
@@ -154,8 +125,8 @@ namespace SessionRequestApi.Client.Models
             {
                 result.RequestId = resultRequestId;
             }
-            var deserializeSession = XmlSerialization.ToDeserializer(e => Session.XmlDeserialize(e));
-            Session resultSession;
+            var deserializeSession = XmlSerialization.ToDeserializer(e => SessionDTO.XmlDeserialize(e));
+            SessionDTO resultSession;
             if (deserializeSession(payload, "session", out resultSession))
             {
                 result.Session = resultSession;

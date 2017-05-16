@@ -4,7 +4,6 @@
 
 namespace SessionRequestApi.Client.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using SessionRequestApi.Client;
     using System.Collections;
@@ -13,25 +12,23 @@ namespace SessionRequestApi.Client.Models
     using System.Xml;
     using System.Xml.Linq;
 
-    public partial class Session
+    public partial class SessionDTO
     {
         /// <summary>
-        /// Initializes a new instance of the Session class.
+        /// Initializes a new instance of the SessionDTO class.
         /// </summary>
-        public Session()
+        public SessionDTO()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Session class.
+        /// Initializes a new instance of the SessionDTO class.
         /// </summary>
-        public Session(string academicTerm, string sessionCode, string owningSchool, string userContact, string userEmail, string userPhone, int? requestId = default(int?), System.DateTime? lastUpdateTimeStamp = default(System.DateTime?), string owningDepartment = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), System.DateTime? requestDate = default(System.DateTime?), string comments = default(string), IList<Section> sections = default(IList<Section>), IList<SessionBreak> sessionBreaks = default(IList<SessionBreak>), IList<Submission> submissions = default(IList<Submission>))
+        public SessionDTO(int? requestId = default(int?), string academicTerm = default(string), string owningSchool = default(string), string owningDepartment = default(string), string userContact = default(string), string userEmail = default(string), string userPhone = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string sessionCode = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), System.DateTime? submitDate = default(System.DateTime?), string comments = default(string), IList<SessionBreakDTO> sessionBreaks = default(IList<SessionBreakDTO>), IList<SectionDTO> sections = default(IList<SectionDTO>))
         {
             RequestId = requestId;
-            LastUpdateTimeStamp = lastUpdateTimeStamp;
             AcademicTerm = academicTerm;
-            SessionCode = sessionCode;
             OwningSchool = owningSchool;
             OwningDepartment = owningDepartment;
             UserContact = userContact;
@@ -49,16 +46,16 @@ namespace SessionRequestApi.Client.Models
             IsClassHeldAtUpc = isClassHeldAtUpc;
             UscCampusLocation = uscCampusLocation;
             OtherCampusLocation = otherCampusLocation;
+            SessionCode = sessionCode;
             RateType = rateType;
             RatePerUnitAmount = ratePerUnitAmount;
             FlatRateAmount = flatRateAmount;
             FlatRateUnitsMin = flatRateUnitsMin;
             FlatRateUnitsMax = flatRateUnitsMax;
-            RequestDate = requestDate;
+            SubmitDate = submitDate;
             Comments = comments;
-            Sections = sections;
             SessionBreaks = sessionBreaks;
-            Submissions = submissions;
+            Sections = sections;
             CustomInit();
         }
 
@@ -74,18 +71,8 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTimeStamp")]
-        public System.DateTime? LastUpdateTimeStamp { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "academicTerm")]
         public string AcademicTerm { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sessionCode")]
-        public string SessionCode { get; set; }
 
         /// <summary>
         /// </summary>
@@ -174,6 +161,11 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "sessionCode")]
+        public string SessionCode { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "rateType")]
         public string RateType { get; set; }
 
@@ -199,8 +191,8 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "requestDate")]
-        public System.DateTime? RequestDate { get; set; }
+        [JsonProperty(PropertyName = "submitDate")]
+        public System.DateTime? SubmitDate { get; set; }
 
         /// <summary>
         /// </summary>
@@ -209,159 +201,14 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "sections")]
-        public IList<Section> Sections { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "sessionBreaks")]
-        public IList<SessionBreak> SessionBreaks { get; set; }
+        public IList<SessionBreakDTO> SessionBreaks { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "submissions")]
-        public IList<Submission> Submissions { get; set; }
+        [JsonProperty(PropertyName = "sections")]
+        public IList<SectionDTO> Sections { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (AcademicTerm == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AcademicTerm");
-            }
-            if (SessionCode == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SessionCode");
-            }
-            if (OwningSchool == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OwningSchool");
-            }
-            if (UserContact == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserContact");
-            }
-            if (UserEmail == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserEmail");
-            }
-            if (UserPhone == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserPhone");
-            }
-            if (AcademicTerm != null)
-            {
-                if (AcademicTerm.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "AcademicTerm", 50);
-                }
-                if (AcademicTerm.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "AcademicTerm", 0);
-                }
-            }
-            if (SessionCode != null)
-            {
-                if (SessionCode.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SessionCode", 50);
-                }
-                if (SessionCode.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SessionCode", 0);
-                }
-            }
-            if (UserEmail != null)
-            {
-                if (UserEmail.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "UserEmail", 100);
-                }
-                if (UserEmail.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "UserEmail", 0);
-                }
-            }
-            if (UserPhone != null)
-            {
-                if (UserPhone.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "UserPhone", 50);
-                }
-                if (UserPhone.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "UserPhone", 0);
-                }
-            }
-            if (UscCampusLocation != null)
-            {
-                if (UscCampusLocation.Length > 200)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "UscCampusLocation", 200);
-                }
-                if (UscCampusLocation.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "UscCampusLocation", 0);
-                }
-            }
-            if (OtherCampusLocation != null)
-            {
-                if (OtherCampusLocation.Length > 200)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "OtherCampusLocation", 200);
-                }
-                if (OtherCampusLocation.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "OtherCampusLocation", 0);
-                }
-            }
-            if (RateType != null)
-            {
-                if (RateType.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "RateType", 50);
-                }
-                if (RateType.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "RateType", 0);
-                }
-            }
-            if (Sections != null)
-            {
-                foreach (var element in Sections)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (SessionBreaks != null)
-            {
-                foreach (var element1 in SessionBreaks)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (Submissions != null)
-            {
-                foreach (var element2 in Submissions)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-        }
         /// <summary>
         /// Serializes the object to an XML node
         /// </summary>
@@ -371,17 +218,9 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("requestId", RequestId) );
             }
-            if( null != LastUpdateTimeStamp )
-            {
-                result.Add(new XElement("lastUpdateTimeStamp", LastUpdateTimeStamp) );
-            }
             if( null != AcademicTerm )
             {
                 result.Add(new XElement("academicTerm", AcademicTerm) );
-            }
-            if( null != SessionCode )
-            {
-                result.Add(new XElement("sessionCode", SessionCode) );
             }
             if( null != OwningSchool )
             {
@@ -451,6 +290,10 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("otherCampusLocation", OtherCampusLocation) );
             }
+            if( null != SessionCode )
+            {
+                result.Add(new XElement("sessionCode", SessionCode) );
+            }
             if( null != RateType )
             {
                 result.Add(new XElement("rateType", RateType) );
@@ -471,19 +314,13 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("flatRateUnitsMax", FlatRateUnitsMax) );
             }
-            if( null != RequestDate )
+            if( null != SubmitDate )
             {
-                result.Add(new XElement("requestDate", RequestDate) );
+                result.Add(new XElement("submitDate", SubmitDate) );
             }
             if( null != Comments )
             {
                 result.Add(new XElement("comments", Comments) );
-            }
-            if( null != Sections )
-            {
-                foreach( var value in Sections ){
-                    result.Add(value.XmlSerialize( new XElement( "sections") ) );
-                }
             }
             if( null != SessionBreaks )
             {
@@ -491,48 +328,36 @@ namespace SessionRequestApi.Client.Models
                     result.Add(value.XmlSerialize( new XElement( "sessionBreaks") ) );
                 }
             }
-            if( null != Submissions )
+            if( null != Sections )
             {
-                foreach( var value in Submissions ){
-                    result.Add(value.XmlSerialize( new XElement( "submissions") ) );
+                foreach( var value in Sections ){
+                    result.Add(value.XmlSerialize( new XElement( "sections") ) );
                 }
             }
             return result;
         }
         /// <summary>
-        /// Deserializes an XML node to an instance of Session
+        /// Deserializes an XML node to an instance of SessionDTO
         /// </summary>
-        internal static Session XmlDeserialize(string payload)
+        internal static SessionDTO XmlDeserialize(string payload)
         {
             // deserialize to xml and use the overload to do the work
             return XmlDeserialize( XElement.Parse( payload ) );
         }
-        internal static Session XmlDeserialize(XElement payload)
+        internal static SessionDTO XmlDeserialize(XElement payload)
         {
-            var result = new Session();
+            var result = new SessionDTO();
             var deserializeRequestId = XmlSerialization.ToDeserializer(e => (int?)e);
             int? resultRequestId;
             if (deserializeRequestId(payload, "requestId", out resultRequestId))
             {
                 result.RequestId = resultRequestId;
             }
-            var deserializeLastUpdateTimeStamp = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultLastUpdateTimeStamp;
-            if (deserializeLastUpdateTimeStamp(payload, "lastUpdateTimeStamp", out resultLastUpdateTimeStamp))
-            {
-                result.LastUpdateTimeStamp = resultLastUpdateTimeStamp;
-            }
             var deserializeAcademicTerm = XmlSerialization.ToDeserializer(e => (string)e);
             string resultAcademicTerm;
             if (deserializeAcademicTerm(payload, "academicTerm", out resultAcademicTerm))
             {
                 result.AcademicTerm = resultAcademicTerm;
-            }
-            var deserializeSessionCode = XmlSerialization.ToDeserializer(e => (string)e);
-            string resultSessionCode;
-            if (deserializeSessionCode(payload, "sessionCode", out resultSessionCode))
-            {
-                result.SessionCode = resultSessionCode;
             }
             var deserializeOwningSchool = XmlSerialization.ToDeserializer(e => (string)e);
             string resultOwningSchool;
@@ -636,6 +461,12 @@ namespace SessionRequestApi.Client.Models
             {
                 result.OtherCampusLocation = resultOtherCampusLocation;
             }
+            var deserializeSessionCode = XmlSerialization.ToDeserializer(e => (string)e);
+            string resultSessionCode;
+            if (deserializeSessionCode(payload, "sessionCode", out resultSessionCode))
+            {
+                result.SessionCode = resultSessionCode;
+            }
             var deserializeRateType = XmlSerialization.ToDeserializer(e => (string)e);
             string resultRateType;
             if (deserializeRateType(payload, "rateType", out resultRateType))
@@ -666,11 +497,11 @@ namespace SessionRequestApi.Client.Models
             {
                 result.FlatRateUnitsMax = resultFlatRateUnitsMax;
             }
-            var deserializeRequestDate = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultRequestDate;
-            if (deserializeRequestDate(payload, "requestDate", out resultRequestDate))
+            var deserializeSubmitDate = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
+            System.DateTime? resultSubmitDate;
+            if (deserializeSubmitDate(payload, "submitDate", out resultSubmitDate))
             {
-                result.RequestDate = resultRequestDate;
+                result.SubmitDate = resultSubmitDate;
             }
             var deserializeComments = XmlSerialization.ToDeserializer(e => (string)e);
             string resultComments;
@@ -678,23 +509,17 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Comments = resultComments;
             }
-            var deserializeSections = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => Section.XmlDeserialize(e)), null);
-            IList<Section> resultSections;
-            if (deserializeSections(payload, "sections", out resultSections))
-            {
-                result.Sections = resultSections;
-            }
-            var deserializeSessionBreaks = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => SessionBreak.XmlDeserialize(e)), null);
-            IList<SessionBreak> resultSessionBreaks;
+            var deserializeSessionBreaks = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => SessionBreakDTO.XmlDeserialize(e)), null);
+            IList<SessionBreakDTO> resultSessionBreaks;
             if (deserializeSessionBreaks(payload, "sessionBreaks", out resultSessionBreaks))
             {
                 result.SessionBreaks = resultSessionBreaks;
             }
-            var deserializeSubmissions = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => Submission.XmlDeserialize(e)), null);
-            IList<Submission> resultSubmissions;
-            if (deserializeSubmissions(payload, "submissions", out resultSubmissions))
+            var deserializeSections = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => SectionDTO.XmlDeserialize(e)), null);
+            IList<SectionDTO> resultSections;
+            if (deserializeSections(payload, "sections", out resultSections))
             {
-                result.Submissions = resultSubmissions;
+                result.Sections = resultSections;
             }
             return result;
         }

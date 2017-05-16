@@ -30,7 +30,7 @@ namespace SessionRequestApi.Client
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<Session>> GetByRequestIdWithHttpMessagesAsync(int requestId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<SessionDTO>> GetByRequestIdWithHttpMessagesAsync(int requestId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='sessionDTO'>
         /// </param>
         /// <param name='customHeaders'>
@@ -48,6 +48,6 @@ namespace SessionRequestApi.Client
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<Session>> PostBySessionDTOWithHttpMessagesAsync(Session sessionDTO, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<SessionDTO>> PostBySessionDTOWithHttpMessagesAsync(SessionDTO sessionDTO, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

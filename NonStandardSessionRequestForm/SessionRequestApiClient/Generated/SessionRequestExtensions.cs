@@ -18,7 +18,7 @@ namespace SessionRequestApi.Client
             /// </param>
             /// <param name='requestId'>
             /// </param>
-            public static Session GetByRequestId(this ISessionRequest operations, int requestId)
+            public static SessionDTO GetByRequestId(this ISessionRequest operations, int requestId)
             {
                 return operations.GetByRequestIdAsync(requestId).GetAwaiter().GetResult();
             }
@@ -31,7 +31,7 @@ namespace SessionRequestApi.Client
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Session> GetByRequestIdAsync(this ISessionRequest operations, int requestId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SessionDTO> GetByRequestIdAsync(this ISessionRequest operations, int requestId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetByRequestIdWithHttpMessagesAsync(requestId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -44,7 +44,7 @@ namespace SessionRequestApi.Client
             /// </param>
             /// <param name='sessionDTO'>
             /// </param>
-            public static Session PostBySessionDTO(this ISessionRequest operations, Session sessionDTO)
+            public static SessionDTO PostBySessionDTO(this ISessionRequest operations, SessionDTO sessionDTO)
             {
                 return operations.PostBySessionDTOAsync(sessionDTO).GetAwaiter().GetResult();
             }
@@ -57,7 +57,7 @@ namespace SessionRequestApi.Client
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Session> PostBySessionDTOAsync(this ISessionRequest operations, Session sessionDTO, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SessionDTO> PostBySessionDTOAsync(this ISessionRequest operations, SessionDTO sessionDTO, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PostBySessionDTOWithHttpMessagesAsync(sessionDTO, null, cancellationToken).ConfigureAwait(false))
                 {

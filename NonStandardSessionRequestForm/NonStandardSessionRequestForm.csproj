@@ -390,6 +390,7 @@
     <Content Include="Scripts\kendo\2017.1.118\kendo.core.min.js.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="SessionRequestApiClient\readme.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -421,12 +422,16 @@
     <Compile Include="SessionRequestApiClient\Generated\ISessionRequest.cs" />
     <Compile Include="SessionRequestApiClient\Generated\ISubmissions.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\Schedule.cs" />
+    <Compile Include="SessionRequestApiClient\Generated\Models\ScheduleDTO.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\Section.cs" />
+    <Compile Include="SessionRequestApiClient\Generated\Models\SectionDTO.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\Session.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\SessionBreak.cs" />
+    <Compile Include="SessionRequestApiClient\Generated\Models\SessionBreakDTO.cs" />
+    <Compile Include="SessionRequestApiClient\Generated\Models\SessionDTO.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\Submission.cs" />
+    <Compile Include="SessionRequestApiClient\Generated\Models\SubmissionDTO.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\XmlSerialization.cs" />
-    <Compile Include="SessionRequestApiClient\Generated\Partials\Session.cs" />
     <Compile Include="SessionRequestApiClient\Generated\RNRSessionRequestAPI.cs" />
     <Compile Include="SessionRequestApiClient\Generated\SessionRequest.cs" />
     <Compile Include="SessionRequestApiClient\Generated\SessionRequestExtensions.cs" />

@@ -24,7 +24,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         private readonly Uri _peApiUri = new Uri(ConfigurationManager.AppSettings["PeApiUrl"]);
 
         [Route("sessionrequests")]
-        public async Task<IHttpActionResult> PostSessionRequest(Session session)
+        public async Task<IHttpActionResult> PostSessionRequest(SessionDTO session)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     session.UserPhone = user.Phone;
                     session.SubmitDate = DateTime.Now;
                     var createdSession = await client.SessionRequest.PostBySessionDTOAsync(session);
-                    var submission = new Submission
+                    var submission = new SubmissionDTO
                     {
                         RequestId = createdSession.RequestId,                        
                     };
@@ -149,7 +149,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("submissions/{submissionId}")]
-        public async Task<IHttpActionResult> PutSubmission(int submissionId, Submission submission)
+        public async Task<IHttpActionResult> PutSubmission(int submissionId, SubmissionDTO submission)
         {
             try
             {
@@ -420,7 +420,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
-                Session sessionRequest;
+                SessionDTO sessionRequest;
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestID);

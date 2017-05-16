@@ -52,7 +52,7 @@ namespace SessionRequestApi.Client
             /// </param>
             /// <param name='submissionDTO'>
             /// </param>
-            public static Submission PostBySubmissionDTO(this ISubmissions operations, Submission submissionDTO)
+            public static SubmissionDTO PostBySubmissionDTO(this ISubmissions operations, SubmissionDTO submissionDTO)
             {
                 return operations.PostBySubmissionDTOAsync(submissionDTO).GetAwaiter().GetResult();
             }
@@ -65,7 +65,7 @@ namespace SessionRequestApi.Client
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Submission> PostBySubmissionDTOAsync(this ISubmissions operations, Submission submissionDTO, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubmissionDTO> PostBySubmissionDTOAsync(this ISubmissions operations, SubmissionDTO submissionDTO, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PostBySubmissionDTOWithHttpMessagesAsync(submissionDTO, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -78,9 +78,35 @@ namespace SessionRequestApi.Client
             /// </param>
             /// <param name='submissionId'>
             /// </param>
+            public static Submission GetBySubmissionId(this ISubmissions operations, int submissionId)
+            {
+                return operations.GetBySubmissionIdAsync(submissionId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='submissionId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Submission> GetBySubmissionIdAsync(this ISubmissions operations, int submissionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBySubmissionIdWithHttpMessagesAsync(submissionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='submissionId'>
+            /// </param>
             /// <param name='submissionDTO'>
             /// </param>
-            public static object PutBySubmissionIdSubmissionDTO(this ISubmissions operations, int submissionId, Submission submissionDTO)
+            public static object PutBySubmissionIdSubmissionDTO(this ISubmissions operations, int submissionId, SubmissionDTO submissionDTO)
             {
                 return operations.PutBySubmissionIdSubmissionDTOAsync(submissionId, submissionDTO).GetAwaiter().GetResult();
             }
@@ -95,7 +121,7 @@ namespace SessionRequestApi.Client
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PutBySubmissionIdSubmissionDTOAsync(this ISubmissions operations, int submissionId, Submission submissionDTO, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PutBySubmissionIdSubmissionDTOAsync(this ISubmissions operations, int submissionId, SubmissionDTO submissionDTO, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PutBySubmissionIdSubmissionDTOWithHttpMessagesAsync(submissionId, submissionDTO, null, cancellationToken).ConfigureAwait(false))
                 {
