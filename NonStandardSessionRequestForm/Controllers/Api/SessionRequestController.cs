@@ -438,19 +438,20 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             string emailBody = "", decision = "", reason = "";
 
 
-            //if (submission.RnrAction.Trim().Length > 0)
-            //{        // RNR Submission
-            //    decision = submission.RnrAction;
-            //    reason = submission.RnrActionReason;
-            //}
-            //else { 
-            //    decision = submission.FaoAction;
-            //    reason = submission.FaoActionReason;
-            //}
+            if (!string.IsNullOrEmpty(submission.RnrAction) && (submission.RnrAction.Trim().Length > 0))
+            {        // RNR Submission
+                decision = submission.RnrAction;
+                reason = submission.RnrActionReason;
+            }
+            else { 
+                decision = submission.FaoAction;
+                reason = submission.FaoActionReason;
+            }
 
             switch (decision.Trim()) {
 
                 case "A":       // Approved
+
                     emailBody = 
                         "Your Session Request has been approved, please do the following. <br/>" +
                         "1. Check all dates for the session on SIS.D.SESS and communicate the dates to faculty.<br/>" + 

@@ -270,6 +270,22 @@
 
         Submissions.update({ submissionId: $scope.submID }, status);
 
+        switch (actionCode) {
+
+            case "A":
+                EmailResult.save($scope.rejectSess.requestId);              // Email requestor upon approval or rejection
+                alert("Approval email sent for Submission ID: " +submID);
+                break;
+
+            case "R":
+                EmailResult.save({ id: submID });                           // Email requestor upon approval or rejection
+                alert("Rejection email sent for Submission ID: " + submID);
+                break;
+
+            default:
+                break;
+        }
+
             // remove the submission from the list
         for (var i = 0; i < $scope.dataSource._data.length; ++i) {
 

@@ -233,14 +233,13 @@
                 break;
 
             case "R":
-                // EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
+                EmailResult.save({ id: submID });                      // Email requestor upon approval or rejection
+                alert("Rejection email sent for Submission ID: " + submID);
                 break;
 
             default:
                 break;
         }
-
-
 
         $scope.rejectWindow.close();
 
