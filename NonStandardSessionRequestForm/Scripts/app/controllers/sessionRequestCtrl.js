@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "$scope", "$http", "$location",
+    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "EmailResult", "$scope", "$http", "$location",
 
-    function (RateTable, Sessions, Get001Dates, SessionCodes, $scope, $http, $location) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, EmailResult, $scope, $http, $location) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -79,11 +79,20 @@ sessionModule.controller("sessionRequestCtrl",
         return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
     }   // ComputeDate()
 
+
     function convDateToString(givenDate) {
-        var newDate = new Date(givenDate);
-        return ((newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear());
-    }
-            // Validate the Class Start and End dates
+
+        var dateString = "";
+
+        if (givenDate.trim() > "") {
+            var newDate = new Date(givenDate);
+            dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+        }
+        return dateString;
+    }   // convDateToString()
+
+
+        // Validate the Class Start and End dates
     $scope.ClassDatesChanged = function () {
 
         if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {
@@ -362,6 +371,8 @@ sessionModule.controller("sessionRequestCtrl",
     }   // GetRateTable()
 
     $(document).ready(function () {
+
+        EmailResult.save();
 
         $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
 

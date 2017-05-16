@@ -11,41 +11,41 @@
                                 data.map(
                                     function (subm) {
                                         return {
-                                            requestId: subm.requestId,
-                                            submissionId: subm.submissionId,
-                                            academicTerm: subm.session.academicTerm,
-                                            sessionCode: subm.session.sessionCode,
-                                            sessionName: subm.session.sessionName,
-                                            userEmail: subm.session.userEmail,
-                                            userPhone: subm.session.userPhone,
-                                            uscCampusLocation: subm.session.uscCampusLocation,
-                                            otherCampusLocation: subm.session.otherCampusLocation,
-                                            lastDayForAddDrop: $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
-                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
-                                            lastDayForEnrollmentOptionChange: $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
-                                            firstDayOfClass: $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
-                                            lastDayOfClass: $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
-                                            firstDayOfFinals: $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
-                                            lastDayOfFinals: $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
-                                            firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
-                                            lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
+                                            requestId           : subm.requestId,
+                                            submissionId        : subm.submissionId,
+                                            academicTerm        : subm.session.academicTerm,
+                                            sessionCode         : subm.session.sessionCode,
+                                            sessionName         : subm.session.sessionName,
+                                            userEmail           : subm.session.userEmail,
+                                            userPhone           : subm.session.userPhone,
+                                            uscCampusLocation   : subm.session.uscCampusLocation,
+                                            otherCampusLocation : subm.session.otherCampusLocation,
+                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate", "UTC"),
+                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate", "UTC"),
+                                            lastDayForEnrollmentOptionChange: $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate", "UTC"),
+                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate", "UTC"),
+                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate", "UTC"),
+                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate", "UTC"),
+                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate", "UTC"),
+                                            firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate", "UTC"),
+                                            lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate", "UTC"),
                                             rateType: getRateTypeDescription(subm.session.rateType),
-                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
-                                            flatRateAmount: subm.session.flatRateAmount,
-                                            flatRateUnitsMin: subm.session.flatRateUnitsMin,
-                                            flatRateUnitsMax: subm.session.flatRateUnitsMax,
-                                            owningSchool: subm.session.owningSchool,
-                                            owningDepartment: subm.session.owningDepartment,
-                                            userContact: subm.session.userContact,
-                                            requestDate: $filter('date')(subm.session.requestDate, "mediumDate"),
-                                            sections: subm.session.sections,
-                                            sessionBreaks: subm.session.sessionBreaks,
-                                            comments: subm.session.comments,
-                                            faoAction: subm.faoAction,
-                                            faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
+                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
+                                            flatRateAmount      : subm.session.flatRateAmount,
+                                            flatRateUnitsMin    : subm.session.flatRateUnitsMin,
+                                            flatRateUnitsMax    : subm.session.flatRateUnitsMax,
+                                            owningSchool        : subm.session.owningSchool,
+                                            owningDepartment    : subm.session.owningDepartment,
+                                            userContact         : subm.session.userContact,
+                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate", "UTC"),
+                                            sections            : subm.session.sections,
+                                            sessionBreaks       : subm.session.sessionBreaks,
+                                            comments            : subm.session.comments,
+                                            faoAction           : subm.faoAction,
+                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate", "UTC"),
                                             faoActionReason: subm.faoActionReason,
-                                            rnrAction: subm.rnrAction,
-                                            rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                            rnrAction           : subm.rnrAction,
+                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate", "UTC"),
                                             rnrActionReason: subm.rnrActionReason
                                         };
                                     }));
@@ -177,8 +177,8 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "startDate", title: "Start Date", format: "{0:MMM dd, yyyy}" },
-                    { field: "endDate", title: "End Date", format: "{0:MMM dd, yyyy}" }
+                    { field: "startDate", title: "Start Date", format: "{0: MMM dd, yyyy}" },
+                    { field: "endDate", title: "End Date", format: "{0: MMM dd, yyyy}" }
                 ]
             };
     };  // $scope.sessionBrkGridOptions
@@ -194,6 +194,7 @@
     $scope.approveRequest = function (submID) {
         $scope.submID = submID;
         $scope.updateRequest('A', 'Approved');
+        alert("Session Request Approved!");
         return;
     }
 

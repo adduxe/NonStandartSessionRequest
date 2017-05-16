@@ -407,7 +407,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
-        [Route("email")]
+        [Route("email/{requestID}")]
         public async Task<IHttpActionResult> PostEmail(int requestID)
         {
             try
@@ -421,17 +421,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
                 mail.From = new MailAddress("donotreply@usc.edu");
-                mail.To.Add(sessionRequest.UserEmail);
+//                mail.To.Add(sessionRequest.UserEmail);
+                mail.To.Add("anthondd@usc.edu");
                 mail.Subject = "Session Request Result";
                 mail.Body = "Session Request";
 
-//                SmtpServer.Port = 587;
-//                SmtpServer.Credentials = new System.Net.NetworkCredential("adduxe", "Al@d5150");
-//                SmtpServer.EnableSsl = true;
-
                 SmtpServer.Send(mail);
-                // MessageBox.Show("mail Send");
-//                returnVal = ("mail Send");
                 return Ok();
             }
             catch (HttpOperationException apiEx)
@@ -441,8 +436,6 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (Exception ex)
             {
-                // MessageBox.Show(ex.ToString());
-//                returnVal = (ex.ToString());
                 return InternalServerError(ex);
             }
         }   // email
