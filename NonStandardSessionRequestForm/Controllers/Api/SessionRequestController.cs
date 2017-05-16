@@ -120,8 +120,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(department, status);
-                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
+                    var submissions = await client.Submissions.GetByDepartmentStatusAsync(department, status);
+                    var json = JsonConvert.SerializeObject(submissions, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
                     return ResponseMessage(new HttpResponseMessage
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
