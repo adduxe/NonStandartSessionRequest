@@ -1,6 +1,8 @@
-﻿adminModule.controller("faoQueueCtrl", ["$scope", "$filter", "Submissions",
+﻿adminModule.controller
 
-    function ($scope, $filter, Submissions) {
+    ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "EmailResult",
+
+    function ($scope, $filter, Submissions, EmailResult) {
         
         $scope.dataSource = new kendo.data.DataSource({
                 transport: {
@@ -20,15 +22,15 @@
                                             userPhone           : subm.session.userPhone,
                                             uscCampusLocation   : subm.session.uscCampusLocation,
                                             otherCampusLocation : subm.session.otherCampusLocation,
-                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate", "UTC"),
-                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate", "UTC"),
-                                            lastDayForEnrollmentOptionChange: $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate", "UTC"),
-                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate", "UTC"),
-                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate", "UTC"),
-                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate", "UTC"),
-                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate", "UTC"),
-                                            firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate", "UTC"),
-                                            lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate", "UTC"),
+                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
+                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
+                                            lastDayForEnrollmentOptionChange: $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
+                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
+                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
+                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
+                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
+                                            firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
+                                            lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                             rateType: getRateTypeDescription(subm.session.rateType),
                                             ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
@@ -37,15 +39,15 @@
                                             owningSchool        : subm.session.owningSchool,
                                             owningDepartment    : subm.session.owningDepartment,
                                             userContact         : subm.session.userContact,
-                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate", "UTC"),
+                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
                                             sections            : subm.session.sections,
                                             sessionBreaks       : subm.session.sessionBreaks,
                                             comments            : subm.session.comments,
                                             faoAction           : subm.faoAction,
-                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate", "UTC"),
+                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
                                             faoActionReason: subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
-                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate", "UTC"),
+                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
                                             rnrActionReason: subm.rnrActionReason
                                         };
                                     }));
@@ -218,17 +220,19 @@
             rnrActionReason: $scope.rejectSess.rnrActionReason
         };
 
-        Submissions.update({ submissionId: $scope.submID }, status);
+        Submissions.update({ submissionId: $scope.submID }, status);        // update the request's status 
 
-            // remove the submission from the list
+        EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
+
+        $scope.rejectWindow.close();
+
+        // remove the submission from the list
         for (var i = 0; i < $scope.dataSource._data.length; ++i) {
             if ($scope.dataSource._data[i].submissionId == $scope.submID) {
                 $scope.dataSource._data.splice(i, 1);
                 break;
             }
         }   // for (var i...
-
-        $scope.rejectWindow.close();
     }
 
 }]);

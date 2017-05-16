@@ -372,7 +372,7 @@ sessionModule.controller("sessionRequestCtrl",
 
     $(document).ready(function () {
 
-        EmailResult.save();
+        EmailResult.save(1071);
 
         $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
 

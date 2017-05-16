@@ -68,7 +68,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestId);
-                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
+                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
+                        {
+                            NullValueHandling = NullValueHandling.Ignore,
+                            PreserveReferencesHandling = PreserveReferencesHandling.All,
+                            DateTimeZoneHandling = DateTimeZoneHandling.Local
+                        });
                     return ResponseMessage(new HttpResponseMessage
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
@@ -121,7 +126,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(department, status);
-                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.All });
+                    var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore,
+                                PreserveReferencesHandling = PreserveReferencesHandling.All,
+                                DateTimeZoneHandling = DateTimeZoneHandling.Local
+                            });
                     return ResponseMessage(new HttpResponseMessage
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
@@ -407,8 +417,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
-        [Route("email/{requestID}")]
-        public async Task<IHttpActionResult> PostEmail(int requestID)
+        [Route("email")]
+        public async Task<IHttpActionResult> PostEmail([FromBody]int requestID)
         {
             try
             {
@@ -416,6 +426,21 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
                     sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestID);
+                }
+
+                string requestAction = sessionRequest.RequestId;
+
+                switch (requestAction) {
+
+                    case "A":
+
+                        break;
+
+                    case "R":
+                        break;
+
+                    default:
+                        break;
                 }
 
                 MailMessage mail = new MailMessage();
