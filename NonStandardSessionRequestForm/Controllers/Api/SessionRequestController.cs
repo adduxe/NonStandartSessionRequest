@@ -71,8 +71,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
                         {
                             NullValueHandling = NullValueHandling.Ignore,
-                            PreserveReferencesHandling = PreserveReferencesHandling.All,
-                            DateTimeZoneHandling = DateTimeZoneHandling.Local
+                            PreserveReferencesHandling = PreserveReferencesHandling.All
                         });
                     return ResponseMessage(new HttpResponseMessage
                     {
@@ -129,8 +128,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
                             {
                                 NullValueHandling = NullValueHandling.Ignore,
-                                PreserveReferencesHandling = PreserveReferencesHandling.All,
-                                DateTimeZoneHandling = DateTimeZoneHandling.Local
+                                PreserveReferencesHandling = PreserveReferencesHandling.All
                             });
                     return ResponseMessage(new HttpResponseMessage
                     {
@@ -428,20 +426,20 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestID);
                 }
 
-                string requestAction = sessionRequest.RequestId;
+                //string requestAction = sessionRequest.;
 
-                switch (requestAction) {
+                //switch (requestAction) {
 
-                    case "A":
+                //    case "A":
 
-                        break;
+                //        break;
 
-                    case "R":
-                        break;
+                //    case "R":
+                //        break;
 
-                    default:
-                        break;
-                }
+                //    default:
+                //        break;
+                //}
 
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
