@@ -71,8 +71,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
                         {
                             NullValueHandling = NullValueHandling.Ignore,
-                            PreserveReferencesHandling = PreserveReferencesHandling.All,
-                            DateTimeZoneHandling = DateTimeZoneHandling.Local
+                            PreserveReferencesHandling = PreserveReferencesHandling.All
                         });
                     return ResponseMessage(new HttpResponseMessage
                     {
@@ -129,8 +128,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
                             {
                                 NullValueHandling = NullValueHandling.Ignore,
-                                PreserveReferencesHandling = PreserveReferencesHandling.All,
-                                DateTimeZoneHandling = DateTimeZoneHandling.Local
+                                PreserveReferencesHandling = PreserveReferencesHandling.All
                             });
                     return ResponseMessage(new HttpResponseMessage
                     {
