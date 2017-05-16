@@ -4,30 +4,28 @@
 
 namespace SessionRequestApi.Client.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using SessionRequestApi.Client;
     using System.Linq;
     using System.Xml;
     using System.Xml.Linq;
 
-    public partial class Submission
+    public partial class SubmissionDTO
     {
         /// <summary>
-        /// Initializes a new instance of the Submission class.
+        /// Initializes a new instance of the SubmissionDTO class.
         /// </summary>
-        public Submission()
+        public SubmissionDTO()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Submission class.
+        /// Initializes a new instance of the SubmissionDTO class.
         /// </summary>
-        public Submission(int? submissionId = default(int?), System.DateTime? lastUpdatedTimeStamp = default(System.DateTime?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), int? requestId = default(int?), Session session = default(Session))
+        public SubmissionDTO(int? submissionId = default(int?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), int? requestId = default(int?))
         {
             SubmissionId = submissionId;
-            LastUpdatedTimeStamp = lastUpdatedTimeStamp;
             FaoAction = faoAction;
             FaoActionDate = faoActionDate;
             FaoActionReason = faoActionReason;
@@ -35,7 +33,6 @@ namespace SessionRequestApi.Client.Models
             RnrActionDate = rnrActionDate;
             RnrActionReason = rnrActionReason;
             RequestId = requestId;
-            Session = session;
             CustomInit();
         }
 
@@ -48,11 +45,6 @@ namespace SessionRequestApi.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "submissionId")]
         public int? SubmissionId { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "lastUpdatedTimeStamp")]
-        public System.DateTime? LastUpdatedTimeStamp { get; set; }
 
         /// <summary>
         /// </summary>
@@ -90,46 +82,6 @@ namespace SessionRequestApi.Client.Models
         public int? RequestId { get; set; }
 
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "session")]
-        public Session Session { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (FaoAction != null)
-            {
-                if (FaoAction.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "FaoAction", 50);
-                }
-                if (FaoAction.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "FaoAction", 0);
-                }
-            }
-            if (RnrAction != null)
-            {
-                if (RnrAction.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "RnrAction", 50);
-                }
-                if (RnrAction.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "RnrAction", 0);
-                }
-            }
-            if (Session != null)
-            {
-                Session.Validate();
-            }
-        }
-        /// <summary>
         /// Serializes the object to an XML node
         /// </summary>
         internal XElement XmlSerialize(XElement result)
@@ -137,10 +89,6 @@ namespace SessionRequestApi.Client.Models
             if( null != SubmissionId )
             {
                 result.Add(new XElement("submissionId", SubmissionId) );
-            }
-            if( null != LastUpdatedTimeStamp )
-            {
-                result.Add(new XElement("lastUpdatedTimeStamp", LastUpdatedTimeStamp) );
             }
             if( null != FaoAction )
             {
@@ -170,34 +118,24 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("requestId", RequestId) );
             }
-            if( null != Session )
-            {
-                result.Add(Session.XmlSerialize(new XElement( "session" )));
-            }
             return result;
         }
         /// <summary>
-        /// Deserializes an XML node to an instance of Submission
+        /// Deserializes an XML node to an instance of SubmissionDTO
         /// </summary>
-        internal static Submission XmlDeserialize(string payload)
+        internal static SubmissionDTO XmlDeserialize(string payload)
         {
             // deserialize to xml and use the overload to do the work
             return XmlDeserialize( XElement.Parse( payload ) );
         }
-        internal static Submission XmlDeserialize(XElement payload)
+        internal static SubmissionDTO XmlDeserialize(XElement payload)
         {
-            var result = new Submission();
+            var result = new SubmissionDTO();
             var deserializeSubmissionId = XmlSerialization.ToDeserializer(e => (int?)e);
             int? resultSubmissionId;
             if (deserializeSubmissionId(payload, "submissionId", out resultSubmissionId))
             {
                 result.SubmissionId = resultSubmissionId;
-            }
-            var deserializeLastUpdatedTimeStamp = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultLastUpdatedTimeStamp;
-            if (deserializeLastUpdatedTimeStamp(payload, "lastUpdatedTimeStamp", out resultLastUpdatedTimeStamp))
-            {
-                result.LastUpdatedTimeStamp = resultLastUpdatedTimeStamp;
             }
             var deserializeFaoAction = XmlSerialization.ToDeserializer(e => (string)e);
             string resultFaoAction;
@@ -240,12 +178,6 @@ namespace SessionRequestApi.Client.Models
             if (deserializeRequestId(payload, "requestId", out resultRequestId))
             {
                 result.RequestId = resultRequestId;
-            }
-            var deserializeSession = XmlSerialization.ToDeserializer(e => Session.XmlDeserialize(e));
-            Session resultSession;
-            if (deserializeSession(payload, "session", out resultSession))
-            {
-                result.Session = resultSession;
             }
             return result;
         }

@@ -4,35 +4,32 @@
 
 namespace SessionRequestApi.Client.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using SessionRequestApi.Client;
     using System.Linq;
     using System.Xml;
     using System.Xml.Linq;
 
-    public partial class Schedule
+    public partial class ScheduleDTO
     {
         /// <summary>
-        /// Initializes a new instance of the Schedule class.
+        /// Initializes a new instance of the ScheduleDTO class.
         /// </summary>
-        public Schedule()
+        public ScheduleDTO()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Schedule class.
+        /// Initializes a new instance of the ScheduleDTO class.
         /// </summary>
-        public Schedule(int? scheduleId = default(int?), System.DateTime? lastUpdateTimeStamp = default(System.DateTime?), int? sectionId = default(int?), string classDayOfWeek = default(string), string classStartTime = default(string), string classEndTime = default(string), Section section = default(Section))
+        public ScheduleDTO(int? scheduleId = default(int?), int? sectionId = default(int?), string classDayOfWeek = default(string), string classStartTime = default(string), string classEndTime = default(string))
         {
             ScheduleId = scheduleId;
-            LastUpdateTimeStamp = lastUpdateTimeStamp;
             SectionId = sectionId;
             ClassDayOfWeek = classDayOfWeek;
             ClassStartTime = classStartTime;
             ClassEndTime = classEndTime;
-            Section = section;
             CustomInit();
         }
 
@@ -45,11 +42,6 @@ namespace SessionRequestApi.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "scheduleId")]
         public int? ScheduleId { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTimeStamp")]
-        public System.DateTime? LastUpdateTimeStamp { get; set; }
 
         /// <summary>
         /// </summary>
@@ -72,57 +64,6 @@ namespace SessionRequestApi.Client.Models
         public string ClassEndTime { get; set; }
 
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "section")]
-        public Section Section { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ClassDayOfWeek != null)
-            {
-                if (ClassDayOfWeek.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ClassDayOfWeek", 50);
-                }
-                if (ClassDayOfWeek.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ClassDayOfWeek", 0);
-                }
-            }
-            if (ClassStartTime != null)
-            {
-                if (ClassStartTime.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ClassStartTime", 50);
-                }
-                if (ClassStartTime.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ClassStartTime", 0);
-                }
-            }
-            if (ClassEndTime != null)
-            {
-                if (ClassEndTime.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ClassEndTime", 50);
-                }
-                if (ClassEndTime.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ClassEndTime", 0);
-                }
-            }
-            if (Section != null)
-            {
-                Section.Validate();
-            }
-        }
-        /// <summary>
         /// Serializes the object to an XML node
         /// </summary>
         internal XElement XmlSerialize(XElement result)
@@ -130,10 +71,6 @@ namespace SessionRequestApi.Client.Models
             if( null != ScheduleId )
             {
                 result.Add(new XElement("scheduleId", ScheduleId) );
-            }
-            if( null != LastUpdateTimeStamp )
-            {
-                result.Add(new XElement("lastUpdateTimeStamp", LastUpdateTimeStamp) );
             }
             if( null != SectionId )
             {
@@ -151,34 +88,24 @@ namespace SessionRequestApi.Client.Models
             {
                 result.Add(new XElement("classEndTime", ClassEndTime) );
             }
-            if( null != Section )
-            {
-                result.Add(Section.XmlSerialize(new XElement( "section" )));
-            }
             return result;
         }
         /// <summary>
-        /// Deserializes an XML node to an instance of Schedule
+        /// Deserializes an XML node to an instance of ScheduleDTO
         /// </summary>
-        internal static Schedule XmlDeserialize(string payload)
+        internal static ScheduleDTO XmlDeserialize(string payload)
         {
             // deserialize to xml and use the overload to do the work
             return XmlDeserialize( XElement.Parse( payload ) );
         }
-        internal static Schedule XmlDeserialize(XElement payload)
+        internal static ScheduleDTO XmlDeserialize(XElement payload)
         {
-            var result = new Schedule();
+            var result = new ScheduleDTO();
             var deserializeScheduleId = XmlSerialization.ToDeserializer(e => (int?)e);
             int? resultScheduleId;
             if (deserializeScheduleId(payload, "scheduleId", out resultScheduleId))
             {
                 result.ScheduleId = resultScheduleId;
-            }
-            var deserializeLastUpdateTimeStamp = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultLastUpdateTimeStamp;
-            if (deserializeLastUpdateTimeStamp(payload, "lastUpdateTimeStamp", out resultLastUpdateTimeStamp))
-            {
-                result.LastUpdateTimeStamp = resultLastUpdateTimeStamp;
             }
             var deserializeSectionId = XmlSerialization.ToDeserializer(e => (int?)e);
             int? resultSectionId;
@@ -203,12 +130,6 @@ namespace SessionRequestApi.Client.Models
             if (deserializeClassEndTime(payload, "classEndTime", out resultClassEndTime))
             {
                 result.ClassEndTime = resultClassEndTime;
-            }
-            var deserializeSection = XmlSerialization.ToDeserializer(e => Section.XmlDeserialize(e));
-            Section resultSection;
-            if (deserializeSection(payload, "section", out resultSection))
-            {
-                result.Section = resultSection;
             }
             return result;
         }

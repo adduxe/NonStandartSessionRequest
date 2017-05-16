@@ -4,7 +4,6 @@
 
 namespace SessionRequestApi.Client.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using SessionRequestApi.Client;
     using System.Collections;
@@ -13,23 +12,22 @@ namespace SessionRequestApi.Client.Models
     using System.Xml;
     using System.Xml.Linq;
 
-    public partial class Section
+    public partial class SectionDTO
     {
         /// <summary>
-        /// Initializes a new instance of the Section class.
+        /// Initializes a new instance of the SectionDTO class.
         /// </summary>
-        public Section()
+        public SectionDTO()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Section class.
+        /// Initializes a new instance of the SectionDTO class.
         /// </summary>
-        public Section(string sectionNumber, int? sectionId = default(int?), System.DateTime? lastUpdateTimeStamp = default(System.DateTime?), int? requestId = default(int?), string prefix = default(string), string title = default(string), string courseNumber = default(string), double? unitValue = default(double?), string instructorName = default(string), int? estimatedEnrollment = default(int?), string comments = default(string), int? incomeAccountNumber = default(int?), IList<Schedule> schedules = default(IList<Schedule>), Session session = default(Session))
+        public SectionDTO(int? sectionId = default(int?), string sectionNumber = default(string), int? requestId = default(int?), string prefix = default(string), string title = default(string), string courseNumber = default(string), double? unitValue = default(double?), string instructorName = default(string), int? estimatedEnrollment = default(int?), string comments = default(string), int? incomeAccountNumber = default(int?), IList<ScheduleDTO> schedules = default(IList<ScheduleDTO>))
         {
             SectionId = sectionId;
-            LastUpdateTimeStamp = lastUpdateTimeStamp;
             SectionNumber = sectionNumber;
             RequestId = requestId;
             Prefix = prefix;
@@ -41,7 +39,6 @@ namespace SessionRequestApi.Client.Models
             Comments = comments;
             IncomeAccountNumber = incomeAccountNumber;
             Schedules = schedules;
-            Session = session;
             CustomInit();
         }
 
@@ -54,11 +51,6 @@ namespace SessionRequestApi.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "sectionId")]
         public int? SectionId { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTimeStamp")]
-        public System.DateTime? LastUpdateTimeStamp { get; set; }
 
         /// <summary>
         /// </summary>
@@ -113,62 +105,8 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "schedules")]
-        public IList<Schedule> Schedules { get; set; }
+        public IList<ScheduleDTO> Schedules { get; set; }
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "session")]
-        public Session Session { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (SectionNumber == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SectionNumber");
-            }
-            if (SectionNumber != null)
-            {
-                if (SectionNumber.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SectionNumber", 50);
-                }
-                if (SectionNumber.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "SectionNumber", 0);
-                }
-            }
-            if (Prefix != null)
-            {
-                if (Prefix.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Prefix", 50);
-                }
-                if (Prefix.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Prefix", 0);
-                }
-            }
-            if (Schedules != null)
-            {
-                foreach (var element in Schedules)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (Session != null)
-            {
-                Session.Validate();
-            }
-        }
         /// <summary>
         /// Serializes the object to an XML node
         /// </summary>
@@ -177,10 +115,6 @@ namespace SessionRequestApi.Client.Models
             if( null != SectionId )
             {
                 result.Add(new XElement("sectionId", SectionId) );
-            }
-            if( null != LastUpdateTimeStamp )
-            {
-                result.Add(new XElement("lastUpdateTimeStamp", LastUpdateTimeStamp) );
             }
             if( null != SectionNumber )
             {
@@ -228,34 +162,24 @@ namespace SessionRequestApi.Client.Models
                     result.Add(value.XmlSerialize( new XElement( "schedules") ) );
                 }
             }
-            if( null != Session )
-            {
-                result.Add(Session.XmlSerialize(new XElement( "session" )));
-            }
             return result;
         }
         /// <summary>
-        /// Deserializes an XML node to an instance of Section
+        /// Deserializes an XML node to an instance of SectionDTO
         /// </summary>
-        internal static Section XmlDeserialize(string payload)
+        internal static SectionDTO XmlDeserialize(string payload)
         {
             // deserialize to xml and use the overload to do the work
             return XmlDeserialize( XElement.Parse( payload ) );
         }
-        internal static Section XmlDeserialize(XElement payload)
+        internal static SectionDTO XmlDeserialize(XElement payload)
         {
-            var result = new Section();
+            var result = new SectionDTO();
             var deserializeSectionId = XmlSerialization.ToDeserializer(e => (int?)e);
             int? resultSectionId;
             if (deserializeSectionId(payload, "sectionId", out resultSectionId))
             {
                 result.SectionId = resultSectionId;
-            }
-            var deserializeLastUpdateTimeStamp = XmlSerialization.ToDeserializer(e => (System.DateTime?)e);
-            System.DateTime? resultLastUpdateTimeStamp;
-            if (deserializeLastUpdateTimeStamp(payload, "lastUpdateTimeStamp", out resultLastUpdateTimeStamp))
-            {
-                result.LastUpdateTimeStamp = resultLastUpdateTimeStamp;
             }
             var deserializeSectionNumber = XmlSerialization.ToDeserializer(e => (string)e);
             string resultSectionNumber;
@@ -317,17 +241,11 @@ namespace SessionRequestApi.Client.Models
             {
                 result.IncomeAccountNumber = resultIncomeAccountNumber;
             }
-            var deserializeSchedules = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => Schedule.XmlDeserialize(e)), null);
-            IList<Schedule> resultSchedules;
+            var deserializeSchedules = XmlSerialization.CreateListXmlDeserializer(XmlSerialization.ToDeserializer(e => ScheduleDTO.XmlDeserialize(e)), null);
+            IList<ScheduleDTO> resultSchedules;
             if (deserializeSchedules(payload, "schedules", out resultSchedules))
             {
                 result.Schedules = resultSchedules;
-            }
-            var deserializeSession = XmlSerialization.ToDeserializer(e => Session.XmlDeserialize(e));
-            Session resultSession;
-            if (deserializeSession(payload, "session", out resultSession))
-            {
-                result.Session = resultSession;
             }
             return result;
         }
