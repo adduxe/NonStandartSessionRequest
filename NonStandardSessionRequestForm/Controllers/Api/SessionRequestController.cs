@@ -420,7 +420,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             return String.Format("{0:MMMM dd, yyyy}", givenDate);
         }
 
-        private string ComposeEmail(Session sessionRec)
+        private string ComposeEmail(Submission submission)
         {
             /*
                 Semester
@@ -435,79 +435,112 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 Campus location
             */
 
-            string emailBody = "";
-            emailBody =
-                "<table align='center'>" +
-                "<tr>" +
-                "	<th>Academic Term</th>" +
-                "	<td>" + sessionRec.AcademicTerm + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Session Code</th>" +
-                "	<td>" + sessionRec.SessionCode + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>First Day of Classes</th>" +
-                "	<td>" + FormatDate(sessionRec.FirstDayOfClass) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Last Day of Classes</th>" +
-                "	<td>" + FormatDate(sessionRec.LastDayOfClass) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Last Day to Add/Drop</th>" +
-                "	<td>" + FormatDate(sessionRec.LastDayForAddDrop) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Last Day to Withdraw</th>" +
-                "	<td>" + FormatDate(sessionRec.LastDayForWithdrawal) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Last Day for Enrollment Change</th>" +
-                "	<td>" + FormatDate(sessionRec.LastDayForEnrollmentOptionChange) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>First Day of Finals</th>" +
-                "	<td>" + FormatDate(sessionRec.FirstDayOfFinals) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Last Day of Finals</th>" +
-                "	<td>" + FormatDate(sessionRec.LastDayOfFinals) + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Campus Location</th>" +
-                "	<td>" + sessionRec.OtherCampusLocation + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "	<th>Comments</th>" +
-                "	<td>" + sessionRec.Comments + "</td>" +
-                "</tr>" +
-                "</table>";
+            string emailBody = "", decision = "", reason = "";
+
+
+            //if (submission.RnrAction.Trim().Length > 0)
+            //{        // RNR Submission
+            //    decision = submission.RnrAction;
+            //    reason = submission.RnrActionReason;
+            //}
+            //else { 
+            //    decision = submission.FaoAction;
+            //    reason = submission.FaoActionReason;
+            //}
+
+            switch (decision.Trim()) {
+
+                case "A":       // Approved
+                    emailBody = 
+                        "Your Session Request has been approved, please do the following. <br/>" +
+                        "1. Check all dates for the session on SIS.D.SESS and communicate the dates to faculty.<br/>" + 
+                        "2. It is at this point that students can register for the class. Once you have verified that <br/>" +
+                        " fees appear on page 2 of SIS.D.SESS, please instruct students to register for the class.";
+                    break;
+
+                case "R":       // Rejected
+                    emailBody =
+                        "<table align='center'>" +
+                        "<tr>" +
+                        "	<th>Academic Term</th>" +
+                        "	<td>" + submission.Session.AcademicTerm + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Session Code</th>" +
+                        "	<td>" + submission.Session.SessionCode + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>First Day of Classes</th>" +
+                        "	<td>" + FormatDate(submission.Session.FirstDayOfClass) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Last Day of Classes</th>" +
+                        "	<td>" + FormatDate(submission.Session.LastDayOfClass) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Last Day to Add/Drop</th>" +
+                        "	<td>" + FormatDate(submission.Session.LastDayForAddDrop) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Last Day to Withdraw</th>" +
+                        "	<td>" + FormatDate(submission.Session.LastDayForWithdrawal) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Last Day for Enrollment Change</th>" +
+                        "	<td>" + FormatDate(submission.Session.LastDayForEnrollmentOptionChange) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>First Day of Finals</th>" +
+                        "	<td>" + FormatDate(submission.Session.FirstDayOfFinals) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Last Day of Finals</th>" +
+                        "	<td>" + FormatDate(submission.Session.LastDayOfFinals) + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Campus Location</th>" +
+                        "	<td>" + submission.Session.OtherCampusLocation + "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "	<th>Comments</th>" +
+                        "	<td>" +
+                            "<p>"
+                            + decision +
+                            "</p>" +
+                        "</td>" +
+                        "</tr>" +
+                        "</table>";
+                    break;
+
+                default:
+                    emailBody = "No decision on this Request yet.";
+                    break;
+            }
+
 
             return emailBody;
 
         }   // ComposeEmail()
 
-        [Route("email/{requestId}")]
-        public async Task<IHttpActionResult> PostEmail(int requestID)
+        [Route("email/{submId}")]
+        public async Task<IHttpActionResult> PostEmail(int submId)
         {
 
             try
             {
-                Session sessionRequest;
+                Submission Submission;
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))
                 {
-                    sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestId);
+                    Submission = await client.Submissions.GetBySubmissionIdAsync(submId);
                 }
 
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
                 mail.From = new MailAddress("donotreply@usc.edu");
-                mail.To.Add(sessionRequest.UserEmail);
-//                mail.To.Add("anthondd@usc.edu");
+                mail.To.Add(Submission.Session.UserEmail);
                 mail.Subject = "Session Request Result";
                 mail.IsBodyHtml = true;
-                mail.Body = ComposeEmail(sessionRequest);
+                mail.Body = ComposeEmail(Submission);
 
                 SmtpServer.Send(mail);
                 return Ok();

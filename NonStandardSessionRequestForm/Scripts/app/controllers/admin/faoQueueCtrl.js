@@ -198,10 +198,10 @@
         return;
     }
 
-    $scope.EmailUser = function (reqID) {
-        EmailResult.save({id: reqID});                      // Email requestor upon approval or rejection
-//        EmailResult.update({id: reqID}, null);                      // Email requestor upon approval or rejection
-        alert("Email sent for Request ID: " + reqID);
+    $scope.EmailUser = function (submID) {
+        EmailResult.save({id: submID });                      // Email requestor upon approval or rejection
+        alert("Email sent for Submission ID: " + submID);
+        return;
     }
 
     $scope.updateRequest = function (actionCode, rejectReason) {
