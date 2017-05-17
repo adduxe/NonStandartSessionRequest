@@ -84,8 +84,8 @@ sessionModule.controller("sessionRequestCtrl",
 
         var dateString = "";
 
-        if (givenDate.trim() > "") {
-            var newDate = new Date(givenDate);
+        if (givenDate) {
+            var newDate = new Date(givenDate.trim());
             dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
         }
         return dateString;
@@ -196,16 +196,16 @@ sessionModule.controller("sessionRequestCtrl",
                 if (data.classBeginDate == undefined) {
                     alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
                 } else {
-                    $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate.trim());
-                    $scope.sess001Dates.lastDayOfClass      = convDateToString(data.classEndDate.trim());
-                    $scope.sess001Dates.lastDayForAddDrop   = convDateToString(data.lastAddDropDate.trim());
-                    $scope.sess001Dates.lastDayForWithdrawal= convDateToString(data.withdrawWithWDate.trim());
-                    $scope.sess001Dates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate.trim());
-                    $scope.sess001Dates.sessBreak1Begin     = convDateToString(data.Break1BeginDate.trim());
-                    $scope.sess001Dates.sessBreak1End       = convDateToString(data.Break1EndDate.trim());
-                    $scope.sess001Dates.sessBreak2Begin     = convDateToString(data.Break2BeginDate.trim());
-                    $scope.sess001Dates.sessBreak2End       = convDateToString(data.Break2EndDate.trim());
-            }
+                    $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate);
+                    $scope.sess001Dates.lastDayOfClass      = convDateToString(data.classEndDate);
+                    $scope.sess001Dates.lastDayForAddDrop   = convDateToString(data.lastAddDropDate);
+                    $scope.sess001Dates.lastDayForWithdrawal= convDateToString(data.withdrawWithWDate);
+                    $scope.sess001Dates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate);
+                    $scope.sess001Dates.sessBreak1Begin     = convDateToString(data.break1BeginDate);
+                    $scope.sess001Dates.sessBreak1End       = convDateToString(data.break1EndDate);
+                    $scope.sess001Dates.sessBreak2Begin     = convDateToString(data.break2BeginDate);
+                    $scope.sess001Dates.sessBreak2End       = convDateToString(data.break2EndDate);
+                }
             },
             function () {
                 console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);

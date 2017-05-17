@@ -422,35 +422,25 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
         private string ComposeEmail(Submission submission)
         {
-            /*
-                Semester
-                First day of classes
-                Last day of classes
-                Session Code
-                Last day to add/drop
-                last day for Enrollment Change
-                Last day to withdraw
-                First Day of Finals
-                Last day of Finals
-                Campus location
-            */
 
             string emailBody = "", decision = "", reason = "";
 
-
+                // Determine whether it's an RNR or FAO decision
             if (!string.IsNullOrEmpty(submission.RnrAction) && (submission.RnrAction.Trim().Length > 0))
-            {        // RNR Submission
+            {           // RNR
                 decision = submission.RnrAction;
                 reason = submission.RnrActionReason;
-            }
-            else { 
+
+            } else {    // FAO
+                 
                 decision = submission.FaoAction;
                 reason = submission.FaoActionReason;
             }
 
+            // Decide whether it's an Approval or Rejection email.
             switch (decision.Trim()) {
 
-                case "A":       // Approved
+                case "A":       // Approval
 
                     emailBody = 
                         "Your Session Request has been approved, please do the following. <br/>" +
@@ -459,7 +449,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                         " fees appear on page 2 of SIS.D.SESS, please instruct students to register for the class.";
                     break;
 
-                case "R":       // Rejected
+                case "R":       // Rejection
+
                     emailBody =
                         "<table align='center'>" +
                         "<tr>" +
@@ -506,7 +497,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                         "	<th>Comments</th>" +
                         "	<td>" +
                             "<p>"
-                            + decision +
+                            + reason +
                             "</p>" +
                         "</td>" +
                         "</tr>" +

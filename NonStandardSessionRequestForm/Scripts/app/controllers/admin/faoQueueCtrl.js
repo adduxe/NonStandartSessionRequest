@@ -224,32 +224,34 @@
             rnrActionReason: $scope.rejectSess.rnrActionReason
         };
 
-        Submissions.update({ submissionId: $scope.submID }, status);        // update the request's status
+        Submissions.update({ submissionId: $scope.submID }, status)     // update the request's status
+            .$promise.then(function () {
 
-        switch (actionCode) {
+                switch (actionCode) {
 
-            case "A":
-                // EmailResult.save($scope.rejectSess.requestId);                      // Email requestor upon approval or rejection
-                break;
+                    case "A":
+                        // EmailResult.save($scope.rejectSess.requestId);           // Email requestor upon approval
+                        break;
 
-            case "R":
-                EmailResult.save({ id: submID });                      // Email requestor upon approval or rejection
-                alert("Rejection email sent for Submission ID: " + submID);
-                break;
+                    case "R":
+                        EmailResult.save({ id: $scope.submID });                           // Email requestor upon rejection
+                        alert("Rejection email sent for Submission ID: " + $scope.submID);
+                        break;
 
-            default:
-                break;
-        }
+                    default:
+                        break;
+                }       // switch()
 
-        $scope.rejectWindow.close();
+                $scope.rejectWindow.close();
 
-        // remove the submission from the list
-        for (var i = 0; i < $scope.dataSource._data.length; ++i) {
-            if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                $scope.dataSource._data.splice(i, 1);
-                break;
-            }
-        }   // for (var i...
-    }
+                // remove the submission from the list
+                for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+                    if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                        $scope.dataSource._data.splice(i, 1);
+                        break;
+                    }
+                }   // for (var i...
+            }); // promise.then()
+    }   // updateRequest()
 
 }]);

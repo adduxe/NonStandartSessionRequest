@@ -345,9 +345,9 @@
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
     <Content Include="Scripts\app\controllers\admin\burQueueCtrl.js" />
-    <Content Include="Scripts\app\controllers\sessionResultCtrl.js" />
     <Content Include="Scripts\app\controllers\admin\faoQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\admin\rnrQueueCtrl.js" />
+    <Content Include="Scripts\app\controllers\SessionResultCtrl.js" />
     <Content Include="Scripts\app\services\admin\emailService.js" />
     <Content Include="Scripts\app\services\emailService.js" />
     <Content Include="Scripts\app\services\sessionTableService.js" />
@@ -360,11 +360,9 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\controllers\indexCtrl.js" />
     <Content Include="Scripts\app\controllers\sessionRequestCtrl.js" />
-    <Content Include="Scripts\app\controllers\sessionReviewCtrl.js" />
     <Content Include="Scripts\app\services\sessionsService.js" />
     <Content Include="Scripts\app\SessionModule.js" />
     <Content Include="Scripts\app\views\SessionRequest.html" />
-    <Content Include="Scripts\app\views\SessionReview.html" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

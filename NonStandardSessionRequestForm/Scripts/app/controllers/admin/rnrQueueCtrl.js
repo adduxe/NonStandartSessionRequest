@@ -1,6 +1,6 @@
-﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis",
+﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult",
 
-    function ($scope, $filter, Submissions, WriteToSis) {
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -45,7 +45,7 @@
                                         faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
                                         faoActionReason     : subm.faoActionReason,
                                         rnrAction           : subm.rnrAction,
-                                        rnrActionDate: $filter('date')(subm.subm.rnrActionDate, "mediumDate"),
+                                        rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
                                         rnrActionReason     : subm.rnrActionReason
                                     };
                                 }));
@@ -192,7 +192,7 @@
 
         var dateString = "";
 
-        if (givenDate.trim() > "") {
+        if (givenDate) {
             var newDate = new Date(givenDate);
             dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
         }
@@ -273,13 +273,13 @@
         switch (actionCode) {
 
             case "A":
-                EmailResult.save($scope.rejectSess.requestId);              // Email requestor upon approval or rejection
-                alert("Approval email sent for Submission ID: " +submID);
+                EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
+                alert("Approval email sent for Submission ID: " + $scope.submID);
                 break;
 
             case "R":
-                EmailResult.save({ id: submID });                           // Email requestor upon approval or rejection
-                alert("Rejection email sent for Submission ID: " + submID);
+                EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
+                alert("Rejection email sent for Submission ID: " + $scope.submID);
                 break;
 
             default:
