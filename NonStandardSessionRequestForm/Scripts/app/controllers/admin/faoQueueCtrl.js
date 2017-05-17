@@ -224,25 +224,26 @@
             rnrActionReason: $scope.rejectSess.rnrActionReason
         };
 
-        Submissions.update({ submissionId: $scope.submID }, status)     // update the request's status
+        Submissions.update({ submissionId: $scope.submID }, status)                         // update the request's status
             .$promise.then(function () {
 
                 switch (actionCode) {
 
                     case "A":
-                        // EmailResult.save($scope.rejectSess.requestId);           // Email requestor upon approval
+                        // EmailResult.save($scope.rejectSess.requestId);                   // Email requestor upon approval
                         break;
 
                     case "R":
                         EmailResult.save({ id: $scope.submID });                           // Email requestor upon rejection
-                        alert("Rejection email sent for Submission ID: " + $scope.submID);
+                        alert("Rejection email sent.");
                         break;
 
                     default:
                         break;
                 }       // switch()
 
-                $scope.rejectWindow.close();
+                if (actionCode == 'R')
+                    $scope.rejectWindow.close();
 
                 // remove the submission from the list
                 for (var i = 0; i < $scope.dataSource._data.length; ++i) {

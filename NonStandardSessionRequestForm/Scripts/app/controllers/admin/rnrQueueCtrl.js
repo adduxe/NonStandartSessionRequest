@@ -91,72 +91,72 @@
             };
 
 
-    function getRateTypeDescription(rateTypeCode) {
+        function getRateTypeDescription(rateTypeCode) {
 
-        var rateTypes =[
-            { rateCode: "STD",  rateName: "Standard (session 001)" },
-            { rateCode: "GBUS", rateName: "Graduate Business" },
-            { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
-            { rateCode: "GENGR",rateName: "Graduate Engineering" },
-            { rateCode: "MRED", rateName: "Master of Real Estate Development"},
-            { rateCode: "PHAR", rateName: "Pharmacy" },
-            { rateCode: "DENT", rateName: "Dentistry"},
-            { rateCode: "DH",   rateName: "Dental Hygiene" },
-            { rateCode: "ADVDE",rateName: "Advanced Dentistry"},
-            { rateCode: "LAW", rateName: "Law" },
-            { rateCode: "MED", rateName: "Medicine" },
-            { rateCode: "OTH", rateName: "Others"}
-        ];
+            var rateTypes =[
+                { rateCode: "STD",  rateName: "Standard (session 001)" },
+                { rateCode: "GBUS", rateName: "Graduate Business" },
+                { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
+                { rateCode: "GENGR",rateName: "Graduate Engineering" },
+                { rateCode: "MRED", rateName: "Master of Real Estate Development"},
+                { rateCode: "PHAR", rateName: "Pharmacy" },
+                { rateCode: "DENT", rateName: "Dentistry"},
+                { rateCode: "DH",   rateName: "Dental Hygiene" },
+                { rateCode: "ADVDE",rateName: "Advanced Dentistry"},
+                { rateCode: "LAW", rateName: "Law" },
+                { rateCode: "MED", rateName: "Medicine" },
+                { rateCode: "OTH", rateName: "Others"}
+            ];
 
-        var rateDesc = "";
+            var rateDesc = "";
 
-        for (var i = 0; i < rateTypes.length; ++i) {
-            if (rateTypes[i].rateCode == rateTypeCode) {
-                rateDesc = rateTypes[i].rateName;
-                break;
+            for (var i = 0; i < rateTypes.length; ++i) {
+                if (rateTypes[i].rateCode == rateTypeCode) {
+                    rateDesc = rateTypes[i].rateName;
+                    break;
+                }
             }
-        }
-        return rateDesc;
-    }   // getRateTypeDescription()
+            return rateDesc;
+        }   // getRateTypeDescription()
 
-    $scope.sectionGridOptions = function (dataItem) {
+        $scope.sectionGridOptions = function (dataItem) {
 
-        return {
-            dataSource: {
-                data: dataItem.sections,
-                pageSize: 5
-            },
-            scrollable: false,
-            sortable: true,
-            pageable: true,
-            columns: [
-                { field: "sectionNumber", title: "Section", width: "50px" },
-                { field: "title", title: "Section Title", width: "200px" },
-                { field: "unitValue", title: "Units", width: "50px" },
-                { field: "instructorName", title: " Name", width: "150px" } //,
-            ]
+            return {
+                dataSource: {
+                    data: dataItem.sections,
+                    pageSize: 5
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "sectionNumber", title: "Section", width: "50px" },
+                    { field: "title", title: "Section Title", width: "200px" },
+                    { field: "unitValue", title: "Units", width: "50px" },
+                    { field: "instructorName", title: " Name", width: "150px" } //,
+                ]
+            };
         };
-    };
 
-    $scope.scheduleGridOptions = function (dataItem) {
-        return {
-            dataSource: {
-                data: dataItem.schedules,
-                pageSize: 5,
-            },
-            scrollable: false,
-            sortable: true,
-            pageable: true,
-            columns: [
-                { field: "classDayOfWeek", title: "Class Day", width: "100px" },
-                { field: "classStartTime", title: "Start Time", width: "150px" },
-                { field: "classEndTime", title: "End Time", width: "150px" }
-            ]
+        $scope.scheduleGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.schedules,
+                    pageSize: 5,
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "classDayOfWeek", title: "Class Day", width: "100px" },
+                    { field: "classStartTime", title: "Start Time", width: "150px" },
+                    { field: "classEndTime", title: "End Time", width: "150px" }
+                ]
+            };
         };
-    };
 
-    $scope.sessionBrkGridOptions = function (dataItem) {
-        return {
+        $scope.sessionBrkGridOptions = function (dataItem) {
+            return {
                 dataSource: {
                     data: dataItem.sessionBreaks,
                     pageSize: 5,
@@ -177,126 +177,127 @@
                     { field: "endDate", title: "End Date", format: "{0:MMM dd, yyyy}" }
                 ]
             };
-    };  // $scope.sessionBrkGridOptions
+        };  // $scope.sessionBrkGridOptions
 
-    $scope.rejectSess = {};
+        $scope.rejectSess = {};
 
-    $scope.openRejectPopup = function (submID) {
-        $scope.submID = submID;
-        $scope.rejectWindow.center().open();
-        $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
-        return;
-    }
-
-    function convDateToString(givenDate) {
-
-        var dateString = "";
-
-        if (givenDate) {
-            var newDate = new Date(givenDate);
-            dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+        $scope.openRejectPopup = function (submID) {
+            $scope.submID = submID;
+            $scope.rejectWindow.center().open();
+            $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
+            return;
         }
-        return dateString;
-    }   // convDateToString()
 
-    $scope.approveRequest = function (submID) {
+        function convDateToString(givenDate) {
 
-        $scope.submID = submID;
-        $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
+            var dateString = "";
+
+            if (givenDate) {
+                var newDate = new Date(givenDate);
+                dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+            }
+            return dateString;
+        }   // convDateToString()
+
+        $scope.approveRequest = function (submID) {
+
+            $scope.submID = submID;
+            $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
 
             // Get the Session Breaks
-        var session = $scope.selectedSess.session;
-        var sessDates = {"Sess1Start": 0, "Sess1End": 1, "Sess2Start": 2, "Sess2End": 3};
-        var sessBreaks = ["", "", "", ""];
+            var session = $scope.selectedSess.session;
+            var sessDates = {"Sess1Start": 0, "Sess1End": 1, "Sess2Start": 2, "Sess2End": 3};
+            var sessBreaks = ["", "", "", ""];
 
-        switch (session.sessionBreaks.length) {
+            switch (session.sessionBreaks.length) {
 
-            case 2:      // if there are two session breaks, it will fall through case 1
-                sessBreaks[sessDates.Sess2Start]    = session.sessionBreaks[1].startDate;
-                sessBreaks[sessDates.Sess2End]      = session.sessionBreaks[1].endDate;
+                case 2:      // if there are two session breaks, it will fall through case 1
+                    sessBreaks[sessDates.Sess2Start]    = session.sessionBreaks[1].startDate;
+                    sessBreaks[sessDates.Sess2End]      = session.sessionBreaks[1].endDate;
 
-            case 1:     // if there is only one break, it will only get the first one
-                sessBreaks[sessDates.Sess1Start]    = session.sessionBreaks[0].startDate;
-                sessBreaks[sessDates.Sess1End]      = session.sessionBreaks[0].endDate;
-                break;
+                case 1:     // if there is only one break, it will only get the first one
+                    sessBreaks[sessDates.Sess1Start]    = session.sessionBreaks[0].startDate;
+                    sessBreaks[sessDates.Sess1End]      = session.sessionBreaks[0].endDate;
+                    break;
 
-            default:
-                break;
-        }   // end of switch()
+                default:
+                    break;
+            }   // end of switch()
 
-        var sisDatesPacket = {
-            academicTerm            : session.academicTerm,
-            sessionCode             : session.sessionCode,
-            firstDayOfClass         : convDateToString(session.firstDayOfClass),
-            lastDayOfClass          : convDateToString(session.lastDayOfClass),
-            firstDayOfFinals        : convDateToString(session.firstDayOfFinals),
-            lastDayOfFinals         : convDateToString(session.lastDayOfFinals),
-            lastDayForAddDrop       : convDateToString(session.lastDayForAddDrop),
-            lastDayForWithdrawal    : convDateToString(session.lastDayForWithdrawal),
-            lastDayForEnrollmentOptionChange: convDateToString(session.lastDayForEnrollmentOptionChange),
-            firstDayForFinalGrading : convDateToString(session.firstDayForFinalGrading),
-            lastDayForFinalGrading  : convDateToString(session.lastDayForFinalGrading),
-            sessionBreak1BeginDate  : convDateToString(sessBreaks[sessDates.Sess1Start]),
-            sessionBreak1EndDate    : convDateToString(sessBreaks[sessDates.Sess1End]),
-            sessionBreak2BeginDate  : convDateToString(sessBreaks[sessDates.Sess2Start]),
-            sessionBreak2EndDate    : convDateToString(sessBreaks[sessDates.Sess2End])
-        };
+            var sisDatesPacket = {
+                academicTerm            : session.academicTerm,
+                sessionCode             : session.sessionCode,
+                firstDayOfClass         : convDateToString(session.firstDayOfClass),
+                lastDayOfClass          : convDateToString(session.lastDayOfClass),
+                firstDayOfFinals        : convDateToString(session.firstDayOfFinals),
+                lastDayOfFinals         : convDateToString(session.lastDayOfFinals),
+                lastDayForAddDrop       : convDateToString(session.lastDayForAddDrop),
+                lastDayForWithdrawal    : convDateToString(session.lastDayForWithdrawal),
+                lastDayForEnrollmentOptionChange: convDateToString(session.lastDayForEnrollmentOptionChange),
+                firstDayForFinalGrading : convDateToString(session.firstDayForFinalGrading),
+                lastDayForFinalGrading  : convDateToString(session.lastDayForFinalGrading),
+                sessionBreak1BeginDate  : convDateToString(sessBreaks[sessDates.Sess1Start]),
+                sessionBreak1EndDate    : convDateToString(sessBreaks[sessDates.Sess1End]),
+                sessionBreak2BeginDate  : convDateToString(sessBreaks[sessDates.Sess2Start]),
+                sessionBreak2EndDate    : convDateToString(sessBreaks[sessDates.Sess2End])
+            };
 
-        WriteToSis.save(sisDatesPacket,
-            function () {
-                $scope.updateRequest('A', 'Approved');
-                alert("Session Request Approved!");
-            }, function () {
-                alert("Failed to update SIS. Please retry.");
-            }
-        );
-        return;
-    }   // approveRequest()
+            WriteToSis.save(sisDatesPacket,
+                function () {
+                    $scope.updateRequest('A', 'Approved');
+                    alert("Session Request Approved!");
+                }, function () {
+                    alert("Failed to update SIS. Please retry.");
+                }
+            );
+            return;
+        }   // approveRequest()
 
 
-    $scope.updateRequest = function (actionCode, rejectReason) {
+        $scope.updateRequest = function (actionCode, rejectReason) {
 
-        var todaysDate = new Date();
+            var todaysDate = new Date();
 
-        var status = {
-            submissionId: $scope.submID,
-            faoAction: $scope.selectedSess.faoAction,
-            faoActionDate: $scope.selectedSess.faoActionDate,
-            faoActionReason: $scope.selectedSess.faoActionReason,
-            rnrAction: actionCode,
-            rnrActionDate: todaysDate.toDateString(),
-            rnrActionReason: rejectReason
-        };
+            var status = {
+                submissionId: $scope.submID,
+                faoAction: $scope.selectedSess.faoAction,
+                faoActionDate: $scope.selectedSess.faoActionDate,
+                faoActionReason: $scope.selectedSess.faoActionReason,
+                rnrAction: actionCode,
+                rnrActionDate: todaysDate.toDateString(),
+                rnrActionReason: rejectReason
+            };
 
-        Submissions.update({ submissionId: $scope.submID }, status);
+            Submissions.update({ submissionId: $scope.submID }, status)                 // update the request's status
+                .$promise.then(function(){
 
-        switch (actionCode) {
+                    switch (actionCode) {
 
-            case "A":
-                EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
-                alert("Approval email sent for Submission ID: " + $scope.submID);
-                break;
+                        case "A":
+                            EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
+                            alert("Approval email sent");
+                            break;
 
-            case "R":
-                EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
-                alert("Rejection email sent for Submission ID: " + $scope.submID);
-                break;
+                        case "R":
+                            EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
+                            alert("Rejection email sent");
+                            break;
 
-            default:
-                break;
-        }
+                        default:
+                            break;
+                    }
 
-            // remove the submission from the list
-        for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+                    // remove the submission from the list
+                    for (var i = 0; i < $scope.dataSource._data.length; ++i) {
 
-            if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                $scope.dataSource._data.splice(i, 1);
-                break;
-            }
-        }   // for (var i...
+                        if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                            $scope.dataSource._data.splice(i, 1);
+                            break;
+                        }
+                    }   // for (var i...
 
-        if (actionCode == 'R') $scope.rejectWindow.close();
-
-    }   // $scope.updateRequest()
-
-}]);
+                    if (actionCode == 'R') $scope.rejectWindow.close();
+                });
+        
+            }   // $scope.updateRequest()
+    }]);

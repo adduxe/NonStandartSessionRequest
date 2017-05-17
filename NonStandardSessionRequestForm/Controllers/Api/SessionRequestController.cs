@@ -432,7 +432,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 reason = submission.RnrActionReason;
 
             } else {    // FAO
-                 
+
                 decision = submission.FaoAction;
                 reason = submission.FaoActionReason;
             }
@@ -443,8 +443,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 case "A":       // Approval
 
                     emailBody = 
-                        "Your Session Request has been approved, please do the following. <br/>" +
-                        "1. Check all dates for the session on SIS.D.SESS and communicate the dates to faculty.<br/>" + 
+                        "Your Session Request has been approved, please do the following. <br/><br/>" +
+                        "1. Check all dates for the session on SIS.D.SESS and communicate the dates to faculty.<br/><br/>" + 
                         "2. It is at this point that students can register for the class. Once you have verified that <br/>" +
                         " fees appear on page 2 of SIS.D.SESS, please instruct students to register for the class.";
                     break;
