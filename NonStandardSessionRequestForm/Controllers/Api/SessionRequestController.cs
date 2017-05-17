@@ -451,6 +451,21 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
                 case "R":       // Rejection
 
+                    string campusLoc = "";
+
+                    if ((bool)submission.Session.IsClassHeldAtUpc)
+                    {
+                        campusLoc = "UPC";
+                    }
+                    else {
+                        if (submission.Session.UscCampusLocation == "OTH") {
+                            campusLoc = submission.Session.OtherCampusLocation;
+                        }
+                        else {
+                            campusLoc = submission.Session.UscCampusLocation;
+                        }
+                    } // if ((bool...
+
                     emailBody =
                         "<table align='center'>" +
                         "<tr>" +
@@ -491,7 +506,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                         "</tr>" +
                         "<tr>" +
                         "	<th>Campus Location</th>" +
-                        "	<td>" + submission.Session.OtherCampusLocation + "</td>" +
+                        "	<td>" + campusLoc + "</td>" +
                         "</tr>" +
                         "<tr>" +
                         "	<th>Comments</th>" +
