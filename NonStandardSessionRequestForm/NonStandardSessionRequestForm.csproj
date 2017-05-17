@@ -340,7 +340,6 @@
     <Content Include="Areas\Admin\Views\Admin\Rnr.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Forbidden.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Bur.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\EmailBody.html" />
     <None Include="Properties\PublishProfiles\local debug.pubxml" />
     <None Include="Properties\PublishProfiles\oweb7-vm.pubxml" />
     <None Include="Properties\PublishProfiles\Session Form.pubxml" />
@@ -391,7 +390,7 @@
     <Content Include="Scripts\kendo\2017.1.118\kendo.core.min.js.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="SessionRequestApiClient\readme.md" />
+    <None Include="SessionRequestApiClient\readme.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

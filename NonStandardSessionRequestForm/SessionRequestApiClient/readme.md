@@ -1,9 +1,9 @@
-﻿# My API 
-> see https://aka.ms/autorest 
+﻿# RNR Session Request API 
+> see http://oweb7-vm.usc.edu/dataapi/swagger/ui/index#/ 
 
 ## Getting Started 
-To build the SDKs for My API, simply install AutoRest via `npm` (`npm install -g autorest`) and then run:
-> `autorest readme.md`
+To generate the API client for RNR Session Request API, simply install AutoRest via `npm` (`npm install -g autorest`) and then run the following in the directory of this readme file:
+> `autorest`
 
 To see additional help and options, run:
 > `autorest --help`
@@ -13,7 +13,7 @@ For other options on installation see [Installing AutoRest](https://aka.ms/autor
 ---
 
 ## Configuration 
-The following are the settings for this using this API with AutoRest.
+The following settings are used for generating the API client using AutoRest.
 
 ``` yaml
 # Location of the OpenAPI file
