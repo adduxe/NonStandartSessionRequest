@@ -151,8 +151,8 @@ sessionModule.controller("sessionRequestCtrl",
             } else {
                     // First Day of Grading = First Day of Finals
                 $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
-                var lastDayGradingDt = new Date();
-                lastDayGradingDt.setDate(endDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
+                var lastDayGradingDt = new Date(endDt);
+                lastDayGradingDt.setDate(lastDayGradingDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
                 $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }
         }   // if (($scope...
