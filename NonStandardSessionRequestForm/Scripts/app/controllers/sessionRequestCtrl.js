@@ -112,11 +112,14 @@ sessionModule.controller("sessionRequestCtrl",
                     var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
 
                             // if class start and end dates match Session 001 dates
-                    if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())){
-                        $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
+                    if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
+
+                        $scope.session.lastDayForAddDrop    = $scope.sess001Dates.lastDayForAddDrop;
                         $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
                         $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
-
+                        $scope.session.firstDayOfFinals     = $scope.sess001Dates.firstDayOfFinals;
+                        $scope.session.lastDayOfFinals      = $scope.sess001Dates.lastDayOfFinals;
+                        
                     } else {            // if the Class start and end dates don't match, compute the dates.
                         ComputeDates(startDt, endDt);
                     }
@@ -149,8 +152,9 @@ sessionModule.controller("sessionRequestCtrl",
             if (startDt > endDt) {
                 alert("First day of Finals later than Last Day of Finals");
             } else {
-                    // First Day of Grading = First Day of Finals
+                                    // First Day of Grading = First Day of Finals
                 $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+
                 var lastDayGradingDt = new Date(endDt);
                 lastDayGradingDt.setDate(lastDayGradingDt.getDate() + 4);      // Last Day for Grading = Last Day of Finals + 4 days
                 $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
@@ -196,6 +200,7 @@ sessionModule.controller("sessionRequestCtrl",
                 if (data.classBeginDate == undefined) {
                     alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
                 } else {
+
                     $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate);
                     $scope.sess001Dates.lastDayOfClass      = convDateToString(data.classEndDate);
                     $scope.sess001Dates.lastDayForAddDrop   = convDateToString(data.lastAddDropDate);
@@ -205,6 +210,8 @@ sessionModule.controller("sessionRequestCtrl",
                     $scope.sess001Dates.sessBreak1End       = convDateToString(data.break1EndDate);
                     $scope.sess001Dates.sessBreak2Begin     = convDateToString(data.break2BeginDate);
                     $scope.sess001Dates.sessBreak2End       = convDateToString(data.break2EndDate);
+                    $scope.sess001Dates.firstDayOfFinals    = convDateToString(data.finalExamBeginDate);
+                    $scope.sess001Dates.lastDayOfFinals     = convDateToString(data.finalExamEndDate);
                 }
             },
             function () {
@@ -220,6 +227,8 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.sess001Dates.sessBreak1End           = "";
                 $scope.sess001Dates.sessBreak2Begin         = "";
                 $scope.sess001Dates.sessBreak2End           = "";
+                $scope.sess001Dates.firstDayOfFinals        = "";
+                $scope.sess001Dates.lastDayOfFinals         = "";
             }
         );
 
@@ -302,6 +311,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         var reqdFields =[
             $scope.session.academicTerm,
+            $scope.session.sessionCode,
             $scope.session.firstDayOfClass,
             $scope.session.lastDayOfClass,
             $scope.session.firstDayOfFinals,
