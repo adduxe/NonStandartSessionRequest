@@ -119,6 +119,7 @@
             return rateDesc;
         }   // getRateTypeDescription()
 
+
         $scope.sectionGridOptions = function (dataItem) {
 
             return {
@@ -140,7 +141,8 @@
                     { field: "incomeAmountNumber", title: "Acct. no.", width: "10%" }
                 ]
             };
-        };
+        }   // sectionGridOptions()
+
 
         $scope.scheduleGridOptions = function (dataItem) {
             return {
@@ -251,7 +253,7 @@
                     $scope.updateRequest('A', 'Approved');
                     alert("Session Request Approved!");
                 }, function () {
-                    alert("Failed to update SIS. Please retry.");
+                    alert("Failed to write the approved session " + sisDatesPacket.academicTerm + "-" + sisDatesPacket.sessionCode +" because it already exists in SIS.");
                 }
             );
             return;
