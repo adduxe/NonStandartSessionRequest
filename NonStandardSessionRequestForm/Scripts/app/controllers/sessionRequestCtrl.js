@@ -311,7 +311,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         var reqdFields =[
             $scope.session.academicTerm,
-            $scope.session.sessionCode,
+            $scope.sessCode.value(),
             $scope.session.firstDayOfClass,
             $scope.session.lastDayOfClass,
             $scope.session.firstDayOfFinals,
@@ -324,8 +324,38 @@ sessionModule.controller("sessionRequestCtrl",
                 break;
             }
         };
+
+        // check Session Breaks
+        // 1) if "No Breaks" is checked, no need to check Session Breaks
+        // 2) if the "No Breaks" checkbox is unchecked:
+        //      - if no Session Breaks entered, error out
+
+        if (!$scope.noBreaks) {     // "No Breaks" checkbox unchecked?
+
+            if ($scope.session.sessionBreaks.length == 0) {
+                formValid = false;
+                alert("Either check the No Breaks checkbox or enter Session Breaks");
+            } else {    // check for blank entries
+                for (var i = 0; i < $scope.session.sessionBreaks.length; ++i){
+                    if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
+                        formValid = false;
+                        alert("Either enter Session Breaks or check the No Breaks checkbox.");
+                    }
+                }
+            }
+        }
+        
         return formValid;
     }   // IsFormValid()
+
+
+    $scope.deleteBreaks = function () {
+
+        if ($scope.noBreaks) {
+            $scope.session.sessionBreaks = [];  // delete existing breaks
+        }
+        return;
+    }   // deleteBreaks()
 
 
     $scope.BlankOtherLocation = function () {
