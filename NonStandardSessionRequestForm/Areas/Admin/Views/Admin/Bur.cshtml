@@ -115,15 +115,15 @@
                         </tr>
                         <tr>
                             <td class="red" align="center"><b>FAO</b></td>
-                            <td align="center">#= data.faoAction #</td>
-                            <td align="center">#= data.faoActionDate #</td>
-                            <td align="center">#= data.faoActionReason #</td>
+                            <td align="center">#= (data.faoAction == null) ? '':  data.faoAction #</td>
+                            <td align="center">#= (data.faoActionDate == null) ? '': data.faoActionDate #</td>
+                            <td align="center">#= (data.faoActionReason == null) ? '':  data.faoActionReason #</td>
                         </tr>
                         <tr>
                             <td class="red" align="center"><b>RNR</b></td>
-                            <td align="center">#= data.rnrAction #</td>
-                            <td align="center">#= data.rnrActionDate #</td>
-                            <td align="center">#= data.rnrActionReason #</td>
+                            <td align="center">#= (data.rnrAction == null) ? '': data.rnrAction #</td>
+                            <td align="center">#= (data.rnrActionDate == null) ? '': data.rnrActionDate #</td>
+                            <td align="center">#= (data.rnrActionReason == null) ? '': data.rnrActionReason #</td>
 
                         </tr>
                     </table>
