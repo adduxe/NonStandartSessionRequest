@@ -82,7 +82,18 @@
                 <div id="sectionsTab">
                     <kendo-grid k-options="sectionGridOptions(dataItem)">
                         <div k-detail-template>
-                            <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+                            <kendo-tabstrip>
+                                <ul>
+                                    <li class="k-state-active">Class Schedule</li>
+                                    <li>Comments</li>
+                                </ul>
+                                <div id="scheduleTab">
+                                    <kendo-grid k-options="scheduleGridOptions(dataItem)"></kendo-grid>
+                                </div>
+                                <div>
+                                    <p>#= data.comments #</p>
+                                </div>
+                            </kendo-tabstrip>
                         </div>
                     </kendo-grid>
                 </div>

@@ -130,10 +130,14 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "sectionNumber", title: "Section", width: "50px" },
-                    { field: "title", title: "Section Title", width: "200px" },
-                    { field: "unitValue", title: "Units", width: "50px" },
-                    { field: "instructorName", title: " Name", width: "150px" } //,
+                    { field: "sectionNumber", title: "Section", width: "10%" },
+                    { field: "prefix", title: "Prefix", width: "10%" },
+                    { field: "title", title: "Section Title", width: "15%" },
+                    { field: "courseNumber", title: "Course #", width: "10%" },
+                    { field: "unitValue", title: "Units", width: "10%" },
+                    { field: "estimatedEnrollment", title: "Class size", width: "10%" },
+                    { field: "instructorName", title: "Instructor", width: "15%" },
+                    { field: "incomeAmountNumber", title: "Acct. no.", width: "10%" }
                 ]
             };
         };
