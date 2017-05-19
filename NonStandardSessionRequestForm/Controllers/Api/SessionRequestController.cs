@@ -443,7 +443,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 case "A":       // Approval
 
                     emailBody = 
-                        "Your Session Request has been approved, please do the following. <br/><br/>" +
+                        "Your Session Request for Session " + submission.Session.SessionCode + " for semester " + submission.Session.AcademicTerm + " has been approved, please do the following. <br/><br/>" +
                         "1. Check all dates for the session on SIS.D.SESS and communicate the dates to faculty.<br/><br/>" + 
                         "2. It is at this point that students can register for the class. Once you have verified that <br/>" +
                         " fees appear on page 2 of SIS.D.SESS, please instruct students to register for the class.";
@@ -509,7 +509,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                         "	<td>" + campusLoc + "</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "	<th>Comments</th>" +
+                        "	<th>Reason for rejection:</th>" +
                         "	<td>" +
                             "<p>"
                             + reason +
@@ -545,7 +545,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
                 mail.From = new MailAddress("donotreply@usc.edu");
                 mail.To.Add(Submission.Session.UserEmail);
-                mail.Subject = "Session Request Result";
+                mail.Subject = "Session Request Result (Submission ID: " + Submission.SubmissionId + ")";
                 mail.IsBodyHtml = true;
                 mail.Body = ComposeEmail(Submission);
 
