@@ -171,7 +171,7 @@
         </div>
     </kendo-grid>
 
-    <!-- Pop-up Window -->
+    <!-- Reject pop-up Window -->
     <div kendo-window="rejectWindow" style="display: none;" k-title="'Rejection Reason'" k-width="300" k-height="250" k-modal="true">
         <table align="center">
         <tr>
@@ -185,5 +185,10 @@
             </td>
         </tr>
         </table>
+    </div>
+
+    <div kendo-window="spinningWheel" k-modal="true" style="display:none;">
+        Processing. Please wait...
+        <img src="~/Content/images/gears.gif"/>
     </div>
 </div>

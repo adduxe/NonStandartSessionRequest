@@ -7,48 +7,49 @@
         $scope.dataSource = new kendo.data.DataSource({
                 transport: {
                     read: function (e) {
+//                        $scope.spinningWheel.center().open();
                         Submissions.query(function (data) {
                             $scope.submissions = data;
                             e.success(
                                 data.map(
                                     function (subm) {
                                         return {
-                                            requestId           : subm.requestId,
-                                            submissionId        : subm.submissionId,
-                                            academicTerm        : subm.session.academicTerm,
-                                            sessionCode         : subm.session.sessionCode,
-                                            sessionName         : subm.session.sessionName,
-                                            userEmail           : subm.session.userEmail,
+                                            requestId: subm.requestId,
+                                            submissionId: subm.submissionId,
+                                            academicTerm: subm.session.academicTerm,
+                                            sessionCode: subm.session.sessionCode,
+                                            sessionName: subm.session.sessionName,
+                                            userEmail: subm.session.userEmail,
                                             userPhone: subm.session.userPhone,
-                                            isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
-                                            uscCampusLocation   : subm.session.uscCampusLocation,
-                                            otherCampusLocation : subm.session.otherCampusLocation,
-                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
+                                            isClassHeldAtUpc: subm.session.isClassHeldAtUpc,
+                                            uscCampusLocation: subm.session.uscCampusLocation,
+                                            otherCampusLocation: subm.session.otherCampusLocation,
+                                            lastDayForAddDrop: $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                             lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
                                             lastDayForEnrollmentOptionChange: $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
-                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
-                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
-                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
-                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
+                                            firstDayOfClass: $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
+                                            lastDayOfClass: $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
+                                            firstDayOfFinals: $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
+                                            lastDayOfFinals: $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
                                             firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                             rateType: getRateTypeDescription(subm.session.rateType),
-                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
-                                            flatRateAmount      : subm.session.flatRateAmount,
-                                            flatRateUnitsMin    : subm.session.flatRateUnitsMin,
-                                            flatRateUnitsMax    : subm.session.flatRateUnitsMax,
-                                            owningSchool        : subm.session.owningSchool,
-                                            owningDepartment    : subm.session.owningDepartment,
-                                            userContact         : subm.session.userContact,
-                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
-                                            sections            : subm.session.sections,
-                                            sessionBreaks       : subm.session.sessionBreaks,
-                                            comments            : subm.session.comments,
-                                            faoAction           : subm.faoAction,
-                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
+                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
+                                            flatRateAmount: subm.session.flatRateAmount,
+                                            flatRateUnitsMin: subm.session.flatRateUnitsMin,
+                                            flatRateUnitsMax: subm.session.flatRateUnitsMax,
+                                            owningSchool: subm.session.owningSchool,
+                                            owningDepartment: subm.session.owningDepartment,
+                                            userContact: subm.session.userContact,
+                                            requestDate: $filter('date')(subm.session.requestDate, "mediumDate"),
+                                            sections: subm.session.sections,
+                                            sessionBreaks: subm.session.sessionBreaks,
+                                            comments: subm.session.comments,
+                                            faoAction: subm.faoAction,
+                                            faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
                                             faoActionReason: subm.faoActionReason,
-                                            rnrAction           : subm.rnrAction,
-                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                            rnrAction: subm.rnrAction,
+                                            rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
                                             rnrActionReason: subm.rnrActionReason
                                         };
                                     }));
@@ -56,6 +57,7 @@
                             alert("Cannot load submissions. " + error.data.message);
                             //                                e.error(new Error("Cannot load users. " + error.data.message));
                         });
+//                        $scope.spinningWheel.center().close();
                     }   // read: function()
                 },      // transport {
                 schema: {
