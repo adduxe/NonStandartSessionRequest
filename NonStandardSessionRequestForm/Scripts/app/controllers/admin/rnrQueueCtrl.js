@@ -274,8 +274,12 @@
                 rnrActionReason: rejectReason
             };
 
+            $scope.spinningWheel.center().open();
+
             Submissions.update({ submissionId: $scope.submID }, status)                 // update the request's status
                 .$promise.then(function(){
+
+                    $scope.spinningWheel.center().close();
 
                     switch (actionCode) {
 
@@ -305,5 +309,10 @@
                     if (actionCode == 'R') $scope.rejectWindow.close();
                 });
         
-            }   // $scope.updateRequest()
+        }   // $scope.updateRequest()
+
+        $(document).ready(function () {
+            $scope.spinningWheel.center().open();
+        })
+
     }]);

@@ -3,11 +3,13 @@
     ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "EmailResult",
 
     function ($scope, $filter, Submissions, EmailResult) {
-        
+
         $scope.dataSource = new kendo.data.DataSource({
-                transport: {
-                    read: function (e) {
-//                        $scope.spinningWheel.center().open();
+
+            transport: {
+
+                read: function (e) {
+
                         Submissions.query(function (data) {
                             $scope.submissions = data;
                             e.success(
@@ -53,25 +55,26 @@
                                             rnrActionReason: subm.rnrActionReason
                                         };
                                     }));
+                                    $scope.spinningWheel.center().close();
                         }, function (error) {
                             alert("Cannot load submissions. " + error.data.message);
+                            $scope.spinningWheel.center().close();
                             //                                e.error(new Error("Cannot load users. " + error.data.message));
                         });
-//                        $scope.spinningWheel.center().close();
                     }   // read: function()
-                },      // transport {
-                schema: {
-                    model: {
-                        fields: {
-                            sessionCode: { type: "string" },
-                            sessionName: { type: "string" },
-                            owningSchool: { type: "string" },
-                            userContact: { type: "string" },
-                            requestDate: { type: "string" }
-                        }
+            },      // transport {
+            schema: {
+                model: {
+                    fields: {
+                        sessionCode:    { type: "string" },
+                        sessionName:    { type: "string" },
+                        owningSchool:   { type: "string" },
+                        userContact:    { type: "string" },
+                        requestDate:    { type: "string" }
                     }
-                },
-                pageSize: 10
+                }
+            },
+            pageSize: 10
         });
 
 
@@ -213,6 +216,11 @@
 
     $scope.updateRequest = function (actionCode, rejectReason) {
 
+        if (!rejectReason) {
+            alert("Please provide a reason for rejecting the request.");
+            return;
+        }
+
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
 
         if (selectedSess != null) {
@@ -231,8 +239,12 @@
             rnrActionReason: $scope.rejectSess.rnrActionReason
         };
 
+        $scope.spinningWheel.center().open();
+
         Submissions.update({ submissionId: $scope.submID }, status)                         // update the request's status
             .$promise.then(function () {
+
+                $scope.spinningWheel.center().close();
 
                 switch (actionCode) {
 
@@ -261,5 +273,9 @@
                 }   // for (var i...
             }); // promise.then()
     }   // updateRequest()
+
+    $(document).ready(function () {
+        $scope.spinningWheel.center().open();
+    })
 
 }]);
