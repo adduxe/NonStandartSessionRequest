@@ -50,7 +50,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to POST session! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to POST session! Error: {Error}.  SessionRequest: {@SessionRequest}", apiEx.Message, session);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
