@@ -49,9 +49,11 @@
                                             rnrActionReason     : subm.rnrActionReason
                                         };
                                     }));
+                                    $scope.spinningWheel.center().close();
+
                         }, function (error) {
                             alert("Cannot load submissions. " + error.data.message);
-                            //                                e.error(new Error("Cannot load users. " + error.data.message));
+                            $scope.spinningWheel.center().close();
                         });
                     }   // read: function()
                 },      // transport {
@@ -180,5 +182,9 @@
                 ]
             };
     };  // $scope.sessionBrkGridOptions
+
+    $(document).ready(function () {
+        $scope.spinningWheel.center().open();
+    });
 
 }]);

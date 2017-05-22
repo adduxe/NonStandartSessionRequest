@@ -49,13 +49,17 @@
                                         rnrActionReason     : subm.rnrActionReason
                                     };
                                 }));
-                    }, function (error) {
-                        alert("Cannot load submissions. " + error.data.message);
-                        //                                e.error(new Error("Cannot load users. " + error.data.message));
-                    });
-                }   // read: function()
-            },      // transport {
-            schema: {
+                                $scope.spinningWheel.center().close();
+                        },
+                        function (error) {
+
+                            alert("Cannot load submissions. " + error.data.message);
+                            $scope.spinningWheel.center().close();
+
+                        });
+                    }   // read: function()
+                },      // transport {
+                schema: {
                 model: {
                     fields: {
                         sessionCode: { type: "string" },
@@ -262,6 +266,11 @@
 
         $scope.updateRequest = function (actionCode, rejectReason) {
 
+            if (!rejectReason) {
+                alert("Please provide a reason for rejecting the request.");
+                return;
+            }
+
             var todaysDate = new Date();
 
             var status = {
@@ -277,6 +286,7 @@
             $scope.spinningWheel.center().open();
 
             Submissions.update({ submissionId: $scope.submID }, status)                 // update the request's status
+
                 .$promise.then(function(){
 
                     $scope.spinningWheel.center().close();

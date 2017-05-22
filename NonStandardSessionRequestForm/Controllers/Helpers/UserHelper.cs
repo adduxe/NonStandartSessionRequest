@@ -41,7 +41,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 
-            string user = "F";
+            string user = "B";
 
             switch (user.ToUpper()){
                  
@@ -79,6 +79,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
                     this.School = "School of Rock";
+                    this.Email = "anthondd@usc.edu";
+                    this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
                     this.IsFao = false;
                     this.IsRnr = false;
@@ -90,7 +92,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "Forbidden";
                     this.Surname = "User";
                     this.Department = "Department of Hacking";
-                    this.Email = "test@usc.edu";
+                    this.Email = "anthondd@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = false;
                     this.IsFao = false;

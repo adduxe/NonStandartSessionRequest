@@ -410,14 +410,14 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
-            var reqID = Sessions
+            var sessObj = Sessions
                 .save($scope.session)
                 .$promise.then(
 
                     function () {
                         //                window.location.href = "successPage.usc.edu";
                         alert("Submission successful");
-                        $location.url("/Result?requestId=" +reqID);
+                        $location.url("/Result?requestId=" + sessObj.requestId);
                     },
 
                     function () {
