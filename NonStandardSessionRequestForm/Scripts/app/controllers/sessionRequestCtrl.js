@@ -219,8 +219,8 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.GetDatesAndRates = function () {
 
             Get001Dates.get({
-                semester: $scope.session.academicTerm
-            },
+                    semester: $scope.session.academicTerm
+                },
 
                 function (data) {
 

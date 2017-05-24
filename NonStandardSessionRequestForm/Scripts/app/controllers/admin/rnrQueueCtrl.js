@@ -80,16 +80,16 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "requestId", title: "Request", width: "7.5%" },
-                    { field: "academicTerm", title: "Term", width: "7.5%" },
-                    { field: "sessionCode", title: "Session", width: "7.5%" },
-                    { field: "sessionName", title: "Session Name", width: "15%" },
-                    { field: "owningSchool", title: "School", width: "15%" },
-                    { field: "owningDepartment", title: "Department", width: "15%" },
-                    { field: "requestDate", title: "Date", width: "10%" },
+                        { field: "requestId", title: "Request", width: "7.5%" },
+                        { field: "academicTerm", title: "Term", width: "7.5%" },
+                        { field: "sessionCode", title: "Session", width: "7.5%" },
+                        { field: "sessionName", title: "Session Name", width: "15%" },
+                        { field: "owningSchool", title: "School", width: "15%" },
+                        { field: "owningDepartment", title: "Department", width: "15%" },
+                        { field: "requestDate", title: "Date", width: "10%" },
                         // Approve/Reject buttons
-                    { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
-                    { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
+                        { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
+                        { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
                 ],
                 editable: "popup"
             };
