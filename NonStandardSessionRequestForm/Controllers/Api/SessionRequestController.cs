@@ -443,10 +443,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 case "A":       // Approval
 
                     emailBody = 
-                        "Your Session Request for Session " + submission.Session.SessionCode + " for semester " + submission.Session.AcademicTerm + " has been approved, please do the following. <br/><br/>" +
-                        "1. Check all dates for the session on SIS.D.SESS and communicate the dates to faculty.<br/><br/>" + 
-                        "2. It is at this point that students can register for the class. Once you have verified that <br/>" +
-                        " fees appear on page 2 of SIS.D.SESS, please instruct students to register for the class.";
+                        "Your Session Request for Session " + submission.Session.SessionCode + " for semester " + submission.Session.AcademicTerm + " has been approved.  Please do the following. <br/><br/>" +
+                        "Check all dates for the session on SIS.D.SESS and communicate the dates to faculty. Once you have verified that fees appear on page 2 of SIS.D.SESS, please instruct students to register for the class.";
                     break;
 
                 case "R":       // Rejection
@@ -516,7 +514,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                             "</p>" +
                         "</td>" +
                         "</tr>" +
-                        "</table>";
+                        "</table><br/>" +
+                        "<b>For questions regarding your submission please call (213)740-4623</b>"
+                        ;
                     break;
 
                 default:

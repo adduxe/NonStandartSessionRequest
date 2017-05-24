@@ -1,22 +1,22 @@
 ﻿<div ng-app="sessionModule" ng-controller="sessionResultCtrl">
 
-    <style>
-        .activeRow {
-            color: red;
-            font-weight: bold;
-            background-color: yellow;
-        }
+<style>
+    .activeRow {
+        color: red;
+        font-weight: bold;
+        background-color: yellow;
+    }
 
-        .inactiveRow {
-            color: darkgray;
-            font-weight: normal;
-            background-color: white;
-        }
-    </style>
+    .inactiveRow {
+        color: darkgray;
+        font-weight: normal;
+        background-color: white;
+    }
+</style>
 
     <h4>Submission Successful!</h4>
 
-    <div class="row" ng-init="secID = 0" style="color: #990000">
+    <div class="row" style="color: #990000">
         <div class="col-md-1 k-header">
             <h4>Semester</h4>
         </div>
@@ -181,32 +181,39 @@
             </tr>
         <tbody>
     </table>
-    <div class="col-md-12" ng-show="session.sessionCode">
+    <div ng-repeat="eachSection in session.sections.$values">
         <a href="javascript:;" title="Click to view the Class Schedule" ng-click="showSchedule(eachSection.sectionID);">
-            <div class="col-md-2">
-                {{ eachSection.sectionNumber }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSection.unitValue }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSection.sectionTitle }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSection.instructorName }}
-            </div>
-        </a>
-        <div class="col-md-12" ng-show="secID == eachSection.sectionID" ng-repeat="eachSched in eachSection.classSchedule">
-            <div class="col-md-2">
-                {{ eachSched.classDay }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSched.classStartTime }}
-            </div>
-            <div class="col-md-2">
-                {{ eachSched.classEndTime }}
-            </div>
-        </div>
-    </div>
+            <table class="table" align="center">
+            <tr>
+                <th>Section</th>
+                <th>Prefix</th>
+                <th>Title</th>
+                <th>Units</th>
+                <th>Estimated Enrollment</th>
+                <th>Instructor</th>
+            </tr>
+            <tr>
+                <td>{{ eachSection.sectionNumber }}</td>
+                <td>{{ eachSection.prefix }}</td>
+                <td>{{ eachSection.title }}</td>
+                <td>{{ eachSection.unitValue }}</td>
+                <td>{{ eachSection.estimatedEnrollment }}</td>
+                <td>{{ eachSection.instructorName }}</td>
+            </tr>
+            </table>
 
+            <table class="table" align="center">
+                <tr>
+                    <th>Class Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+                <tr ng-repeat="eachSched in eachSection.schedules.$values">
+                    <td>{{ eachSched.classDayOfWeek }}</td>
+                    <td>{{ eachSched.classStartTime }}</td>
+                    <td>{{ eachSched.classEndTime }}</td>
+                </tr>
+            </table>
+        </a>
+    </div>
 </div>
