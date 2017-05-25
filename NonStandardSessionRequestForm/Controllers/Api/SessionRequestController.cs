@@ -45,7 +45,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
                     await client.Submissions.PostBySubmissionDTOAsync(submission);
 
-                    return Ok(createdSession.RequestId);
+                    return Ok(createdSession);
                 }
             }
             catch (HttpOperationException apiEx)
