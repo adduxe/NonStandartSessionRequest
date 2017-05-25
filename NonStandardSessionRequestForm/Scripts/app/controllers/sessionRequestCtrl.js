@@ -193,16 +193,16 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.AddSection = function () {
 
             var section = {
-                sectionNumber: "",
-                prefix: "",
-                title: "",
-                courseNumber: "",
-                unitValue: 0,
+                sectionNumber:  "",
+                prefix:         "",
+                title:          "",
+                courseNumber:   "",
+                unitValue:      0,
                 instructorName: "",
                 estimatedEnrollment: 0,
                 incomeAccountNumber: "",
-                comments: "",
-                schedules: []
+                comments:       "",
+                schedules:      []
             };
 
             $scope.session.sections.push(section);
@@ -502,19 +502,19 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.campusLocs =[                                   // Populate the Campus Location dropdown.
 
-            { campusCode: "HSC", campusName: "Health Science Campus" },
-            { campusCode: "OCC", campusName: "Orange County Campus"},
-            { campusCode: "OVS", campusName: "Overseas"},
-            { campusCode: "DC", campusName: "Washington D.C."},
-            { campusCode: "SAC", campusName: "Sacramento"},
-            { campusCode: "USA", campusName: "Off-campus in U.S."},
-            { campusCode: "VIR", campusName: "Virtual(DEN/Online)"},
-            { campusCode: "CAT", campusName: "Catalina"},
-            { campusCode: "LAC", campusName: "L.A. Center"},
-            { campusCode: "SD", campusName: "San Diego"},
-            { campusCode: "ATT", campusName: "AT&T Center"},
-            { campusCode: "SKB", campusName: "No Tuition or Fees"},
-            { campusCode: "OTH", campusName: "Others" }
+            { campusCode: "HSC",    campusName: "Health Science Campus" },
+            { campusCode: "OCC",    campusName: "Orange County Campus"},
+            { campusCode: "OVS",    campusName: "Overseas"},
+            { campusCode: "DC",     campusName: "Washington D.C."},
+            { campusCode: "SAC",    campusName: "Sacramento"},
+            { campusCode: "USA",    campusName: "Off-campus in U.S."},
+            { campusCode: "VIR",    campusName: "Virtual(DEN/Online)"},
+            { campusCode: "CAT",    campusName: "Catalina"},
+            { campusCode: "LAC",    campusName: "L.A. Center"},
+            { campusCode: "SD",     campusName: "San Diego"},
+            { campusCode: "ATT",    campusName: "AT&T Center"},
+            { campusCode: "SKB",    campusName: "No Tuition or Fees"},
+            { campusCode: "OTH",    campusName: "Others" }
         ];
 
         /*
@@ -531,40 +531,40 @@ sessionModule.controller("sessionRequestCtrl",
 */
         holidays =[
             "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
-            "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018", "11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
-            "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019", "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
-            "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020", "11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
+            "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018","11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
+            "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019",  "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
+            "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020","11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
         ];
 
         $scope.session = {
-            academicTerm: "",
-            sessionCode: "",
-            sessionName: "",
-            owningSchool: "",          // from Shib
-            owningDepartment: "",        // from Shib
-            userContact: "",// from Shib
-            userEmail: "",       // from Shib
-            userPhone: "",         // from Shib
-            firstDayOfClass: "",
-            lastDayOfClass: "",
-            lastDayForAddDrop: "",
+            academicTerm:       "",
+            sessionCode:        "",
+            sessionName:        "",
+            owningSchool:       "",     // from Shib
+            owningDepartment:   "",     // from Shib
+            userContact:        "",     // from Shib
+            userEmail:          "",     // from Shib
+            userPhone:          "",     // from Shib
+            firstDayOfClass:    "",
+            lastDayOfClass:     "",
+            lastDayForAddDrop:  "",
             lastDayForEnrollmentOptionChange: "",
             lastDayForWithdrawal: "",
-            firstDayOfFinals: "",
+            firstDayOfFinals:   "",
             firstDayForFinalGrading: "",
             lastDayForFinalGrading: "",
-            isClassHeldAtUpc: null,
-            uscCampusLocation: "",
-            otherCampusLocation: "",
-            rateType: "",
-            ratePerUnitAmount: "",
-            flatRateAmount: "",
-            flatRateUnitsMin: "",
-            flatRateUnitsMax: "",
-            comments: "",
-            sessionBreaks: [],
-            sections: [],
-            submitDate: "",
+            isClassHeldAtUpc:   null,
+            uscCampusLocation:  "",
+            otherCampusLocation:"",
+            rateType:           "",
+            ratePerUnitAmount:  "",
+            flatRateAmount:     "",
+            flatRateUnitsMin:   "",
+            flatRateUnitsMax:   "",
+            comments:           "",
+            sessionBreaks:      [],
+            sections:           [],
+            submitDate:         "",
         };
 
         $scope.sess001Dates = {
@@ -583,11 +583,9 @@ sessionModule.controller("sessionRequestCtrl",
         }
 
             // field validation flags
-        $scope.requireUSCLoc = false;
-        $scope.requireOtherLoc = false;
+        $scope.requireUSCLoc    = false;
+        $scope.requireOtherLoc  = false;
         $scope.requireUnitRange = false;
 
-
     }); // document.ready()
-
 }]);    // sessionModule()

@@ -22,13 +22,16 @@
                                         otherCampusLocation : subm.session.otherCampusLocation,
                                         lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                         lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
-                                        lastDayForEnrollmentOptionChange: $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
+                                        lastDayForEnrollmentOptionChange:
+                                                            $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
                                         firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
                                         lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
                                         firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
                                         lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
-                                        firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
-                                        lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
+                                        firstDayForFinalGrading:
+                                                            $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
+                                        lastDayForFinalGrading:
+                                                            $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                         rateType            : getRateTypeDescription(subm.session.rateType),
                                         ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                         flatRateAmount      : subm.session.flatRateAmount,
@@ -80,13 +83,13 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                        { field: "requestId", title: "Request", width: "7.5%" },
-                        { field: "academicTerm", title: "Term", width: "7.5%" },
-                        { field: "sessionCode", title: "Session", width: "7.5%" },
-                        { field: "sessionName", title: "Session Name", width: "15%" },
-                        { field: "owningSchool", title: "School", width: "15%" },
-                        { field: "owningDepartment", title: "Department", width: "15%" },
-                        { field: "requestDate", title: "Date", width: "10%" },
+                        { field: "requestId",       title: "Request",       width: "7.5%" },
+                        { field: "academicTerm",    title: "Term",          width: "7.5%" },
+                        { field: "sessionCode",     title: "Session",       width: "7.5%" },
+                        { field: "sessionName",     title: "Session Name",  width: "15%" },
+                        { field: "owningSchool",    title: "School",        width: "15%" },
+                        { field: "owningDepartment",title: "Department",    width: "15%" },
+                        { field: "requestDate",     title: "Date",          width: "10%" },
                         // Approve/Reject buttons
                         { template: "<button ng-click='approveRequest(#= data.submissionId #)'>Approve</button>" },
                         { template: "<button ng-click='openRejectPopup(#= data.submissionId #)'>Reject</button>" }
@@ -120,14 +123,14 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "sectionNumber", title: "Section", width: "10%" },
-                    { field: "prefix", title: "Prefix", width: "10%" },
-                    { field: "title", title: "Section Title", width: "15%" },
-                    { field: "courseNumber", title: "Course #", width: "10%" },
-                    { field: "unitValue", title: "Units", width: "10%" },
-                    { field: "estimatedEnrollment", title: "Class size", width: "10%" },
-                    { field: "instructorName", title: "Instructor", width: "15%" },
-                    { field: "incomeAmountNumber", title: "Acct. no.", width: "10%" }
+                    { field: "sectionNumber",       title: "Section",       width: "10%" },
+                    { field: "prefix",              title: "Prefix",        width: "10%" },
+                    { field: "title",               title: "Section Title", width: "15%" },
+                    { field: "courseNumber",        title: "Course #",      width: "10%" },
+                    { field: "unitValue",           title: "Units",         width: "10%" },
+                    { field: "estimatedEnrollment", title: "Class size",    width: "10%" },
+                    { field: "instructorName",      title: "Instructor",    width: "15%" },
+                    { field: "incomeAmountNumber",  title: "Acct. no.",     width: "10%" }
                 ]
             };
         }   // sectionGridOptions()
@@ -143,9 +146,9 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "classDayOfWeek", title: "Class Day", width: "100px" },
-                    { field: "classStartTime", title: "Start Time", width: "150px" },
-                    { field: "classEndTime", title: "End Time", width: "150px" }
+                    { field: "classDayOfWeek",  title: "Class Day",     width: "100px" },
+                    { field: "classStartTime",  title: "Start Time",    width: "150px" },
+                    { field: "classEndTime",    title: "End Time",      width: "150px" }
                 ]
             };
         };
@@ -168,8 +171,8 @@
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "startDate", title: "Start Date", format: "{0:MMM dd, yyyy}" },
-                    { field: "endDate", title: "End Date", format: "{0:MMM dd, yyyy}" }
+                    { field: "startDate",   title: "Start Date",    format: "{0:MMM dd, yyyy}" },
+                    { field: "endDate",     title: "End Date",      format: "{0:MMM dd, yyyy}" }
                 ]
             };
         };  // $scope.sessionBrkGridOptions
