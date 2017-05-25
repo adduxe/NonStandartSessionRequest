@@ -467,8 +467,8 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     emailBody =
                         "<table align='center'>" +
                         "<tr>" +
-                        "	<th>Academic Term</th>" +
-                        "	<td>" + submission.Session.AcademicTerm + "</td>" +
+                        "	<th width='50%'>Academic Term</th>" +
+                        "	<td width='50%'>" + submission.Session.AcademicTerm + "</td>" +
                         "</tr>" +
                         "<tr>" +
                         "	<th>Session Code</th>" +
