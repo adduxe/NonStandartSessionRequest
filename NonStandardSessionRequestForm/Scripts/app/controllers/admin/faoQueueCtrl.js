@@ -1,8 +1,8 @@
 ﻿adminModule.controller
 
-    ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "EmailResult",
+    ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "RateTypes", "EmailResult",
 
-    function ($scope, $filter, Submissions, EmailResult) {
+    function ($scope, $filter, Submissions, RateTypes, EmailResult) {
 
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -102,27 +102,11 @@
 
         function getRateTypeDescription(rateTypeCode) {
 
-                    // Rate type lookup table
-            var rateTypes = [
-                { rateCode: "STD",  rateName: "Standard (session 001)" },
-                { rateCode: "GBUS", rateName: "Graduate Business" },
-                { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
-                { rateCode: "GENGR",rateName: "Graduate Engineering" },
-                { rateCode: "MRED", rateName: "Master of Real Estate Development" },
-                { rateCode: "PHAR", rateName: "Pharmacy" },
-                { rateCode: "DENT", rateName: "Dentistry" },
-                { rateCode: "DH",   rateName: "Dental Hygiene" },
-                { rateCode: "ADVDE",rateName: "Advanced Dentistry" },
-                { rateCode: "LAW",  rateName: "Law" },
-                { rateCode: "MED",  rateName: "Medicine" },
-                { rateCode: "OTH",  rateName: "Others" }
-            ];
-
             var rateDesc = "";
 
-            for (var i = 0; i < rateTypes.length; ++i) {
-                if (rateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = rateTypes[i].rateName;
+            for (var i = 0; i < RateTypes.length; ++i) {
+                if (RateTypes[i].rateCode == rateTypeCode) {
+                    rateDesc = RateTypes[i].rateName;
                     break;
                 }
             }

@@ -87,17 +87,17 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.IsBur = true;
                     break;
 
-                default:    // Illegal User
-                    this.UscId = "Illegal User";
-                    this.FirstName = "Forbidden";
-                    this.Surname = "User";
-                    this.Department = "Department of Hacking";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = false;
-                    this.IsFao = false;
-                    this.IsRnr = false;
-                    this.IsBur = false;
+                default:    // use the values from Shib
+                    //this.UscId = "Illegal User";
+                    //this.FirstName = "Forbidden";
+                    //this.Surname = "User";
+                    //this.Department = "Department of Hacking";
+                    //this.Email = "anthondd@usc.edu";
+                    //this.Phone = "+1 213 111 1111";
+                    //this.IsAdmin = false;
+                    //this.IsFao = false;
+                    //this.IsRnr = false;
+                    //this.IsBur = false;
                     break;
             }
 

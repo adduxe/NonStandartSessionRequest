@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    ["Sessions", "$scope", "$location",
+        ["Sessions", "RateTypes", "$scope", "$location",
 
-    function (Sessions, $scope, $location) {
+    function (Sessions, RateTypes, $scope, $location) {
         
         var reqID = $location.search()["requestId"];        // request ID
 
@@ -28,7 +28,16 @@ sessionModule.controller("sessionResultCtrl",
 
                     default:
                         break;
-                }
+                } // switch()
+
+                
+                for (var i = 0; i < RateTypes.length; ++i) {
+
+                    if (RateTypes[i].rateCode == $scope.session.rateType) {
+                        $scope.rateType = RateTypes[i].rateName;
+                        break;
+                    };
+                }   // for (var...)
             },
 
             function () {

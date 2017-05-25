@@ -12,6 +12,10 @@
         font-weight: normal;
         background-color: white;
     }
+
+    .red {
+        color: #790202;
+    }
 </style>
 
     <h4>Submission Successful!</h4>
@@ -40,7 +44,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row red">
         <div class="col-md-1">
             {{ session.academicTerm }}
         </div>
@@ -63,7 +67,7 @@
             {{ session.userEmail }}
         </div>
     </div>
-
+    <br/>
     <div class="row" style="color:black;padding-top:10px;">
         <div class="col-md-1">
             <div class="col-sm-12">
@@ -80,10 +84,10 @@
             <div class="col-sm-12">
                 <b class="red">Classes</b>
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.firstDayOfClass | date:"MMM dd, yyyy" }}&nbsp;
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.lastDayOfClass | date: "MMM dd, yyyy" }}&nbsp;
             </div>
         </div>
@@ -91,10 +95,10 @@
             <div class="col-sm-12">
                 <b class="red">Session Break 1</b>
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.sessionBreakStart_1 | date:"MMM dd, yyyy" }}&nbsp;
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.sessionBreakEnd_1 | date:"MMM dd, yyyy" }}&nbsp;
             </div>
         </div>
@@ -102,10 +106,10 @@
             <div class="col-sm-12">
                 <b class="red">Session Break 2</b>
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.sessionBreakStart_2 | date:"MMM dd, yyyy" }}&nbsp;
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.sessionBreakEnd_2 | date:"MMM dd, yyyy" }}&nbsp;
             </div>
         </div>
@@ -113,10 +117,10 @@
             <div class="col-sm-12">
                 <b class="red">Finals</b>
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.firstDayOfFinals | date:"MMM dd, yyyy" }}&nbsp;
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.lastDayOfFinals | date:"MMM dd, yyyy" }}&nbsp;
             </div>
         </div>
@@ -124,14 +128,15 @@
             <div class="col-sm-12">
                 <b class="red">Final Grades</b>
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.firstDayForFinalGrading | date:"MMM dd, yyyy" }}&nbsp;
             </div>
-            <div class="col-sm-12 borders">
+            <div class="col-sm-12">
                 {{ session.lastDayForFinalGrading | date:"MMM dd, yyyy" }}&nbsp;
             </div>
         </div>
     </div>
+    <br/>
     <div class="row" style="color:black;padding-top:10px;">
         <div class="col-md-1">
             &nbsp;
@@ -173,7 +178,7 @@
         </thead>
         <tbody>
             <tr class="black">
-                <td>{{ session.rateType }}</td>
+                <td>{{ rateType }}</td>
                 <td>{{ session.ratePerUnitAmount }}</td>
                 <td>{{ session.flatRateAmount }}</td>
                 <td>{{ session.flatRateUnitsMin }}</td>

@@ -1,6 +1,6 @@
-﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult",
+﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTypes",
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult) {
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTypes) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -29,7 +29,7 @@
                                         lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
                                         firstDayForFinalGrading: $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                         lastDayForFinalGrading: $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                        rateType: getRateTypeDescription(subm.session.rateType),
+                                        rateType            : getRateTypeDescription(subm.session.rateType),
                                         ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                         flatRateAmount      : subm.session.flatRateAmount,
                                         flatRateUnitsMin    : subm.session.flatRateUnitsMin,
@@ -42,10 +42,10 @@
                                         sessionBreaks       : subm.session.sessionBreaks,
                                         comments            : subm.session.comments,
                                         faoAction           : subm.faoAction,
-                                        faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
+                                        faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
                                         faoActionReason     : subm.faoActionReason,
                                         rnrAction           : subm.rnrAction,
-                                        rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                        rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
                                         rnrActionReason     : subm.rnrActionReason
                                     };
                                 }));
@@ -97,26 +97,11 @@
 
         function getRateTypeDescription(rateTypeCode) {
 
-            var rateTypes =[
-                { rateCode: "STD",  rateName: "Standard (session 001)" },
-                { rateCode: "GBUS", rateName: "Graduate Business" },
-                { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
-                { rateCode: "GENGR",rateName: "Graduate Engineering" },
-                { rateCode: "MRED", rateName: "Master of Real Estate Development"},
-                { rateCode: "PHAR", rateName: "Pharmacy" },
-                { rateCode: "DENT", rateName: "Dentistry"},
-                { rateCode: "DH",   rateName: "Dental Hygiene" },
-                { rateCode: "ADVDE",rateName: "Advanced Dentistry"},
-                { rateCode: "LAW", rateName: "Law" },
-                { rateCode: "MED", rateName: "Medicine" },
-                { rateCode: "OTH", rateName: "Others"}
-            ];
-
             var rateDesc = "";
 
-            for (var i = 0; i < rateTypes.length; ++i) {
-                if (rateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = rateTypes[i].rateName;
+            for (var i = 0; i < RateTypes.length; ++i) {
+                if (RateTypes[i].rateCode == rateTypeCode) {
+                    rateDesc = RateTypes[i].rateName;
                     break;
                 }
             }
