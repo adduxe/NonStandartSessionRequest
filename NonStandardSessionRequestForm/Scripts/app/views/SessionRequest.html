@@ -194,8 +194,7 @@
                     <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" readonly ng-model="session.flatRateAmount" />
                 </div>
             </div>
-            <!--<div class="form-group" ng-class="{'has-error': sessionRequestForm.flatUnitsMax.$invalid && sessionRequestForm.$submitted}">-->
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
                 <label for="flatUnitsMin" class="col-md-6 control-label">
                     <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
                 </label>

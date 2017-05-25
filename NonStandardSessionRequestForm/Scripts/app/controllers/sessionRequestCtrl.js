@@ -268,10 +268,10 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
 
-            if ($scope.session.academicTerm > '') {
+            $scope.session.flatRateAmount = '';
+            $scope.session.ratePerUnitAmount = '';
 
-                $scope.session.rateFlatAmount = "";
-                $scope.session.ratePerUnitAmount = "";
+            if ($scope.session.academicTerm > '') {
 
                 angular.forEach($scope.rates, function (value) {
                     if (value.term == $scope.session.academicTerm) {
@@ -338,12 +338,12 @@ sessionModule.controller("sessionRequestCtrl",
 
             var reqdFields = [
 
-                $scope.session.academicTerm,
-                $scope.sessCode.value(),
-                $scope.session.firstDayOfClass,
-                $scope.session.lastDayOfClass,
-                $scope.session.firstDayOfFinals,
-                $scope.session.lastDayOfFinals
+                $scope.session.academicTerm,        // Semester field
+                $scope.sessCode.value(),            // Session code
+                $scope.session.firstDayOfClass,     // First day of Classes
+                $scope.session.lastDayOfClass,      // Last day of Classes
+                $scope.session.firstDayOfFinals,    // First day of Finals
+                $scope.session.lastDayOfFinals      // Last day of Finals
             ];
 
             for (var i = 0; i < reqdFields.length; ++i){
@@ -384,7 +384,26 @@ sessionModule.controller("sessionRequestCtrl",
                         formValid = false;
                         break;
                 }   // switch()
-            }   // if (formValid)
+            }   // end of Campus Location check
+
+                // Check the rate fields
+            if (formValid && ($scope.session.flatRateAmount > '')) {
+
+                if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
+
+                    $scope.requireUnitRange = true;
+                    formValid = false;
+
+                } else { // Range is specified but validate the values
+
+                    if ($scope.session.flatRateUnitsMax < $scope.session.flatRateUnitsMin) {
+
+                        alert("The flat rate maximum units should be more than the minimum units.");
+                        $scope.requireUnitRange = true;
+                        formValid = false;
+                    }
+                }   // else
+            }
 
             // check Session Breaks
             // 1) if "No Breaks" is checked, no need to check Session Breaks
@@ -577,8 +596,11 @@ sessionModule.controller("sessionRequestCtrl",
             sessBreak2End       : ""
         }
 
+            // field validation flags
         $scope.requireUSCLoc = false;
         $scope.requireOtherLoc = false;
+        $scope.requireUnitRange = false;
+
 
     }); // document.ready()
 
