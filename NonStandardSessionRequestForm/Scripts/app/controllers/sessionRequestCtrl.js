@@ -336,7 +336,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             var formValid = true;
 
-            var reqdFields =[
+            var reqdFields = [
+
                 $scope.session.academicTerm,
                 $scope.sessCode.value(),
                 $scope.session.firstDayOfClass,
@@ -345,19 +346,52 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.session.lastDayOfFinals
             ];
 
-            for (var i = 0; i < reqdFields.length; ++i) {
+            for (var i = 0; i < reqdFields.length; ++i){
                 if (reqdFields[i].length == 0) {
                     formValid = false; // test
                     break;
                 }
             };
 
+            // Check Campus Location
+            if (formValid) {
+                switch ($scope.session.isClassHeldAtUpc) {
+
+                    case 'true':              // Class held on campus.  Will not require the other Location fields.
+                        break;
+
+                    case 'false':             // Would require at least one of the two other location fields.
+
+                        $scope.requireUSCLoc = false;
+                        $scope.requireOtherLoc = false;
+
+                        if ($scope.session.uscCampusLocation == '') {
+
+                            formValid = false;
+                            $scope.requireUSCLoc = true;
+
+                        } else {
+                            // if "Other" campus location and Other campus location is blank
+                            if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
+
+                                formValid = false;
+                                $scope.requireOtherLoc = true;
+                            }
+                        }
+                        break;
+
+                    default:                // radio button unselected
+                        formValid = false;
+                        break;
+                }   // switch()
+            }   // if (formValid)
+
             // check Session Breaks
             // 1) if "No Breaks" is checked, no need to check Session Breaks
             // 2) if the "No Breaks" checkbox is unchecked:
             //      - if no Session Breaks entered, error out
 
-            if (!$scope.noBreaks) {     // "No Breaks" checkbox unchecked?
+            if (formValid && !$scope.noBreaks) {     // "No Breaks" checkbox unchecked?
 
                 if ($scope.session.sessionBreaks.length == 0) {
                     formValid = false;
@@ -498,7 +532,6 @@ sessionModule.controller("sessionRequestCtrl",
         ];
 
         $scope.session = {
-
             academicTerm: "",
             sessionCode: "",
             sessionName: "",
@@ -515,7 +548,7 @@ sessionModule.controller("sessionRequestCtrl",
             firstDayOfFinals: "",
             firstDayForFinalGrading: "",
             lastDayForFinalGrading: "",
-            isClassHeldAtUpc: false,
+            isClassHeldAtUpc: null,
             uscCampusLocation: "",
             otherCampusLocation: "",
             rateType: "",
@@ -543,6 +576,9 @@ sessionModule.controller("sessionRequestCtrl",
             sessBreak2Begin     : "",
             sessBreak2End       : ""
         }
+
+        $scope.requireUSCLoc = false;
+        $scope.requireOtherLoc = false;
 
     }); // document.ready()
 
