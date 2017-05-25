@@ -463,14 +463,15 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
-            var sessObj = Sessions
-                .save($scope.session)
-                .$promise.then(
+//            var session = Sessions.save($scope.session)
+            var session = new Sessions($scope.session);
+
+            session.$save(null, 
 
                     function () {
                         //                window.location.href = "successPage.usc.edu";
                         alert("Submission successful");
-                        $location.url("/Result?requestId=" + sessObj.requestId);
+                        $location.url("/Result?requestId=" + session.requestId);
                     },
 
                     function () {
