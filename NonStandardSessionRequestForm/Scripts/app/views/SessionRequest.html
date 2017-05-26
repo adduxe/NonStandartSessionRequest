@@ -416,8 +416,9 @@
     <!--  End of Section section -->
 
     <br>
-    <div class="row" style="align-content:center;">
-        <div class="col-md-5">
+    <div class="row" style="align-content:center;" ng-init="(formError = '')">
+        <div class="col-md-5 text-center red">
+            <b>{{ formError }}</b>
         </div>
         <div class="col-md-2">
             <input type="submit" class="form-control uscRedButton" ng-click="SubmitForm();" value="Submit" />

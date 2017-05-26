@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location",
+        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$timeout",
 
-    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location) {
+    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $timeout) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -11,7 +11,8 @@ sessionModule.controller("sessionRequestCtrl",
             var semBreak = { startDate: "", endDate: "" };
 
             if ($scope.session.sessionBreaks.length == 2) {
-                alert("A maximum of 2 semester breaks are allowed per session.");
+                $scope.formError = "* Only 2 Session Breaks are allowed per session.";
+                $timeout(clearFormError, 3000);
             } else {
                 $scope.session.sessionBreaks.push(semBreak);
             }
@@ -79,8 +80,8 @@ sessionModule.controller("sessionRequestCtrl",
             initialDate.setDate(startDate.getDate() + daysToAdd - 1);
             var adjustedDate =  AdjustDate(initialDate);
 
-            if (adjustedDate > endDate) {                                // if computed new date is beyond the Last Day of classes,
-                adjustedDate = endDate;                                  //  make it equal to the last day of classes.
+            if (adjustedDate > endDate) {                                   // if computed new date is beyond the Last Day of classes,
+                adjustedDate = endDate;                                     //  make it equal to the last day of classes.
             }
             
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
@@ -109,7 +110,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                 if (startDt > endDt) {
 
-                    alert("Class Start Date later than Class End Date");
+                    $scope.formError = "* The Classes Start Date should be earlier than the Classes End Date";
 
                 } else {        // dates OK.  Calculate computed date fields.
 
@@ -157,7 +158,9 @@ sessionModule.controller("sessionRequestCtrl",
 
                     // Compute Final Grading Period
                 if (startDt > endDt) {
-                    alert("First day of Finals later than Last Day of Finals");
+
+                    $scope.formError = "* The first day of Finals should be earlier than the last day of Finals";
+
                 } else {
                                         // First Day of Grading = First Day of Finals
                     $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
@@ -218,31 +221,36 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.GetDatesAndRates = function () {
 
+            $scope.formError = "";
+
             Get001Dates.get({
                     semester: $scope.session.academicTerm
                 },
 
                 function (data) {
 
-                    if (data.classBeginDate == undefined) {
-                        alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
-                    } else {
+                    $scope.formError = "* Session 001 dates found for semester " + $scope.session.academicTerm;
 
-                        $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate);
-                        $scope.sess001Dates.lastDayOfClass      = convDateToString(data.classEndDate);
-                        $scope.sess001Dates.lastDayForAddDrop   = convDateToString(data.lastAddDropDate);
-                        $scope.sess001Dates.lastDayForWithdrawal= convDateToString(data.withdrawWithWDate);
-                        $scope.sess001Dates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate);
-                        $scope.sess001Dates.sessBreak1Begin     = convDateToString(data.break1BeginDate);
-                        $scope.sess001Dates.sessBreak1End       = convDateToString(data.break1EndDate);
-                        $scope.sess001Dates.sessBreak2Begin     = convDateToString(data.break2BeginDate);
-                        $scope.sess001Dates.sessBreak2End       = convDateToString(data.break2EndDate);
-                        $scope.sess001Dates.firstDayOfFinals    = convDateToString(data.finalExamBeginDate);
-                        $scope.sess001Dates.lastDayOfFinals     = convDateToString(data.finalExamEndDate);
-                    }
+                    $scope.sess001Dates.firstDayOfClass = convDateToString(data.classBeginDate);
+                    $scope.sess001Dates.lastDayOfClass      = convDateToString(data.classEndDate);
+                    $scope.sess001Dates.lastDayForAddDrop   = convDateToString(data.lastAddDropDate);
+                    $scope.sess001Dates.lastDayForWithdrawal= convDateToString(data.withdrawWithWDate);
+                    $scope.sess001Dates.lastDayForEnrollmentOptionChange = convDateToString(data.lastEnrollmentOptionDate);
+                    $scope.sess001Dates.sessBreak1Begin     = convDateToString(data.break1BeginDate);
+                    $scope.sess001Dates.sessBreak1End       = convDateToString(data.break1EndDate);
+                    $scope.sess001Dates.sessBreak2Begin     = convDateToString(data.break2BeginDate);
+                    $scope.sess001Dates.sessBreak2End       = convDateToString(data.break2EndDate);
+                    $scope.sess001Dates.firstDayOfFinals    = convDateToString(data.finalExamBeginDate);
+                    $scope.sess001Dates.lastDayOfFinals     = convDateToString(data.finalExamEndDate);
+
+                    $timeout(clearFormError, 1000);
                 },
+
                 function () {
+
+                    $scope.formError = "* No Session 001 dates found for semester " + $scope.session.academicTerm;
                     console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);
+
                     $scope.sess001Dates.firstDayOfClass         = "";
                     $scope.sess001Dates.lastDayOfClass          = "";
                     $scope.sess001Dates.lastDayForAddDrop       = "";
@@ -256,6 +264,8 @@ sessionModule.controller("sessionRequestCtrl",
                     $scope.sess001Dates.sessBreak2End           = "";
                     $scope.sess001Dates.firstDayOfFinals        = "";
                     $scope.sess001Dates.lastDayOfFinals         = "";
+
+                    $timeout(clearFormError, 1000);
                 }
             );
 
@@ -264,6 +274,11 @@ sessionModule.controller("sessionRequestCtrl",
 
             return;
         }   // GetDatesAndRates()
+
+
+        function clearFormError() {
+            $scope.formError = '';
+        }
 
 
         $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
@@ -304,7 +319,8 @@ sessionModule.controller("sessionRequestCtrl",
             if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
 
                 semChoices =[
-                    { semName: currYear + " Spring",    semCode: currYear + "1" },
+
+                    { semName: currYear + " Spring", semCode: currYear + "1" },
                     { semName: currYear + " Summer",    semCode: currYear + "2" },
                     { semName: currYear + " Fall",      semCode: currYear + "3" },
                     { semName: nextYear + " Spring",    semCode: nextYear + "1" }
@@ -313,7 +329,8 @@ sessionModule.controller("sessionRequestCtrl",
             } else if ((currDate >= summerDate) && (currDate < fallDate)) {  // Display Summer Current Year to Summer Next Year
 
                 semChoices =[
-                    { semName: currYear + " Summer",    semCode: currYear + "2" },
+
+                    { semName: currYear + " Summer", semCode: currYear + "2" },
                     { semName: currYear + " Fall",      semCode: currYear + "3" },
                     { semName: nextYear + " Spring",    semCode: nextYear + "1" },
                     { semName: nextYear + " Summer",    semCode: nextYear + "2" }
@@ -322,72 +339,29 @@ sessionModule.controller("sessionRequestCtrl",
             } else {                                                        // Display Current Fall to Next Year Fall
 
                 semChoices =[
-                        { semName: currYear + " Fall",  semCode: currYear + "3" },
-                        { semName: nextYear + " Spring",semCode: nextYear + "1" },
-                        { semName: nextYear + " Summer",semCode: nextYear + "2" },
-                        { semName: nextYear + " Fall",  semCode: nextYear + "3" }
+
+                    { semName: currYear + " Fall", semCode: currYear + "3" },
+                    { semName: nextYear + " Spring",semCode: nextYear + "1" },
+                    { semName: nextYear + " Summer",semCode: nextYear + "2" },
+                    { semName: nextYear + " Fall",  semCode: nextYear + "3" }
                 ];
             }
 
             $scope.semesters = semChoices;
         }   // PopulateSemesterDropdown
 
+
         function IsFormValid() {
 
             var formValid = true;
 
-            var reqdFields = [
-
-                $scope.session.academicTerm,        // Semester field
-                $scope.sessCode.value(),            // Session code
-                $scope.session.firstDayOfClass,     // First day of Classes
-                $scope.session.lastDayOfClass,      // Last day of Classes
-                $scope.session.firstDayOfFinals,    // First day of Finals
-                $scope.session.lastDayOfFinals      // Last day of Finals
-            ];
-
-            for (var i = 0; i < reqdFields.length; ++i){
-                if (reqdFields[i].length == 0) {
-                    formValid = false; // test
-                    break;
-                }
-            };
-
-            // Check Campus Location
-            if (formValid) {
-                switch ($scope.session.isClassHeldAtUpc) {
-
-                    case 'true':              // Class held on campus.  Will not require the other Location fields.
-                        break;
-
-                    case 'false':             // Would require at least one of the two other location fields.
-
-                        $scope.requireUSCLoc = false;
-                        $scope.requireOtherLoc = false;
-
-                        if ($scope.session.uscCampusLocation == '') {
-
-                            formValid = false;
-                            $scope.requireUSCLoc = true;
-
-                        } else {
-                            // if "Other" campus location and Other campus location is blank
-                            if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-
-                                formValid = false;
-                                $scope.requireOtherLoc = true;
-                            }
-                        }
-                        break;
-
-                    default:                // radio button unselected
-                        formValid = false;
-                        break;
-                }   // switch()
-            }   // end of Campus Location check
-
-                // Check the rate fields
-            if (formValid && ($scope.session.flatRateAmount > '')) {
+            formValid = CheckMainFields();      // Check Semester, Session Code, Start & End of Classes, and First and Last Day of Finals
+            
+            if (formValid){                             // Check Campus Location Fields
+                formValid = CheckCampusLocation();
+            }
+                
+            if (formValid && ($scope.session.flatRateAmount > '')) {    // Check the rate fields
 
                 if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
 
@@ -398,7 +372,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                     if ($scope.session.flatRateUnitsMax <= $scope.session.flatRateUnitsMin) {
 
-                        alert("The flat rate maximum units should be more than the minimum units.");
+                        $scope.formError = "The flat rate maximum units should be more than the minimum units.";
                         $scope.requireUnitRange = true;
                         formValid = false;
                     }
@@ -414,12 +388,12 @@ sessionModule.controller("sessionRequestCtrl",
 
                 if ($scope.session.sessionBreaks.length == 0) {
                     formValid = false;
-                    alert("Either check the No Breaks checkbox or enter Session Breaks");
+                    $scope.formError = "Either check the No Breaks checkbox or enter Session Breaks";
                 } else {    // check for blank entries
                     for (var i = 0; i < $scope.session.sessionBreaks.length; ++i){
                         if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
                             formValid = false;
-                            alert("Either enter Session Breaks or check the No Breaks checkbox.");
+                            $scope.formError = "Either enter Session Breaks or check the No Breaks checkbox.";
                         }
                     }
                 }
@@ -427,6 +401,114 @@ sessionModule.controller("sessionRequestCtrl",
         
             return formValid;
         }   // IsFormValid()
+
+        function CheckMainFields() {
+
+            var areFieldsValid = true;
+
+            var reqdFields = [
+
+                $scope.session.academicTerm,            // Semester field
+                $scope.sessCode.value(),                // Session code
+                $scope.session.firstDayOfClass,         // First day of Classes
+                $scope.session.lastDayOfClass,          // Last day of Classes
+                $scope.session.firstDayOfFinals,        // First day of Finals
+                $scope.session.lastDayOfFinals          // Last day of Finals
+            ];
+
+            for (var i = 0; i < reqdFields.length; ++i){
+                if (reqdFields[i].length == 0) {
+                    areFieldsValid = false; // test
+                    break;
+                }
+            }
+
+            if (areFieldsValid) {                       // Check First and Last Day of Classes
+
+                var startDt = new Date($scope.session.firstDayOfClass);
+                var endDt = new Date($scope.session.lastDayOfClass);
+
+                if (startDt > endDt) {
+
+                    $scope.formError = "* The Class Start Date should be earlier than Class End Date";
+                    $scope.sessionRequestForm.classStartDate.$invalid = true;   // mark the fields
+                    $scope.sessionRequestForm.classEndDate.$invalid = true;
+                    areFieldsValid = false;
+
+                } else {
+
+                    $scope.sessionRequestForm.classStartDate.$invalid = false;   // mark the fields
+                    $scope.sessionRequestForm.classEndDate.$invalid = false;
+                }
+            }
+
+            if (areFieldsValid) {                       // Check First and Last Day of Finals
+
+                if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
+
+                    var startDt = new Date($scope.session.firstDayOfFinals);
+                    var endDt = new Date($scope.session.lastDayOfFinals);
+
+                    // Compute Final Grading Period
+                    if (startDt > endDt) {
+
+                        $scope.formError = "First day of Finals should be before the Last Day of Finals";
+                        areFieldsValid = false;
+                        
+                        $scope.sessionRequestForm.finalsStartDate.$invalid = true;
+                        $scope.sessionRequestForm.finalsEndDate.$invalid = true;
+
+                    } else {
+
+                        $scope.sessionRequestForm.finalsStartDate.$invalid = false;
+                        $scope.sessionRequestForm.finalsEndDate.$invalid = false;
+
+                    }
+                }   // if($scope.session...)
+            }   // if (areFields...)
+
+            return areFieldsValid;
+        }   // CheckMainFields()
+
+
+        function CheckCampusLocation() {
+
+            var isFormValid = true;
+
+            switch ($scope.session.isClassHeldAtUpc) {
+
+                case 'true':              // Class held on campus.  Will not require the other Location fields.
+                    break;
+
+                case 'false':             // Would require at least one of the two other location fields.
+
+                    $scope.requireUSCLoc = false;
+                    $scope.requireOtherLoc = false;
+
+                    if ($scope.session.uscCampusLocation == '') {
+
+                        isFormValid = false;
+                        $scope.requireUSCLoc = true;
+
+                    } else {
+                        // if "Other" campus location and Other campus location is blank
+                        if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
+
+                            isFormValid = false;
+                            $scope.requireOtherLoc = true;
+                        }
+                    }
+                    break;
+
+                default:                // radio button unselected
+                    isFormValid = false;
+                    break;
+
+            }   // switch()
+
+            return isFormValid;
+
+        }   // CheckCampusLocation()
 
 
         $scope.deleteBreaks = function () {
@@ -449,8 +531,12 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.SubmitForm = function () {
 
+            $scope.formError = "";
+
             if (!IsFormValid()) {
-                alert("Please provide required fields.");
+                if ($scope.formError == "") {
+                    $scope.formError = "* Please provide required fields.";
+                }
                 return;
             };
 
@@ -463,10 +549,9 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
-//            var session = Sessions.save($scope.session)
             var session = new Sessions($scope.session);
 
-            session.$save(null, 
+            session.$save(null,
 
                     function () {
                         //                window.location.href = "successPage.usc.edu";
