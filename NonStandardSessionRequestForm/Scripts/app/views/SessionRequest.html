@@ -137,12 +137,12 @@
                 </label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" 
-                           ng-readonly="session.rateType != 'OTH'"  ng-model="session.ratePerUnitAmount" />
+                           ng-readonly="(session.rateType != 'OTH')"  ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
                 <label for="sessionComment" class="col-md-4 control-label">
-                    <abbr title="In this space, enter comments specific to the Session.">
+                    <abbr title="In this space, enter comments specific to the Session.  Please comment if this session will have any special fees.">
                         Session Comment
                     </abbr>:
                 </label>

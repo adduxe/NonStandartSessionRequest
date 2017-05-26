@@ -1,6 +1,6 @@
-﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTypes",
+﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTypes", "CampusLocations",
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTypes) {
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTypes, CampusLocations) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -18,7 +18,7 @@
                                         sessionName         : subm.session.sessionName,
                                         userEmail           : subm.session.userEmail,
                                         userPhone           : subm.session.userPhone,
-                                        uscCampusLocation   : subm.session.uscCampusLocation,
+                                        uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
                                         otherCampusLocation : subm.session.otherCampusLocation,
                                         lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                         lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
@@ -73,8 +73,23 @@
                     }
                 }
             },
-            pageSize: 5
+            pageSize: 10
         });
+
+
+        function GetCampusName(campusCode) {
+
+            var campusName = "";
+
+            for (var i = 0; i < CampusLocations.length; ++i) {
+                if (CampusLocations[i].campusCode = campusCode) {
+                    campusName = CampusLocations[i].campusName;
+                    break;
+                }
+            }
+
+            return campusName;
+        }   // GetCampusName()
 
 
         $scope.mainGridOptions =

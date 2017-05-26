@@ -348,7 +348,9 @@
     <Content Include="Scripts\app\controllers\admin\faoQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\admin\rnrQueueCtrl.js" />
     <Content Include="Scripts\app\controllers\SessionResultCtrl.js" />
+    <Content Include="Scripts\app\services\admin\campusLocationsService.js" />
     <Content Include="Scripts\app\services\admin\emailService.js" />
+    <Content Include="Scripts\app\services\campusLocationsService.js" />
     <Content Include="Scripts\app\services\admin\rateTypesService.js" />
     <Content Include="Scripts\app\services\emailService.js" />
     <Content Include="Scripts\app\services\rateTypesService.js" />

@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "$scope", "$http", "$location",
+        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location",
 
-    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, $scope, $http, $location) {
+    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -396,7 +396,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                 } else { // Range is specified but validate the values
 
-                    if ($scope.session.flatRateUnitsMax < $scope.session.flatRateUnitsMin) {
+                    if ($scope.session.flatRateUnitsMax <= $scope.session.flatRateUnitsMin) {
 
                         alert("The flat rate maximum units should be more than the minimum units.");
                         $scope.requireUnitRange = true;
@@ -501,22 +501,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.rateTypes = RateTypes;
 
-        $scope.campusLocs =[                                   // Populate the Campus Location dropdown.
-
-            { campusCode: "HSC",    campusName: "Health Science Campus" },
-            { campusCode: "OCC",    campusName: "Orange County Campus"},
-            { campusCode: "OVS",    campusName: "Overseas"},
-            { campusCode: "DC",     campusName: "Washington D.C."},
-            { campusCode: "SAC",    campusName: "Sacramento"},
-            { campusCode: "USA",    campusName: "Off-campus in U.S."},
-            { campusCode: "VIR",    campusName: "Virtual(DEN/Online)"},
-            { campusCode: "CAT",    campusName: "Catalina"},
-            { campusCode: "LAC",    campusName: "L.A. Center"},
-            { campusCode: "SD",     campusName: "San Diego"},
-            { campusCode: "ATT",    campusName: "AT&T Center"},
-            { campusCode: "SKB",    campusName: "No Tuition or Fees"},
-            { campusCode: "OTH",    campusName: "Others" }
-        ];
+        $scope.campusLocs = CampusLocations;
 
         /*
                                 2017 	                2018 	                2019 	                2020
@@ -530,7 +515,7 @@ sessionModule.controller("sessionRequestCtrl",
         Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
         Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
 */
-        holidays =[
+        holidays = [
             "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
             "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018","11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
             "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019",  "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",

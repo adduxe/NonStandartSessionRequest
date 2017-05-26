@@ -1,8 +1,8 @@
 ﻿adminModule.controller
 
-    ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "RateTypes", "EmailResult",
+    ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "RateTypes", "EmailResult", "CampusLocations",
 
-    function ($scope, $filter, Submissions, RateTypes, EmailResult) {
+    function ($scope, $filter, Submissions, RateTypes, EmailResult, CampusLocations) {
 
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -24,7 +24,7 @@
                                             userEmail:          subm.session.userEmail,
                                             userPhone:          subm.session.userPhone,
                                             isClassHeldAtUpc:   subm.session.isClassHeldAtUpc,
-                                            uscCampusLocation:  subm.session.uscCampusLocation,
+                                            uscCampusLocation:  GetCampusName(subm.session.uscCampusLocation),
                                             otherCampusLocation:subm.session.otherCampusLocation,
                                             lastDayForAddDrop:  $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                             lastDayForWithdrawal:
@@ -80,6 +80,21 @@
             },
             pageSize: 10
         });
+
+
+        function GetCampusName(campusCode) {
+
+            var campusName = "";
+
+            for (var i = 0; i < CampusLocations.length; ++i) {
+                if (CampusLocations[i].campusCode = campusCode) {
+                    campusName = CampusLocations[i].campusName;
+                    break;
+                }
+            }
+
+            return campusName;
+        }   // GetCampusName()
 
 
         $scope.mainGridOptions = {
