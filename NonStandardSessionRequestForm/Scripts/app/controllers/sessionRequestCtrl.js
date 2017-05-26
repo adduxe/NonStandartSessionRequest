@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$timeout",
+        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$timeout", "$rootScope",
 
-    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $timeout) {
+    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $timeout, $rootScope) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -549,20 +549,21 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
-            var session = new Sessions($scope.session);
+            $rootScope.savedSession = new Sessions($scope.session);
 
-            session.$save(null,
+            $rootScope.savedSession.$save(null,
 
                     function () {
                         //                window.location.href = "successPage.usc.edu";
                         alert("Submission successful");
-                        $location.url("/Result?requestId=" + session.requestId);
+                        $location.url("/Result");
                     },
 
                     function () {
                         alert("Error in submitting the form.");
                     }
                 );
+            
             return;
         }   // SubmitForm()
 

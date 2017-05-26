@@ -1,8 +1,11 @@
 ﻿"use strict";
+
 var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
 
 sessionModule.config([
-    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+
+    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider ) {
+
         $routeProvider
             .when("/",
             {
