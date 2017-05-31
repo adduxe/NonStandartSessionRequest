@@ -41,65 +41,65 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 
-            string user = "R";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+            //string user = "R";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
 
-            switch (user.ToUpper()){
+            //switch (user.ToUpper()){
                  
-                case "F": // Test as FAO
-                    this.UscId = "this is a test";
-                    this.FirstName = "FAO Admin";
-                    this.Surname = "Tester";
-                    this.Department = "Department of Testing";
-                    this.School = "School of Rock";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = true;
-                    this.IsFao = true;
-                    this.IsRnr = false;
-                    this.IsBur = false;
-                    break;
+            //    case "F": // Test as FAO
+            //        this.UscId = "this is a test";
+            //        this.FirstName = "FAO Admin";
+            //        this.Surname = "Tester";
+            //        this.Department = "Department of Testing";
+            //        this.School = "School of Rock";
+            //        this.Email = "anthondd@usc.edu";
+            //        this.Phone = "+1 213 111 1111";
+            //        this.IsAdmin = true;
+            //        this.IsFao = true;
+            //        this.IsRnr = false;
+            //        this.IsBur = false;
+            //        break;
 
-                case "R": // Test as RNR
-                    this.UscId = "this is a test";
-                    this.FirstName = "RNR Admin";
-                    this.Surname = "Tester";
-                    this.Department = "Department of Testing";
-                    this.School = "School of Rock";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = true;
-                    this.IsFao = false;
-                    this.IsRnr = true;
-                    this.IsBur = false;
-                    break;
+            //    case "R": // Test as RNR
+            //        this.UscId = "this is a test";
+            //        this.FirstName = "RNR Admin";
+            //        this.Surname = "Tester";
+            //        this.Department = "Department of Testing";
+            //        this.School = "School of Rock";
+            //        this.Email = "anthondd@usc.edu";
+            //        this.Phone = "+1 213 111 1111";
+            //        this.IsAdmin = true;
+            //        this.IsFao = false;
+            //        this.IsRnr = true;
+            //        this.IsBur = false;
+            //        break;
 
-                case "B": // Test as Bursar
-                    this.UscId = "this is a test";
-                    this.FirstName = "BUR Admin";
-                    this.Surname = "Tester";
-                    this.Department = "Department of Testing";
-                    this.School = "School of Rock";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = true;
-                    this.IsFao = false;
-                    this.IsRnr = false;
-                    this.IsBur = true;
-                    break;
+            //    case "B": // Test as Bursar
+            //        this.UscId = "this is a test";
+            //        this.FirstName = "BUR Admin";
+            //        this.Surname = "Tester";
+            //        this.Department = "Department of Testing";
+            //        this.School = "School of Rock";
+            //        this.Email = "anthondd@usc.edu";
+            //        this.Phone = "+1 213 111 1111";
+            //        this.IsAdmin = true;
+            //        this.IsFao = false;
+            //        this.IsRnr = false;
+            //        this.IsBur = true;
+            //        break;
 
-                default:    // use the values from Shib
-                    //this.UscId = "Illegal User";
-                    //this.FirstName = "Forbidden";
-                    //this.Surname = "User";
-                    //this.Department = "Department of Hacking";
-                    //this.Email = "anthondd@usc.edu";
-                    //this.Phone = "+1 213 111 1111";
-                    //this.IsAdmin = false;
-                    //this.IsFao = false;
-                    //this.IsRnr = false;
-                    //this.IsBur = false;
-                    break;
-            }
+            //    default:    // use the values from Shib
+            //        //this.UscId = "Illegal User";
+            //        //this.FirstName = "Forbidden";
+            //        //this.Surname = "User";
+            //        //this.Department = "Department of Hacking";
+            //        //this.Email = "anthondd@usc.edu";
+            //        //this.Phone = "+1 213 111 1111";
+            //        //this.IsAdmin = false;
+            //        //this.IsFao = false;
+            //        //this.IsRnr = false;
+            //        //this.IsBur = false;
+            //        break;
+            //}
 
         }
 
