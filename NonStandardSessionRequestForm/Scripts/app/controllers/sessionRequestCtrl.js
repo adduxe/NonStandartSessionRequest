@@ -259,6 +259,15 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             );
 
+            $scope.rateTypes = $scope.rates.filter(function(rate) {
+                return rate.term == $scope.session.academicTerm;
+            })[0].rateTypes.map(function(rateType){ 
+                return {
+                    rateCode: rateType.rateTypeCode,
+                    rateName: rateType.rateTypeDesc
+                };
+            })
+
             if ($scope.session.rateType > '')
                 SetRates();
 
@@ -484,12 +493,9 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.rates =[];
 
         function GetRateTable() {
-
-        $scope.rates = RateTable.query(function () {
-            ;       // just load the table
-        });
+            $scope.rates = RateTable.query();
             return;
-    }   // GetRateTable()
+        }   // GetRateTable()
 
     $(document).ready(function () {
 
@@ -499,7 +505,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         GetRateTable();                         // Reads the rate table from the database
 
-        $scope.rateTypes = RateTypes;
+        //$scope.rateTypes = RateTypes;
 
         $scope.campusLocs = CampusLocations;
 

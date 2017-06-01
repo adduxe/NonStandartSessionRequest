@@ -186,22 +186,46 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeCode"": ""STD"",
                                      ""rateTypeDesc"": ""Standard (session 001)"",
                                      ""rateTypeUnitRate"": ""1733"",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeFlatRate"": ""25721""
                                  },
                                  {
-                                     ""rateTypeCode"": ""GBUS"",
+                                     ""rateTypeCode"": ""BUSG"",
                                      ""rateTypeDesc"": ""Graduate Business"",
-                                     ""rateTypeUnitRate"": ""1778"",
+                                     ""rateTypeUnitRate"": ""1788"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
-                                     ""rateTypeCode"": ""GCINA"",
-                                     ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                                     ""rateTypeCode"": ""CINAG"",
+                                     ""rateTypeDesc"": ""Graduate Cinema"",
                                      ""rateTypeUnitRate"": ""1843"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
-                                     ""rateTypeCode"": ""GENGR"",
+                                     ""rateTypeCode"": ""DENTADV"",
+                                     ""rateTypeDesc"": ""Advanced Dentistry"",
+                                     ""rateTypeUnitRate"": ""1733"",
+                                     ""rateTypeFlatRate"": ""29583""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENT"",
+                                     ""rateTypeDesc"": ""Dentistry DDS"",
+                                     ""rateTypeUnitRate"": ""1733"",
+                                     ""rateTypeFlatRate"": ""29268""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENSP"",
+                                     ""rateTypeDesc"": ""Special Dentistry International"",
+                                     ""rateTypeUnitRate"": ""1733"",
+                                     ""rateTypeFlatRate"": ""29268""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DH"",
+                                     ""rateTypeDesc"": ""Dental Hygiene"",
+                                     ""rateTypeUnitRate"": ""1733"",
+                                     ""rateTypeFlatRate"": ""23840""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ENGRG"",
                                      ""rateTypeDesc"": ""Graduate Engineering"",
                                      ""rateTypeUnitRate"": ""1845"",
                                      ""rateTypeFlatRate"": """"
@@ -210,19 +234,31 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeCode"": ""LAW"",
                                      ""rateTypeDesc"": ""Law"",
                                      ""rateTypeUnitRate"": ""2303"",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeFlatRate"": ""29788""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MED"",
+                                     ""rateTypeDesc"": ""Medicine"",
+                                     ""rateTypeUnitRate"": ""1733"",
+                                     ""rateTypeFlatRate"": ""29561""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MPA"",
+                                     ""rateTypeDesc"": ""Master in Physician Assistant"",
+                                     ""rateTypeUnitRate"": ""1773"",
+                                     ""rateTypeFlatRate"": ""25721""
                                  },
                                  {
                                      ""rateTypeCode"": ""MRED"",
                                      ""rateTypeDesc"": ""Master of Real Estate Development"",
-                                     ""rateTypeUnitRate"": ""1921"",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1996"",
+                                     ""rateTypeFlatRate"": ""31936""
                                  },
                                  {
                                      ""rateTypeCode"": ""PHAR"",
                                      ""rateTypeDesc"": ""Pharmacy"",
                                      ""rateTypeUnitRate"": ""1761"",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeFlatRate"": ""26431""
                                  }
                                ]        
                            },
@@ -236,26 +272,32 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeFlatRate"": ""26724""
                                  },
                                  {
-                                     ""rateTypeCode"": ""GBUS"",
+                                     ""rateTypeCode"": ""BUSG"",
                                      ""rateTypeDesc"": ""Graduate Business"",
                                      ""rateTypeUnitRate"": ""1847"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
-                                     ""rateTypeCode"": ""GCINA"",
-                                     ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                                     ""rateTypeCode"": ""CINAG"",
+                                     ""rateTypeDesc"": ""Graduate Cinema"",
                                      ""rateTypeUnitRate"": ""1915"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
-                                     ""rateTypeCode"": ""ADVDE"",
+                                     ""rateTypeCode"": ""DENTADV"",
                                      ""rateTypeDesc"": ""Advanced Dentistry"",
                                      ""rateTypeUnitRate"": ""1800"",
                                      ""rateTypeFlatRate"": ""30736""
                                  },
                                  {
                                      ""rateTypeCode"": ""DENT"",
-                                     ""rateTypeDesc"": ""Dentistry"",
+                                     ""rateTypeDesc"": ""Dentistry DDS"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30409""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENSP"",
+                                     ""rateTypeDesc"": ""Special Dentistry International"",
                                      ""rateTypeUnitRate"": ""1800"",
                                      ""rateTypeFlatRate"": ""30409""
                                  },
@@ -266,7 +308,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeFlatRate"": ""24769""
                                  },
                                  {
-                                     ""rateTypeCode"": ""GENGR"",
+                                     ""rateTypeCode"": ""ENGRG"",
                                      ""rateTypeDesc"": ""Graduate Engineering"",
                                      ""rateTypeUnitRate"": ""1937"",
                                      ""rateTypeFlatRate"": """"
@@ -282,6 +324,24 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeDesc"": ""Medicine"",
                                      ""rateTypeUnitRate"": ""1800"",
                                      ""rateTypeFlatRate"": ""30714""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MPA"",
+                                     ""rateTypeDesc"": ""Master in Physician Assistant"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""26724""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MRED"",
+                                     ""rateTypeDesc"": ""Master of Real Estate Development"",
+                                     ""rateTypeUnitRate"": ""1996"",
+                                     ""rateTypeFlatRate"": ""31936""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""PHAR"",
+                                     ""rateTypeDesc"": ""Pharmacy"",
+                                     ""rateTypeUnitRate"": ""1830"",
+                                     ""rateTypeFlatRate"": ""27462""
                                  }
                                ]     
                            },
@@ -295,26 +355,32 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeFlatRate"": ""26724""
                                  },
                                  {
-                                     ""rateTypeCode"": ""GBUS"",
+                                     ""rateTypeCode"": ""BUSG"",
                                      ""rateTypeDesc"": ""Graduate Business"",
                                      ""rateTypeUnitRate"": ""1847"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
-                                     ""rateTypeCode"": ""GCINA"",
-                                     ""rateTypeDesc"": ""Graduate Cinematic Arts"",
+                                     ""rateTypeCode"": ""CINAG"",
+                                     ""rateTypeDesc"": ""Graduate Cinema"",
                                      ""rateTypeUnitRate"": ""1915"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
-                                     ""rateTypeCode"": ""ADVDE"",
+                                     ""rateTypeCode"": ""DENTADV"",
                                      ""rateTypeDesc"": ""Advanced Dentistry"",
                                      ""rateTypeUnitRate"": ""1800"",
                                      ""rateTypeFlatRate"": ""30736""
                                  },
                                  {
                                      ""rateTypeCode"": ""DENT"",
-                                     ""rateTypeDesc"": ""Dentistry"",
+                                     ""rateTypeDesc"": ""Dentistry DDS"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30409""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENSP"",
+                                     ""rateTypeDesc"": ""Special Dentistry International"",
                                      ""rateTypeUnitRate"": ""1800"",
                                      ""rateTypeFlatRate"": ""30409""
                                  },
@@ -325,7 +391,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeFlatRate"": ""24769""
                                  },
                                  {
-                                     ""rateTypeCode"": ""GENGR"",
+                                     ""rateTypeCode"": ""ENGRG"",
                                      ""rateTypeDesc"": ""Graduate Engineering"",
                                      ""rateTypeUnitRate"": ""1937"",
                                      ""rateTypeFlatRate"": """"
@@ -341,6 +407,24 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeDesc"": ""Medicine"",
                                      ""rateTypeUnitRate"": ""1800"",
                                      ""rateTypeFlatRate"": ""30714""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MPA"",
+                                     ""rateTypeDesc"": ""Master in Physician Assistant"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""26724""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MRED"",
+                                     ""rateTypeDesc"": ""Master of Real Estate Development"",
+                                     ""rateTypeUnitRate"": ""1996"",
+                                     ""rateTypeFlatRate"": ""31936""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""PHAR"",
+                                     ""rateTypeDesc"": ""Pharmacy"",
+                                     ""rateTypeUnitRate"": ""1830"",
+                                     ""rateTypeFlatRate"": ""27462""
                                  }
                                ]     
                            }
