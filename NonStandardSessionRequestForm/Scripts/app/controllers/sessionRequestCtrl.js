@@ -259,14 +259,19 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             );
 
-            $scope.rateTypes = $scope.rates.filter(function(rate) {
+            $scope.rateTypes = $scope.rates.filter(function (rate) {
                 return rate.term == $scope.session.academicTerm;
-            })[0].rateTypes.map(function(rateType){ 
+            }).shift().rateTypes.map(function (rateType) {
                 return {
                     rateCode: rateType.rateTypeCode,
                     rateName: rateType.rateTypeDesc
                 };
-            })
+            });
+
+            $scope.rateTypes.push({
+                rateCode: "OTH",
+                rateName: "Other"
+                });
 
             if ($scope.session.rateType > '')
                 SetRates();
@@ -298,8 +303,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         var holidays =[];
 
-            function PopulateSemesterDropdown() {
-
+        function PopulateSemesterDropdown() {
             var currDate = new Date();
             var currYear = currDate.getFullYear();
             var nextYear = parseInt(currYear) +1;
