@@ -217,13 +217,9 @@ sessionModule.controller("sessionRequestCtrl",
         }
 
         $scope.GetDatesAndRates = function () {
-
-            Get001Dates.get({
-                    semester: $scope.session.academicTerm
-                },
-
+            Get001Dates.get(
+                { semester: $scope.session.academicTerm },
                 function (data) {
-
                     if (data.classBeginDate == undefined) {
                         alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
                     } else {
@@ -259,14 +255,24 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             );
 
-            $scope.rateTypes = $scope.rates.filter(function (rate) {
-                return rate.term == $scope.session.academicTerm;
-            }).shift().rateTypes.map(function (rateType) {
-                return {
-                    rateCode: rateType.rateTypeCode,
-                    rateName: rateType.rateTypeDesc
-                };
-            });
+            function selectTermRateType(rates, term) {
+                var termRateType = $scope.rates.find(function (rate) {
+                    return rate.term == $scope.session.academicTerm;
+                })
+
+                if (termRateType != undefined) {
+                    return termRateType.rateTypes.map(function (rateType) {
+                        return {
+                            rateCode: rateType.rateTypeCode,
+                            rateName: rateType.rateTypeDesc
+                        };
+                    });
+                } else {
+                    return [];
+                }
+            }            
+
+            $scope.rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
 
             $scope.rateTypes.push({
                 rateCode: "OTH",
@@ -274,19 +280,16 @@ sessionModule.controller("sessionRequestCtrl",
                 });
 
             if ($scope.session.rateType > '')
-                SetRates();
+                $scope.SetRates();
 
             return;
         }   // GetDatesAndRates()
 
-
         $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
-
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
 
             if ($scope.session.academicTerm > '') {
-
                 angular.forEach($scope.rates, function (value) {
                     if (value.term == $scope.session.academicTerm) {
                         angular.forEach(value.rateTypes, function (value) {
