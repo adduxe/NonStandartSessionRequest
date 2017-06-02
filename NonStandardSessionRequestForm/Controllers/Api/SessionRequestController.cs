@@ -191,7 +191,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                  {
                                      ""rateTypeCode"": ""BUSG"",
                                      ""rateTypeDesc"": ""Graduate Business"",
-                                     ""rateTypeUnitRate"": ""1788"",
+                                     ""rateTypeUnitRate"": ""1778"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
