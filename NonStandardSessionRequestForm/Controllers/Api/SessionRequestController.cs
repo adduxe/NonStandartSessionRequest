@@ -186,7 +186,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeCode"": ""STD"",
                                      ""rateTypeDesc"": ""Standard (session 001)"",
                                      ""rateTypeUnitRate"": ""1733"",
-                                     ""rateTypeFlatRate"": ""25721""
+                                     ""rateTypeFlatRate"": """"
                                  },
                                  {
                                      ""rateTypeCode"": ""BUSG"",
