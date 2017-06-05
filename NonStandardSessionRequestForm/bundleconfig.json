@@ -1,0 +1,50 @@
+[
+  {
+    "outputFileName": "Content/kendo/kendocss.css",
+    "inputFiles": [
+      "Content/kendo/kendo.common-bootstrap.min.css",
+      "Content/kendo/kendo.bootstrap.min.css"
+    ]
+  },
+
+  {
+    "outputFileName": "Content/corebundle.css",
+    "inputFiles": [
+      "Content/bootstrap.css",
+      "Content/bootstrap-theme.css",
+      "Content/site-xs.css",
+      "Content/site-md.css",
+      "Content/site-lg.css",
+      "Content/site.css"
+    ]
+  },
+
+  {
+    "outputFileName": "Scripts/corebundle.js",
+    "inputFiles": [
+      "Scripts/jquery-3.1.1.js",
+      "Scripts/bootstrap.js",
+      "Scripts/angular.js",
+      "Scripts/angular-route.js",
+      "Scripts/angular-resource.js",
+      "Scripts/kendo/kendo.web.min.js"
+    ]
+  },
+
+  {
+    "outputFileName": "Scripts/appbundle.js",
+    "inputFiles": [
+      "Scripts/app/**/*.js",
+      "!Scripts/app/**/admin/*.js",
+      "!Scripts/app/AdminModule.js"
+    ]
+  },
+
+  {
+    "outputFileName": "Scripts/adminbundle.js",
+    "inputFiles": [
+      "Scripts/app/AdminModule.js",
+      "Scripts/app/**/admin/*.js"
+    ]
+  }
+]
