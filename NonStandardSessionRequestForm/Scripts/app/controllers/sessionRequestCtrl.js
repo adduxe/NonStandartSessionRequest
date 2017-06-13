@@ -127,6 +127,7 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
                             $scope.session.firstDayOfFinals     = $scope.sess001Dates.firstDayOfFinals;
                             $scope.session.lastDayOfFinals      = $scope.sess001Dates.lastDayOfFinals;
+                            $scope.FinalsDatesChanged();        // Compute for the Final Grading Dates
                         
                         } else {            // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
