@@ -129,6 +129,7 @@ sessionModule.controller("sessionRequestCtrl",
                         
                         } else {            // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
+                            $scope.FinalsDatesChanged();
                         }
                     } else {        // If there are no 001 dates, compute the dates
                         ComputeDates(startDt, endDt);
