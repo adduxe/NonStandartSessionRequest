@@ -1,6 +1,28 @@
 ﻿'use strict';
 
-sessionModule.factory('RateTypes', ['$resource', function ($resource) {
+sessionModule.factory('RateTypes', ['RateTable', '$resource', '$scope', function (RateTable, $resource, $scope) {
+
+    function selectTermRateType() {
+
+        $scope.rates = RateTable.query();
+
+        var termRateType = $scope.rates.find(function (rate) {
+            return rate.term == $scope.session.academicTerm;
+        })
+
+        if (termRateType != undefined) {
+            return termRateType.rateTypes.map(function (rateType) {
+                return {
+                    rateCode: rateType.rateTypeCode,
+                    rateName: rateType.rateTypeDesc
+                };
+            });
+        } else {
+            return [];
+        }
+    }
+
+    var rateTypes = selectTermRateType;
 
     var rateTypes = [                    // Rate type lookup table
 

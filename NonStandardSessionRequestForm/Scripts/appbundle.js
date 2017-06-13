@@ -1,8 +1,11 @@
 "use strict";
+
 var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
 
 sessionModule.config([
-    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+
+    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider ) {
+
         $routeProvider
             .when("/",
             {
@@ -59,9 +62,9 @@ sessionModule.controller("indexCtrl", ["$scope", "$q", function ($scope, $q) {
 "use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location",
+        ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$rootScope",
 
-    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -184,7 +187,8 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
                             $scope.session.firstDayOfFinals     = $scope.sess001Dates.firstDayOfFinals;
                             $scope.session.lastDayOfFinals      = $scope.sess001Dates.lastDayOfFinals;
-                        
+                            $scope.FinalsDatesChanged();
+
                         } else {            // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
                         }
@@ -537,15 +541,14 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
-//            var session = Sessions.save($scope.session)
-            var session = new Sessions($scope.session);
+            $rootScope.savedSession = new Sessions($scope.session);
 
-            session.$save(null, 
+            $rootScope.savedSession.$save(null,
 
                     function () {
                         //                window.location.href = "successPage.usc.edu";
                         alert("Submission successful");
-                        $location.url("/Result?requestId=" + session.requestId);
+                        $location.url("/Result");
                     },
 
                     function () {
@@ -555,7 +558,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // SubmitForm()
 
-        $scope.rates =[];
+        $scope.rates = [];
 
         function GetRateTable() {
             $scope.rates = RateTable.query();
@@ -649,50 +652,61 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
-        ["Sessions", "RateTypes", "$scope", "$location",
+        ["Sessions", "RateTable", "$scope", "$location", "$rootScope",
 
-    function (Sessions, RateTypes, $scope, $location) {
-        
-        var reqID = $location.search()["requestId"];        // request ID
+    function (Sessions, RateTable, $scope, $location, $rootScope) {
 
-        $scope.session = Sessions.get(
+        $scope.session = $rootScope.savedSession;
 
-            { requestId: reqID },
+        var sessBreaks = $scope.session.sessionBreaks;
 
-            function () {       // on-success
-                
-                var sessBreaks = $scope.session.sessionBreaks;
+        switch (sessBreaks.length) {
 
-                switch (sessBreaks.$values.length) {
+            case 2:
+                $scope.session.sessionBreakStart_2  = sessBreaks[1].startDate;
+                $scope.session.sessionBreakEnd_2    = sessBreaks[1].endDate;
 
-                    case 2:
-                        $scope.session.sessionBreakStart_2  = sessBreaks.$values[1].startDate;
-                        $scope.session.sessionBreakEnd_2    = sessBreaks.$values[1].endDate;
+            case 1:
+                $scope.session.sessionBreakStart_1  = sessBreaks[0].startDate;
+                $scope.session.sessionBreakEnd_1    = sessBreaks[0].endDate;
+                break;
 
-                    case 1:
-                        $scope.session.sessionBreakStart_1  = sessBreaks.$values[0].startDate;
-                        $scope.session.sessionBreakEnd_1    = sessBreaks.$values[0].endDate;
-                        break;
+            default:
+                $scope.session.sessionBreakStart_2 = "";
+                $scope.session.sessionBreakEnd_2 = "";
+                break;
 
-                    default:
-                        break;
-                } // switch()
+        } // switch()
 
-                
-                for (var i = 0; i < RateTypes.length; ++i) {
+//        var selectTermRateType = function (rates, term) {
+//            var termRateType = rates.find(function (rate) {
+//                return rate.term == $scope.session.academicTerm;
+//            })
 
-                    if (RateTypes[i].rateCode == $scope.session.rateType) {
-                        $scope.rateType = RateTypes[i].rateName;
-                        break;
-                    };
-                }   // for (var...)
-            },
+//            if (termRateType != undefined) {
+//                return termRateType.rateTypes.map(function (rateType) {
+//                    return {
+//                        rateCode: rateType.rateTypeCode,
+//                        rateName: rateType.rateTypeDesc
+//                    };
+//                });
+//            } else {
+//                return [];
+//            }
+//        }   // selectTermRateType()
 
-            function () {
-                alert("Error in retrieving request no. " + reqID);
-                return;
-            }
-        );
+////        var rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
+
+//        for (var i = 0; i < $scope.rateTypes.length; ++i) {
+
+//            if (rateTypes[i].rateCode == $rootScope.savedSession.rateType) {
+//                $scope.rateType = rateTypes[i].rateName;
+//                break;
+//            };
+        //        }   // for (var...)
+
+        $scope.rateType = $scope.session.rateType;
+
         return;
     }
 ]);
@@ -747,7 +761,29 @@ sessionModule.factory('RateTable', ['$resource', function ($resource) {
 }])
 'use strict';
 
-sessionModule.factory('RateTypes', ['$resource', function ($resource) {
+sessionModule.factory('RateTypes', ['RateTable', '$resource', '$scope', function (RateTable, $resource, $scope) {
+
+    function selectTermRateType() {
+
+        $scope.rates = RateTable.query();
+
+        var termRateType = $scope.rates.find(function (rate) {
+            return rate.term == $scope.session.academicTerm;
+        })
+
+        if (termRateType != undefined) {
+            return termRateType.rateTypes.map(function (rateType) {
+                return {
+                    rateCode: rateType.rateTypeCode,
+                    rateName: rateType.rateTypeDesc
+                };
+            });
+        } else {
+            return [];
+        }
+    }
+
+    var rateTypes = selectTermRateType;
 
     var rateTypes = [                    // Rate type lookup table
 

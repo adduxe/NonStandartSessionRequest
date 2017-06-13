@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTypes", "RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location",
+        ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$rootScope",
 
-    function (RateTypes, RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
     
             // Add Semester Break functionality
         $scope.AddSemesterBreaks = function () {
@@ -126,10 +126,10 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
                             $scope.session.firstDayOfFinals     = $scope.sess001Dates.firstDayOfFinals;
                             $scope.session.lastDayOfFinals      = $scope.sess001Dates.lastDayOfFinals;
-                        
+                            $scope.FinalsDatesChanged();
+
                         } else {            // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
-                            $scope.FinalsDatesChanged();
                         }
                     } else {        // If there are no 001 dates, compute the dates
                         ComputeDates(startDt, endDt);
@@ -480,15 +480,14 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
-//            var session = Sessions.save($scope.session)
-            var session = new Sessions($scope.session);
+            $rootScope.savedSession = new Sessions($scope.session);
 
-            session.$save(null, 
+            $rootScope.savedSession.$save(null,
 
                     function () {
                         //                window.location.href = "successPage.usc.edu";
                         alert("Submission successful");
-                        $location.url("/Result?requestId=" + session.requestId);
+                        $location.url("/Result");
                     },
 
                     function () {
@@ -498,7 +497,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // SubmitForm()
 
-        $scope.rates =[];
+        $scope.rates = [];
 
         function GetRateTable() {
             $scope.rates = RateTable.query();
