@@ -191,12 +191,12 @@
         <p>{{ session.comments }}</p>
     </article>
 
-    <table align="center" ng-hide="session.sections.$values.length == 0">
+    <table align="center" ng-hide="session.sections.length == 0">
     <tr>
         <th class="red"><h3>Sections</h3></th>
     </tr>
     </table>
-    <div ng-repeat="eachSection in session.sections.$values">
+    <div ng-repeat="eachSection in session.sections">
         <a href="javascript:;" title="Click to view the Class Schedule" ng-click="showSchedule(eachSection.sectionID);">
             <table class="table" align="center">
             <tr>
@@ -225,7 +225,7 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                 </tr>
-                <tr ng-repeat="eachSched in eachSection.schedules.$values">
+                <tr ng-repeat="eachSched in eachSection.schedules">
                     <td>{{ eachSched.classDayOfWeek }}</td>
                     <td>{{ eachSched.classStartTime }}</td>
                     <td>{{ eachSched.classEndTime }}</td>
