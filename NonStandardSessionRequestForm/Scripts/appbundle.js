@@ -541,6 +541,14 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
+            $rootScope.rateName = '';
+            for (var i = 0; i < $scope.rateTypes.length; ++i) {
+                if ($scope.rateTypes[i].rateCode == $scope.session.rateType) {
+                    $rootScope.rateName = $scope.rateTypes[i].rateName;
+                    break;
+                };
+            }   // for (var...)
+
             $rootScope.savedSession = new Sessions($scope.session);
 
             $rootScope.savedSession.$save(null,
@@ -657,6 +665,7 @@ sessionModule.controller("sessionResultCtrl",
     function (Sessions, RateTable, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
+        $scope.rateName = $rootScope.rateName;
 
         var sessBreaks = $scope.session.sessionBreaks;
 
@@ -678,34 +687,7 @@ sessionModule.controller("sessionResultCtrl",
 
         } // switch()
 
-//        var selectTermRateType = function (rates, term) {
-//            var termRateType = rates.find(function (rate) {
-//                return rate.term == $scope.session.academicTerm;
-//            })
-
-//            if (termRateType != undefined) {
-//                return termRateType.rateTypes.map(function (rateType) {
-//                    return {
-//                        rateCode: rateType.rateTypeCode,
-//                        rateName: rateType.rateTypeDesc
-//                    };
-//                });
-//            } else {
-//                return [];
-//            }
-//        }   // selectTermRateType()
-
-////        var rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
-
-//        for (var i = 0; i < $scope.rateTypes.length; ++i) {
-
-//            if (rateTypes[i].rateCode == $rootScope.savedSession.rateType) {
-//                $scope.rateType = rateTypes[i].rateName;
-//                break;
-//            };
-        //        }   // for (var...)
-
-        $scope.rateType = $scope.session.rateType;
+//        $scope.rateType = $scope.session.rateType;
 
         return;
     }

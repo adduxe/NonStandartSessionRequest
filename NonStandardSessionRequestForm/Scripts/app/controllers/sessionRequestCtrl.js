@@ -480,6 +480,14 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = sessionValue.substring(3);
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
+            $rootScope.rateName = '';
+            for (var i = 0; i < $scope.rateTypes.length; ++i) {
+                if ($scope.rateTypes[i].rateCode == $scope.session.rateType) {
+                    $rootScope.rateName = $scope.rateTypes[i].rateName;
+                    break;
+                };
+            }   // for (var...)
+
             $rootScope.savedSession = new Sessions($scope.session);
 
             $rootScope.savedSession.$save(null,
