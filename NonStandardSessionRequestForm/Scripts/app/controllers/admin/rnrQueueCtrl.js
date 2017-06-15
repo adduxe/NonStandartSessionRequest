@@ -1,6 +1,6 @@
-﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTypes", "CampusLocations",
+﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "CampusLocations",
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTypes, CampusLocations) {
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, CampusLocations) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -32,7 +32,7 @@
                                                             $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                         lastDayForFinalGrading:
                                                             $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                        rateType            : getRateTypeDescription(subm.session.rateType),
+                                        rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
                                         ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                         flatRateAmount      : subm.session.flatRateAmount,
                                         flatRateUnitsMin    : subm.session.flatRateUnitsMin,
@@ -326,6 +326,7 @@
 
         $(document).ready(function () {
             $scope.spinningWheel.center().open();
+            $scope.rates = RateTable.query();
         })
 
     }]);

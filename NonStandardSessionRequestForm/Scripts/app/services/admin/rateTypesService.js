@@ -1,23 +1,42 @@
 ﻿'use strict';
 
-adminModule.factory('RateTypes', ['$resource', function ($resource) {
+adminModule.factory('RateDescription', [function () {
 
-    var rateTypes = [                    // Rate type lookup table
+    function selectTermRateType(term, rates) {
 
-        { rateCode: "STD",  rateName: "Standard (session 001)" },
-        { rateCode: "GBUS", rateName: "Graduate Business" },
-        { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
-        { rateCode: "GENGR",rateName: "Graduate Engineering" },
-        { rateCode: "MRED", rateName: "Master of Real Estate Development" },
-        { rateCode: "PHAR", rateName: "Pharmacy" },
-        { rateCode: "DENT", rateName: "Dentistry" },
-        { rateCode: "DH",   rateName: "Dental Hygiene" },
-        { rateCode: "ADVDE",rateName: "Advanced Dentistry" },
-        { rateCode: "LAW",  rateName: "Law" },
-        { rateCode: "MED",  rateName: "Medicine" },
-        { rateCode: "OTH",  rateName: "Other" }
-    ];
+        var termRateType = rates.find(function (rate) {
+            return rate.term == term;
+        })
 
-    return rateTypes;
+        if (termRateType != undefined) {
+            return termRateType.rateTypes.map(function (rateType) {
+                return {
+                    rateCode: rateType.rateTypeCode,
+                    rateName: rateType.rateTypeDesc
+                };
+            });
+        } else {
+            return [];
+        }
+    }   // selectTermRateType            
+
+    return function (rateCode, term, rateTable) {
+
+        var rateTypes = selectTermRateType(term, rateTable);
+
+        rateTypes.push({
+            rateCode: "OTH",
+            rateName: "Other"
+        });
+
+        var rateDesc = "";
+        for (var i = 0; i < rateTypes.length; ++i) {
+            if (rateTypes[i].rateCode == rateCode) {
+                rateDesc = rateTypes[i].rateName;
+                break;
+            }
+        }
+        return rateDesc;
+    }
 
 }])

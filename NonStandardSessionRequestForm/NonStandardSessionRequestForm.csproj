@@ -373,11 +373,12 @@
     <None Include="Scripts\app\services\emailService.js" />
     <None Include="Scripts\app\services\rateTypesService.js" />
     <None Include="Scripts\app\services\sessionTableService.js" />
-    <None Include="Scripts\app\services\rateTableService.js" />
+    <None Include="Scripts\app\services\admin\rateTableService.js" />
     <None Include="Scripts\app\services\get001DatesService.js" />
     <None Include="Scripts\app\services\admin\submissionsService.js" />
     <None Include="Scripts\app\AdminModule.js" />
     <None Include="Scripts\app\services\admin\writeToSisService.js" />
+    <Content Include="Scripts\app\services\rateTableService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\app\controllers\indexCtrl.js" />
     <None Include="Scripts\app\controllers\sessionRequestCtrl.js" />

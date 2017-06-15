@@ -44,7 +44,8 @@
     "outputFileName": "Scripts/adminbundle.js",
     "inputFiles": [
       "Scripts/app/AdminModule.js",
-      "Scripts/app/**/admin/*.js"
+      "Scripts/app/services/admin/*.js",
+      "Scripts/app/controllers/admin/*.js"
     ]
   }
 ]

@@ -257,8 +257,8 @@ sessionModule.controller("sessionRequestCtrl",
             );
 
             function selectTermRateType(rates, term) {
-                var termRateType = $scope.rates.find(function (rate) {
-                    return rate.term == $scope.session.academicTerm;
+                var termRateType = rates.find(function (rate) {
+                    return rate.term == term;
                 })
 
                 if (termRateType != undefined) {
@@ -271,7 +271,7 @@ sessionModule.controller("sessionRequestCtrl",
                 } else {
                     return [];
                 }
-            }            
+            }   // selectTermRateType            
 
             $scope.rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
 
@@ -519,8 +519,6 @@ sessionModule.controller("sessionRequestCtrl",
         PopulateSemesterDropdown();             // calculates the semester options for the user
 
         GetRateTable();                         // Reads the rate table from the database
-
-        //$scope.rateTypes = RateTypes;
 
         $scope.campusLocs = CampusLocations;
 

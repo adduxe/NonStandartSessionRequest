@@ -1,13 +1,21 @@
-﻿adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "RateTypes", "CampusLocations",
+﻿adminModule.controller("burQueueCtrl",
 
-    function ($scope, $filter, Submissions, RateTypes, CampusLocations) {
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "CampusLocations",
+
+    function ($scope, $filter, Submissions, RateTable, RateDescription, CampusLocations) {
         
         $scope.dataSource = new kendo.data.DataSource({
-                transport: {
+
+            transport: {
+
                     read: function (e) {
+
                         Submissions.query(function (data) {
+
                             $scope.submissions = data;
+
                             e.success(
+
                                 data.map(
                                     function (subm) {
                                         return {
@@ -19,7 +27,7 @@
                                             userEmail           : subm.session.userEmail,
                                             userPhone           : subm.session.userPhone,
                                             uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
-                                            otherCampusLocation: subm.session.otherCampusLocation,
+                                            otherCampusLocation : subm.session.otherCampusLocation,
                                             lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                             lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
                                             lastDayForEnrollmentOptionChange:
@@ -32,8 +40,8 @@
                                                                 $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
                                                                 $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                            rateType            : getRateTypeDescription(subm.session.rateType),
-                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
+                                            rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
+                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
                                             flatRateUnitsMin    : subm.session.flatRateUnitsMin,
                                             flatRateUnitsMax    : subm.session.flatRateUnitsMax,
@@ -74,7 +82,6 @@
                 pageSize: 10
         });
 
-
         function GetCampusName(campusCode) {
 
             var campusName = "";
@@ -88,7 +95,6 @@
             return campusName; 
 
         }   // GetCampusName()
-
 
         $scope.mainGridOptions = {
 
@@ -106,20 +112,6 @@
             ],
             editable: "popup"
         };
-
-
-        function getRateTypeDescription(rateTypeCode) {
-
-            var rateDesc = "";
-
-            for (var i = 0; i < RateTypes.length; ++i) {
-                if (RateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = RateTypes[i].rateName;
-                    break;
-                }
-            }
-        return rateDesc;
-    }   // getRateTypeDescription()
 
     $scope.sectionGridOptions = function (dataItem) {
 
@@ -142,7 +134,7 @@
                 { field: "incomeAmountNumber",  title: "Acct. no.",     width: "10%" }
             ]
         };
-    };
+    };  // sectionGridOptions
 
     $scope.scheduleGridOptions = function (dataItem) {
         return {
@@ -159,7 +151,7 @@
                 { field: "classEndTime",    title: "End Time",      width: "150px" }
             ]
         };
-    };
+    };  // scheduleGridOptions
 
     $scope.sessionBrkGridOptions = function (dataItem) {
         return {
@@ -183,10 +175,11 @@
                     { field: "endDate",     title: "End Date",  format: "{0:MMM dd, yyyy}" }
                 ]
             };
-    };  // $scope.sessionBrkGridOptions
+    };  // sessionBrkGridOptions
 
     $(document).ready(function () {
         $scope.spinningWheel.center().open();
+        $scope.rates = RateTable.query();
     });
 
 }]);

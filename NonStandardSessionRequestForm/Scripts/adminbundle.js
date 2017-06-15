@@ -1,15 +1,122 @@
 "use strict";
 var adminModule = angular.module("adminModule", ["ngResource", "kendo.directives"]);
-adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "RateTypes", "CampusLocations",
+'use strict';
 
-    function ($scope, $filter, Submissions, RateTypes, CampusLocations) {
+adminModule.factory('CampusLocations', ['$resource', function ($resource) {
+
+    var campusLocations = [                                   // Populate the Campus Location dropdown.
+            { campusCode: "HSC", campusName: "Health Science Campus" },
+            { campusCode: "OCC", campusName: "Orange County Campus" },
+            { campusCode: "OVS", campusName: "Overseas" },
+            { campusCode: "DC", campusName: "Washington D.C." },
+            { campusCode: "SAC", campusName: "Sacramento" },
+            { campusCode: "USA", campusName: "Off-campus in U.S." },
+            { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
+            { campusCode: "CAT", campusName: "Catalina" },
+            { campusCode: "LAC", campusName: "L.A. Center" },
+            { campusCode: "SD", campusName: "San Diego" },
+            { campusCode: "ATT", campusName: "AT&T Center" },
+            { campusCode: "SKB", campusName: "No Tuition or Fees" },
+            { campusCode: "OTH", campusName: "Others" }
+        ];
+
+    return campusLocations;
+
+}])
+'use strict';
+
+adminModule.factory('EmailResult', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/email/:requestId", { requestId: '@id' }
+    );
+}])
+'use strict';
+
+adminModule.factory('RateTable', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/ratetable"
+    );
+
+}])
+'use strict';
+
+adminModule.factory('RateDescription', [function () {
+
+    function selectTermRateType(term, rates) {
+
+        var termRateType = rates.find(function (rate) {
+            return rate.term == term;
+        })
+
+        if (termRateType != undefined) {
+            return termRateType.rateTypes.map(function (rateType) {
+                return {
+                    rateCode: rateType.rateTypeCode,
+                    rateName: rateType.rateTypeDesc
+                };
+            });
+        } else {
+            return [];
+        }
+    }   // selectTermRateType            
+
+    return function (rateCode, term, rateTable) {
+
+        var rateTypes = selectTermRateType(term, rateTable);
+
+        rateTypes.push({
+            rateCode: "OTH",
+            rateName: "Other"
+        });
+
+        var rateDesc = "";
+        for (var i = 0; i < rateTypes.length; ++i) {
+            if (rateTypes[i].rateCode == rateCode) {
+                rateDesc = rateTypes[i].rateName;
+                break;
+            }
+        }
+        return rateDesc;
+    }
+
+}])
+'use strict';
+
+adminModule.factory('Submissions', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/submissions/:submissionId", { submissionId: '@id' },
+        { 'update': { method: 'PUT' } }
+    );
+}])
+'use strict';
+
+adminModule.factory('WriteToSis', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/rnrswebsess", null, null
+    );
+}])
+adminModule.controller("burQueueCtrl",
+
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "CampusLocations",
+
+    function ($scope, $filter, Submissions, RateTable, RateDescription, CampusLocations) {
         
         $scope.dataSource = new kendo.data.DataSource({
-                transport: {
+
+            transport: {
+
                     read: function (e) {
+
                         Submissions.query(function (data) {
+
                             $scope.submissions = data;
+
                             e.success(
+
                                 data.map(
                                     function (subm) {
                                         return {
@@ -21,7 +128,7 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
                                             userEmail           : subm.session.userEmail,
                                             userPhone           : subm.session.userPhone,
                                             uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
-                                            otherCampusLocation: subm.session.otherCampusLocation,
+                                            otherCampusLocation : subm.session.otherCampusLocation,
                                             lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                             lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
                                             lastDayForEnrollmentOptionChange:
@@ -34,8 +141,8 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
                                                                 $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
                                                                 $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                            rateType            : getRateTypeDescription(subm.session.rateType),
-                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
+                                            rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
+                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
                                             flatRateUnitsMin    : subm.session.flatRateUnitsMin,
                                             flatRateUnitsMax    : subm.session.flatRateUnitsMax,
@@ -76,7 +183,6 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
                 pageSize: 10
         });
 
-
         function GetCampusName(campusCode) {
 
             var campusName = "";
@@ -90,7 +196,6 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
             return campusName; 
 
         }   // GetCampusName()
-
 
         $scope.mainGridOptions = {
 
@@ -108,20 +213,6 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
             ],
             editable: "popup"
         };
-
-
-        function getRateTypeDescription(rateTypeCode) {
-
-            var rateDesc = "";
-
-            for (var i = 0; i < RateTypes.length; ++i) {
-                if (RateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = RateTypes[i].rateName;
-                    break;
-                }
-            }
-        return rateDesc;
-    }   // getRateTypeDescription()
 
     $scope.sectionGridOptions = function (dataItem) {
 
@@ -144,7 +235,7 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
                 { field: "incomeAmountNumber",  title: "Acct. no.",     width: "10%" }
             ]
         };
-    };
+    };  // sectionGridOptions
 
     $scope.scheduleGridOptions = function (dataItem) {
         return {
@@ -161,7 +252,7 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
                 { field: "classEndTime",    title: "End Time",      width: "150px" }
             ]
         };
-    };
+    };  // scheduleGridOptions
 
     $scope.sessionBrkGridOptions = function (dataItem) {
         return {
@@ -185,18 +276,19 @@ adminModule.controller("burQueueCtrl", ["$scope", "$filter", "Submissions", "Rat
                     { field: "endDate",     title: "End Date",  format: "{0:MMM dd, yyyy}" }
                 ]
             };
-    };  // $scope.sessionBrkGridOptions
+    };  // sessionBrkGridOptions
 
     $(document).ready(function () {
         $scope.spinningWheel.center().open();
+        $scope.rates = RateTable.query();
     });
 
 }]);
-adminModule.controller
+adminModule.controller("faoQueueCtrl",
 
-    ("faoQueueCtrl", ["$scope", "$filter", "Submissions", "RateTypes", "EmailResult", "CampusLocations",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "CampusLocations",
 
-    function ($scope, $filter, Submissions, RateTypes, EmailResult, CampusLocations) {
+    function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, CampusLocations) {
 
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -204,53 +296,55 @@ adminModule.controller
 
                 read: function (e) {
 
-                        Submissions.query(function (data) {
+                    Submissions.query(function (data) {
+
                             $scope.submissions = data;
+
                             e.success(
+
                                 data.map(
                                     function (subm) {
                                         return {
-                                            requestId:          subm.requestId,
-                                            submissionId:       subm.submissionId,
-                                            academicTerm:       subm.session.academicTerm,
-                                            sessionCode:        subm.session.sessionCode,
-                                            sessionName:        subm.session.sessionName,
-                                            userEmail:          subm.session.userEmail,
-                                            userPhone:          subm.session.userPhone,
-                                            isClassHeldAtUpc:   subm.session.isClassHeldAtUpc,
-                                            uscCampusLocation:  GetCampusName(subm.session.uscCampusLocation),
-                                            otherCampusLocation:subm.session.otherCampusLocation,
-                                            lastDayForAddDrop:  $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
-                                            lastDayForWithdrawal:
-                                                                $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
+                                            requestId           : subm.requestId,
+                                            submissionId        : subm.submissionId,
+                                            academicTerm        : subm.session.academicTerm,
+                                            sessionCode         : subm.session.sessionCode,
+                                            sessionName         : subm.session.sessionName,
+                                            userEmail           : subm.session.userEmail,
+                                            userPhone           : subm.session.userPhone,
+                                            isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
+                                            uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
+                                            otherCampusLocation : subm.session.otherCampusLocation,
+                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
+                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
                                             lastDayForEnrollmentOptionChange:
                                                                 $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
-                                            firstDayOfClass:    $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
-                                            lastDayOfClass:     $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
-                                            firstDayOfFinals:   $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
-                                            lastDayOfFinals:    $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
+                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
+                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
+                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
+                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
                                             firstDayForFinalGrading:
                                                                 $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
                                                                 $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                            rateType:           getRateTypeDescription(subm.session.rateType),
-                                            ratePerUnitAmount:  subm.session.ratePerUnitAmount,
-                                            flatRateAmount:     subm.session.flatRateAmount,
-                                            flatRateUnitsMin:   subm.session.flatRateUnitsMin,
-                                            flatRateUnitsMax:   subm.session.flatRateUnitsMax,
-                                            owningSchool:       subm.session.owningSchool,
-                                            owningDepartment:   subm.session.owningDepartment,
-                                            userContact:        subm.session.userContact,
-                                            requestDate:        $filter('date')(subm.session.requestDate, "mediumDate"),
-                                            sections:           subm.session.sections,
-                                            sessionBreaks:      subm.session.sessionBreaks,
-                                            comments:           subm.session.comments,
-                                            faoAction:          subm.faoAction,
-                                            faoActionDate:      $filter('date')(subm.faoActionDate, "mediumDate"),
-                                            faoActionReason:    subm.faoActionReason,
-                                            rnrAction:          subm.rnrAction,
-                                            rnrActionDate:      $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason:    subm.rnrActionReason
+                                            rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
+                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
+                                            flatRateAmount      : subm.session.flatRateAmount,
+                                            flatRateUnitsMin    : subm.session.flatRateUnitsMin,
+                                            flatRateUnitsMax    : subm.session.flatRateUnitsMax,
+                                            owningSchool        : subm.session.owningSchool,
+                                            owningDepartment    : subm.session.owningDepartment,
+                                            userContact         : subm.session.userContact,
+                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
+                                            sections            : subm.session.sections,
+                                            sessionBreaks       : subm.session.sessionBreaks,
+                                            comments            : subm.session.comments,
+                                            faoAction           : subm.faoAction,
+                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
+                                            faoActionReason     : subm.faoActionReason,
+                                            rnrAction           : subm.rnrAction,
+                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                            rnrActionReason     : subm.rnrActionReason
                                         };
                                     }));
                                     $scope.spinningWheel.center().close();
@@ -275,7 +369,6 @@ adminModule.controller
             pageSize: 10
         });
 
-
         function GetCampusName(campusCode) {
 
             var campusName = "";
@@ -289,7 +382,6 @@ adminModule.controller
 
             return campusName;
         }   // GetCampusName()
-
 
         $scope.mainGridOptions = {
 
@@ -312,173 +404,161 @@ adminModule.controller
             editable: "popup"
         };
 
+        $scope.sectionGridOptions = function (dataItem) {
 
-        function getRateTypeDescription(rateTypeCode) {
-
-            var rateDesc = "";
-
-            for (var i = 0; i < RateTypes.length; ++i) {
-                if (RateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = RateTypes[i].rateName;
-                    break;
-                }
-            }
-        return rateDesc;
-    }   // getRateTypeDescription()
-
-    $scope.sectionGridOptions = function (dataItem) {
-
-        return {
-            dataSource: {
-                data: dataItem.sections,
-                pageSize: 5
-            },
-            scrollable: false,
-            sortable: true,
-            pageable: true,
-            columns: [
-                { field: "sectionNumber",       title: "Section",       width: "10%" },
-                { field: "prefix",              title: "Prefix",        width: "10%" },
-                { field: "title",               title: "Section Title", width: "15%" },
-                { field: "courseNumber",        title: "Course #",      width: "10%" },
-                { field: "unitValue",           title: "Units",         width: "10%" },
-                { field: "estimatedEnrollment", title: "Class size",    width: "10%" },
-                { field: "instructorName",      title: "Instructor",    width: "15%" },
-                { field: "incomeAmountNumber",  title: "Acct. no.",     width: "10%" }
-            ]
-        };
-    };
-
-    $scope.scheduleGridOptions = function (dataItem) {
-        return {
-            dataSource: {
-                data: dataItem.schedules,
-                pageSize: 5,
-            },
-            scrollable: false,
-            sortable: true,
-            pageable: true,
-            columns: [
-                { field: "classDayOfWeek",  title: "Class Day",     width: "100px" },
-                { field: "classStartTime",  title: "Start Time",    width: "150px" },
-                { field: "classEndTime",    title: "End Time",      width: "150px" }
-            ]
-        };
-    };
-
-    $scope.sessionBrkGridOptions = function (dataItem) {
-        return {
+            return {
                 dataSource: {
-                    data: dataItem.sessionBreaks,
-                    pageSize: 5,
-                    schema: {
-                        model: {
-                            fields: {
-                                startDate: { type: "date" },
-                                endDate: { type: "date" }
-                            }
-                        }
-                    }
+                    data: dataItem.sections,
+                    pageSize: 5
                 },
                 scrollable: false,
                 sortable: true,
                 pageable: true,
                 columns: [
-                    { field: "startDate",   title: "Start Date",    format: "{0: MMM dd, yyyy}" },
-                    { field: "endDate",     title: "End Date",      format: "{0: MMM dd, yyyy}" }
+                    { field: "sectionNumber",       title: "Section",       width: "10%" },
+                    { field: "prefix",              title: "Prefix",        width: "10%" },
+                    { field: "title",               title: "Section Title", width: "15%" },
+                    { field: "courseNumber",        title: "Course #",      width: "10%" },
+                    { field: "unitValue",           title: "Units",         width: "10%" },
+                    { field: "estimatedEnrollment", title: "Class size",    width: "10%" },
+                    { field: "instructorName",      title: "Instructor",    width: "15%" },
+                    { field: "incomeAmountNumber",  title: "Acct. no.",     width: "10%" }
                 ]
             };
-    };  // $scope.sessionBrkGridOptions
+        };
 
-    $scope.rejectSess = {};
+        $scope.scheduleGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.schedules,
+                    pageSize: 5,
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "classDayOfWeek",  title: "Class Day",     width: "100px" },
+                    { field: "classStartTime",  title: "Start Time",    width: "150px" },
+                    { field: "classEndTime",    title: "End Time",      width: "150px" }
+                ]
+            };
+        };
 
-    $scope.openRejectPopup = function (submID) {
-        $scope.submID = submID;
-        $scope.rejectWindow.center().open();
-        return;
-    }
+        $scope.sessionBrkGridOptions = function (dataItem) {
+            return {
+                    dataSource: {
+                        data: dataItem.sessionBreaks,
+                        pageSize: 5,
+                        schema: {
+                            model: {
+                                fields: {
+                                    startDate: { type: "date" },
+                                    endDate: { type: "date" }
+                                }
+                            }
+                        }
+                    },
+                    scrollable: false,
+                    sortable: true,
+                    pageable: true,
+                    columns: [
+                        { field: "startDate",   title: "Start Date",    format: "{0: MMM dd, yyyy}" },
+                        { field: "endDate",     title: "End Date",      format: "{0: MMM dd, yyyy}" }
+                    ]
+                };
+        };  // $scope.sessionBrkGridOptions
 
-    $scope.approveRequest = function (submID) {
-        $scope.submID = submID;
-        $scope.updateRequest('A', 'Approved');
-        alert("Session Request Approved!");
-        return;
-    }
+        $scope.rejectSess = {};
 
-    $scope.EmailUser = function (submID) {
-        EmailResult.save({id: submID });                      // Email requestor upon approval or rejection
-        alert("Email sent for Submission ID: " + submID);
-        return;
-    }
-
-    $scope.updateRequest = function (actionCode, rejectReason) {
-
-        if (!rejectReason) {
-            alert("Please provide a reason for rejecting the request.");
+        $scope.openRejectPopup = function (submID) {
+            $scope.submID = submID;
+            $scope.rejectWindow.center().open();
             return;
         }
 
-        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
-
-        if (selectedSess != null) {
-            $scope.rejectSess = selectedSess;
+        $scope.approveRequest = function (submID) {
+            $scope.submID = submID;
+            $scope.updateRequest('A', 'Approved');
+            alert("Session Request Approved!");
+            return;
         }
 
-        var todaysDate = new Date();
+        $scope.EmailUser = function (submID) {
+            EmailResult.save({id: submID });                      // Email requestor upon approval or rejection
+            alert("Email sent for Submission ID: " + submID);
+            return;
+        }
 
-        var status = {
-            submissionId:   $scope.submID,
-            faoAction:      actionCode,
-            faoActionDate:  todaysDate.toDateString(),
-            faoActionReason: rejectReason,
-            rnrAction:      $scope.rejectSess.rnrAction,
-            rnrActionDate:  $scope.rejectSess.rnrActionDate,
-            rnrActionReason:$scope.rejectSess.rnrActionReason
-        };
+        $scope.updateRequest = function (actionCode, rejectReason) {
 
-        $scope.spinningWheel.center().open();
+            if (!rejectReason) {
+                alert("Please provide a reason for rejecting the request.");
+                return;
+            }
 
-        Submissions.update({ submissionId: $scope.submID }, status)                         // update the request's status
-            .$promise.then(function () {
+            var selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
 
-                $scope.spinningWheel.center().close();
+            if (selectedSess != null) {
+                $scope.rejectSess = selectedSess;
+            }
 
-                switch (actionCode) {
+            var todaysDate = new Date();
 
-                    case "A":
-                        // EmailResult.save($scope.rejectSess.requestId);                   // Email requestor upon approval
-                        break;
+            var status = {
+                submissionId:   $scope.submID,
+                faoAction:      actionCode,
+                faoActionDate:  todaysDate.toDateString(),
+                faoActionReason: rejectReason,
+                rnrAction:      $scope.rejectSess.rnrAction,
+                rnrActionDate:  $scope.rejectSess.rnrActionDate,
+                rnrActionReason:$scope.rejectSess.rnrActionReason
+            };
 
-                    case "R":
-                        EmailResult.save({ id: $scope.submID });                           // Email requestor upon rejection
-                        alert("Rejection email sent.");
-                        break;
+            $scope.spinningWheel.center().open();
 
-                    default:
-                        break;
-                }       // switch()
+            Submissions.update({ submissionId: $scope.submID }, status)                         // update the request's status
+                .$promise.then(function () {
 
-                if (actionCode == 'R')
-                    $scope.rejectWindow.close();
+                    $scope.spinningWheel.center().close();
 
-                // remove the submission from the list
-                for (var i = 0; i < $scope.dataSource._data.length; ++i) {
-                    if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                        $scope.dataSource._data.splice(i, 1);
-                        break;
-                    }
-                }   // for (var i...
-            }); // promise.then()
-    }   // updateRequest()
+                    switch (actionCode) {
 
-    $(document).ready(function () {
-        $scope.spinningWheel.center().open();
-    })
+                        case "A":
+                            // EmailResult.save($scope.rejectSess.requestId);                   // Email requestor upon approval
+                            break;
 
-}]);
-adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTypes", "CampusLocations",
+                        case "R":
+                            EmailResult.save({ id: $scope.submID });                           // Email requestor upon rejection
+                            alert("Rejection email sent.");
+                            break;
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTypes, CampusLocations) {
+                        default:
+                            break;
+                    }       // switch()
+
+                    if (actionCode == 'R')
+                        $scope.rejectWindow.close();
+
+                    // remove the submission from the list
+                    for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+                        if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                            $scope.dataSource._data.splice(i, 1);
+                            break;
+                        }
+                    }   // for (var i...
+                }); // promise.then()
+        }   // updateRequest()
+
+        $(document).ready(function () {
+            $scope.spinningWheel.center().open();
+            $scope.rates = RateTable.query();
+        })
+
+    }   // function ($scope...
+]); // adminController...
+adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "CampusLocations",
+
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, CampusLocations) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -510,7 +590,7 @@ adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "Wri
                                                             $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                         lastDayForFinalGrading:
                                                             $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                        rateType            : getRateTypeDescription(subm.session.rateType),
+                                        rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
                                         ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                         flatRateAmount      : subm.session.flatRateAmount,
                                         flatRateUnitsMin    : subm.session.flatRateUnitsMin,
@@ -804,77 +884,7 @@ adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "Wri
 
         $(document).ready(function () {
             $scope.spinningWheel.center().open();
+            $scope.rates = RateTable.query();
         })
 
     }]);
-'use strict';
-
-adminModule.factory('CampusLocations', ['$resource', function ($resource) {
-
-    var campusLocations = [                                   // Populate the Campus Location dropdown.
-            { campusCode: "HSC", campusName: "Health Science Campus" },
-            { campusCode: "OCC", campusName: "Orange County Campus" },
-            { campusCode: "OVS", campusName: "Overseas" },
-            { campusCode: "DC", campusName: "Washington D.C." },
-            { campusCode: "SAC", campusName: "Sacramento" },
-            { campusCode: "USA", campusName: "Off-campus in U.S." },
-            { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
-            { campusCode: "CAT", campusName: "Catalina" },
-            { campusCode: "LAC", campusName: "L.A. Center" },
-            { campusCode: "SD", campusName: "San Diego" },
-            { campusCode: "ATT", campusName: "AT&T Center" },
-            { campusCode: "SKB", campusName: "No Tuition or Fees" },
-            { campusCode: "OTH", campusName: "Others" }
-        ];
-
-    return campusLocations;
-
-}])
-'use strict';
-
-adminModule.factory('EmailResult', ['$resource', function ($resource) {
-
-    return $resource(
-        "api/email/:requestId", { requestId: '@id' }
-    );
-}])
-'use strict';
-
-adminModule.factory('RateTypes', ['$resource', function ($resource) {
-
-    var rateTypes = [                    // Rate type lookup table
-
-        { rateCode: "STD",  rateName: "Standard (session 001)" },
-        { rateCode: "GBUS", rateName: "Graduate Business" },
-        { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
-        { rateCode: "GENGR",rateName: "Graduate Engineering" },
-        { rateCode: "MRED", rateName: "Master of Real Estate Development" },
-        { rateCode: "PHAR", rateName: "Pharmacy" },
-        { rateCode: "DENT", rateName: "Dentistry" },
-        { rateCode: "DH",   rateName: "Dental Hygiene" },
-        { rateCode: "ADVDE",rateName: "Advanced Dentistry" },
-        { rateCode: "LAW",  rateName: "Law" },
-        { rateCode: "MED",  rateName: "Medicine" },
-        { rateCode: "OTH",  rateName: "Other" }
-    ];
-
-    return rateTypes;
-
-}])
-'use strict';
-
-adminModule.factory('Submissions', ['$resource', function ($resource) {
-
-    return $resource(
-        "api/submissions/:submissionId", { submissionId: '@id' },
-        { 'update': { method: 'PUT' } }
-    );
-}])
-'use strict';
-
-adminModule.factory('WriteToSis', ['$resource', function ($resource) {
-
-    return $resource(
-        "api/rnrswebsess", null, null
-    );
-}])
