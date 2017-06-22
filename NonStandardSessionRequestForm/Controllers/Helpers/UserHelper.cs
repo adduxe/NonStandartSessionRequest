@@ -41,7 +41,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 #if DEBUG
-            string user = "B";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+            string user = "R";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
 
             switch (user.ToUpper())
             {

@@ -11,13 +11,14 @@
                             data.map(
                                 function (subm) {
                                     return {
-                                        submissionId        : subm.submissionId,
                                         requestId           : subm.requestId,
+                                        submissionId        : subm.submissionId,
                                         academicTerm        : subm.session.academicTerm,
                                         sessionCode         : subm.session.sessionCode,
                                         sessionName         : subm.session.sessionName,
                                         userEmail           : subm.session.userEmail,
                                         userPhone           : subm.session.userPhone,
+                                        isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
                                         uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
                                         otherCampusLocation : subm.session.otherCampusLocation,
                                         lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),

@@ -120,6 +120,7 @@ adminModule.controller("burQueueCtrl",
                                 data.map(
                                     function (subm) {
                                         return {
+
                                             requestId           : subm.requestId,
                                             submissionId        : subm.submissionId,
                                             academicTerm        : subm.session.academicTerm,
@@ -127,6 +128,7 @@ adminModule.controller("burQueueCtrl",
                                             sessionName         : subm.session.sessionName,
                                             userEmail           : subm.session.userEmail,
                                             userPhone           : subm.session.userPhone,
+                                            isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
                                             uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
                                             otherCampusLocation : subm.session.otherCampusLocation,
                                             lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
@@ -142,7 +144,7 @@ adminModule.controller("burQueueCtrl",
                                             lastDayForFinalGrading:
                                                                 $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                             rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
-                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
+                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
                                             flatRateUnitsMin    : subm.session.flatRateUnitsMin,
                                             flatRateUnitsMax    : subm.session.flatRateUnitsMax,
@@ -569,13 +571,14 @@ adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "Wri
                             data.map(
                                 function (subm) {
                                     return {
-                                        submissionId        : subm.submissionId,
                                         requestId           : subm.requestId,
+                                        submissionId        : subm.submissionId,
                                         academicTerm        : subm.session.academicTerm,
                                         sessionCode         : subm.session.sessionCode,
                                         sessionName         : subm.session.sessionName,
                                         userEmail           : subm.session.userEmail,
                                         userPhone           : subm.session.userPhone,
+                                        isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
                                         uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
                                         otherCampusLocation : subm.session.otherCampusLocation,
                                         lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),

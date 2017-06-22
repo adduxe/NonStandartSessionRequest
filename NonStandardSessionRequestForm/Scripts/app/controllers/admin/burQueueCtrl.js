@@ -19,6 +19,7 @@
                                 data.map(
                                     function (subm) {
                                         return {
+
                                             requestId           : subm.requestId,
                                             submissionId        : subm.submissionId,
                                             academicTerm        : subm.session.academicTerm,
@@ -26,6 +27,7 @@
                                             sessionName         : subm.session.sessionName,
                                             userEmail           : subm.session.userEmail,
                                             userPhone           : subm.session.userPhone,
+                                            isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
                                             uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
                                             otherCampusLocation : subm.session.otherCampusLocation,
                                             lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
@@ -41,7 +43,7 @@
                                             lastDayForFinalGrading:
                                                                 $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                             rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
-                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
+                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
                                             flatRateUnitsMin    : subm.session.flatRateUnitsMin,
                                             flatRateUnitsMax    : subm.session.flatRateUnitsMax,
