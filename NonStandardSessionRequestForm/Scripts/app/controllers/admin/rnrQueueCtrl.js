@@ -100,21 +100,6 @@
                 editable: "popup"
             };
 
-
-        function getRateTypeDescription(rateTypeCode) {
-
-            var rateDesc = "";
-
-            for (var i = 0; i < RateTypes.length; ++i) {
-                if (RateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = RateTypes[i].rateName;
-                    break;
-                }
-            }
-            return rateDesc;
-        }   // getRateTypeDescription()
-
-
         $scope.sectionGridOptions = function (dataItem) {
 
             return {

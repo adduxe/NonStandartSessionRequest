@@ -17,20 +17,20 @@ adminModule.factory('GetCampusName',
     [
         "CampusLocations", function(CampusLocations){
 
-            return function (campusCode, campusLocation) {
+            return function (campusCode) {
                 return GetCampusName(campusCode, CampusLocations)
             }
         }
     ]
 );
 
-//sessionModule.factory('GetCampusName',
-//    [
-//        "CampusLocations", function (CampusLocations) {
+sessionModule.factory('GetCampusName',
+    [
+        "CampusLocations", function (CampusLocations) {
 
-//            return function (campusCode, campusLocation) {
-//                return GetCampusName(campusCode, CampusLocations)
-//            }
-//        }
-//    ]
-//);
+            return function (campusCode) {
+                return GetCampusName(campusCode, CampusLocations)
+            }
+        }
+    ]
+);

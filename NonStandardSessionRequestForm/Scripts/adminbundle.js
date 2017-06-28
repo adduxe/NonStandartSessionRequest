@@ -28,79 +28,11 @@ sessionModule.config([
 ]);
 'use strict';
 
-adminModule.factory('CampusLocations', ['$resource', function ($resource) {
-
-    var campusLocations = [                                   // Populate the Campus Location dropdown.
-            { campusCode: "HSC", campusName: "Health Science Campus" },
-            { campusCode: "OCC", campusName: "Orange County Campus" },
-            { campusCode: "OVS", campusName: "Overseas" },
-            { campusCode: "DC", campusName: "Washington D.C." },
-            { campusCode: "SAC", campusName: "Sacramento" },
-            { campusCode: "USA", campusName: "Off-campus in U.S." },
-            { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
-            { campusCode: "CAT", campusName: "Catalina" },
-            { campusCode: "LAC", campusName: "L.A. Center" },
-            { campusCode: "SD", campusName: "San Diego" },
-            { campusCode: "ATT", campusName: "AT&T Center" },
-            { campusCode: "SKB", campusName: "No Tuition or Fees" },
-            { campusCode: "OTH", campusName: "Others" }
-        ];
-
-    return campusLocations;
-
-}])
-'use strict';
-
 adminModule.factory('EmailResult', ['$resource', function ($resource) {
 
     return $resource(
         "api/email/:requestId", { requestId: '@id' }
     );
-}])
-'use strict';
-
-function GetCampusName(cCode, cLocations) {
-
-    var campusName = "";
-
-    for (var i = 0; i < cLocations.length; ++i) {
-        if (cLocations[i].campusCode == cCode) {
-            campusName = cLocations[i].campusName;
-            break;
-        }
-    }
-    return campusName;
-}
-
-adminModule.factory('GetCampusName',
-    [
-        "CampusLocations", function(CampusLocations){
-
-            return function (campusCode, campusLocation) {
-                return GetCampusName(campusCode, CampusLocations)
-            }
-        }
-    ]
-);
-
-sessionModule.factory('GetCampusName',
-    [
-        "CampusLocations", function (CampusLocations) {
-
-            return function (campusCode, campusLocation) {
-                return GetCampusName(campusCode, CampusLocations)
-            }
-        }
-    ]
-);
-'use strict';
-
-adminModule.factory('RateTable', ['$resource', function ($resource) {
-
-    return $resource(
-        "api/ratetable"
-    );
-
 }])
 'use strict';
 
@@ -160,6 +92,95 @@ adminModule.factory('WriteToSis', ['$resource', function ($resource) {
     return $resource(
         "api/rnrswebsess", null, null
     );
+}])
+'use strict';
+
+function GetCampusLocations(){
+
+    var campusLocations = [ // Populate the Campus Location dropdown.
+
+            { campusCode: "HSC", campusName: "Health Science Campus" },
+            { campusCode: "OCC", campusName: "Orange County Campus" },
+            { campusCode: "OVS", campusName: "Overseas" },
+            { campusCode: "DC", campusName: "Washington D.C." },
+            { campusCode: "SAC", campusName: "Sacramento" },
+            { campusCode: "USA", campusName: "Off-campus in U.S." },
+            { campusCode: "VIR", campusName: "Virtual(DEN/Online)" },
+            { campusCode: "CAT", campusName: "Catalina" },
+            { campusCode: "LAC", campusName: "L.A. Center" },
+            { campusCode: "SD", campusName: "San Diego" },
+            { campusCode: "ATT", campusName: "AT&T Center" },
+            { campusCode: "SKB", campusName: "No Tuition or Fees" },
+            { campusCode: "OTH", campusName: "Others" }
+    ];
+
+    return campusLocations;
+}   // GetCampusLocations()
+
+
+adminModule.factory('CampusLocations', ['$resource', function ($resource) {
+
+    return GetCampusLocations();
+
+}]);
+
+sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
+
+    return GetCampusLocations();
+
+}]);
+'use strict';
+
+function GetCampusName(cCode, cLocations) {
+
+    var campusName = "";
+
+    for (var i = 0; i < cLocations.length; ++i) {
+        if (cLocations[i].campusCode == cCode) {
+            campusName = cLocations[i].campusName;
+            break;
+        }
+    }
+    return campusName;
+}
+
+adminModule.factory('GetCampusName',
+    [
+        "CampusLocations", function(CampusLocations){
+
+            return function (campusCode) {
+                return GetCampusName(campusCode, CampusLocations)
+            }
+        }
+    ]
+);
+
+sessionModule.factory('GetCampusName',
+    [
+        "CampusLocations", function (CampusLocations) {
+
+            return function (campusCode) {
+                return GetCampusName(campusCode, CampusLocations)
+            }
+        }
+    ]
+);
+'use strict';
+
+adminModule.factory('RateTable', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/ratetable"
+    );
+
+}]);
+
+sessionModule.factory('RateTable', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/ratetable"
+    );
+
 }])
 adminModule.controller("burQueueCtrl",
 
@@ -693,21 +714,6 @@ adminModule.controller("rnrQueueCtrl",
                 ],
                 editable: "popup"
             };
-
-
-        function getRateTypeDescription(rateTypeCode) {
-
-            var rateDesc = "";
-
-            for (var i = 0; i < RateTypes.length; ++i) {
-                if (RateTypes[i].rateCode == rateTypeCode) {
-                    rateDesc = RateTypes[i].rateName;
-                    break;
-                }
-            }
-            return rateDesc;
-        }   // getRateTypeDescription()
-
 
         $scope.sectionGridOptions = function (dataItem) {
 

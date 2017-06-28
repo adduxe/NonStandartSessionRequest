@@ -1,8 +1,9 @@
 ﻿'use strict';
 
-adminModule.factory('CampusLocations', ['$resource', function ($resource) {
+function GetCampusLocations(){
 
-    var campusLocations = [                                   // Populate the Campus Location dropdown.
+    var campusLocations = [ // Populate the Campus Location dropdown.
+
             { campusCode: "HSC", campusName: "Health Science Campus" },
             { campusCode: "OCC", campusName: "Orange County Campus" },
             { campusCode: "OVS", campusName: "Overseas" },
@@ -16,8 +17,20 @@ adminModule.factory('CampusLocations', ['$resource', function ($resource) {
             { campusCode: "ATT", campusName: "AT&T Center" },
             { campusCode: "SKB", campusName: "No Tuition or Fees" },
             { campusCode: "OTH", campusName: "Others" }
-        ];
+    ];
 
     return campusLocations;
+}   // GetCampusLocations()
 
-}])
+
+adminModule.factory('CampusLocations', ['$resource', function ($resource) {
+
+    return GetCampusLocations();
+
+}]);
+
+sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
+
+    return GetCampusLocations();
+
+}]);
