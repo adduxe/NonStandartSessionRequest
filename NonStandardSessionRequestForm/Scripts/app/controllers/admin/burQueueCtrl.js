@@ -1,8 +1,8 @@
 ﻿adminModule.controller("burQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "CampusLocations",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "GetCampusName",
 
-    function ($scope, $filter, Submissions, RateTable, RateDescription, CampusLocations) {
+    function ($scope, $filter, Submissions, RateTable, RateDescription, GetCampusName) {
         
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -83,20 +83,6 @@
                 },
                 pageSize: 10
         });
-
-        function GetCampusName(campusCode) {
-
-            var campusName = "";
-
-            for (var i = 0; i < CampusLocations.length; ++i){
-                if (CampusLocations[i].campusCode = campusCode) {
-                    campusName = CampusLocations[i].campusName;
-                    break;
-                }
-            }
-            return campusName; 
-
-        }   // GetCampusName()
 
         $scope.mainGridOptions = {
 

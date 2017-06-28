@@ -378,6 +378,8 @@
     <None Include="Scripts\app\services\admin\submissionsService.js" />
     <None Include="Scripts\app\AdminModule.js" />
     <None Include="Scripts\app\services\admin\writeToSisService.js" />
+    <Content Include="Scripts\app\services\admin\getCampusName.js" />
+    <Content Include="Scripts\app\services\getCampusName.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\app\controllers\indexCtrl.js" />

@@ -3,6 +3,7 @@
 sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
 
     var campusLocations = [                                   // Populate the Campus Location dropdown.
+
             { campusCode: "HSC", campusName: "Health Science Campus" },
             { campusCode: "OCC", campusName: "Orange County Campus" },
             { campusCode: "OVS", campusName: "Overseas" },
@@ -16,7 +17,7 @@ sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
             { campusCode: "ATT", campusName: "AT&T Center" },
             { campusCode: "SKB", campusName: "No Tuition or Fees" },
             { campusCode: "OTH", campusName: "Others" }
-        ];
+    ];
 
     return campusLocations;
 

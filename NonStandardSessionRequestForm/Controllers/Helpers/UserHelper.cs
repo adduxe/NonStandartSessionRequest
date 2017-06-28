@@ -41,7 +41,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 #if DEBUG
-            string user = "R";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+            string user = "B";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
 
             switch (user.ToUpper())
             {
@@ -51,7 +51,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "FAO Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
-                    this.School = "School of Rock";
+                    this.School = "Financial Aid Office";
                     this.Email = "anthondd@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
@@ -65,7 +65,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "RNR Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
-                    this.School = "School of Rock";
+                    this.School = "Record and Registration Office";
                     this.Email = "anthondd@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;
@@ -79,7 +79,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                     this.FirstName = "BUR Admin";
                     this.Surname = "Tester";
                     this.Department = "Department of Testing";
-                    this.School = "School of Rock";
+                    this.School = "Bursar Office";
                     this.Email = "anthondd@usc.edu";
                     this.Phone = "+1 213 111 1111";
                     this.IsAdmin = true;

@@ -1,8 +1,8 @@
 ﻿adminModule.controller("faoQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "CampusLocations",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "GetCampusName",
 
-    function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, CampusLocations) {
+    function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, GetCampusName) {
 
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -82,20 +82,6 @@
             },
             pageSize: 10
         });
-
-        function GetCampusName(campusCode) {
-
-            var campusName = "";
-
-            for (var i = 0; i < CampusLocations.length; ++i) {
-                if (CampusLocations[i].campusCode = campusCode) {
-                    campusName = CampusLocations[i].campusName;
-                    break;
-                }
-            }
-
-            return campusName;
-        }   // GetCampusName()
 
         $scope.mainGridOptions = {
 

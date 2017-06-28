@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-        ["Sessions", "$scope", "$location", "$rootScope",
+        ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope",
 
-    function (Sessions, $scope, $location, $rootScope) {
+    function (Sessions, GetCampusName, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
         $scope.rateName = $rootScope.rateName;
@@ -28,7 +28,7 @@ sessionModule.controller("sessionResultCtrl",
 
         } // switch()
 
-//        $scope.rateType = $scope.session.rateType;
+        $scope.campusLocation = GetCampusName($scope.campusLocation);
 
         return;
     }

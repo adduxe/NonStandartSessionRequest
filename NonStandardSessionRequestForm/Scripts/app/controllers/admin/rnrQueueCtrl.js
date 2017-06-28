@@ -1,6 +1,8 @@
-﻿adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "CampusLocations",
+﻿adminModule.controller("rnrQueueCtrl",
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, CampusLocations) {
+    ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "GetCampusName",
+
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, GetCampusName) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -76,21 +78,6 @@
             },
             pageSize: 10
         });
-
-
-        function GetCampusName(campusCode) {
-
-            var campusName = "";
-
-            for (var i = 0; i < CampusLocations.length; ++i) {
-                if (CampusLocations[i].campusCode = campusCode) {
-                    campusName = CampusLocations[i].campusName;
-                    break;
-                }
-            }
-
-            return campusName;
-        }   // GetCampusName()
 
 
         $scope.mainGridOptions =

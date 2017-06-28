@@ -1,5 +1,33 @@
 "use strict";
 
+// FAO, RNR, and BUR Admin pages
+var adminModule = angular.module("adminModule", ["ngResource", "kendo.directives"]);
+
+// Session Request and Session Result pages
+var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
+
+sessionModule.config([
+
+    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+
+        $routeProvider
+            .when("/",
+            {
+                templateUrl: "scripts/app/views/SessionRequest.html",
+                controller: "sessionRequestCtrl"
+            })
+            .when("/Result",
+            {
+                templateUrl: "scripts/app/views/SessionResult.html",
+                controller: "sessionResultCtrl"
+            })
+            .otherwise({ redirectTo: "/" });
+
+        $locationProvider.html5Mode(true);
+    }
+]);
+"use strict";
+
 var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
 
 sessionModule.config([
@@ -658,9 +686,9 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
-        ["Sessions", "RateTable", "$scope", "$location", "$rootScope",
+        ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope",
 
-    function (Sessions, RateTable, $scope, $location, $rootScope) {
+    function (Sessions, GetCampusName, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
         $scope.rateName = $rootScope.rateName;
@@ -685,7 +713,7 @@ sessionModule.controller("sessionResultCtrl",
 
         } // switch()
 
-//        $scope.rateType = $scope.session.rateType;
+        $scope.campusLocation = GetCampusName($scope.campusLocation);
 
         return;
     }
@@ -695,6 +723,7 @@ sessionModule.controller("sessionResultCtrl",
 sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
 
     var campusLocations = [                                   // Populate the Campus Location dropdown.
+
             { campusCode: "HSC", campusName: "Health Science Campus" },
             { campusCode: "OCC", campusName: "Orange County Campus" },
             { campusCode: "OVS", campusName: "Overseas" },
@@ -708,7 +737,7 @@ sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
             { campusCode: "ATT", campusName: "AT&T Center" },
             { campusCode: "SKB", campusName: "No Tuition or Fees" },
             { campusCode: "OTH", campusName: "Others" }
-        ];
+    ];
 
     return campusLocations;
 
@@ -732,7 +761,51 @@ sessionModule.factory('Get001Dates', ['$resource', function ($resource) {
 ])
 'use strict';
 
+function GetCampusName(cCode, cLocations) {
+
+    var campusName = "";
+
+    for (var i = 0; i < cLocations.length; ++i) {
+        if (cLocations[i].campusCode == cCode) {
+            campusName = cLocations[i].campusName;
+            break;
+        }
+    }
+    return campusName;
+}
+
+adminModule.factory('GetCampusName',
+    [
+        "CampusLocations", function(CampusLocations){
+
+            return function (campusCode, campusLocation) {
+                return GetCampusName(campusCode, CampusLocations)
+            }
+        }
+    ]
+);
+
+//sessionModule.factory('GetCampusName',
+//    [
+//        "CampusLocations", function (CampusLocations) {
+
+//            return function (campusCode, campusLocation) {
+//                return GetCampusName(campusCode, CampusLocations)
+//            }
+//        }
+//    ]
+//);
+'use strict';
+
 sessionModule.factory('RateTable', ['$resource', function ($resource) {
+
+    return $resource(
+        "api/ratetable"
+    );
+
+}]);
+
+adminModule.factory('RateTable', ['$resource', function ($resource) {
 
     return $resource(
         "api/ratetable"
@@ -782,23 +855,6 @@ sessionModule.factory('RateTypes', ['RateTable', '$scope', function (RateTable, 
 
         return rateDescription;
     }   // return function()...
-
-
-    //var rateTypes = [                    // Rate type lookup table
-
-    //    { rateCode: "STD",  rateName: "Standard (session 001)" },
-    //    { rateCode: "GBUS", rateName: "Graduate Business" },
-    //    { rateCode: "GCINA",rateName: "Graduate Cinematic Arts" },
-    //    { rateCode: "GENGR",rateName: "Graduate Engineering" },
-    //    { rateCode: "MRED", rateName: "Master of Real Estate Development" },
-    //    { rateCode: "PHAR", rateName: "Pharmacy" },
-    //    { rateCode: "DENT", rateName: "Dentistry" },
-    //    { rateCode: "DH",   rateName: "Dental Hygiene" },
-    //    { rateCode: "ADVDE",rateName: "Advanced Dentistry" },
-    //    { rateCode: "LAW",  rateName: "Law" },
-    //    { rateCode: "MED",  rateName: "Medicine" },
-    //    { rateCode: "OTH",  rateName: "Other" }
-    //];
 
 }])
 'use strict';

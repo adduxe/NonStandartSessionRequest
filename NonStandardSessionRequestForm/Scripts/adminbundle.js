@@ -1,5 +1,31 @@
 "use strict";
+
+// FAO, RNR, and BUR Admin pages
 var adminModule = angular.module("adminModule", ["ngResource", "kendo.directives"]);
+
+// Session Request and Session Result pages
+var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
+
+sessionModule.config([
+
+    "$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+
+        $routeProvider
+            .when("/",
+            {
+                templateUrl: "scripts/app/views/SessionRequest.html",
+                controller: "sessionRequestCtrl"
+            })
+            .when("/Result",
+            {
+                templateUrl: "scripts/app/views/SessionResult.html",
+                controller: "sessionResultCtrl"
+            })
+            .otherwise({ redirectTo: "/" });
+
+        $locationProvider.html5Mode(true);
+    }
+]);
 'use strict';
 
 adminModule.factory('CampusLocations', ['$resource', function ($resource) {
@@ -31,6 +57,42 @@ adminModule.factory('EmailResult', ['$resource', function ($resource) {
         "api/email/:requestId", { requestId: '@id' }
     );
 }])
+'use strict';
+
+function GetCampusName(cCode, cLocations) {
+
+    var campusName = "";
+
+    for (var i = 0; i < cLocations.length; ++i) {
+        if (cLocations[i].campusCode == cCode) {
+            campusName = cLocations[i].campusName;
+            break;
+        }
+    }
+    return campusName;
+}
+
+adminModule.factory('GetCampusName',
+    [
+        "CampusLocations", function(CampusLocations){
+
+            return function (campusCode, campusLocation) {
+                return GetCampusName(campusCode, CampusLocations)
+            }
+        }
+    ]
+);
+
+sessionModule.factory('GetCampusName',
+    [
+        "CampusLocations", function (CampusLocations) {
+
+            return function (campusCode, campusLocation) {
+                return GetCampusName(campusCode, CampusLocations)
+            }
+        }
+    ]
+);
 'use strict';
 
 adminModule.factory('RateTable', ['$resource', function ($resource) {
@@ -101,9 +163,9 @@ adminModule.factory('WriteToSis', ['$resource', function ($resource) {
 }])
 adminModule.controller("burQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "CampusLocations",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "GetCampusName",
 
-    function ($scope, $filter, Submissions, RateTable, RateDescription, CampusLocations) {
+    function ($scope, $filter, Submissions, RateTable, RateDescription, GetCampusName) {
         
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -184,20 +246,6 @@ adminModule.controller("burQueueCtrl",
                 },
                 pageSize: 10
         });
-
-        function GetCampusName(campusCode) {
-
-            var campusName = "";
-
-            for (var i = 0; i < CampusLocations.length; ++i){
-                if (CampusLocations[i].campusCode = campusCode) {
-                    campusName = CampusLocations[i].campusName;
-                    break;
-                }
-            }
-            return campusName; 
-
-        }   // GetCampusName()
 
         $scope.mainGridOptions = {
 
@@ -288,9 +336,9 @@ adminModule.controller("burQueueCtrl",
 }]);
 adminModule.controller("faoQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "CampusLocations",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "GetCampusName",
 
-    function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, CampusLocations) {
+    function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, GetCampusName) {
 
         $scope.dataSource = new kendo.data.DataSource({
 
@@ -370,20 +418,6 @@ adminModule.controller("faoQueueCtrl",
             },
             pageSize: 10
         });
-
-        function GetCampusName(campusCode) {
-
-            var campusName = "";
-
-            for (var i = 0; i < CampusLocations.length; ++i) {
-                if (CampusLocations[i].campusCode = campusCode) {
-                    campusName = CampusLocations[i].campusName;
-                    break;
-                }
-            }
-
-            return campusName;
-        }   // GetCampusName()
 
         $scope.mainGridOptions = {
 
@@ -558,9 +592,11 @@ adminModule.controller("faoQueueCtrl",
 
     }   // function ($scope...
 ]); // adminController...
-adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "CampusLocations",
+adminModule.controller("rnrQueueCtrl",
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, CampusLocations) {
+    ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "GetCampusName",
+
+    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, GetCampusName) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -636,21 +672,6 @@ adminModule.controller("rnrQueueCtrl", ["$scope", "$filter", "Submissions", "Wri
             },
             pageSize: 10
         });
-
-
-        function GetCampusName(campusCode) {
-
-            var campusName = "";
-
-            for (var i = 0; i < CampusLocations.length; ++i) {
-                if (CampusLocations[i].campusCode = campusCode) {
-                    campusName = CampusLocations[i].campusName;
-                    break;
-                }
-            }
-
-            return campusName;
-        }   // GetCampusName()
 
 
         $scope.mainGridOptions =

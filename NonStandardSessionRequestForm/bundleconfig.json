@@ -35,8 +35,8 @@
     "outputFileName": "Scripts/appbundle.js",
     "inputFiles": [
       "Scripts/app/**/*.js",
-      "!Scripts/app/**/admin/*.js",
-      "!Scripts/app/AdminModule.js"
+      "!Scripts/app/**/admin/*.js" //,
+//      "!Scripts/app/AdminModule.js"
     ]
   },
 
