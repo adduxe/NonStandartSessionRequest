@@ -844,14 +844,18 @@ adminModule.controller("rnrQueueCtrl",
                 sessionBreak2EndDate    : convDateToString(sessBreaks[sessDates.Sess2End])
             };
 
+            $scope.spinningWheel.center().open();
             WriteToSis.save(sisDatesPacket,
                 function () {
                     $scope.updateRequest('A', 'Approved');
                     alert("Session Request Approved!");
+                    $scope.spinningWheel.center().close();
                 }, function () {
                     alert("Failed to write the approved session " + sisDatesPacket.academicTerm + "-" + sisDatesPacket.sessionCode +" because it already exists in SIS.");
+                    $scope.spinningWheel.center().close();
                 }
             );
+
             return;
         }   // approveRequest()
 
