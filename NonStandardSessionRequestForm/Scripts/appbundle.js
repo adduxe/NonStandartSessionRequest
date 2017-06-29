@@ -3,6 +3,7 @@
 // FAO, RNR, and BUR Admin pages
 var adminModule = angular.module("adminModule", ["ngResource", "kendo.directives"]);
 
+
 // Session Request and Session Result pages
 var sessionModule = angular.module("sessionModule", ["ngResource", "ngRoute", "kendo.directives"]);
 

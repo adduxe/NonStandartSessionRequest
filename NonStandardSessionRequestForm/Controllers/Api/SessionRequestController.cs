@@ -629,7 +629,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 SmtpClient SmtpServer = new SmtpClient("email.usc.edu");
                 mail.From = new MailAddress("donotreply@usc.edu");
                 mail.To.Add(Submission.Session.UserEmail);
-                mail.Subject = "Session Request Result (Submission ID: " + Submission.SubmissionId + ")";
+                mail.Subject = "Session Request Result (Request ID: " + Submission.RequestId + ")";
                 mail.IsBodyHtml = true;
                 mail.Body = ComposeEmail(Submission);
 

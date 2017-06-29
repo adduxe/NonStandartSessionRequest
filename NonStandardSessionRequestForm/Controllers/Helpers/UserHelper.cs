@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Mail;
+﻿
 using System.Web;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
@@ -41,7 +40,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 #if DEBUG
-            string user = "F";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+            string user = "B";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+
+//            user = HttpContext.Current.Request.QueryString["User"].ToString();
 
             switch (user.ToUpper())
             {
