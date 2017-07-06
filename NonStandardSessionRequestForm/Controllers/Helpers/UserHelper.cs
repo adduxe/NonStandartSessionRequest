@@ -40,7 +40,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 #if DEBUG
-            string user = "R";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+            string user = "B";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
 
             //var user = HttpContext.Current.Request.QueryString["User"]!= null 
             //    ? HttpContext.Current.Request.QueryString["User"].ToString():"";

@@ -266,6 +266,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                ""term"": ""20173"",
                                ""rateTypes"": [
                                  {
+                                     ""rateTypeCode"": ""ZERO"",
+                                     ""rateTypeDesc"": ""Zero"",
+                                     ""rateTypeUnitRate"": ""0"",
+                                     ""rateTypeFlatRate"": ""0""
+                                 },
+                                 {
                                      ""rateTypeCode"": ""STD"",
                                      ""rateTypeDesc"": ""Standard (session 001)"",
                                      ""rateTypeUnitRate"": ""1800"",
@@ -348,6 +354,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                            {
                                ""term"": ""20181"",
                                ""rateTypes"": [
+                                 {
+                                     ""rateTypeCode"": ""ZERO"",
+                                     ""rateTypeDesc"": ""Zero"",
+                                     ""rateTypeUnitRate"": ""0"",
+                                     ""rateTypeFlatRate"": ""0""
+                                 },
                                  {
                                      ""rateTypeCode"": ""STD"",
                                      ""rateTypeDesc"": ""Standard (session 001)"",
