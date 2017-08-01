@@ -267,39 +267,55 @@
 
             Submissions.update({ submissionId: $scope.submID }, status)                 // update the request's status
 
-                .$promise.then(function(){
+                .$promise.then(function () {
 
-                    $scope.spinningWheel.center().close();
+                    EmailResultAndUpdateList(actionCode);
 
-                    switch (actionCode) {
+                }, function(errMsg) {
 
-                        case "A":
-                            EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
-                            alert("Approval email sent");
-                            break;
+                    alert("Update failed: " + errMsg);
 
-                        case "R":
-                            EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
-                            alert("Rejection email sent");
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    // remove the submission from the list
-                    for (var i = 0; i < $scope.dataSource._data.length; ++i) {
-
-                        if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                            $scope.dataSource._data.splice(i, 1);
-                            break;
-                        }
-                    }   // for (var i...
-
-                    if (actionCode == 'R') $scope.rejectWindow.close();
                 });
         
         }   // $scope.updateRequest()
+
+
+        function EmailResultAndUpdateList(codeAction) {
+
+            $scope.spinningWheel.center().close();
+
+            switch (codeAction) {
+
+                case "A":
+                    EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
+                    alert("Approval email sent");
+                    break;
+
+                case "R":
+                    EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
+                    alert("Rejection email sent");
+                    break;
+
+                default:
+                    break;
+            }   // switch()
+
+            // remove the submission from the list
+            for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+
+                if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                    $scope.dataSource._data.splice(i, 1);
+                    break;
+                }
+            }   // for (var i...
+
+            if (actionCode == 'R') {
+                $scope.rejectWindow.close();
+            }
+
+            return;
+        }   // EmailResultAndUpdateList()
+
 
         $(document).ready(function () {
             $scope.spinningWheel.center().open();

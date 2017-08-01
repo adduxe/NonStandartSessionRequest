@@ -134,7 +134,20 @@
                             <td align="center">#= (data.rnrAction == null) ? '': data.rnrAction #</td>
                             <td align="center">#= (data.rnrActionDate == null) ? '': data.rnrActionDate #</td>
                             <td align="center">#= (data.rnrActionReason == null) ? '': data.rnrActionReason #</td>
-
+                        </tr>
+                        <tr>
+                            <td class="red" align="center"><b>BUR</b></td>
+                            <td align="center">
+                                @*<select ng-select="changeBurStatus(#= data.submissionId #)">*@
+                                <select ng-model="dataItem.burStatus">
+                                    <option>&nbsp;</option>
+                                    <option value="To be reviewed">To be reviewed</option>
+                                    <option value="For follow-up">For follow-up</option>
+                                    <option value="Entered in SIS">Entered in SIS</option>
+                                </select>
+                            </td>
+                            <td align="center">#= (data.rnrActionDate == null) ? '': data.rnrActionDate #</td>
+                            <td align="center">{{ dataItem.burStatus }}</td>
                         </tr>
                     </table>
                 </div>

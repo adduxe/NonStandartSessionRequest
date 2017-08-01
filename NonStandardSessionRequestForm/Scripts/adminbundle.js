@@ -244,7 +244,8 @@ adminModule.controller("burQueueCtrl",
                                             faoActionReason     : subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
                                             rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason     : subm.rnrActionReason
+                                            rnrActionReason     : subm.rnrActionReason,
+                                            burStatus           : getBurStatus(Math.random() * 10)
                                         };
                                     }));
                                     $scope.spinningWheel.center().close();
@@ -269,19 +270,39 @@ adminModule.controller("burQueueCtrl",
                 pageSize: 10
         });
 
+        function getBurStatus(rNum) {
+
+            var randNum = Math.round(rNum);
+            var burStatus = "";
+
+            switch (randNum % 3) {
+                case 1:
+                    burStatus = "To be reviewed";
+                    break;
+                case 2:
+                    burStatus = "For follow-up";
+                    break;
+                default:
+                    burStatus = "Entered in SIS";
+                    break;
+            }
+            return burStatus;
+        }
+
         $scope.mainGridOptions = {
 
             dataSource: $scope.dataSource,
             sortable: true,
             pageable: true,
             columns: [
-                { field: "requestId",       title: "Request",       width: "10%" },
-                { field: "academicTerm",    title: "Term",          width: "10%" },
-                { field: "sessionCode",     title: "Session",       width: "15%" },
-                { field: "sessionName",     title: "Session Name",  width: "20%" },
-                { field: "owningSchool",    title: "School",        width: "20%" },
-                { field: "owningDepartment",title: "Department",    width: "15%" },
-                { field: "requestDate",     title: "Date",          width: "10%" },
+                { field: "burStatus",       title: "Status",        width: "12.5%"  },
+                { field: "requestId",       title: "Request",       width: "7.5%"   },
+                { field: "academicTerm",    title: "Term",          width: "7.5%"   },
+                { field: "sessionCode",     title: "Session",       width: "7.5%"   },
+                { field: "sessionName",     title: "Session Name",  width: "15%"    },
+                { field: "owningSchool",    title: "School",        width: "20%"    },
+                { field: "owningDepartment",title: "Department",    width: "15%"    },
+                { field: "requestDate",     title: "Date",          width: "10%"    },
             ],
             editable: "popup"
         };
@@ -349,6 +370,13 @@ adminModule.controller("burQueueCtrl",
                 ]
             };
     };  // sessionBrkGridOptions
+
+    $scope.changeBurStatus = function (bStat)
+    {
+        alert(bStat);
+        return;
+    }
+
 
     $(document).ready(function () {
         $scope.spinningWheel.center().open();
@@ -883,39 +911,55 @@ adminModule.controller("rnrQueueCtrl",
 
             Submissions.update({ submissionId: $scope.submID }, status)                 // update the request's status
 
-                .$promise.then(function(){
+                .$promise.then(function () {
 
-                    $scope.spinningWheel.center().close();
+                    EmailResultAndUpdateList(actionCode);
 
-                    switch (actionCode) {
+                }, function(errMsg) {
 
-                        case "A":
-                            EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
-                            alert("Approval email sent");
-                            break;
+                    alert("Update failed: " + errMsg);
 
-                        case "R":
-                            EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
-                            alert("Rejection email sent");
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    // remove the submission from the list
-                    for (var i = 0; i < $scope.dataSource._data.length; ++i) {
-
-                        if ($scope.dataSource._data[i].submissionId == $scope.submID) {
-                            $scope.dataSource._data.splice(i, 1);
-                            break;
-                        }
-                    }   // for (var i...
-
-                    if (actionCode == 'R') $scope.rejectWindow.close();
                 });
         
         }   // $scope.updateRequest()
+
+
+        function EmailResultAndUpdateList(codeAction) {
+
+            $scope.spinningWheel.center().close();
+
+            switch (codeAction) {
+
+                case "A":
+                    EmailResult.save({ id: $scope.submID });                           // Send Request Approval Email
+                    alert("Approval email sent");
+                    break;
+
+                case "R":
+                    EmailResult.save({ id: $scope.submID });                           // Send Rejection Email
+                    alert("Rejection email sent");
+                    break;
+
+                default:
+                    break;
+            }   // switch()
+
+            // remove the submission from the list
+            for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+
+                if ($scope.dataSource._data[i].submissionId == $scope.submID) {
+                    $scope.dataSource._data.splice(i, 1);
+                    break;
+                }
+            }   // for (var i...
+
+            if (actionCode == 'R') {
+                $scope.rejectWindow.close();
+            }
+
+            return;
+        }   // EmailResultAndUpdateList()
+
 
         $(document).ready(function () {
             $scope.spinningWheel.center().open();

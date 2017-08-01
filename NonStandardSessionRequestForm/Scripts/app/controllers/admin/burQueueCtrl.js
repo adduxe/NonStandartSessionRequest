@@ -59,7 +59,8 @@
                                             faoActionReason     : subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
                                             rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason     : subm.rnrActionReason
+                                            rnrActionReason     : subm.rnrActionReason,
+                                            burStatus           : getBurStatus(Math.random() * 10)
                                         };
                                     }));
                                     $scope.spinningWheel.center().close();
@@ -84,19 +85,39 @@
                 pageSize: 10
         });
 
+        function getBurStatus(rNum) {
+
+            var randNum = Math.round(rNum);
+            var burStatus = "";
+
+            switch (randNum % 3) {
+                case 1:
+                    burStatus = "To be reviewed";
+                    break;
+                case 2:
+                    burStatus = "For follow-up";
+                    break;
+                default:
+                    burStatus = "Entered in SIS";
+                    break;
+            }
+            return burStatus;
+        }
+
         $scope.mainGridOptions = {
 
             dataSource: $scope.dataSource,
             sortable: true,
             pageable: true,
             columns: [
-                { field: "requestId",       title: "Request",       width: "10%" },
-                { field: "academicTerm",    title: "Term",          width: "10%" },
-                { field: "sessionCode",     title: "Session",       width: "15%" },
-                { field: "sessionName",     title: "Session Name",  width: "20%" },
-                { field: "owningSchool",    title: "School",        width: "20%" },
-                { field: "owningDepartment",title: "Department",    width: "15%" },
-                { field: "requestDate",     title: "Date",          width: "10%" },
+                { field: "burStatus",       title: "Status",        width: "12.5%"  },
+                { field: "requestId",       title: "Request",       width: "7.5%"   },
+                { field: "academicTerm",    title: "Term",          width: "7.5%"   },
+                { field: "sessionCode",     title: "Session",       width: "7.5%"   },
+                { field: "sessionName",     title: "Session Name",  width: "15%"    },
+                { field: "owningSchool",    title: "School",        width: "20%"    },
+                { field: "owningDepartment",title: "Department",    width: "15%"    },
+                { field: "requestDate",     title: "Date",          width: "10%"    },
             ],
             editable: "popup"
         };
@@ -164,6 +185,13 @@
                 ]
             };
     };  // sessionBrkGridOptions
+
+    $scope.changeBurStatus = function (bStat)
+    {
+        alert(bStat);
+        return;
+    }
+
 
     $(document).ready(function () {
         $scope.spinningWheel.center().open();
