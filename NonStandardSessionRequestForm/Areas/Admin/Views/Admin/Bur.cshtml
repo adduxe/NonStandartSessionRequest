@@ -138,12 +138,11 @@
                         <tr>
                             <td class="red" align="center"><b>BUR</b></td>
                             <td align="center">
-                                @*<select ng-select="changeBurStatus(#= data.submissionId #)">*@
-                                <select ng-model="dataItem.burStatus">
+                                <select ng-model="dataItem.burStatus" ng-change="ChangeBurStatus(dataItem.submissionId);">
                                     <option>&nbsp;</option>
-                                    <option value="To be reviewed">To be reviewed</option>
-                                    <option value="For follow-up">For follow-up</option>
-                                    <option value="Entered in SIS">Entered in SIS</option>
+                                    <option value="Not Reviewed">Not Reviewed</option>
+                                    <option value="Needs follow-up">Needs follow-up</option>
+                                    <option value="Tuition Entered">Tuition Entered</option>
                                 </select>
                             </td>
                             <td align="center">#= (data.rnrActionDate == null) ? '': data.rnrActionDate #</td>

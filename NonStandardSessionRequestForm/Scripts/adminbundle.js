@@ -277,13 +277,13 @@ adminModule.controller("burQueueCtrl",
 
             switch (randNum % 3) {
                 case 1:
-                    burStatus = "To be reviewed";
+                    burStatus = "Not reviewed";
                     break;
                 case 2:
-                    burStatus = "For follow-up";
+                    burStatus = "Needs follow-up";
                     break;
                 default:
-                    burStatus = "Entered in SIS";
+                    burStatus = "Tuition Entered";
                     break;
             }
             return burStatus;
@@ -371,11 +371,41 @@ adminModule.controller("burQueueCtrl",
             };
     };  // sessionBrkGridOptions
 
-    $scope.changeBurStatus = function (bStat)
+    $scope.ChangeBurStatus = function (submID)
     {
-        alert(bStat);
+        var selectedSess = $filter('filter')($scope.submissions, { "submissionId": submID }, true)[0];
+
+        if (selectedSess != null) {
+            $scope.rejectSess = selectedSess;
+        }
+
+        var todaysDate = new Date();
+
+        var status = {
+                submissionId    :   submID,
+                faoAction       :   $scope.rejectSess.faoAction,
+                faoActionDate   :   $scope.rejectSess.faoActionDate,
+                faoActionReason :   $scope.rejectSess.faoActionReason,
+                rnrAction       :   $scope.rejectSess.rnrAction,
+                rnrActionDate   :   $scope.rejectSess.rnrActionDate,
+                rnrActionReason :   $scope.rejectSess.rnrActionReason //,
+                //burAction       :   $scope.rejectSess.burAction,
+                //burActionDate   :   todaysDate.toDateString(),
+                //burActionReason :   $scope.rejectSess.burActionReason
+        };
+
+        $scope.spinningWheel.center().open();
+
+        Submissions.update({ submissionId: submID }, status)     // update the request's status
+            .$promise.then(function () {
+                $scope.spinningWheel.center().close();
+            }), function(){
+                alert("Failed in updating the Bursar Status for Request ID: " + $scope.rejectSess.requestId);
+                $scope.spinningWheel.center().close();
+            }; // promise.fail()
+
         return;
-    }
+    }   // Submissions.ChangeBurStatus()
 
 
     $(document).ready(function () {
