@@ -245,7 +245,9 @@ adminModule.controller("burQueueCtrl",
                                             rnrAction           : subm.rnrAction,
                                             rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
                                             rnrActionReason     : subm.rnrActionReason,
-                                            burStatus           : getBurStatus(Math.random() * 10)
+                                            burAction           : (subm.burAction == null)? "Review": subm.burAction,
+                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
+                                            burActionReason     : subm.burActionReason
                                         };
                                     }));
                                     $scope.spinningWheel.center().close();
@@ -270,12 +272,11 @@ adminModule.controller("burQueueCtrl",
                 pageSize: 10
         });
 
-        function getBurStatus(rNum) {
+        function getBurStatus(bStatus) {
 
-            var randNum = Math.round(rNum);
             var burStatus = "";
 
-            switch (randNum % 3) {
+            switch (bStatus) {
                 case 1:
                     burStatus = "Review";
                     break;
@@ -295,7 +296,7 @@ adminModule.controller("burQueueCtrl",
             sortable: true,
             pageable: true,
             columns: [
-                { field: "burStatus",       title: "Status",        width: "12.5%"  },
+                { field: "burAction",       title: "Status",        width: "12.5%"  },
                 { field: "requestId",       title: "Request",       width: "7.5%"   },
                 { field: "academicTerm",    title: "Term",          width: "7.5%"   },
                 { field: "sessionCode",     title: "Session",       width: "7.5%"   },
@@ -371,7 +372,7 @@ adminModule.controller("burQueueCtrl",
             };
     };  // sessionBrkGridOptions
 
-    $scope.ChangeBurStatus = function (submID, )
+    $scope.ChangeBurStatus = function (submID, burStatus)
     {
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": submID }, true)[0];
 
@@ -389,9 +390,9 @@ adminModule.controller("burQueueCtrl",
                 rnrAction       :   $scope.rejectSess.rnrAction,
                 rnrActionDate   :   $scope.rejectSess.rnrActionDate,
                 rnrActionReason :   $scope.rejectSess.rnrActionReason,
-                burAction       :   $scope.rejectSess.burAction,
+                burAction       :   burStatus,
                 burActionDate   :   todaysDate.toDateString(),
-                burActionReason :   $scope.rejectSess.burActionReason
+                burActionReason :   burStatus
         };
 
         $scope.spinningWheel.center().open();
@@ -400,7 +401,7 @@ adminModule.controller("burQueueCtrl",
             .$promise.then(function () {
                 $scope.spinningWheel.center().close();
             }), function(){
-                alert("Failed in updating the Bursar Status for Request ID: " + $scope.rejectSess.requestId);
+                alert("Failed in updating the Bursar status for Request ID: " + $scope.rejectSess.requestId);
                 $scope.spinningWheel.center().close();
             }; // promise.fail()
 
@@ -474,8 +475,11 @@ adminModule.controller("faoQueueCtrl",
                                             faoActionReason     : subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
                                             rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason     : subm.rnrActionReason
-                                        };
+                                            rnrActionReason     : subm.rnrActionReason,
+                                            burAction           : subm.burAction,
+                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
+                                            burActionReason     : subm.burActionReason
+                                    };
                                     }));
                                     $scope.spinningWheel.center().close();
                         }, function (error) {
@@ -729,7 +733,10 @@ adminModule.controller("rnrQueueCtrl",
                                         faoActionReason     : subm.faoActionReason,
                                         rnrAction           : subm.rnrAction,
                                         rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                        rnrActionReason     : subm.rnrActionReason
+                                        rnrActionReason     : subm.rnrActionReason,
+                                        burAction           : subm.burAction,
+                                        burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
+                                        burActionReason     : subm.burActionReason
                                     };
                                 }));
                                 $scope.spinningWheel.center().close();

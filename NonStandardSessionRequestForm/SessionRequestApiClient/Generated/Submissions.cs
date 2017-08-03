@@ -44,10 +44,11 @@ namespace SessionRequestApi.Client
         public RNRSessionRequestAPI Client { get; private set; }
 
         /// <param name='department'>
-        /// Possible values include: 'Fao', 'Rnr'
+        /// Possible values include: 'Fao', 'Rnr', 'Bur'
         /// </param>
         /// <param name='status'>
-        /// Possible values include: 'Pending', 'Approved', 'Rejected'
+        /// Possible values include: 'Pending', 'Approved', 'Rejected', 'Review',
+        /// 'Issue', 'Complete'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

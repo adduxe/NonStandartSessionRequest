@@ -21,16 +21,19 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the SubmissionDTO class.
         /// </summary>
-        public SubmissionDTO(int? submissionId = default(int?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), int? requestId = default(int?))
+        public SubmissionDTO(int? submissionId = default(int?), int? requestId = default(int?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), string burAction = default(string), System.DateTime? burActionDate = default(System.DateTime?), string burActionReason = default(string))
         {
             SubmissionId = submissionId;
+            RequestId = requestId;
             FaoAction = faoAction;
             FaoActionDate = faoActionDate;
             FaoActionReason = faoActionReason;
             RnrAction = rnrAction;
             RnrActionDate = rnrActionDate;
             RnrActionReason = rnrActionReason;
-            RequestId = requestId;
+            BurAction = burAction;
+            BurActionDate = burActionDate;
+            BurActionReason = burActionReason;
             CustomInit();
         }
 
@@ -43,6 +46,11 @@ namespace SessionRequestApi.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "submissionId")]
         public int? SubmissionId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "requestId")]
+        public int? RequestId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -76,8 +84,18 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "requestId")]
-        public int? RequestId { get; set; }
+        [JsonProperty(PropertyName = "burAction")]
+        public string BurAction { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "burActionDate")]
+        public System.DateTime? BurActionDate { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "burActionReason")]
+        public string BurActionReason { get; set; }
 
     }
 }

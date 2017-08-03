@@ -58,8 +58,11 @@
                                             faoActionReason     : subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
                                             rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason     : subm.rnrActionReason
-                                        };
+                                            rnrActionReason     : subm.rnrActionReason,
+                                            burAction           : subm.burAction,
+                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
+                                            burActionReason     : subm.burActionReason
+                                    };
                                     }));
                                     $scope.spinningWheel.center().close();
                         }, function (error) {

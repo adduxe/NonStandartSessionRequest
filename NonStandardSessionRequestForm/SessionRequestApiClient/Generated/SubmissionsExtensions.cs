@@ -17,10 +17,11 @@ namespace SessionRequestApi.Client
             /// The operations group for this extension method.
             /// </param>
             /// <param name='department'>
-            /// Possible values include: 'Fao', 'Rnr'
+            /// Possible values include: 'Fao', 'Rnr', 'Bur'
             /// </param>
             /// <param name='status'>
-            /// Possible values include: 'Pending', 'Approved', 'Rejected'
+            /// Possible values include: 'Pending', 'Approved', 'Rejected', 'Review',
+            /// 'Issue', 'Complete'
             /// </param>
             public static object GetByDepartmentStatus(this ISubmissions operations, string department = default(string), string status = default(string))
             {
@@ -31,10 +32,11 @@ namespace SessionRequestApi.Client
             /// The operations group for this extension method.
             /// </param>
             /// <param name='department'>
-            /// Possible values include: 'Fao', 'Rnr'
+            /// Possible values include: 'Fao', 'Rnr', 'Bur'
             /// </param>
             /// <param name='status'>
-            /// Possible values include: 'Pending', 'Approved', 'Rejected'
+            /// Possible values include: 'Pending', 'Approved', 'Rejected', 'Review',
+            /// 'Issue', 'Complete'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

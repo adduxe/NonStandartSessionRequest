@@ -22,7 +22,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the Submission class.
         /// </summary>
-        public Submission(int? submissionId = default(int?), System.DateTime? lastUpdatedTimeStamp = default(System.DateTime?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), int? requestId = default(int?), Session session = default(Session))
+        public Submission(int? submissionId = default(int?), System.DateTime? lastUpdatedTimeStamp = default(System.DateTime?), string faoAction = default(string), System.DateTime? faoActionDate = default(System.DateTime?), string faoActionReason = default(string), string rnrAction = default(string), System.DateTime? rnrActionDate = default(System.DateTime?), string rnrActionReason = default(string), string burAction = default(string), System.DateTime? burActionDate = default(System.DateTime?), string burActionReason = default(string), int? requestId = default(int?), Session session = default(Session))
         {
             SubmissionId = submissionId;
             LastUpdatedTimeStamp = lastUpdatedTimeStamp;
@@ -32,6 +32,9 @@ namespace SessionRequestApi.Client.Models
             RnrAction = rnrAction;
             RnrActionDate = rnrActionDate;
             RnrActionReason = rnrActionReason;
+            BurAction = burAction;
+            BurActionDate = burActionDate;
+            BurActionReason = burActionReason;
             RequestId = requestId;
             Session = session;
             CustomInit();
@@ -84,6 +87,21 @@ namespace SessionRequestApi.Client.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "burAction")]
+        public string BurAction { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "burActionDate")]
+        public System.DateTime? BurActionDate { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "burActionReason")]
+        public string BurActionReason { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "requestId")]
         public int? RequestId { get; set; }
 
@@ -120,6 +138,17 @@ namespace SessionRequestApi.Client.Models
                 if (RnrAction.Length < 0)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "RnrAction", 0);
+                }
+            }
+            if (BurAction != null)
+            {
+                if (BurAction.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "BurAction", 50);
+                }
+                if (BurAction.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "BurAction", 0);
                 }
             }
             if (Session != null)
