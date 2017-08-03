@@ -147,7 +147,7 @@
                             </td>
                             <td align="center">#= (data.burActionDate == null) ? '': data.burActionDate #</td>
                             <td align="center">
-                                #= (dataItem.burAction == null) ? '': dataItem.burAction #
+                                {{ (dataItem.burAction == null) ? '': dataItem.burAction }}
                             </td>
                         </tr>
                     </table>
