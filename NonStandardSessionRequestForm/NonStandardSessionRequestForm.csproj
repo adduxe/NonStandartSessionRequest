@@ -448,7 +448,6 @@
     <Compile Include="SessionRequestApiClient\Generated\Models\SessionDTO.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\Submission.cs" />
     <Compile Include="SessionRequestApiClient\Generated\Models\SubmissionDTO.cs" />
-    <Compile Include="SessionRequestApiClient\Generated\Models\XmlSerialization.cs" />
     <Compile Include="SessionRequestApiClient\Generated\RNRSessionRequestAPI.cs" />
     <Compile Include="SessionRequestApiClient\Generated\SessionRequest.cs" />
     <Compile Include="SessionRequestApiClient\Generated\SessionRequestExtensions.cs" />

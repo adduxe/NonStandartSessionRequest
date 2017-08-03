@@ -96,7 +96,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         public async Task<IHttpActionResult> GetSubmissions()
         {
             string department = null;
-            string status = "Pending";
+            string status = null;
 
             try
             {
@@ -107,19 +107,22 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     return NotFound();
                 }
 
-                if (user.IsFao)
+                if (user.IsFao)     // Get the FAO Queue
                 {
                     department = "Fao";
+                    status = "Pending";
                 }
 
-                if (user.IsRnr)
+                if (user.IsRnr)     // Get the RNR Queue
                 {
                     department = "Rnr";
+                    status = "Pending";
+
                 }
 
-                if (user.IsBur)
+                if (user.IsBur)     // Get the BUR Queue
                 {
-                    status = "Approved";
+                    department = "Bur";
                 }
 
                 using (var client = new RNRSessionRequestAPI(_dataApiUri))

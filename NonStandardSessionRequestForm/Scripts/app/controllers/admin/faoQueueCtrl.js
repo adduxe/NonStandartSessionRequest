@@ -211,7 +211,10 @@
                 faoActionReason: rejectReason,
                 rnrAction:      $scope.rejectSess.rnrAction,
                 rnrActionDate:  $scope.rejectSess.rnrActionDate,
-                rnrActionReason:$scope.rejectSess.rnrActionReason
+                rnrActionReason: $scope.rejectSess.rnrActionReason,
+                burAction       :   $scope.rejectSess.burAction,
+                burActionDate   :   todaysDate.toDateString(),
+                burActionReason :   $scope.rejectSess.burActionReason
             };
 
             $scope.spinningWheel.center().open();

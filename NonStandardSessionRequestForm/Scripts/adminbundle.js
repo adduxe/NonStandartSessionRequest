@@ -277,13 +277,13 @@ adminModule.controller("burQueueCtrl",
 
             switch (randNum % 3) {
                 case 1:
-                    burStatus = "Not reviewed";
+                    burStatus = "Review";
                     break;
                 case 2:
-                    burStatus = "Needs follow-up";
+                    burStatus = "Issue";
                     break;
                 default:
-                    burStatus = "Tuition Entered";
+                    burStatus = "Complete";
                     break;
             }
             return burStatus;
@@ -371,7 +371,7 @@ adminModule.controller("burQueueCtrl",
             };
     };  // sessionBrkGridOptions
 
-    $scope.ChangeBurStatus = function (submID)
+    $scope.ChangeBurStatus = function (submID, )
     {
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": submID }, true)[0];
 
@@ -388,10 +388,10 @@ adminModule.controller("burQueueCtrl",
                 faoActionReason :   $scope.rejectSess.faoActionReason,
                 rnrAction       :   $scope.rejectSess.rnrAction,
                 rnrActionDate   :   $scope.rejectSess.rnrActionDate,
-                rnrActionReason :   $scope.rejectSess.rnrActionReason //,
-                //burAction       :   $scope.rejectSess.burAction,
-                //burActionDate   :   todaysDate.toDateString(),
-                //burActionReason :   $scope.rejectSess.burActionReason
+                rnrActionReason :   $scope.rejectSess.rnrActionReason,
+                burAction       :   $scope.rejectSess.burAction,
+                burActionDate   :   todaysDate.toDateString(),
+                burActionReason :   $scope.rejectSess.burActionReason
         };
 
         $scope.spinningWheel.center().open();
@@ -627,7 +627,10 @@ adminModule.controller("faoQueueCtrl",
                 faoActionReason: rejectReason,
                 rnrAction:      $scope.rejectSess.rnrAction,
                 rnrActionDate:  $scope.rejectSess.rnrActionDate,
-                rnrActionReason:$scope.rejectSess.rnrActionReason
+                rnrActionReason: $scope.rejectSess.rnrActionReason,
+                burAction       :   $scope.rejectSess.burAction,
+                burActionDate   :   todaysDate.toDateString(),
+                burActionReason :   $scope.rejectSess.burActionReason
             };
 
             $scope.spinningWheel.center().open();
@@ -928,13 +931,16 @@ adminModule.controller("rnrQueueCtrl",
             var todaysDate = new Date();
 
             var status = {
-                submissionId: $scope.submID,
-                faoAction: $scope.selectedSess.faoAction,
-                faoActionDate: $scope.selectedSess.faoActionDate,
-                faoActionReason: $scope.selectedSess.faoActionReason,
-                rnrAction: actionCode,
-                rnrActionDate: todaysDate.toDateString(),
-                rnrActionReason: rejectReason
+                submissionId    : $scope.submID,
+                faoAction       : $scope.selectedSess.faoAction,
+                faoActionDate   : $scope.selectedSess.faoActionDate,
+                faoActionReason : $scope.selectedSess.faoActionReason,
+                rnrAction       : actionCode,
+                rnrActionDate   : todaysDate.toDateString(),
+                rnrActionReason: rejectReason,
+                burAction       :   $scope.rejectSess.burAction,
+                burActionDate   :   todaysDate.toDateString(),
+                burActionReason :   $scope.rejectSess.burActionReason
             };
 
             $scope.spinningWheel.center().open();

@@ -254,13 +254,16 @@
             var todaysDate = new Date();
 
             var status = {
-                submissionId: $scope.submID,
-                faoAction: $scope.selectedSess.faoAction,
-                faoActionDate: $scope.selectedSess.faoActionDate,
-                faoActionReason: $scope.selectedSess.faoActionReason,
-                rnrAction: actionCode,
-                rnrActionDate: todaysDate.toDateString(),
-                rnrActionReason: rejectReason
+                submissionId    : $scope.submID,
+                faoAction       : $scope.selectedSess.faoAction,
+                faoActionDate   : $scope.selectedSess.faoActionDate,
+                faoActionReason : $scope.selectedSess.faoActionReason,
+                rnrAction       : actionCode,
+                rnrActionDate   : todaysDate.toDateString(),
+                rnrActionReason: rejectReason,
+                burAction       :   $scope.rejectSess.burAction,
+                burActionDate   :   todaysDate.toDateString(),
+                burActionReason :   $scope.rejectSess.burActionReason
             };
 
             $scope.spinningWheel.center().open();
