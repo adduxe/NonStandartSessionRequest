@@ -192,33 +192,35 @@
         var selectedSess = $filter('filter')($scope.submissions, { "submissionId": submID }, true)[0];
 
         if (selectedSess != null) {
+
             $scope.rejectSess = selectedSess;
+            $scope.rejectSess.rnrActionReason = "";
+
+            var todaysDate = new Date();
+
+            var status = {
+                submissionId    : submID,
+                faoAction       : $scope.rejectSess.faoAction,
+                faoActionDate   : $scope.rejectSess.faoActionDate,
+                faoActionReason : $scope.rejectSess.faoActionReason,
+                rnrAction       : $scope.rejectSess.rnrAction,
+                rnrActionDate   : $scope.rejectSess.rnrActionDate,
+                rnrActionReason : $scope.rejectSess.rnrActionReason,
+                burAction       : burStatus,
+                burActionDate   : todaysDate.toDateString(),
+                burActionReason : burStatus
+            };
+
+            $scope.spinningWheel.center().open();
+
+            Submissions.update({ submissionId: submID }, status)     // update the request's status
+                .$promise.then(function () {
+                    $scope.spinningWheel.center().close();
+                }), function () {
+                    alert("Failed in updating the Bursar status for Request ID: " + $scope.rejectSess.requestId);
+                    $scope.spinningWheel.center().close();
+                }; // promise.fail()
         }
-
-        var todaysDate = new Date();
-
-        var status = {
-                submissionId    :   submID,
-                faoAction       :   $scope.rejectSess.faoAction,
-                faoActionDate   :   $scope.rejectSess.faoActionDate,
-                faoActionReason :   $scope.rejectSess.faoActionReason,
-                rnrAction       :   $scope.rejectSess.rnrAction,
-                rnrActionDate   :   $scope.rejectSess.rnrActionDate,
-                rnrActionReason :   $scope.rejectSess.rnrActionReason,
-                burAction       :   burStatus,
-                burActionDate   :   todaysDate.toDateString(),
-                burActionReason :   burStatus
-        };
-
-        $scope.spinningWheel.center().open();
-
-        Submissions.update({ submissionId: submID }, status)     // update the request's status
-            .$promise.then(function () {
-                $scope.spinningWheel.center().close();
-            }), function(){
-                alert("Failed in updating the Bursar status for Request ID: " + $scope.rejectSess.requestId);
-                $scope.spinningWheel.center().close();
-            }; // promise.fail()
 
         return;
     }   // Submissions.ChangeBurStatus()

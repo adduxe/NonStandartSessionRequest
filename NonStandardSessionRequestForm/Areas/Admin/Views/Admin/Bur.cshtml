@@ -145,8 +145,10 @@
                                     <option value="Complete">Complete</option>
                                 </select>
                             </td>
-                            <td align="center">#= (data.rnrActionDate == null) ? '': data.rnrActionDate #</td>
-                            <td align="center">{{ dataItem.burAction }}</td>
+                            <td align="center">#= (data.burActionDate == null) ? '': data.burActionDate #</td>
+                            <td align="center">
+                                #= (dataItem.burAction == null) ? '': dataItem.burAction #
+                            </td>
                         </tr>
                     </table>
                 </div>
