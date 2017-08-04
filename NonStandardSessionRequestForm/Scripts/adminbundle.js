@@ -245,9 +245,9 @@ adminModule.controller("burQueueCtrl",
                                             rnrAction           : subm.rnrAction,
                                             rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
                                             rnrActionReason     : subm.rnrActionReason,
-                                            burAction           : (subm.burAction == null)? "Review": subm.burAction,
+                                            burAction           : subm.burAction,
                                             burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
-                                            burActionReason     : subm.burActionReason
+                                            burActionReason     : (subm.burAction == null) ? "1. Review" : subm.burActionReason
                                         };
                                     }));
                                     $scope.spinningWheel.center().close();
@@ -272,31 +272,14 @@ adminModule.controller("burQueueCtrl",
                 pageSize: 10
         });
 
-        function getBurStatus(bStatus) {
-
-            var burStatus = "";
-
-            switch (bStatus) {
-                case 1:
-                    burStatus = "Review";
-                    break;
-                case 2:
-                    burStatus = "Issue";
-                    break;
-                default:
-                    burStatus = "Complete";
-                    break;
-            }
-            return burStatus;
-        }
-
         $scope.mainGridOptions = {
 
             dataSource: $scope.dataSource,
             sortable: true,
             pageable: true,
+
             columns: [
-                { field: "burAction",       title: "Status",        width: "12.5%"  },
+                { field: "burActionReason", title: "Status",        width: "12.5%"  },
                 { field: "requestId",       title: "Request",       width: "7.5%"   },
                 { field: "academicTerm",    title: "Term",          width: "7.5%"   },
                 { field: "sessionCode",     title: "Session",       width: "7.5%"   },
@@ -382,6 +365,26 @@ adminModule.controller("burQueueCtrl",
             $scope.rejectSess.rnrActionReason = "";
 
             var todaysDate = new Date();
+            var burStatusText = null;
+
+            switch (burStatus) {
+
+                case "":
+                    burStatusText = "1. Review";
+                    break;
+
+                case "I":
+                    burStatusText = "2. Issue";
+                    break;
+                
+                case "C":
+                    burStatusText = "3. Complete";
+                    break;
+
+                default:
+                    burStatusText = "";
+                    break;
+            }
 
             var status = {
                 submissionId    : submID,
@@ -393,13 +396,22 @@ adminModule.controller("burQueueCtrl",
                 rnrActionReason : $scope.rejectSess.rnrActionReason,
                 burAction       : burStatus,
                 burActionDate   : todaysDate.toDateString(),
-                burActionReason : burStatus
+                burActionReason : burStatusText
             };
 
             $scope.spinningWheel.center().open();
 
             Submissions.update({ submissionId: submID }, status)     // update the request's status
                 .$promise.then(function () {
+
+                    // remove the submission from the list
+                    for (var i = 0; i < $scope.dataSource._data.length; ++i) {
+                        if ($scope.dataSource._data[i].submissionId == submID) {
+                            $scope.dataSource._data[i].burActionReason = burStatusText;
+                            break;
+                        }
+                    }   // for (var i...
+
                     $scope.spinningWheel.center().close();
                 }), function () {
                     alert("Failed in updating the Bursar status for Request ID: " + $scope.rejectSess.requestId);

@@ -139,15 +139,14 @@
                             <td class="red" align="center"><b>BUR</b></td>
                             <td align="center">
                                 <select ng-model="dataItem.burAction" ng-change="ChangeBurStatus(dataItem.submissionId, dataItem.burAction);">
-                                    <option>&nbsp;</option>
-                                    <option value="Review">Review</option>
-                                    <option value="Issue">Issue</option>
-                                    <option value="Complete">Complete</option>
+                                    <option value="">Review</option>
+                                    <option value="I">Issue</option>
+                                    <option value="C">Complete</option>
                                 </select>
                             </td>
                             <td align="center">#= (data.burActionDate == null) ? '': data.burActionDate #</td>
                             <td align="center">
-                                {{ (dataItem.burAction == null) ? '': dataItem.burAction }}
+                                {{ dataItem.burActionReason }}
                             </td>
                         </tr>
                     </table>
