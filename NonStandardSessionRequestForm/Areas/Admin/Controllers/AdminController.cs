@@ -1,6 +1,8 @@
 ﻿
 using System.Web.Mvc;
 using USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers;
+using System.Web;
+using System;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
 {
@@ -9,6 +11,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
         // GET: Admin/Admin
         public ActionResult Index()
         {
+
+            GetUserRole();                  // Check to see if the role is set in the querystring
+
             var user = new UserHelper();
             string viewName = "Forbidden";  // default view if none found.
 
@@ -18,7 +23,6 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
 
             if (user.IsAdmin)
             {
-
                 if (user.IsFao)
                 {
                     ViewBag.Title = "Financial Aid Office Session Requests";
@@ -46,5 +50,23 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public void GetUserRole()
+        {
+            string role = Request.QueryString["User"];              // Read the role off of the Querystring
+
+            if (!string.IsNullOrEmpty(role)) {
+                
+                HttpCookie myCookie = new HttpCookie("User");       // Set the cookie
+                DateTime now = DateTime.Now;
+
+                myCookie.Value = role;                              // Set the cookie value.
+                myCookie.Expires = now.AddMinutes(0.05);              // Set the cookie expiration date.
+
+                Response.Cookies.Add(myCookie);                     // Add the cookie.
+            }
+            return;
+        }
+
     }
 }

@@ -5,6 +5,80 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
 {
     public class UserHelper
     {
+        public void SetUserRole() {
+
+            string user = "B";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
+
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie = HttpContext.Current.Request.Cookies["User"];
+            if (myCookie != null)
+            {
+                user = myCookie.Value;
+            }
+
+            if (!string.IsNullOrEmpty(user))
+            {
+                switch (user.ToUpper())
+                {
+                    case "F": // Test as FAO
+                        this.UscId = "this is a test";
+                        this.FirstName = "FAO Admin";
+                        this.Surname = "Tester";
+                        this.Department = "Department of Testing";
+                        this.School = "Financial Aid Office";
+                        this.Email = "anthondd@usc.edu";
+                        this.Phone = "+1 213 111 1111";
+                        this.IsAdmin = true;
+                        this.IsFao = true;
+                        this.IsRnr = false;
+                        this.IsBur = false;
+                        break;
+
+                    case "R": // Test as RNR
+                        this.UscId = "this is a test";
+                        this.FirstName = "RNR Admin";
+                        this.Surname = "Tester";
+                        this.Department = "Department of Testing";
+                        this.School = "Record and Registration Office";
+                        this.Email = "anthondd@usc.edu";
+                        this.Phone = "+1 213 111 1111";
+                        this.IsAdmin = true;
+                        this.IsFao = false;
+                        this.IsRnr = true;
+                        this.IsBur = false;
+                        break;
+
+                    case "B": // Test as Bursar
+                        this.UscId = "this is a test";
+                        this.FirstName = "BUR Admin";
+                        this.Surname = "Tester";
+                        this.Department = "Department of Testing";
+                        this.School = "Bursar Office";
+                        this.Email = "anthondd@usc.edu";
+                        this.Phone = "+1 213 111 1111";
+                        this.IsAdmin = true;
+                        this.IsFao = false;
+                        this.IsRnr = false;
+                        this.IsBur = true;
+                        break;
+
+                    default:    // use the values from Shib
+                                //this.UscId = "Illegal User";
+                                //this.FirstName = "Forbidden";
+                                //this.Surname = "User";
+                                //this.Department = "Department of Hacking";
+                                //this.Email = "anthondd@usc.edu";
+                                //this.Phone = "+1 213 111 1111";
+                                //this.IsAdmin = false;
+                                //this.IsFao = false;
+                                //this.IsRnr = false;
+                                //this.IsBur = false;
+                        break;
+                }   // switch()
+            }
+            return;
+        }   
+
         public UserHelper()
         {
             this.UscId = HttpContext.Current.Request.ServerVariables["HTTP_SHIBUSCPERSONUSCID"];
@@ -40,70 +114,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers
                 this.IsBur = true;
             }
 #if (DEBUG)
-            string user = "B";  // "F" - FAO, "R" - RNR, "B" - BUR, "" - get from Shib
 
-            //var user = HttpContext.Current.Request.QueryString["User"]!= null 
-            //    ? HttpContext.Current.Request.QueryString["User"].ToString():"";
+        SetUserRole();              // Get the User Role from Cookies
 
-            switch (user.ToUpper())
-            {
-
-                case "F": // Test as FAO
-                    this.UscId = "this is a test";
-                    this.FirstName = "FAO Admin";
-                    this.Surname = "Tester";
-                    this.Department = "Department of Testing";
-                    this.School = "Financial Aid Office";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = true;
-                    this.IsFao = true;
-                    this.IsRnr = false;
-                    this.IsBur = false;
-                    break;
-
-                case "R": // Test as RNR
-                    this.UscId = "this is a test";
-                    this.FirstName = "RNR Admin";
-                    this.Surname = "Tester";
-                    this.Department = "Department of Testing";
-                    this.School = "Record and Registration Office";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = true;
-                    this.IsFao = false;
-                    this.IsRnr = true;
-                    this.IsBur = false;
-                    break;
-
-                case "B": // Test as Bursar
-                    this.UscId = "this is a test";
-                    this.FirstName = "BUR Admin";
-                    this.Surname = "Tester";
-                    this.Department = "Department of Testing";
-                    this.School = "Bursar Office";
-                    this.Email = "anthondd@usc.edu";
-                    this.Phone = "+1 213 111 1111";
-                    this.IsAdmin = true;
-                    this.IsFao = false;
-                    this.IsRnr = false;
-                    this.IsBur = true;
-                    break;
-
-                default:    // use the values from Shib
-                    //this.UscId = "Illegal User";
-                    //this.FirstName = "Forbidden";
-                    //this.Surname = "User";
-                    //this.Department = "Department of Hacking";
-                    //this.Email = "anthondd@usc.edu";
-                    //this.Phone = "+1 213 111 1111";
-                    //this.IsAdmin = false;
-                    //this.IsFao = false;
-                    //this.IsRnr = false;
-                    //this.IsBur = false;
-                    break;
- 
-            }
 #endif
         }
 
