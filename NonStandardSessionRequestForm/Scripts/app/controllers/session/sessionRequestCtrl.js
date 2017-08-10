@@ -300,14 +300,18 @@ sessionModule.controller("sessionRequestCtrl",
 
                             if (value.rateTypeCode == $scope.session.rateType) {
 
-                                $scope.session.flatRateAmount = value.rateTypeFlatRate;
                                 $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+                                $scope.session.flatRateAmount = value.rateTypeFlatRate;
+
+                                if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
+                                    $scope.session.flatRateUnitsMin = 98;
+                                    $scope.session.flatRateUnitsMax = 99;
+                                } else {
+                                    $scope.session.flatRateUnitsMin = '';
+                                    $scope.session.flatRateUnitsMax = '';
+                                }
                             }
 
-                            if (value.rateTypeCode == "ZERO"){
-                                $scope.session.flatRateUnitsMin = 98;
-                                $scope.session.flatRateUnitsMax = 99;
-                            }
                         })
                     }
                 });
