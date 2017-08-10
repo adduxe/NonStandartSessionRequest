@@ -291,12 +291,22 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.ratePerUnitAmount = '';
 
             if ($scope.session.academicTerm > '') {
+
                 angular.forEach($scope.rates, function (value) {
+
                     if (value.term == $scope.session.academicTerm) {
+
                         angular.forEach(value.rateTypes, function (value) {
+
                             if (value.rateTypeCode == $scope.session.rateType) {
+
                                 $scope.session.flatRateAmount = value.rateTypeFlatRate;
                                 $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+                            }
+
+                            if (value.rateTypeCode == "ZERO"){
+                                $scope.session.flatRateUnitsMin = 98;
+                                $scope.session.flatRateUnitsMax = 99;
                             }
                         })
                     }
