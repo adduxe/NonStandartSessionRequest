@@ -136,7 +136,8 @@
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" ng-required="session.rateType == 'OTH'"
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" 
+                           ng-required="session.rateType == 'OTH'" ng-blur="checkRateAmount($event.target.value, 'Tuition per unit');"
                            ng-readonly="(session.rateType != 'OTH')" ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
@@ -175,7 +176,8 @@
                     <abbr title="Last day to Withdraw classes">Last day <br> to Withdraw:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="lastDayWithdraw" name="lastDayWithdraw" maxlength="20" readonly ng-model="session.lastDayForWithdrawal" />
+                    <input type="text" class="form-control" id="lastDayWithdraw" name="lastDayWithdraw" 
+                           maxlength="20" readonly ng-model="session.lastDayForWithdrawal" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireOtherLoc && sessionRequestForm.$submitted}">
@@ -192,7 +194,8 @@
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-required="session.rateType == 'OTH'"
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" 
+                           ng-required="session.rateType == 'OTH'" ng-blur="checkRateAmount($event.target.value, 'Tuition Flat Rate');"
                            ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
                 </div>
             </div>
@@ -201,10 +204,10 @@
                     <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == 0)"
+                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
                            ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
                     &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == 0)"
+                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>

@@ -1553,12 +1553,150 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.semesters = semChoices;
         }   // PopulateSemesterDropdown
 
+
+        function areCampusLocFieldsOk() {           // Checks the Campus Location Fields
+
+            var campusOK = true;
+
+            switch ($scope.session.isClassHeldAtUpc) {
+
+                case 'true':                        // Class held on campus.  Will not require the other Location fields.
+                    break;
+
+                case 'false':                       // Would require at least one of the two other location fields.
+
+                    $scope.requireUSCLoc = false;
+                    $scope.requireOtherLoc = false;
+
+                    if ($scope.session.uscCampusLocation == '') {
+
+                        campusOK = false;
+                        $scope.requireUSCLoc = true;
+
+                    } else {
+                                                    // if "Other" campus location and Other campus location is blank
+                        if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
+                            campusOK = false;
+                            $scope.requireOtherLoc = true;
+                        }
+                    }
+                    break;
+
+                default:                                    // radio button unselected
+                    campusOK = false;
+                    break;
+            }   // switch()
+
+            return campusOK;
+
+        }   // areCampusLocFieldsOk()
+
+
+        function areRateFieldsOK()                          // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
+        {
+            var rateFieldsOk = true;
+            var errMsg = "";
+
+            if ($scope.session.rateType == 'OTH') {         // If rate type 'Others' is chosen
+                                                            // Make sure Tuition per  Unit and Tuition Flat Rate are required
+                switch (true) {
+
+                    case (!$scope.session.ratePerUnitAmount):
+                    case (parseFloat($scope.session.ratePerUnitAmount) == 0):
+                        errMsg = "Tuition per Unit must have an amount greater than zero."
+                        rateFieldsOk = false;
+                        break;
+
+                    case (!$scope.session.flatRateAmount):
+                    case (parseFloat($scope.session.flatRateAmount) == 0):
+                        errMsg = "Tuition Flat Rate amount must have an amount greater than zero."
+                        rateFieldsOk = false;
+                        break;
+
+                    default:
+                        break;
+                }   // switch()
+            }   // if ($scope.session.rateType...)
+
+            if (rateFieldsOk && ($scope.session.flatRateAmount > '')) {     // Check the rate fields
+
+                if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
+
+                    $scope.requireUnitRange = true;
+                    rateFieldsOk = false;
+
+                } else {                                                    // Range is specified but validate the values
+
+                    switch (true) {
+
+                        case (parseInt($scope.session.flatRateUnitsMax) <= parseInt($scope.session.flatRateUnitsMin)):
+
+                            errMsg = "The flat rate maximum units should be more than the minimum units.";
+                            $scope.requireUnitRange = true;
+                            rateFieldsOk = false;
+                            break;
+
+                        case (typeof $scope.session.flatRateUnitsMin == 'undefined'):
+
+                            errMsg = "The Flat Rate Range minimum units should between 1 and 30.";
+                            $scope.requireUnitRange = true;
+                            rateFieldsOk = false;
+                            break;
+
+                        case (typeof $scope.session.flatRateUnitsMax == 'undefined'):
+
+                            errMsg = "The Flat Rate Range maximum units should between 2 and 30.";
+                            $scope.requireUnitRange = true;
+                            rateFieldsOk = false;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }   // if (rateFieldsOk...)
+
+            if (errMsg > '') {
+                alert(errMsg);
+            }
+
+            return rateFieldsOk;
+        }   // areRateFieldsOK()
+
+
+        function sessionBreaksOK()                      // check Session Breaks
+        {                                               // 1) if "No Breaks" is checked, no need to check Session Breaks
+            var sessBreaksOK = true;
+            var errMsg = "";
+
+            if (!$scope.noBreaks) {                     // 2) is "No Breaks" checkbox unchecked?
+                if ($scope.session.sessionBreaks.length == 0) {   //  - if no Session Breaks entered, error out
+                    errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
+                    sessBreaksOK = false;
+                } else {                                // check for blank entries
+                    for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
+                        if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
+                            errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
+                            sessBreaksOK = false;
+                        }
+                    }
+                }
+            }
+
+            if (errMsg > '') {
+                alert(errMsg);
+            }
+
+            return sessBreaksOK;
+        }   // sessionBreaksOK()
+
+
+
         function IsFormValid() {
 
             var formValid = true;
 
             var reqdFields = [
-
                 $scope.session.academicTerm,        // Semester field
                 $scope.sessCode.value(),            // Session code
                 $scope.session.firstDayOfClass,     // First day of Classes
@@ -1574,111 +1712,32 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             };
 
-            // Check Campus Location
             if (formValid) {
-                switch ($scope.session.isClassHeldAtUpc) {
-
-                    case 'true':              // Class held on campus.  Will not require the other Location fields.
-                        break;
-
-                    case 'false':             // Would require at least one of the two other location fields.
-
-                        $scope.requireUSCLoc = false;
-                        $scope.requireOtherLoc = false;
-
-                        if ($scope.session.uscCampusLocation == '') {
-
-                            formValid = false;
-                            $scope.requireUSCLoc = true;
-
-                        } else {
-                            // if "Other" campus location and Other campus location is blank
-                            if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-
-                                formValid = false;
-                                $scope.requireOtherLoc = true;
-                            }
-                        }
-                        break;
-
-                    default:                // radio button unselected
-                        formValid = false;
-                        break;
-                }   // switch()
-            }   // end of Campus Location check
-
-
-            if (formValid && ($scope.session.rateType == 'OTH')) {      // If rate type 'Others' is chosen
-                                                                        // Make sure Tuition per  Unit and Tuition Flat Rate are required
-                var errMsg = "";
-
-                switch (true) {
-
-                    case (!$scope.session.ratePerUnitAmount):
-                    case (parseFloat($scope.session.ratePerUnitAmount) == 0):
-                        errMsg = "Tuition per Unit must have an amount greater than zero."
-                        break;
-
-                    case (!$scope.session.flatrateAmount):
-                    case (parseFloat($scope.session.flatRateAmount) == 0):
-                        errMsg = "Tuition Flat Rate amount must have an amount greater than zero."
-                        break;
-
-                    default:
-                        break;
-                }   // switch()
-
-                if (errMsg > '') {
-                    alert(errMsg);
-                    formValid = false;
-                }
-            }   // if ($scope.session.rateType...)
-
-
-                // Check the rate fields
-            if (formValid && ($scope.session.flatRateAmount > '')) {
-
-                if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
-
-                    $scope.requireUnitRange = true;
-                    formValid = false;
-
-                } else { // Range is specified but validate the values
-
-                    if ($scope.session.flatRateUnitsMax <= $scope.session.flatRateUnitsMin) {
-
-                        alert("The flat rate maximum units should be more than the minimum units.");
-                        $scope.requireUnitRange = true;
-                        formValid = false;
-                    }
-                }
+                formValid = areCampusLocFieldsOk();                     // Check Campus Location Fields
             }
 
-            // check Session Breaks
-            // 1) if "No Breaks" is checked, no need to check Session Breaks
-            // 2) if the "No Breaks" checkbox is unchecked:
-            //      - if no Session Breaks entered, error out
-
-            if (formValid && !$scope.noBreaks) {     // "No Breaks" checkbox unchecked?
-
-                if ($scope.session.sessionBreaks.length == 0) {
-                    formValid = false;
-                    alert("Either check the No Breaks checkbox or enter Session Breaks");
-                } else {    // check for blank entries
-                    for (var i = 0; i < $scope.session.sessionBreaks.length; ++i){
-                        if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
-                            formValid = false;
-                            alert("Either enter Session Breaks or check the No Breaks checkbox.");
-                        }
-                    }
-                }
+            if (formValid) {
+                formValid = areRateFieldsOK();                          // Check Tuition Rate Fields
             }
+
+            if (formValid) {
+                formValid = sessionBreaksOK();                          // Check if the Session Breaks were entered
+            }   
         
             return formValid;
         }   // IsFormValid()
 
 
-        $scope.deleteBreaks = function () {
+        $scope.checkRateAmount = function (value, fieldName) {
+
+            if ($scope.session.rateType == 'OTH') {
+                if (value < 1) {
+                    alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
+                }
+            }
+        }   // checkRateAmount()
+
+        $scope.deleteBreaks = function(){
 
             if ($scope.noBreaks) {
                 $scope.session.sessionBreaks = [];  // delete existing breaks
