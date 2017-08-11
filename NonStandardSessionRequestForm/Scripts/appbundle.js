@@ -1469,34 +1469,42 @@ sessionModule.controller("sessionRequestCtrl",
         }   // GetDatesAndRates()
 
         $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
+
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
 
             if ($scope.session.academicTerm > '') {
 
-                angular.forEach($scope.rates, function (value) {
+                if ($scope.session.rateType == 'OTH'){
 
-                    if (value.term == $scope.session.academicTerm) {
+                    $scope.session.flatRateUnitsMin = '';
+                    $scope.session.flatRateUnitsMax = '';
 
-                        angular.forEach(value.rateTypes, function (value) {
+                } else {
+                    angular.forEach($scope.rates, function (value) {
 
-                            if (value.rateTypeCode == $scope.session.rateType) {
+                        if (value.term == $scope.session.academicTerm) {
 
-                                $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
-                                $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                            angular.forEach(value.rateTypes, function (value) {
 
-                                if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
-                                    $scope.session.flatRateUnitsMin = 98;
-                                    $scope.session.flatRateUnitsMax = 99;
-                                } else {
-                                    $scope.session.flatRateUnitsMin = '';
-                                    $scope.session.flatRateUnitsMax = '';
+                                if (value.rateTypeCode == $scope.session.rateType) {
+
+                                    $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+                                    $scope.session.flatRateAmount = value.rateTypeFlatRate;
+
+                                    if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
+                                        $scope.session.flatRateUnitsMin = 98;
+                                        $scope.session.flatRateUnitsMax = 99;
+                                    } else {
+                                        $scope.session.flatRateUnitsMin = '';
+                                        $scope.session.flatRateUnitsMax = '';
+                                    }
                                 }
-                            }
 
-                        })
-                    }
-                });
+                            })
+                        }
+                    });
+                }   // if ($scope.session.rateType)
             }
             return;
         }   // SetRates
@@ -1599,6 +1607,34 @@ sessionModule.controller("sessionRequestCtrl",
                 }   // switch()
             }   // end of Campus Location check
 
+
+            if (formValid && ($scope.session.rateType == 'OTH')) {      // If rate type 'Others' is chosen
+                                                                        // Make sure Tuition per  Unit and Tuition Flat Rate are required
+                var errMsg = "";
+
+                switch (true) {
+
+                    case (!$scope.session.ratePerUnitAmount):
+                    case (parseFloat($scope.session.ratePerUnitAmount) == 0):
+                        errMsg = "Tuition per Unit must have an amount greater than zero."
+                        break;
+
+                    case (!$scope.session.flatrateAmount):
+                    case (parseFloat($scope.session.flatRateAmount) == 0):
+                        errMsg = "Tuition Flat Rate amount must have an amount greater than zero."
+                        break;
+
+                    default:
+                        break;
+                }   // switch()
+
+                if (errMsg > '') {
+                    alert(errMsg);
+                    formValid = false;
+                }
+            }   // if ($scope.session.rateType...)
+
+
                 // Check the rate fields
             if (formValid && ($scope.session.flatRateAmount > '')) {
 
@@ -1615,7 +1651,7 @@ sessionModule.controller("sessionRequestCtrl",
                         $scope.requireUnitRange = true;
                         formValid = false;
                     }
-                }   // else
+                }
             }
 
             // check Session Breaks

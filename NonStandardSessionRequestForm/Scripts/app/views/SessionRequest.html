@@ -136,8 +136,8 @@
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" 
-                           ng-readonly="(session.rateType != 'OTH')"  ng-model="session.ratePerUnitAmount" />
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" ng-required="session.rateType == 'OTH'"
+                           ng-readonly="(session.rateType != 'OTH')" ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -192,7 +192,8 @@
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-required="session.rateType == 'OTH'"
+                           ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
