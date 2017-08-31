@@ -1763,7 +1763,7 @@ sessionModule.controller("sessionRequestCtrl",
             };
 
             var today = new Date();
-            $scope.session.submitDate = today.getMonth() + 1 + '/' +today.getDate() + '/' +today.getFullYear();
+            $scope.session.submitDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
 
             var sessionValue = $scope.sessCode.value().trim();
             $scope.session.sessionCode = sessionValue.substring(0, 3);
@@ -1885,6 +1885,23 @@ sessionModule.controller("sessionRequestCtrl",
 
     }); // document.ready()
 }]);    // sessionModule()
+
+
+function checkRateAmt(rateField, fieldName) {
+
+    var rateType = document.getElementById('rateType');
+
+    if (rateType.value == 'OTH') {
+        if (rateField.value < 1) {
+            alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
+            rateField.style.borderColor = "red";
+        } else {
+            rateField.style.borderColor = "#ccc";
+        }
+    }
+    return;
+}
+
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 

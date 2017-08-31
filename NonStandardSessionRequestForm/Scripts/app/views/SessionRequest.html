@@ -136,8 +136,8 @@
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" 
-                           ng-required="session.rateType == 'OTH'" ng-blur="checkRateAmount($event.target.value, 'Tuition per unit');"
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" onchange="checkRateAmt(this, 'Tuition unit rate');"
+                           ng-required="session.rateType == 'OTH'" change="checkRateAmount($event.target.value, 'Tuition per unit');"
                            ng-readonly="(session.rateType != 'OTH')" ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
@@ -194,8 +194,8 @@
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" 
-                           ng-required="session.rateType == 'OTH'" ng-blur="checkRateAmount($event.target.value, 'Tuition Flat Rate');"
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" onchange="checkRateAmt(this, 'Tuition flat rate');"
+                           ng-required="session.rateType == 'OTH'" change="checkRateAmount($event.target.value, 'Tuition Flat Rate');"
                            ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
                 </div>
             </div>
