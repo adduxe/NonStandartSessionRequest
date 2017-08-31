@@ -131,12 +131,12 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': (session.rateType == 'OTH') && (session.ratePerUnitAmount < 1)}">
                 <label for="tuitionUnitRate" class="col-md-4 control-label">
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" 
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" ng-blur="CheckRateAmount(session.ratePerUnitAmount, 'Tuition unit rate')"
                            ng-readonly="(session.rateType != 'OTH')"  ng-model="session.ratePerUnitAmount" />
                 </div>
             </div>
@@ -187,12 +187,13 @@
                            ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': (session.rateType == 'OTH') && (session.flatRateAmount < 1)}">
                 <label for="tuitionFlatRate" class="col-md-6 control-label">
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-readonly="session.rateType != 'OTH'" 
+                           ng-model="session.flatRateAmount" ng-blur="CheckRateAmount(session.flatRateAmount, 'Tuition flat rate')"/>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">

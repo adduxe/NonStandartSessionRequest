@@ -1694,6 +1694,15 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // GetRateTable()
 
+        $scope.CheckRateAmount = function (rateAmount, rateName) {
+
+            if ($scope.session.rateType == "OTH") {
+                if (rateAmount < 1) {
+                    alert("Please enter a " + rateName + " that is greater than 0.");
+                }
+            }
+        }   // CheckRateAmount
+
     $(document).ready(function () {
 
         $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
