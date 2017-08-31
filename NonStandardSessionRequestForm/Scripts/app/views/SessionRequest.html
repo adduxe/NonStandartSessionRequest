@@ -137,7 +137,7 @@
                 </label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" ng-blur="CheckRateAmount(session.ratePerUnitAmount, 'Tuition unit rate')"
-                           ng-readonly="(session.rateType != 'OTH')"  ng-model="session.ratePerUnitAmount" />
+                           ng-readonly="(session.rateType != 'OTH')"  ng-model="session.ratePerUnitAmount"  ng-model-options="{updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -193,7 +193,7 @@
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-readonly="session.rateType != 'OTH'" 
-                           ng-model="session.flatRateAmount" ng-blur="CheckRateAmount(session.flatRateAmount, 'Tuition flat rate')"/>
+                           ng-model="session.flatRateAmount" ng-blur="CheckRateAmount(session.flatRateAmount, 'Tuition flat rate')" ng-model-options="{updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
