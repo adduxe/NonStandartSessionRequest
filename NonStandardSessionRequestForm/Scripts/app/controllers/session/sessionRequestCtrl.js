@@ -5,8 +5,7 @@ sessionModule.controller("sessionRequestCtrl",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
     
-            // Add Semester Break functionality
-        $scope.AddSemesterBreaks = function () {
+        $scope.AddSemesterBreaks = function () {                    // Add Semester Break functionality
 
             var semBreak = { startDate: "", endDate: "" };
 
@@ -18,23 +17,22 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // AddSemesterBreaks()
 
-            // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
-        Date.dateDiff = function (datepart, fromdate, todate) {
+        Date.dateDiff = function (datepart, fromdate, todate) {     // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
             datepart = datepart.toLowerCase();
             var diff = todate - fromdate;
             var divideBy = {
-                w: 604800000,   // weeks
-                d: 86400000,    // days
-                h: 3600000,     // hours
-                m: 60000,       // minutes
-                s: 1000         // seconds
+                w: 604800000,                                       // weeks
+                d: 86400000,                                        // days
+                h: 3600000,                                         // hours
+                m: 60000,                                           // minutes
+                s: 1000                                             // seconds
             };
 
             return Math.floor(diff / divideBy[datepart]);
         }   // Date.dateDiff
 
 
-        function AdjustDate(newDate)        // Computes a new date incrementing the day if it falls on a weekend or a holiday.
+        function AdjustDate(newDate)                                // Computes a new date incrementing the day if it falls on a weekend or a holiday.
         {
             var newDtmonthDay = '';
 
@@ -62,25 +60,21 @@ sessionModule.controller("sessionRequestCtrl",
         }       // AdjustDate()
 
 
-        //  1) Calculates computed dates given the:
-        //      a) start date
-        //      b) end date
-        //      c) percentage number of days to be added to the start date
-        //
-        //  2) If the new date falls on a weekend, or a holiday:
-        //      - move it to the next school day      
-
-        function ComputeDate(startDate, endDate, percentAdd) {
-
+        function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
+                                                                    //      a) start date
+                                                                    //      b) end date
+                                                                    //      c) percentage number of days to be added to the start date
+                                                                    //  2) If the new date falls on a weekend, or a holiday:
+                                                                    //      - move it to the next school day      
             var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
-            var daysToAdd = Math.round(totalDays * (percentAdd/100));       // days to add based on the percentage (percentAdd) provided
+            var daysToAdd = Math.round(totalDays * (percentAdd/100));   // days to add based on the percentage (percentAdd) provided
             var initialDate = new Date(startDate);
 
             initialDate.setDate(startDate.getDate() + daysToAdd - 1);
             var adjustedDate =  AdjustDate(initialDate);
 
-            if (adjustedDate > endDate) {                                // if computed new date is beyond the Last Day of classes,
-                adjustedDate = endDate;                                  //  make it equal to the last day of classes.
+            if (adjustedDate > endDate) {                           // if computed new date is beyond the Last Day of classes,
+                adjustedDate = endDate;                             //  make it equal to the last day of classes.
             }
             
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
@@ -99,8 +93,7 @@ sessionModule.controller("sessionRequestCtrl",
         }   // convDateToString()
 
 
-            // Validate the Class Start and End dates
-        $scope.ClassDatesChanged = function () {
+        $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {
 
@@ -111,14 +104,14 @@ sessionModule.controller("sessionRequestCtrl",
 
                     alert("Class Start Date later than Class End Date");
 
-                } else {        // dates OK.  Calculate computed date fields.
+                } else {                                        // dates OK.  Calculate computed date fields.
 
                     if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > ''))        // 001 dates exists for semester
                     {
                         var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
                         var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
 
-                                // if class start and end dates match Session 001 dates
+                                                                // if class start and end dates match Session 001 dates
                         if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
 
                             $scope.session.lastDayForAddDrop    = $scope.sess001Dates.lastDayForAddDrop;
@@ -128,10 +121,10 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.session.lastDayOfFinals      = $scope.sess001Dates.lastDayOfFinals;
                             $scope.FinalsDatesChanged();
 
-                        } else {            // if the Class start and end dates don't match, compute the dates.
+                        } else {                                // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
                         }
-                    } else {        // If there are no 001 dates, compute the dates
+                    } else {                                    // If there are no 001 dates, compute the dates
                         ComputeDates(startDt, endDt);
                     }
                 }   // if (startDt...
@@ -156,11 +149,12 @@ sessionModule.controller("sessionRequestCtrl",
                 var startDt = new Date($scope.session.firstDayOfFinals);
                 var endDt = new Date($scope.session.lastDayOfFinals);
 
-                    // Compute Final Grading Period
-                if (startDt > endDt) {
+                if (startDt > endDt) {                          // Compute Final Grading Period
+
                     alert("First day of Finals later than Last Day of Finals");
+
                 } else {
-                                        // First Day of Grading = First Day of Finals
+                                                                // First Day of Grading = First Day of Finals
                     $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
 
                     var initialLastDay = new Date(endDt);
@@ -170,7 +164,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                         notaSchoolDay = false;
 
-                        do {     // keep incrementing a day until a school day is found.
+                        do {                                    // keep incrementing the date by a day until a school day is found.
 
                             initialLastDay.setDate(initialLastDay.getDate() + 1);
                             newDateStr = initialLastDay.getMonth() + 1 + '/' + initialLastDay.getDate() + '/' + initialLastDay.getFullYear();
@@ -210,8 +204,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }
 
-            // Add a Class Schedule functionality
-        $scope.AddSchedule = function (thisSection) {
+        $scope.AddSchedule = function (thisSection) {           // Adding a Class Schedule functionality
             var sched = { classDayOfWeek: "", classStartTime: "", classEndTime: "" };
             thisSection.schedules.push(sched);
             return;
@@ -286,7 +279,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // GetDatesAndRates()
 
-        $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
+        $scope.SetRates = function () {                     // setting the value of the Tuition per Unit and Flat Rate fields
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
 
@@ -308,6 +301,7 @@ sessionModule.controller("sessionRequestCtrl",
         var holidays =[];
 
         function PopulateSemesterDropdown() {
+
             var currDate = new Date();
             var currYear = currDate.getFullYear();
             var nextYear = parseInt(currYear) +1;
@@ -339,10 +333,10 @@ sessionModule.controller("sessionRequestCtrl",
             } else {                                                        // Display Current Fall to Next Year Fall
 
                 semChoices =[
-                        { semName: currYear + " Fall",  semCode: currYear + "3" },
-                        { semName: nextYear + " Spring",semCode: nextYear + "1" },
-                        { semName: nextYear + " Summer",semCode: nextYear + "2" },
-                        { semName: nextYear + " Fall",  semCode: nextYear + "3" }
+                    { semName: currYear + " Fall",      semCode: currYear + "3" },
+                    { semName: nextYear + " Spring",    semCode: nextYear + "1" },
+                    { semName: nextYear + " Summer",    semCode: nextYear + "2" },
+                    { semName: nextYear + " Fall",      semCode: nextYear + "3" }
                 ];
             }
 
@@ -355,12 +349,12 @@ sessionModule.controller("sessionRequestCtrl",
 
             var reqdFields = [
 
-                $scope.session.academicTerm,        // Semester field
-                $scope.sessCode.value(),            // Session code
-                $scope.session.firstDayOfClass,     // First day of Classes
-                $scope.session.lastDayOfClass,      // Last day of Classes
-                $scope.session.firstDayOfFinals,    // First day of Finals
-                $scope.session.lastDayOfFinals      // Last day of Finals
+                $scope.session.academicTerm,            // Semester field
+                $scope.sessCode.value(),                // Session code
+                $scope.session.firstDayOfClass,         // First day of Classes
+                $scope.session.lastDayOfClass,          // Last day of Classes
+                $scope.session.firstDayOfFinals,        // First day of Finals
+                $scope.session.lastDayOfFinals          // Last day of Finals
             ];
 
             for (var i = 0; i < reqdFields.length; ++i){
@@ -374,10 +368,10 @@ sessionModule.controller("sessionRequestCtrl",
             if (formValid) {
                 switch ($scope.session.isClassHeldAtUpc) {
 
-                    case 'true':              // Class held on campus.  Will not require the other Location fields.
+                    case 'true':                        // Class held on campus.  Will not require the other Location fields.
                         break;
 
-                    case 'false':             // Would require at least one of the two other location fields.
+                    case 'false':                       // Would require at least one of the two other location fields.
 
                         $scope.requireUSCLoc = false;
                         $scope.requireOtherLoc = false;
@@ -388,7 +382,7 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.requireUSCLoc = true;
 
                         } else {
-                            // if "Other" campus location and Other campus location is blank
+                                                        // if "Other" campus location and Other campus location is blank
                             if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
 
                                 formValid = false;
@@ -397,7 +391,7 @@ sessionModule.controller("sessionRequestCtrl",
                         }
                         break;
 
-                    default:                // radio button unselected
+                    default:                            // radio button unselected
                         formValid = false;
                         break;
                 }   // switch()
@@ -421,13 +415,12 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }   // else
             }
+                                                        // check Session Breaks
+                                                        // 1) if "No Breaks" is checked, no need to check Session Breaks
+                                                        // 2) if the "No Breaks" checkbox is unchecked:
+                                                        //      - if no Session Breaks entered, error out
 
-            // check Session Breaks
-            // 1) if "No Breaks" is checked, no need to check Session Breaks
-            // 2) if the "No Breaks" checkbox is unchecked:
-            //      - if no Session Breaks entered, error out
-
-            if (formValid && !$scope.noBreaks) {     // "No Breaks" checkbox unchecked?
+            if (formValid && !$scope.noBreaks) {        // "No Breaks" checkbox unchecked?
 
                 if ($scope.session.sessionBreaks.length == 0) {
                     formValid = false;
@@ -441,7 +434,6 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }
             }
-        
             return formValid;
         }   // IsFormValid()
 
@@ -493,7 +485,6 @@ sessionModule.controller("sessionRequestCtrl",
             $rootScope.savedSession.$save(null,
 
                     function () {
-                        //                window.location.href = "successPage.usc.edu";
                         alert("Submission successful");
                         $location.url("/Result");
                     },
@@ -531,7 +522,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.campusLocs = CampusLocations;
 
-        /*
+/*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
         Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
@@ -551,14 +542,15 @@ sessionModule.controller("sessionRequestCtrl",
         ];
 
         $scope.session = {
+
             academicTerm:       "",
             sessionCode:        "",
             sessionName:        "",
-            owningSchool:       "",     // from Shib
-            owningDepartment:   "",     // from Shib
-            userContact:        "",     // from Shib
-            userEmail:          "",     // from Shib
-            userPhone:          "",     // from Shib
+            owningSchool:       "",         // from Shib
+            owningDepartment:   "",         // from Shib
+            userContact:        "",         // from Shib
+            userEmail:          "",         // from Shib
+            userPhone:          "",         // from Shib
             firstDayOfClass:    "",
             lastDayOfClass:     "",
             lastDayForAddDrop:  "",
@@ -596,8 +588,7 @@ sessionModule.controller("sessionRequestCtrl",
             sessBreak2End       : ""
         }
 
-            // field validation flags
-        $scope.requireUSCLoc    = false;
+        $scope.requireUSCLoc = false;        // field validation flags
         $scope.requireOtherLoc  = false;
         $scope.requireUnitRange = false;
 
