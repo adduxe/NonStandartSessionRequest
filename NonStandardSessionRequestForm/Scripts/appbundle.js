@@ -1340,7 +1340,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             var startDt = null, endDt = null; 
 
-            if ($scope.session.firstDayOfClass > '') {
+            if ($scope.session.firstDayOfClass > '') {              // First Day of class provided
 
                 var startDt = new Date($scope.session.firstDayOfClass);
 
