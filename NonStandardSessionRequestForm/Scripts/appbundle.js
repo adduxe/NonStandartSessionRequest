@@ -60,7 +60,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
 
         semStart = springDate;
-
         semChoices = [
             { semName: currYear + " Spring", semCode: currYear + "1" },
             { semName: currYear + " Summer", semCode: currYear + "2" },
@@ -71,7 +70,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     } else if ((currDate >= summerDate) && (currDate < fallDate)) {  // Display Summer Current Year to Summer Next Year
 
         semStart = summerDate;
-
         semChoices = [
             { semName: currYear + " Summer", semCode: currYear + "2" },
             { semName: currYear + " Fall", semCode: currYear + "3" },
@@ -82,7 +80,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     } else {                                                        // Display Current Fall to Next Year Fall
 
         semStart = fallDate;
-
         semChoices = [
             { semName: currYear + " Fall", semCode: currYear + "3" },
             { semName: nextYear + " Spring", semCode: nextYear + "1" },
@@ -1252,7 +1249,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             var semBreak = { startDate: "", endDate: "" };
 
-            if ($scope.session.sessionBreaks.length == 2) {
+            if ($scope.session.sessionBreaks.length == 2){
                 alert("A maximum of 2 semester breaks are allowed per session.");
             } else {
                 $scope.session.sessionBreaks.push(semBreak);
@@ -1338,23 +1335,14 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
-            var startDt = null, endDt = null; 
+            $scope.classStartDt = new Date($scope.session.firstDayOfClass);
+            $scope.classEndDt = new Date($scope.session.lastDayOfClass);
 
-            if ($scope.session.firstDayOfClass > '') {              // First Day of class provided
+            if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {    // First Day and Last Day of Class entered?
 
-                var startDt = new Date($scope.session.firstDayOfClass);
+                if ($scope.classStartDt > $scope.classEndDt) {
 
-                if (startDt < $scope.semStart) {
-                    alert("First day of class is a date in an earlier semester.");
-                }
-
-            } else if (startDt && ($scope.session.lastDayOfClass > '')) {
-
-                var endDt = new Date($scope.session.lastDayOfClass);
-
-                if (startDt > endDt) {
-
-                    alert("Class Start Date later than Class End Date");
+                    alert("First Day of Class is later than the Last Day of Class");
 
                 } else {                                        // dates OK.  Calculate computed date fields.
 
@@ -1364,7 +1352,7 @@ sessionModule.controller("sessionRequestCtrl",
                         var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
 
                         // if class start and end dates match Session 001 dates
-                        if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
+                        if (($scope.classStartDt.toDateString() == stdStartDate.toDateString()) && ($scope.classEndDt.toDateString() == stdEndDate.toDateString())) {
 
                             $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
                             $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
@@ -1374,12 +1362,12 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.FinalsDatesChanged();
 
                         } else {                                // if the Class start and end dates don't match, compute the dates.
-                            ComputeDates(startDt, endDt);
+                            ComputeDates($scope.classStartDt, $scope.classEndDt);
                         }
                     } else {                                    // If there are no 001 dates, compute the dates
-                        ComputeDates(startDt, endDt);
+                        ComputeDates($scope.classStartDt, $scope.classEndDt);
                     }
-                }   // if (startDt...
+                }   // if ($scope.startDt...
             }   // if (($scope...
             return;
         }       // ClassDateChanged()
@@ -1394,22 +1382,22 @@ sessionModule.controller("sessionRequestCtrl",
         }   // ComputeDates()
 
 
-        $scope.FinalsDatesChanged = function () {
+        $scope.FinalsDatesChanged = function (){
+
+            $scope.finalsStartDt = new Date($scope.session.firstDayOfFinals);
+            $scope.finalsEndDt = new Date($scope.session.lastDayOfFinals);
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-                var startDt = new Date($scope.session.firstDayOfFinals);
-                var endDt = new Date($scope.session.lastDayOfFinals);
-
-                if (startDt > endDt) {                          // Compute Final Grading Period
+                if ($scope.finalsStartDt > $scope.finalsEndDt) {                          // Compute Final Grading Period
 
                     alert("First day of Finals later than Last Day of Finals");
 
                 } else {
                                                                 // First Day of Grading = First Day of Finals
-                    $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+                    $scope.session.firstDayForFinalGrading = ($scope.finalsStartDt.getMonth() + 1) + '/' + $scope.finalsStartDt.getDate() + '/' + $scope.finalsStartDt.getFullYear();
 
-                    var initialLastDay = new Date(endDt);
+                    var initialLastDay = new Date($scope.finalsEndDt);
                     var notaSchoolDay = false, newDateStr = "";
 
                     for (var i = 0; i < 4; ++i) {

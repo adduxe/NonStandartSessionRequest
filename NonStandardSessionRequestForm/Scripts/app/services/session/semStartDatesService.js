@@ -22,7 +22,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
 
         semStart = springDate;
-
         semChoices = [
             { semName: currYear + " Spring", semCode: currYear + "1" },
             { semName: currYear + " Summer", semCode: currYear + "2" },
@@ -33,7 +32,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     } else if ((currDate >= summerDate) && (currDate < fallDate)) {  // Display Summer Current Year to Summer Next Year
 
         semStart = summerDate;
-
         semChoices = [
             { semName: currYear + " Summer", semCode: currYear + "2" },
             { semName: currYear + " Fall", semCode: currYear + "3" },
@@ -44,7 +42,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     } else {                                                        // Display Current Fall to Next Year Fall
 
         semStart = fallDate;
-
         semChoices = [
             { semName: currYear + " Fall", semCode: currYear + "3" },
             { semName: nextYear + " Spring", semCode: nextYear + "1" },
