@@ -5,7 +5,7 @@ sessionModule.controller("sessionRequestCtrl",
         ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
-    
+
         $scope.AddSemesterBreaks = function () {                    // Add Semester Break functionality
 
             var semBreak = { startDate: "", endDate: "" };
@@ -97,7 +97,16 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
             $scope.classStartDt = new Date($scope.session.firstDayOfClass);
+
+            if ($scope.session.firstDayOfClass > '') {
+                $scope.classEndOptions = { min: $scope.classStartDt };
+            }
+
             $scope.classEndDt = new Date($scope.session.lastDayOfClass);
+
+            if ($scope.session.lastDayOfClass > '') {
+                $scope.finalsStartOptions = { min: $scope.classEndDt };
+            }
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {    // First Day and Last Day of Class entered?
 
@@ -130,7 +139,6 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }   // if ($scope.startDt...
             }   // if (($scope...
-            return;
         }       // ClassDateChanged()
 
 
@@ -146,6 +154,12 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.FinalsDatesChanged = function (){
 
             $scope.finalsStartDt = new Date($scope.session.firstDayOfFinals);
+
+            if ($scope.session.firstDayOfFinals > '') {
+
+                $scope.finalsEndOptions = { min: $scope.finalsStartDt };
+            }
+
             $scope.finalsEndDt = new Date($scope.session.lastDayOfFinals);
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
@@ -218,8 +232,11 @@ sessionModule.controller("sessionRequestCtrl",
             Get001Dates.get(
                 { semester: $scope.session.academicTerm },
                 function (data) {
+
                     if (data.classBeginDate == undefined) {
+
                         alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
+
                     } else {
 
                         $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate);
@@ -309,7 +326,6 @@ sessionModule.controller("sessionRequestCtrl",
             var formValid = true;
 
             var reqdFields = [
-
                 $scope.session.academicTerm,            // Semester field
                 $scope.sessCode.value(),                // Session code
                 $scope.session.firstDayOfClass,         // First day of Classes
@@ -471,6 +487,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }
         }   // CheckRateAmount
+
 
     $(document).ready(function () {
 
