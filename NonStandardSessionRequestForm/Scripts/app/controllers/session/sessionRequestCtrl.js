@@ -139,6 +139,7 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }   // if ($scope.startDt...
             }   // if (($scope...
+            return null;
         }       // ClassDateChanged()
 
 
