@@ -1643,13 +1643,27 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.checkSessBreak = function (i){
 
             var sessBeginDate = $scope.session.sessionBreaks[i].startDate;
-            if (sessBeginDate > ''){
-                $scope.beginDate = new Date(sessBeginDate);
+
+            if (sessBeginDate > '') {
+
+                var beginDate = new Date(sessBeginDate);
+
+                if (beginDate < semStart){
+                    alert("Entered date is from a previous semester.");
+                    $scope.session.sessionBreaks[i].startDate = '';
+                }
             }
 
             var sessEndDate = $scope.session.sessionBreaks[i].endDate;
-            if (sessEndDate > ''){
-                $scope.endDate = new Date(sessEndDate);
+
+            if (sessEndDate > '') {
+
+                var endDate = new Date(sessEndDate);
+
+                if (endDate < semStart){
+                    alert("Entered date is from a previous semester.");
+                    $scope.session.sessionBreaks[i].endDate = '';
+                }
             }
 
             if ((sessBeginDate > '') && (sessEndDate > '')){
@@ -1730,6 +1744,8 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.rates = RateTable.query();
             return;
         }   // GetRateTable()
+
+        $('#tuitionFlatRate').bind();
 
         $scope.CheckRateAmount = function (rateAmount, rateName) {
 
@@ -1823,7 +1839,9 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.requireUnitRange = false;
 
     }); // document.ready()
-}]);    // sessionModule()
+
+    }]);    // sessionModule()
+
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
