@@ -1537,6 +1537,10 @@ sessionModule.controller("sessionRequestCtrl",
                 $('#flatUnitsMax').prop('readonly', true);
 
             } else {
+
+                $scope.session.flatRateUnitsMin = '';
+                $scope.session.flatRateUnitsMax = '';
+
                 $('#flatUnitsMin').prop('readonly', false);
                 $('#flatUnitsMax').prop('readonly', false);
             }
