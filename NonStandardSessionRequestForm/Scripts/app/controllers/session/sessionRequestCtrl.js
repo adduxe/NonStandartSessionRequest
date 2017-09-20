@@ -511,8 +511,19 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.CheckRateAmount = function (rateAmount, rateName) {
 
             if ($scope.session.rateType == "OTH") {
-                if (rateAmount < 1) {
+
+                if (rateAmount < 1){
                     alert("Please enter a " + rateName + " that is greater than 0.");
+                } else {
+
+                    var flatRate = $scope.session.flatRateAmount;
+                    var unitRate = $scope.session.ratePerUnitAmount;
+
+                    if ((flatRate > 0) && (unitRate > 0)) {
+                        if (unitRate > flatRate) {
+                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                        }
+                    }
                 }
             }
         }   // CheckRateAmount
