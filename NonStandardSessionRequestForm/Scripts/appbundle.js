@@ -1527,6 +1527,20 @@ sessionModule.controller("sessionRequestCtrl",
         }   // GetDatesAndRates()
 
         $scope.SetRates = function () {                     // setting the value of the Tuition per Unit and Flat Rate fields
+
+            if ($scope.session.rateType == 'ZERO') {
+
+                $scope.session.flatRateUnitsMin = 98;
+                $scope.session.flatRateUnitsMax = 99;
+
+                $('#flatUnitsMin').prop('readonly', true);
+                $('#flatUnitsMax').prop('readonly', true);
+
+            } else {
+                $('#flatUnitsMin').prop('readonly', false);
+                $('#flatUnitsMax').prop('readonly', false);
+            }
+
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
 
@@ -1542,6 +1556,7 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 });
             }
+            
             return;
         }   // SetRates()
 
