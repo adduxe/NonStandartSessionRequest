@@ -556,10 +556,11 @@ sessionModule.controller("sessionRequestCtrl",
 
                     var flatRate = parseInt($scope.session.flatRateAmount);
                     var unitRate = parseInt($scope.session.ratePerUnitAmount);
-
+                    
                     if ((flatRate > 0) && (unitRate > 0)) {
                         if (unitRate > flatRate) {
                             alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                            $scope.ratesOK = false;
                         }
                     }
                 }
@@ -711,6 +712,7 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.requireUSCLoc    = false;
         $scope.requireOtherLoc  = false;
         $scope.requireUnitRange = false;
+        $scope.ratesOK          = true;
 
     }); // document.ready()
 }]);    // sessionModule()
