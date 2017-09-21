@@ -1728,11 +1728,22 @@ sessionModule.controller("sessionRequestCtrl",
         }   // IsFormValid()
 
 
-        $scope.checkRateAmount = function (value, fieldName) {
+        $scope.checkRateAmount = function (rateAmount, rateName) {
 
-            if ($scope.session.rateType == 'OTH') {
-                if (value < 1) {
-                    alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
+            if ($scope.session.rateType == "OTH") {
+
+                if (rateAmount < 1) {
+                    alert("Please enter a " + rateName + " that is greater than 0.");
+                } else {
+
+                    var flatRate = parseInt($scope.session.flatRateAmount);
+                    var unitRate = parseInt($scope.session.ratePerUnitAmount);
+
+                    if ((flatRate > 0) && (unitRate > 0)) {
+                        if (unitRate > flatRate) {
+                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                        }
+                    }
                 }
             }
         }   // checkRateAmount()
@@ -1885,23 +1896,6 @@ sessionModule.controller("sessionRequestCtrl",
 
     }); // document.ready()
 }]);    // sessionModule()
-
-
-function checkRateAmt(rateField, fieldName) {
-
-    var rateType = document.getElementById('rateType');
-
-    if (rateType.value == 'OTH') {
-        if (rateField.value < 1) {
-            alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
-            rateField.style.borderColor = "red";
-        } else {
-            rateField.style.borderColor = "#ccc";
-        }
-    }
-    return;
-}
-
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 

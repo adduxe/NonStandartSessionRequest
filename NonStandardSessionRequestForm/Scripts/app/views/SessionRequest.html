@@ -136,9 +136,10 @@
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" onchange="checkRateAmt(this, 'Tuition unit rate');"
-                           ng-required="session.rateType == 'OTH'" change="checkRateAmount($event.target.value, 'Tuition per unit');"
-                           ng-readonly="(session.rateType != 'OTH')" ng-model="session.ratePerUnitAmount" />
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate"
+                           ng-required="session.rateType == 'OTH'" ng-readonly="(session.rateType != 'OTH')" 
+                           ng-change="checkRateAmount(session.ratePerUnitAmount, 'Tuition per unit');"
+                           ng-model="session.ratePerUnitAmount" ng-model-options="{ updateOn: 'blur' }"/>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -194,9 +195,10 @@
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" onchange="checkRateAmt(this, 'Tuition flat rate');"
-                           ng-required="session.rateType == 'OTH'" change="checkRateAmount($event.target.value, 'Tuition Flat Rate');"
-                           ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate"
+                           ng-required="session.rateType == 'OTH'" ng-readonly="session.rateType != 'OTH'"
+                           ng-change="checkRateAmount(session.flatRateAmount, 'Tuition flat rate');"
+                           ng-model="session.flatRateAmount" ng-model-options="{ updateOn: 'blur' }"/>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
