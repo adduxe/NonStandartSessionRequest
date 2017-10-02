@@ -1765,25 +1765,15 @@ sessionModule.controller("sessionRequestCtrl",
         }   // GetRateTable()
 
 
-        $scope.CheckRateAmount = function (rateAmount, rateName) {
+        $scope.CheckRateAmount = function (value, fieldName) {
 
-            if ($scope.session.rateType == "OTH") {
-
-                if (rateAmount < 1){
-                    alert("Please enter a " + rateName + " that is greater than 0.");
-                } else {
-
-                    var flatRate = $scope.session.flatRateAmount;
-                    var unitRate = $scope.session.ratePerUnitAmount;
-
-                    if ((flatRate > 0) && (unitRate > 0)) {
-                        if (unitRate > flatRate) {
-                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
-                        }
-                    }
+            if ($scope.session.rateType == 'OTH') {
+                if (value < 1) {
+                    alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
                 }
             }
-        }   // CheckRateAmount
+
+        }   // CheckRateAmount()
 
 
     $(document).ready(function () {
