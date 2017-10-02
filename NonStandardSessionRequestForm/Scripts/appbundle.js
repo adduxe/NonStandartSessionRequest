@@ -1187,8 +1187,7 @@ sessionModule.controller("sessionRequestCtrl",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
     
-            // Add Semester Break functionality
-        $scope.AddSemesterBreaks = function () {
+        $scope.AddSemesterBreaks = function () {                                // Add Semester Break functionality
 
             var semBreak = { startDate: "", endDate: "" };
 
@@ -1240,18 +1239,17 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }                                                       // keep checking until the computed day is not a weekend nor a holiday
             while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
+
             return newDate;
         }       // AdjustDate()
 
-
-        //  1) Calculates computed dates given the:
-        //      a) start date
-        //      b) end date
-        //      c) percentage number of days to be added to the start date
-        //
-        //  2) If the new date falls on a weekend, or a holiday:
-        //      - move it to the next school day      
-
+                                                                            //  1) Calculates computed dates given the:
+                                                                            //      a) start date
+                                                                            //      b) end date
+                                                                            //      c) percentage number of days to be added to the start date
+                                                                            //
+                                                                            //  2) If the new date falls on a weekend, or a holiday:
+                                                                            //      - move it to the next school day      
         function ComputeDate(startDate, endDate, percentAdd) {
 
             var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
@@ -1281,8 +1279,7 @@ sessionModule.controller("sessionRequestCtrl",
         }   // convDateToString()
 
 
-            // Validate the Class Start and End dates
-        $scope.ClassDatesChanged = function () {
+        $scope.ClassDatesChanged = function () {                                    // Validate the Class Start and End dates
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {
 
@@ -1293,14 +1290,14 @@ sessionModule.controller("sessionRequestCtrl",
 
                     alert("Class Start Date later than Class End Date");
 
-                } else {        // dates OK.  Calculate computed date fields.
+                } else {                                                            // dates OK.  Calculate computed date fields.
 
                     if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > ''))        // 001 dates exists for semester
                     {
                         var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
                         var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
 
-                                // if class start and end dates match Session 001 dates
+                                                                                    // check if class start and end dates match Session 001 dates
                         if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
 
                             $scope.session.lastDayForAddDrop    = $scope.sess001Dates.lastDayForAddDrop;
@@ -1310,10 +1307,10 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.session.lastDayOfFinals      = $scope.sess001Dates.lastDayOfFinals;
                             $scope.FinalsDatesChanged();
 
-                        } else {            // if the Class start and end dates don't match, compute the dates.
+                        } else {                                                // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
                         }
-                    } else {        // If there are no 001 dates, compute the dates
+                    } else {                                                    // If there are no 001 dates, compute the dates
                         ComputeDates(startDt, endDt);
                     }
                 }   // if (startDt...
@@ -1338,11 +1335,13 @@ sessionModule.controller("sessionRequestCtrl",
                 var startDt = new Date($scope.session.firstDayOfFinals);
                 var endDt = new Date($scope.session.lastDayOfFinals);
 
-                    // Compute Final Grading Period
+                                                                                                // Compute Final Grading Period
                 if (startDt > endDt) {
+
                     alert("First day of Finals later than Last Day of Finals");
+
                 } else {
-                                        // First Day of Grading = First Day of Finals
+                                                                                                // First Day of Grading = First Day of Finals
                     $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
 
                     var initialLastDay = new Date(endDt);
@@ -1352,7 +1351,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                         notaSchoolDay = false;
 
-                        do {     // keep incrementing a day until a school day is found.
+                        do {                                                                    // keep incrementing a day until a school day is found.
 
                             initialLastDay.setDate(initialLastDay.getDate() + 1);
                             newDateStr = initialLastDay.getMonth() + 1 + '/' + initialLastDay.getDate() + '/' + initialLastDay.getFullYear();
@@ -1372,8 +1371,8 @@ sessionModule.controller("sessionRequestCtrl",
             }   // if (($scope...
         }   // FinalsDatesChanged()
 
-            // Add a Section functionality
-        $scope.AddSection = function () {
+
+        $scope.AddSection = function () {                   // Add a Section functionality
 
             var section = {
                 sectionNumber:  "",
@@ -1392,8 +1391,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }
 
-            // Add a Class Schedule functionality
-        $scope.AddSchedule = function (thisSection) {
+        $scope.AddSchedule = function (thisSection) {               // Add a Class Schedule functionality
             var sched = { classDayOfWeek: "", classStartTime: "", classEndTime: "" };
             thisSection.schedules.push(sched);
             return;
@@ -1468,7 +1466,8 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // GetDatesAndRates()
 
-        $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
+
+        $scope.SetRates = function () {                 // setting the value of the Tuition per Unit and Flat Rate fields
 
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
@@ -1813,7 +1812,7 @@ sessionModule.controller("sessionRequestCtrl",
         function GetRateTable() {
             $scope.rates = RateTable.query();
             return;
-        }   // GetRateTable()
+        }
 
     $(document).ready(function () {
 
@@ -1825,7 +1824,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.campusLocs = CampusLocations;
 
-        /*
+/*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
         Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
