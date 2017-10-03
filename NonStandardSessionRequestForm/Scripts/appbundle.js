@@ -1455,10 +1455,9 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
 
-            $scope.rateTypes.push({
-                rateCode: "OTH",
-                rateName: "Other"
-                });
+            $scope.rateTypes.push(
+                { rateCode: "OTHU", rateName: "Other Unit Rate" },
+                { rateCode: "OTH", rateName: "Other Flat Rate" });
 
             if ($scope.session.rateType > '')
                 $scope.SetRates();
@@ -1473,6 +1472,20 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.ratePerUnitAmount = '';
 
             if ($scope.session.academicTerm > '') {
+
+                switch ($scope.session.rateType) {
+
+                    case 'OTH':
+
+                    case 'OTHU':
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
 
                 if ($scope.session.rateType == 'OTH'){
 

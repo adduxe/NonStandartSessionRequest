@@ -137,7 +137,8 @@
                 </label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate"
-                           ng-required="session.rateType == 'OTH'" ng-readonly="(session.rateType != 'OTH')" 
+                           ng-readonly="(session.rateType != 'OTH') && (session.rateType != 'OTHU')" 
+                           ng-required="(session.rateType == 'OTH') || (session.rateType == 'OTHU')" 
                            ng-change="checkRateAmount(session.ratePerUnitAmount, 'Tuition per unit');"
                            ng-model="session.ratePerUnitAmount" ng-model-options="{ updateOn: 'blur' }"/>
                 </div>
@@ -196,7 +197,8 @@
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate"
-                           ng-required="session.rateType == 'OTH'" ng-readonly="session.rateType != 'OTH'"
+                           ng-required="(session.rateType == 'OTH') || (session.rateType == 'OTHU'") 
+                           ng-readonly="session.rateType != 'OTH'"
                            ng-change="checkRateAmount(session.flatRateAmount, 'Tuition flat rate');"
                            ng-model="session.flatRateAmount" ng-model-options="{ updateOn: 'blur' }"/>
                 </div>
