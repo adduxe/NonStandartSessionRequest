@@ -59,7 +59,7 @@
             <div class="form-group">
                 <div class="col-md-4">
                     <abbr title="Check this box ONLY IF this session will not have an interruption of instruction for five days or more. For example, check the box if instruction will continue for students in this session during the university's Thanksgiving holiday or during Spring Break.">
-                        <b>No Breaks</b>&nbsp;&nbsp;<input type="checkbox" ng-model="noBreaks" ng-click="deleteBreaks()" />
+                        <b>No Breaks</b>&nbsp;&nbsp;<input type="checkbox" ng-model="noBreaks" ng-click="deleteBreaks()" ng-required="requireBreaks" />
                     </abbr>
                 </div>
                 <div class="col-md-8" style="align-content:center">
@@ -206,10 +206,10 @@
                     <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
+                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
                            ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
                     &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
+                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>

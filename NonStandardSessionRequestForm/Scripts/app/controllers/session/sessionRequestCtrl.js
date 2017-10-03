@@ -420,56 +420,74 @@ sessionModule.controller("sessionRequestCtrl",
 
                     case (!$scope.session.ratePerUnitAmount):
                     case (parseFloat($scope.session.ratePerUnitAmount) == 0):
-                        errMsg = "Tuition per Unit must have an amount greater than zero."
+
+                        errMsg = "The Tuition per Unit must have an amount greater than zero.";
                         rateFieldsOk = false;
                         break;
+
 
                     case (!$scope.session.flatRateAmount):
                     case (parseFloat($scope.session.flatRateAmount) == 0):
-                        errMsg = "Tuition Flat Rate amount must have an amount greater than zero."
+
+                        errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
                         rateFieldsOk = false;
                         break;
 
+                    case (parseInt($scope.session.ratePerUnitAmount) >= parseInt($scope.session.flatRateAmount)):
+
+                        errMsg = "The Tuition Flat Rate must be greater than the Tuition per Unit amount.";
+                        rateFieldsOk = false;
+                        $scope.ratesOK = false;
+                        break;
+
                     default:
+                        $scope.ratesOK = true;
                         break;
                 }   // switch()
             }   // if ($scope.session.rateType...)
 
-            if (rateFieldsOk && ($scope.session.flatRateAmount > '')) {     // Check the rate fields
+            if ($scope.session.flatRateAmount > '') {                       // Check the Flat Rate Range fields
 
-                if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
+                switch (true) {
 
-                    $scope.requireUnitRange = true;
-                    rateFieldsOk = false;
+                    case ($scope.session.flatRateUnitsMin == ''):
+                    case ($scope.session.flatRateUnitsMin == null):
 
-                } else {                                                    // Range is specified but validate the values
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
 
-                    switch (true) {
+                    case ($scope.session.flatRateUnitsMax == ''):
+                    case ($scope.session.flatRateUnitsMax == null):
 
-                        case (parseInt($scope.session.flatRateUnitsMax) <= parseInt($scope.session.flatRateUnitsMin)):
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
 
-                            errMsg = "The flat rate maximum units should be more than the minimum units.";
-                            $scope.requireUnitRange = true;
-                            rateFieldsOk = false;
-                            break;
+                    case (parseInt($scope.session.flatRateUnitsMin) < 1):
 
-                        case (typeof $scope.session.flatRateUnitsMin == 'undefined'):
+                        errMsg = "The Flat Rate Range minimum units should between 1 and 30.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
 
-                            errMsg = "The Flat Rate Range minimum units should between 1 and 30.";
-                            $scope.requireUnitRange = true;
-                            rateFieldsOk = false;
-                            break;
+                    case (parseInt($scope.session.flatRateUnitsMax) < 2):
 
-                        case (typeof $scope.session.flatRateUnitsMax == 'undefined'):
+                        errMsg = "The Flat Rate Range maximum units should between 2 and 30.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
 
-                            errMsg = "The Flat Rate Range maximum units should between 2 and 30.";
-                            $scope.requireUnitRange = true;
-                            rateFieldsOk = false;
-                            break;
+                    case (parseInt($scope.session.flatRateUnitsMax) <= parseInt($scope.session.flatRateUnitsMin)):
 
-                        default:
-                            break;
-                    }
+                        errMsg = "The flat rate maximum units should be more than the minimum units.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    default:
+                        $scope.requireUnitRange = false;
+                        break;
                 }
             }   // if (rateFieldsOk...)
 
@@ -482,23 +500,27 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         function sessionBreaksOK()                      // check Session Breaks
-        {                                               // 1) if "No Breaks" is checked, no need to check Session Breaks
+        {                                               
             var sessBreaksOK = true;
             var errMsg = "";
+            $scope.requireBreaks = false;
 
-            if (!$scope.noBreaks) {                     // 2) is "No Breaks" checkbox unchecked?
-                if ($scope.session.sessionBreaks.length == 0) {   //  - if no Session Breaks entered, error out
+            if (!$scope.noBreaks) {                     // 1) is "No Breaks" checkbox unchecked?
+                                                                            
+                if ($scope.session.sessionBreaks.length == 0) {     //  - if no Session Breaks entered, error out
                     errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
                     sessBreaksOK = false;
-                } else {                                // check for blank entries
+                    $scope.requireBreaks = true;
+                } else {                                            // check for blank entries
                     for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
                         if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
                             errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
                             sessBreaksOK = false;
+                            $scope.requireBreaks = true;
                         }
                     }
                 }
-            }
+            }                                           // 2) if "No Breaks" is checked, no need to check Session Breaks
 
             if (errMsg > '') {
                 alert(errMsg);
