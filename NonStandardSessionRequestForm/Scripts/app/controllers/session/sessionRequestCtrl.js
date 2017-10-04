@@ -288,6 +288,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
+            $scope.unitRateRequired = false;
 
             if ($scope.session.academicTerm > '') {
 
@@ -295,49 +296,58 @@ sessionModule.controller("sessionRequestCtrl",
 
                     case 'OTH':
 
+                        $scope.unitRateRequired = true;
+                        $scope.flatRateRequired = true;
+
+                        $scope.session.flatRateUnitsMin = '';
+                        $scope.session.flatRateUnitsMax = '';
+                        break;
+
                     case 'OTHU':
 
+                        $scope.unitRateRequired = true;
+                        $scope.flatRateRequired = false;
+
+                        $scope.session.flatRateUnitsMin = 98;
+                        $scope.session.flatRateUnitsMax = 99;
                         break;
 
                     default:
 
-                        break;
+                        $scope.unitRateRequired = false;
+                        $scope.flatRateRequired = false;
 
-                }
+                        angular.forEach($scope.rates, function (value) {
 
-                if ($scope.session.rateType == 'OTH'){
+                            if (value.term == $scope.session.academicTerm) {
 
-                    $scope.session.flatRateUnitsMin = '';
-                    $scope.session.flatRateUnitsMax = '';
+                                angular.forEach(value.rateTypes, function (value) {
 
-                } else {
-                    angular.forEach($scope.rates, function (value) {
+                                    if (value.rateTypeCode == $scope.session.rateType) {
 
-                        if (value.term == $scope.session.academicTerm) {
+                                        $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+                                        $scope.session.flatRateAmount = value.rateTypeFlatRate;
 
-                            angular.forEach(value.rateTypes, function (value) {
+                                        if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
 
-                                if (value.rateTypeCode == $scope.session.rateType) {
+                                            $scope.session.flatRateUnitsMin = 98;
+                                            $scope.session.flatRateUnitsMax = 99;
 
-                                    $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
-                                    $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                                        } else {
 
-                                    if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
-                                        $scope.session.flatRateUnitsMin = 98;
-                                        $scope.session.flatRateUnitsMax = 99;
-                                    } else {
-                                        $scope.session.flatRateUnitsMin = '';
-                                        $scope.session.flatRateUnitsMax = '';
+                                            $scope.session.flatRateUnitsMin = '';
+                                            $scope.session.flatRateUnitsMax = '';
+
+                                        }   // if (value.rateType...)
                                     }
-                                }
-
-                            })
-                        }
-                    });
-                }   // if ($scope.session.rateType)
-            }
+                                })  // angular.forEach
+                            }   // if (value.term)
+                        });
+                        break;
+                }   // switch()
+            }   // if ($scope.session..)
             return;
-        }   // SetRates
+        }   // SetRates()
 
         var holidays =[];
 
@@ -422,44 +432,45 @@ sessionModule.controller("sessionRequestCtrl",
         }   // areCampusLocFieldsOk()
 
 
-        function areRateFieldsOK()                          // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
+        function areRateFieldsOK()              // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
         {
             var rateFieldsOk = true;
             var errMsg = "";
 
-            if ($scope.session.rateType == 'OTH') {         // If rate type 'Others' is chosen
-                                                            // Make sure Tuition per  Unit and Tuition Flat Rate are required
-                switch (true) {
+            if (($scope.session.rateType == 'OTH') || ($scope.session.rateType == 'OTHU')){ // If rate type 'Others' is chosen
+                                                                                            // Make sure Tuition per  Unit and 
+                                                                                            //   Tuition Flat Rate are required
+                if ((!$scope.session.ratePerUnitAmount) || (parseFloat($scope.session.ratePerUnitAmount) == 0)) {
+                    errMsg = "The Tuition per Unit must have an amount greater than zero.";
+                    rateFieldsOk = false;
+                }
 
-                    case (!$scope.session.ratePerUnitAmount):
-                    case (parseFloat($scope.session.ratePerUnitAmount) == 0):
+                if (rateFieldsOk && ($scope.session.rateType == 'OTH')){
 
-                        errMsg = "The Tuition per Unit must have an amount greater than zero.";
-                        rateFieldsOk = false;
-                        break;
+                    switch (true) {
 
+                        case (!$scope.session.flatRateAmount):
+                        case (parseFloat($scope.session.flatRateAmount) == 0):
 
-                    case (!$scope.session.flatRateAmount):
-                    case (parseFloat($scope.session.flatRateAmount) == 0):
+                            errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
+                            rateFieldsOk = false;
+                            break;
 
-                        errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
-                        rateFieldsOk = false;
-                        break;
+                        case (parseInt($scope.session.ratePerUnitAmount) >= parseInt($scope.session.flatRateAmount)):
 
-                    case (parseInt($scope.session.ratePerUnitAmount) >= parseInt($scope.session.flatRateAmount)):
+                            errMsg = "The Tuition Flat Rate must be greater than the Tuition per Unit amount.";
+                            rateFieldsOk = false;
+                            $scope.ratesOK = false;
+                            break;
 
-                        errMsg = "The Tuition Flat Rate must be greater than the Tuition per Unit amount.";
-                        rateFieldsOk = false;
-                        $scope.ratesOK = false;
-                        break;
-
-                    default:
-                        $scope.ratesOK = true;
-                        break;
-                }   // switch()
+                        default:
+                            $scope.ratesOK = true;
+                            break;
+                    }   // switch()
+                }
             }   // if ($scope.session.rateType...)
 
-            if ($scope.session.flatRateAmount > '') {                       // Check the Flat Rate Range fields
+            if ($scope.session.flatRateAmount > '') {       // Check the Flat Rate Unit Range fields
 
                 switch (true) {
 
@@ -645,18 +656,20 @@ sessionModule.controller("sessionRequestCtrl",
 
             $rootScope.savedSession = new Sessions($scope.session);
 
+            $scope.spinningWheel.center().open();
             $rootScope.savedSession.$save(null,
 
-                    function () {
-                        //                window.location.href = "successPage.usc.edu";
+                    function () {       // success
+
                         alert("Submission successful");
                         $location.url("/Result");
                     },
 
-                    function () {
+                    function () {       // fail
                         alert("Error in submitting the form.");
                     }
-                );
+            );
+            $scope.spinningWheel.center().close();
             return;
         }   // SubmitForm()
 

@@ -131,14 +131,14 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (session.rateType == 'OTH') && (!ratesOK || (session.ratePerUnitAmount < 1)) }">
+            <div class="form-group" ng-class="{'has-error': unitRateRequired && (!ratesOK || !(session.ratePerUnitAmount > 0)) }">
                 <label for="tuitionUnitRate" class="col-md-4 control-label">
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate"
                            ng-readonly="(session.rateType != 'OTH') && (session.rateType != 'OTHU')" 
-                           ng-required="(session.rateType == 'OTH') || (session.rateType == 'OTHU')" 
+                           ng-required="unitRateRequired" 
                            ng-change="checkRateAmount(session.ratePerUnitAmount, 'Tuition per unit');"
                            ng-model="session.ratePerUnitAmount" ng-model-options="{ updateOn: 'blur' }"/>
                 </div>
@@ -191,13 +191,13 @@
                            ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (session.rateType == 'OTH') && (!ratesOK || (session.flatRateAmount < 1)) }">
+            <div class="form-group" ng-class="{'has-error': flatRateRequired && (!ratesOK || !(session.flatRateAmount > 0)) }">
                 <label for="tuitionFlatRate" class="col-md-6 control-label">
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate"
-                           ng-required="(session.rateType == 'OTH') || (session.rateType == 'OTHU'") 
+                           ng-required="flatRateRequired" 
                            ng-readonly="session.rateType != 'OTH'"
                            ng-change="checkRateAmount(session.flatRateAmount, 'Tuition flat rate');"
                            ng-model="session.flatRateAmount" ng-model-options="{ updateOn: 'blur' }"/>
@@ -434,6 +434,12 @@
         <div class="col-md-5">
         </div>
     </div>
+
+    <div kendo-window="spinningWheel" k-modal="true" style="display:none;">
+        Processing. Please wait...
+        <img src="/Content/images/gears.gif" />
+    </div>
+
     <input type="hidden" ng-model="session.firstDayForFinalGrading" value="" />
     <input type="hidden" ng-model="session.lastDayForFinalGrading" value="" />
     <input type="hidden" ng-model="session.userContact" value="@(ViewBag.ShibUserName)" />

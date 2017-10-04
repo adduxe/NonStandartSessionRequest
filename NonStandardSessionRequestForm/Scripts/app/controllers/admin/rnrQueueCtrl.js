@@ -233,15 +233,16 @@
 
             $scope.spinningWheel.center().open();
             WriteToSis.save(sisDatesPacket,
-                function () {
+
+                function () {       // success
                     $scope.updateRequest('A', 'Approved');
                     alert("Session Request Approved!");
-                    $scope.spinningWheel.center().close();
-                }, function () {
+                },
+                function () {      // fail
                     alert("Failed to write the approved session " + sisDatesPacket.academicTerm + "-" + sisDatesPacket.sessionCode +" because it already exists in SIS.");
-                    $scope.spinningWheel.center().close();
                 }
             );
+            $scope.spinningWheel.center().close();
 
             return;
         }   // approveRequest()
