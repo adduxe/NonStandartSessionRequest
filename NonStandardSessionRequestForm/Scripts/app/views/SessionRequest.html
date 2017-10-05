@@ -51,7 +51,8 @@
                     <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="rateType" name="rateType" ng-model="session.rateType" ng-change="SetRates();">
+                    <select class="form-control" id="rateType" name="rateType" ng-disabled="!session.academicTerm"
+                            ng-model="session.rateType" ng-change="SetRates();">
                         <option ng-repeat="eachRate in rateTypes" value="{{ eachRate.rateCode }}">{{ eachRate.rateName }}</option>
                     </select>
                 </div>
