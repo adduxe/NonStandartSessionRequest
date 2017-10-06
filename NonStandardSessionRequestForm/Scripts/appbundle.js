@@ -1667,7 +1667,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                 var beginDate = new Date(sessBeginDate);
 
-                if (beginDate < semStart){
+                if (beginDate < $scope.semStart) {
                     alert("Entered date is from a previous semester.");
                     $scope.session.sessionBreaks[i].startDate = '';
                 }
@@ -1679,7 +1679,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                 var endDate = new Date(sessEndDate);
 
-                if (endDate < semStart){
+                if (endDate < $scope.semStart) {
                     alert("Entered date is from a previous semester.");
                     $scope.session.sessionBreaks[i].endDate = '';
                 }
@@ -1687,14 +1687,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             if ((sessBeginDate > '') && (sessEndDate > '')){
 
-                switch (true) {
-
-                    case (endDate < beginDate):
-                        alert("The session end date is earlier than the session begin date.");
-                        break;
-
-                    default:
-                        break;
+                if (endDate < beginDate) {
+                    alert("The session end date is earlier than the session begin date.");
                 }
             }
         }
@@ -1772,7 +1766,6 @@ sessionModule.controller("sessionRequestCtrl",
                     alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
                 }
             }
-
         }   // CheckRateAmount()
 
 
