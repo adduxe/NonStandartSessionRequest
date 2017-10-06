@@ -364,6 +364,7 @@
     <None Include="Scripts\app\services\admin\submissionsService.js" />
     <None Include="Scripts\app\Modules.js" />
     <None Include="Scripts\app\services\admin\writeToSisService.js" />
+    <Content Include="Scripts\app\services\session\semStartDatesService.js" />
     <Content Include="Scripts\app\services\shared\campusLocationsService.js" />
     <Content Include="Scripts\app\services\shared\getCampusName.js" />
     <Content Include="Scripts\app\services\shared\rateTableService.js" />
