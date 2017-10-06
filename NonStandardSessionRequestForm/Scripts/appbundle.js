@@ -1250,8 +1250,11 @@ sessionModule.controller("sessionRequestCtrl",
             var semBreak = { startDate: "", endDate: "" };
 
             if ($scope.session.sessionBreaks.length == 2){
+
                 alert("A maximum of 2 semester breaks are allowed per session.");
+
             } else {
+
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
@@ -1407,7 +1410,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                     notaSchoolDay = false;
 
-                    do {                                    // keep incrementing the date by a day until a school day is found.
+                        do {                                                                    // keep incrementing a day until a school day is found.
 
                         initialLastDay.setDate(initialLastDay.getDate() + 1);
                         newDateStr = initialLastDay.getMonth() + 1 + '/' + initialLastDay.getDate() + '/' + initialLastDay.getFullYear();
@@ -1657,28 +1660,30 @@ sessionModule.controller("sessionRequestCtrl",
 
             var campusOK = true;
 
-            switch ($scope.session.isClassHeldAtUpc) {
+            if (formValid) {                            // Check Campus Location
 
-                case 'true':                        // Class held on campus.  Will not require the other Location fields.
-                    break;
+                switch ($scope.session.isClassHeldAtUpc) {
 
-                case 'false':                       // Would require at least one of the two other location fields.
+                    case 'true':                        // Class held on campus.  Will not require the other Location fields.
+                        break;
 
-                    $scope.requireUSCLoc = false;
-                    $scope.requireOtherLoc = false;
+                    case 'false':                       // Would require at least one of the two other location fields.
 
-                    if ($scope.session.uscCampusLocation == '') {
+                        $scope.requireUSCLoc = false;
+                        $scope.requireOtherLoc = false;
 
-                        campusOK = false;
-                        $scope.requireUSCLoc = true;
+                        if ($scope.session.uscCampusLocation == '') {
 
-                    } else {
-                                                    // if "Other" campus location and Other campus location is blank
-                        if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-                            campusOK = false;
-                            $scope.requireOtherLoc = true;
+                            formValid = false;
+                            $scope.requireUSCLoc = true;
+
+                        } else {
+                                                        // if "Other" campus location and Other campus location is blank
+                            if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
+                                campusOK = false;
+                                $scope.requireOtherLoc = true;
+                            }
                         }
-                    }
                     break;
 
                 default:                                    // radio button unselected
@@ -1850,6 +1855,27 @@ sessionModule.controller("sessionRequestCtrl",
         }   // IsFormValid()
 
 
+        $scope.checkRateAmount = function (rateAmount, rateName) {
+
+            if ($scope.session.rateType == "OTH") {
+
+                if (rateAmount < 1) {
+                    alert("Please enter a " + rateName + " that is greater than 0.");
+                } else {
+
+                    var flatRate = parseInt($scope.session.flatRateAmount);
+                    var unitRate = parseInt($scope.session.ratePerUnitAmount);
+                    
+                    if ((flatRate > 0) && (unitRate > 0)) {
+                        if (unitRate > flatRate) {
+                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                            $scope.ratesOK = false;
+                        }
+                    }
+                }
+            }
+        }   // checkRateAmount()
+
         $scope.checkSessBreak = function (i){
 
             var sessBeginDate = $scope.session.sessionBreaks[i].startDate;
@@ -1884,7 +1910,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
         }
 
-        $scope.deleteBreaks = function(){
+        $scope.deleteBreaks = function () {
 
             if ($scope.noBreaks){
                 $scope.session.sessionBreaks = [];  // delete existing breaks

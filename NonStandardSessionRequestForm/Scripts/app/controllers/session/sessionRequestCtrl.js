@@ -11,8 +11,11 @@ sessionModule.controller("sessionRequestCtrl",
             var semBreak = { startDate: "", endDate: "" };
 
             if ($scope.session.sessionBreaks.length == 2){
+
                 alert("A maximum of 2 semester breaks are allowed per session.");
+
             } else {
+
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
