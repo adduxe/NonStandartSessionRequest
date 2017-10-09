@@ -4,7 +4,7 @@ sessionModule.controller("sessionRequestCtrl",
 
         ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
 
-    function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
+    function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
 
         $scope.AddSemesterBreaks = function () {                                // Add Semester Break functionality
 
@@ -110,7 +110,7 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.finalsStartOptions = { min: $scope.classEndDt };
             }
 
-            if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {    // First Day and Last Day of Class entered?
+            if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {                    // First Day and Last Day of Class entered?
 
                 if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > '')) {        // Session 001 dates exists for semester
 
@@ -449,7 +449,6 @@ sessionModule.controller("sessionRequestCtrl",
             }   // switch()
 
             return campusOK;
-
         }   // areCampusLocFieldsOk()
 
 
