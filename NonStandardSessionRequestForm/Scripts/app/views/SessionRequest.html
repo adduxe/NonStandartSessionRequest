@@ -1,13 +1,13 @@
 ﻿
 <form id="sessionRequestForm" name="sessionRequestForm" class="form-horizontal" novalidate ng-submit="submit()" method="POST">
-    
+
     <div class="row">
 
         <!-- 1st Column -->
         <div class="col-md-4" id="firstColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.semester.$invalid && sessionRequestForm.$submitted}">
                 <label for="semester" class="col-md-4 control-label">
-                    <abbr title="Session semester being applied for">For Semester:</abbr>
+                    <abbr title="Session semester being applied for">For Semester</abbr>
                 </label>
                 <div class="col-md-8">
                     <select class="form-control" id="semester" name="semester" ng-required="true" ng-model="session.academicTerm" ng-change="GetDatesAndRates();">
@@ -15,22 +15,25 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classStartDate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': classStartDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="classesStartDate" class="col-md-4 control-label">
-                    <abbr title="Session Start Date">First day<br>of Classes:</abbr>
+                    <abbr title="Session Start Date">First day<br>of Classes</abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="classStartDate" name="classStartDate"
-                           ng-change="ClassDatesChanged();" maxlength="10" ng-model="session.firstDayOfClass" ng-required="true" />
+                           maxlength="10" ng-model="session.firstDayOfClass" k-min="semStart"
+                           ng-required="true" ng-change="ClassDatesChanged();" ng-model-options="{ updateOn: 'blur' }" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classEndDate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': sessionRequestForm.classEndDate.$invalid && sessionRequestForm.$submitted }">
                 <label for="classesEndDate" class="col-md-4 control-label">
-                    <abbr title="Session End Date">Last day<br>of Classes:</abbr>
+                    <abbr title="Session End Date">Last day<br>of Classes</abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="classEndDate" name="classEndDate"
-                           ng-change="ClassDatesChanged();" maxlength="10" ng-model="session.lastDayOfClass" ng-required="true" />
+                           ng-readonly="(session.firstDayOfClass == '')" k-options="classEndOptions"
+                           ng-change="ClassDatesChanged();" maxlength="10" ng-model="session.lastDayOfClass"
+                           ng-required="true" ng-model-options="{ updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': (session.isClassHeldAtUpc == null) && sessionRequestForm.$submitted}">
@@ -39,7 +42,7 @@
                 </label>
                 <div class="col-md-8">
                     <label class="radio-inline">
-                        <input type="radio" name="isClassAtUPC" value=true ng-model="session.isClassHeldAtUpc" ng-click="session.uscCampusLocation = ''"/>Yes
+                        <input type="radio" name="isClassAtUPC" value=true ng-model="session.isClassHeldAtUpc" ng-click="session.uscCampusLocation = ''" />Yes
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="isClassAtUPC" value=false ng-model="session.isClassHeldAtUpc" />No
@@ -48,7 +51,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.rateType.$invalid && sessionRequestForm.$submitted}">
                 <label for="rateType" class="col-md-4 control-label">
-                    <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type:</abbr>
+                    <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type</abbr>
                 </label>
                 <div class="col-md-8">
                     <select class="form-control" id="rateType" name="rateType" ng-model="session.rateType" ng-change="SetRates();">
@@ -64,7 +67,7 @@
                 </div>
                 <div class="col-md-8" style="align-content:center">
                     <abbr title="A break of at least five consecutive days during the semester or session when the student is not scheduled to attend a course OR have contact with the course instructor. Two examples of session breaks are the university's Thanksgiving break, which is a five day instructional gap (Wed, Thurs, Friday, Sat, and Sun) and Spring Break, which is a nine day gap in instruction (Sa, Su, Mo, Tu, We, Th, Fr, Sa, Su).">
-                        <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton" 
+                        <kendo-button id="addSessionBreaks" name="addSessionBreaks" class="form-control uscRedButton"
                                       ng-model="session.addSessionBreaks" ng-click="AddSemesterBreaks();" ng-disabled="noBreaks">
                             Add a Session Break
                         </kendo-button>
@@ -90,54 +93,58 @@
             <div class="form-group" ng-class="{'has-error': (sessCode.value() == '') && sessionRequestForm.$submitted}">
                 <label for="sessCode" class="col-md-4 control-label">
                     <abbr title="Enter the 3-digit code that was used for this session previously. If you do not know the Session Code assigned to this academic program, or if the special program is new, please leave this field blank">
-                        Session Code:
+                        Session Code
                     </abbr>
                 </label>
                 <div class="col-md-8">
-                    <input kendo-auto-complete="sessCode" class="form-control" id="sessionCode" name="sessionCode" maxlength="4" 
+                    <input kendo-auto-complete="sessCode" class="form-control" id="sessionCode" name="sessionCode" maxlength="4"
                            k-ng-model="session.sessionCode" k-data-source="sessionCodes" ng-required="true" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsStartDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="finalsStartDate" class="col-md-4 control-label">
                     <abbr title="If the session will have a finals period, enter the first day of finals. If there will be no final exams in this session, enter the same date date as in the Last day of classes. Please note that sessions that follow the dates shown on the USC academic calendar page (http://academics.usc.edu) must use the final dates listed on the website.">
-                        First day of Finals:
+                        First day of Finals
                     </abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="finalsStartDate" name="finalsStartDate" maxlength="10"
-                           ng-change="FinalsDatesChanged();" ng-model="session.firstDayOfFinals" ng-required="true" />
+                           ng-readonly="(session.lastDayOfClass == '')" ng-change="FinalsDatesChanged();" ng-required="true"
+                           k-options="finalsStartOptions" ng-model="session.firstDayOfFinals" ng-model-options="{ updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.finalsEndDate.$invalid && sessionRequestForm.$submitted}">
                 <label for="finalsEndDate" class="col-md-4 control-label">
                     <abbr title="If the session will have a finals period, enter the last day of finals. If there will be no final exams in this session, enter the same date date as in the Last day of classes. Please note that sessions that follow the dates shown on the USC academic calendar page (http://academics.usc.edu) must use the final dates listed on the website">
-                        Last day of Finals:
+                        Last day of Finals
                     </abbr>
                 </label>
                 <div class="col-md-8">
                     <input kendo-date-picker class="form-control" id="finalsEndDate" name="finalsEndDate" maxlength="10"
-                           ng-change="FinalsDatesChanged();" ng-model="session.lastDayOfFinals" ng-required="true" />
+                           ng-readonly="(session.firstDayOfFinals == '')" k-options="finalsEndOptions" ng-required="true"
+                           ng-model="session.lastDayOfFinals" ng-change="FinalsDatesChanged();" ng-model-options="{ updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUSCLoc && sessionRequestForm.$submitted}">
                 <label for="offCampusLocation" class="col-md-4 control-label">
-                    <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location:</abbr>
+                    <abbr title="USC Campus outside of UPC where class will be held">Off-campus Location</abbr>
                 </label>
                 <div class="col-md-8">
                     <select class="form-control" id="offCampusLocation" name="offCampusLocation" ng-change="BlankOtherLocation()" disabled
-                            ng-disabled="(session.isClassHeldAtUpc == 'true')" ng-model="session.uscCampusLocation" >
+                            ng-disabled="(session.isClassHeldAtUpc == 'true')" ng-model="session.uscCampusLocation">
                         <option ng-repeat="eachCampus in campusLocs" value="{{ eachCampus.campusCode }}">{{ eachCampus.campusName }}</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': (session.rateType == 'OTH') && (session.ratePerUnitAmount < 1)}">
                 <label for="tuitionUnitRate" class="col-md-4 control-label">
-                    <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
+                    <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit</abbr>
                 </label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate" 
-                           ng-readonly="(session.rateType != 'OTH')"  ng-model="session.ratePerUnitAmount" />
+                    <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate"
+                           ng-readonly="(session.rateType != 'OTH')" ng-model="session.ratePerUnitAmount"
+                           ng-change="CheckRateAmount(session.ratePerUnitAmount, 'Tuition unit rate');"
+                           ng-model-options="{updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -156,7 +163,7 @@
         <div class="col-md-4" id="thirdColumn">
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayAddDrop.$invalid && sessionRequestForm.$submitted}">
                 <label for="lastDayAddDrop" class="col-md-6 control-label">
-                    <abbr title="Last day to Add or Drop classes">Last day to <br /> Add/Drop:</abbr>
+                    <abbr title="Last day to Add or Drop classes">Last day to <br /> Add/Drop</abbr>
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="lastDayAddDrop" name="lastDayAddDrop" maxlength="10" readonly ng-model="session.lastDayForAddDrop" />
@@ -164,7 +171,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayEnrollOptionChange.$invalid && sessionRequestForm.$submitted}">
                 <label for="lastDayEnrollChange" class="col-md-6 control-label">
-                    <abbr title="Last day to change Enrollment Option from 'PN' to 'L'">Last day for<br />Enrollment Change:</abbr>
+                    <abbr title="Last day to change Enrollment Option from 'PN' to 'L'">Last day for<br />Enrollment Change</abbr>
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="lastDayEnrollChange" name="lastDayEnrollChange" maxlength="10" readonly ng-model="session.lastDayForEnrollmentOptionChange" />
@@ -172,7 +179,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.lastDayWithdraw.$invalid && sessionRequestForm.$submitted}">
                 <label for="lastDayWithdraw" class="col-md-6 control-label">
-                    <abbr title="Last day to Withdraw classes">Last day <br> to Withdraw:</abbr>
+                    <abbr title="Last day to Withdraw classes">Last day <br> to Withdraw</abbr>
                 </label>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="lastDayWithdraw" name="lastDayWithdraw" maxlength="20" readonly ng-model="session.lastDayForWithdrawal" />
@@ -180,30 +187,33 @@
             </div>
             <div class="form-group" ng-class="{'has-error': requireOtherLoc && sessionRequestForm.$submitted}">
                 <label for="otherCampusLocation" class="col-md-6 control-label">
-                    <abbr title="Indicate a campus other than the ones listed in the dropdown">Other campus<br />location:</abbr>
+                    <abbr title="Indicate a campus other than the ones listed in the dropdown">Other campus<br />location</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20" 
+                    <input type="text" class="form-control" id="otherCampusLocation" name="otherCampusLocation" maxlength="20"
                            ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': (session.rateType == 'OTH') && (session.flatRateAmount < 1)}">
                 <label for="tuitionFlatRate" class="col-md-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
+                    <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate"
+                           ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount"
+                           ng-change="CheckRateAmount(session.flatRateAmount, 'Tuition flat rate');"
+                           ng-model-options="{updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
                 <label for="flatUnitsMin" class="col-md-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
+                    <abbr title="Tuition flat rate in dollars">Flat Rate Range (units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="98" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A')"
+                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="39" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A')"
                            ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
                     &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="99" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A')"
+                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
@@ -231,10 +241,10 @@
             <div class="col-md-1" style="text-align:right;">
             </div>
             <div class="col-md-4" style="align-self:center;">
-                <input kendo-date-picker class="form-control" ng-model="eachBreak.startDate" />
+                <input kendo-date-picker class="form-control" min="semStart" ng-model="eachBreak.startDate" ng-blur="checkSessBreak($index);" />
             </div>
             <div class="col-md-4" style="align-self:center;">
-                <input kendo-date-picker class="form-control" ng-model="eachBreak.endDate" />
+                <input kendo-date-picker class="form-control" k-min="session.sessionBreaks[$index].startDate" ng-model="eachBreak.endDate" ng-blur="checkSessBreak($index);" />
             </div>
             <div class="col-md-3" style="align-self:center;">
                 <a href="javascript:;" class="uscRedButton" title="Delete this Semester Break" ng-click="session.sessionBreaks.splice($index,1);">
@@ -263,7 +273,9 @@
             <div class="col-md-4">
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionNumber.$invalid && sessionRequestForm.$submitted}">
                     <label for="sectionNumber" class="col-md-6 control-label">
-                        <abbr title="A 5-digit identifier.  Make sure the number you enter is within the range assigned to your department.">Section Number:</abbr>
+                        <abbr title="A 5-digit identifier.  Make sure the number you enter is within the range assigned to your department.">
+                            Section Number
+                        </abbr>
                     </label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="sectionNumber" name="sectionNumber" maxlength="25" ng-model="eachSection.sectionNumber" />
@@ -271,7 +283,9 @@
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionTitle.$invalid && sessionRequestForm.$submitted}">
                     <label for="sectionTitle" class="col-md-6 control-label">
-                        <abbr title="The title for the course that will print in the Schedule of Classes and on student transcripts.">Section Title:</abbr>
+                        <abbr title="The title for the course that will print in the Schedule of Classes and on student transcripts.">
+                            Section Title
+                        </abbr>
                     </label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="sectionTitle" name="sectionTitle" maxlength="25" ng-model="eachSection.title" />
@@ -279,7 +293,9 @@
                 </div>
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.incomeAcctNumber.$invalid && sessionRequestForm.$submitted}">
                     <label for="incomeAcctNumber" class="col-md-6 control-label">
-                        <abbr title="The account number to which enrollment in the class should be credited.">Income Account No.:</abbr>
+                        <abbr title="The account number to which enrollment in the class should be credited.">
+                            Income Account No.
+                        </abbr>
                     </label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="incomeAcctNumber" name="incomeAcctNumber" maxlength="25" ng-model="eachSection.incomeAccountNumber" />
@@ -303,7 +319,9 @@
             <div class="col-md-4">
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.deptAbbrev.$invalid && sessionRequestForm.$submitted}">
                     <label for="deptAbbrev" class="col-md-6 control-label">
-                        <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">Prefix:</abbr>
+                        <abbr title="The department's abbreviation (e.g. BUAD, AME, SPAN, etc.)'">
+                            Prefix
+                        </abbr>
                     </label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="deptAbbrev" name="deptAbbrev" maxlength="25" ng-model="eachSection.prefix" />
@@ -312,7 +330,7 @@
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.unitValue.$invalid && sessionRequestForm.$submitted}">
                     <label for="unitValue" class="col-md-6 control-label">
                         <abbr title="Number of units assigned to the course. The units entered should be the maximum units that most students are expected to earn (note that they may earn fewer units if they take less than a full load).">
-                            Unit value:
+                            Unit value
                         </abbr>
                     </label>
                     <div class="col-md-6">
@@ -322,7 +340,7 @@
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.enrollEstimate.$invalid && sessionRequestForm.$submitted}">
                     <label for="enrollEstimate" class="col-md-6 control-label">
                         <abbr title="Capacity of the course. This may not exceed the capacity of the room in which the class will be scheduled.">
-                            Estimated Enrollment:
+                            Estimated Enrollment
                         </abbr>
                     </label>
                     <div class="col-md-6">
@@ -335,7 +353,9 @@
             <div class="col-md-4">
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.courseNumber.$invalid && sessionRequestForm.$submitted}">
                     <label for="courseNumber" class="col-md-6 control-label">
-                        <abbr title="A 3-digit code of the course being offered. This number, combined with the Prefix, gives a complete designation for the course, such as BUAD-494.">Course Number:</abbr>
+                        <abbr title="A 3-digit code of the course being offered. This number, combined with the Prefix, gives a complete designation for the course, such as BUAD-494.">
+                            Course Number
+                        </abbr>
                     </label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="courseNumber" name="courseNumber" maxlength="25" ng-model="eachSection.courseNumber" />
@@ -344,7 +364,7 @@
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.instructorName.$invalid && sessionRequestForm.$submitted}">
                     <label for="instructorName" class="col-md-6 control-label">
                         <abbr title="Name of the instructor who will be teaching the course. The instructor’s name should be entered in the following order: Last name, First name">
-                            Instructor Name:
+                            Instructor Name
                         </abbr>
                     </label>
                     <div class="col-md-6">
@@ -354,7 +374,7 @@
                 <div class="form-group" ng-class="{'has-error': sessionRequestForm.sectionComment.$invalid && sessionRequestForm.$submitted}">
                     <label for="sectionComment" class="col-md-6 control-label">
                         <abbr title="In this space, enter comments specific to the section (list 3 descriptors: 1. the country and 2. university name where the course will take place, and 3. the USC school offering the program).">
-                            Section<br>Comments:
+                            Section<br>Comments
                         </abbr>
                     </label>
                     <div class="col-md-6">
