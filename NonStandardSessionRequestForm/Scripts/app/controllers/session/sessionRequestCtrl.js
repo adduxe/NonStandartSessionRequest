@@ -1,7 +1,8 @@
 ﻿"use strict";
+
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$rootScope",
+        ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
 
@@ -22,18 +23,18 @@ sessionModule.controller("sessionRequestCtrl",
             datepart = datepart.toLowerCase();
             var diff = todate - fromdate;
             var divideBy = {
-                w: 604800000,   // weeks
-                d: 86400000,    // days
-                h: 3600000,     // hours
-                m: 60000,       // minutes
-                s: 1000         // seconds
+                w: 604800000,                                       // weeks
+                d: 86400000,                                        // days
+                h: 3600000,                                         // hours
+                m: 60000,                                           // minutes
+                s: 1000                                             // seconds
             };
 
             return Math.floor(diff / divideBy[datepart]);
         }   // Date.dateDiff
 
 
-        function AdjustDate(newDate)        // Computes a new date incrementing the day if it falls on a weekend or a holiday.
+        function AdjustDate(newDate)                                // Computes a new date incrementing the day if it falls on a weekend or a holiday.
         {
             var newDtmonthDay = '';
 
@@ -61,15 +62,13 @@ sessionModule.controller("sessionRequestCtrl",
             return newDate;
         }       // AdjustDate()
 
-        //  1) Calculates computed dates given the:
-        //      a) start date
-        //      b) end date
-        //      c) percentage number of days to be added to the start date
-        //
-        //  2) If the new date falls on a weekend, or a holiday:
-        //      - move it to the next school day      
-        function ComputeDate(startDate, endDate, percentAdd) {
 
+        function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
+            //      a) start date
+            //      b) end date
+            //      c) percentage number of days to be added to the start date
+            //  2) If the new date falls on a weekend, or a holiday:
+            //      - move it to the next school day      
             var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
             var daysToAdd = Math.round(totalDays * (percentAdd / 100));       // days to add based on the percentage (percentAdd) provided
             var initialDate = new Date(startDate);
@@ -77,8 +76,8 @@ sessionModule.controller("sessionRequestCtrl",
             initialDate.setDate(startDate.getDate() + daysToAdd - 1);
             var adjustedDate = AdjustDate(initialDate);
 
-            if (adjustedDate > endDate) {                                // if computed new date is beyond the Last Day of classes,
-                adjustedDate = endDate;                                  //  make it equal to the last day of classes.
+            if (adjustedDate > endDate) {                           // if computed new date is beyond the Last Day of classes,
+                adjustedDate = endDate;                             //  make it equal to the last day of classes.
             }
 
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
@@ -97,43 +96,44 @@ sessionModule.controller("sessionRequestCtrl",
         }   // convDateToString()
 
 
-        $scope.ClassDatesChanged = function () {                                    // Validate the Class Start and End dates
+        $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
-            if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {
+            $scope.classStartDt = new Date($scope.session.firstDayOfClass);
 
-                var startDt = new Date($scope.session.firstDayOfClass);
-                var endDt = new Date($scope.session.lastDayOfClass);
+            if ($scope.session.firstDayOfClass > '') {
+                $scope.classEndOptions = { min: $scope.classStartDt };
+            }
 
-                if (startDt > endDt) {
+            $scope.classEndDt = new Date($scope.session.lastDayOfClass);
 
-                    alert("Class Start Date later than Class End Date");
+            if ($scope.session.lastDayOfClass > '') {
+                $scope.finalsStartOptions = { min: $scope.classEndDt };
+            }
 
-                } else {                                                            // dates OK.  Calculate computed date fields.
+            if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {    // First Day and Last Day of Class entered?
 
-                    if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > ''))        // 001 dates exists for semester
-                    {
-                        var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
-                        var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
+                if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > '')) {        // Session 001 dates exists for semester
 
-                        // check if class start and end dates match Session 001 dates
-                        if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
+                    var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
+                    var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
+                    // if class start and end dates match Session 001 dates
+                    if (($scope.classStartDt.toDateString() == stdStartDate.toDateString()) && ($scope.classEndDt.toDateString() == stdEndDate.toDateString())) {
 
-                            $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
-                            $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
-                            $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
-                            $scope.session.firstDayOfFinals = $scope.sess001Dates.firstDayOfFinals;
-                            $scope.session.lastDayOfFinals = $scope.sess001Dates.lastDayOfFinals;
-                            $scope.FinalsDatesChanged();
+                        $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
+                        $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
+                        $scope.session.lastDayForWithdrawal = $scope.sess001Dates.lastDayForWithdrawal;
+                        $scope.session.firstDayOfFinals = $scope.sess001Dates.firstDayOfFinals;
+                        $scope.session.lastDayOfFinals = $scope.sess001Dates.lastDayOfFinals;
+                        $scope.FinalsDatesChanged();
 
-                        } else {                                                // if the Class start and end dates don't match, compute the dates.
-                            ComputeDates(startDt, endDt);
-                        }
-                    } else {                                                    // If there are no 001 dates, compute the dates
-                        ComputeDates(startDt, endDt);
+                    } else {                                                                        // if the Class start and end dates don't match, compute the dates.
+                        ComputeDates($scope.classStartDt, $scope.classEndDt);
                     }
-                }   // if (startDt...
+                } else {                                                                            // If there are no 001 dates, compute the dates
+                    ComputeDates($scope.classStartDt, $scope.classEndDt);
+                }
             }   // if (($scope...
-            return;
+            return null;
         }       // ClassDateChanged()
 
 
@@ -148,49 +148,48 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.FinalsDatesChanged = function () {
 
+            $scope.finalsStartDt = new Date($scope.session.firstDayOfFinals);
+
+            if ($scope.session.firstDayOfFinals > '') {
+                $scope.finalsEndOptions = { min: $scope.finalsStartDt };
+            }
+
+            $scope.finalsEndDt = new Date($scope.session.lastDayOfFinals);
+
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-                var startDt = new Date($scope.session.firstDayOfFinals);
-                var endDt = new Date($scope.session.lastDayOfFinals);
-
                 // Compute Final Grading Period
-                if (startDt > endDt) {
+                // First Day of Grading = First Day of Finals
+                $scope.session.firstDayForFinalGrading = ($scope.finalsStartDt.getMonth() + 1) + '/' + $scope.finalsStartDt.getDate() + '/' + $scope.finalsStartDt.getFullYear();
 
-                    alert("First day of Finals later than Last Day of Finals");
+                var initialLastDay = new Date($scope.finalsEndDt);
+                var notaSchoolDay = false, newDateStr = "";
 
-                } else {
-                    // First Day of Grading = First Day of Finals
-                    $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
+                for (var i = 0; i < 4; ++i) {
 
-                    var initialLastDay = new Date(endDt);
-                    var notaSchoolDay = false, newDateStr = "";
+                    notaSchoolDay = false;
 
-                    for (var i = 0; i < 4; ++i) {
+                    do {                                    // keep incrementing the date by a day until a school day is found.
 
-                        notaSchoolDay = false;
+                        initialLastDay.setDate(initialLastDay.getDate() + 1);
+                        newDateStr = initialLastDay.getMonth() + 1 + '/' + initialLastDay.getDate() + '/' + initialLastDay.getFullYear();
 
-                        do {                                                                    // keep incrementing a day until a school day is found.
+                        if ((initialLastDay.getDay() == 0) || (initialLastDay.getDay() == 6) || (holidays.indexOf(newDateStr) > -1))
+                            notaSchoolDay = true;
+                        else
+                            notaSchoolDay = false;
 
-                            initialLastDay.setDate(initialLastDay.getDate() + 1);
-                            newDateStr = initialLastDay.getMonth() + 1 + '/' + initialLastDay.getDate() + '/' + initialLastDay.getFullYear();
+                    } while (notaSchoolDay)
 
-                            if ((initialLastDay.getDay() == 0) || (initialLastDay.getDay() == 6) || (holidays.indexOf(newDateStr) > -1))
-                                notaSchoolDay = true;
-                            else
-                                notaSchoolDay = false;
+                }   // for(var i...)
 
-                        } while (notaSchoolDay)
-
-                    }   // for(var i...)
-
-                    var lastDayGradingDt = initialLastDay;
-                    $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
-                }
+                var lastDayGradingDt = initialLastDay;
+                $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }   // if (($scope...
         }   // FinalsDatesChanged()
 
-
-        $scope.AddSection = function () {                   // Add a Section functionality
+            // Add a Section functionality
+        $scope.AddSection = function () {
 
             var section = {
                 sectionNumber: "",
@@ -209,18 +208,24 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }
 
-        $scope.AddSchedule = function (thisSection) {               // Add a Class Schedule functionality
+        $scope.AddSchedule = function (thisSection) {           // Adding a Class Schedule functionality
+
             var sched = { classDayOfWeek: "", classStartTime: "", classEndTime: "" };
+
             thisSection.schedules.push(sched);
             return;
         }
 
         $scope.GetDatesAndRates = function () {
+
             Get001Dates.get(
                 { semester: $scope.session.academicTerm },
                 function (data) {
+
                     if (data.classBeginDate == undefined) {
+
                         alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
+
                     } else {
 
                         $scope.sess001Dates.firstDayOfClass = convDateToString(data.classBeginDate);
@@ -283,8 +288,24 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // GetDatesAndRates()
 
+        $scope.SetRates = function () {                     // setting the value of the Tuition per Unit and Flat Rate fields
 
-        $scope.SetRates = function () {                 // setting the value of the Tuition per Unit and Flat Rate fields
+            if ($scope.session.rateType == 'ZERO') {
+
+                $scope.session.flatRateUnitsMin = 98;
+                $scope.session.flatRateUnitsMax = 99;
+
+                $('#flatUnitsMin').prop('readonly', true);
+                $('#flatUnitsMax').prop('readonly', true);
+
+            } else {
+
+                $scope.session.flatRateUnitsMin = '';
+                $scope.session.flatRateUnitsMax = '';
+
+                $('#flatUnitsMin').prop('readonly', false);
+                $('#flatUnitsMax').prop('readonly', false);
+            }
 
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
@@ -591,26 +612,39 @@ sessionModule.controller("sessionRequestCtrl",
         }   // IsFormValid()
 
 
-        $scope.checkRateAmount = function (rateAmount, rateName) {
+        $scope.checkSessBreak = function (i) {
 
-            if ($scope.session.rateType == "OTH") {
+            var sessBeginDate = $scope.session.sessionBreaks[i].startDate;
 
-                if (rateAmount < 1) {
-                    alert("Please enter a " + rateName + " that is greater than 0.");
-                } else {
+            if (sessBeginDate > '') {
 
-                    var flatRate = parseInt($scope.session.flatRateAmount);
-                    var unitRate = parseInt($scope.session.ratePerUnitAmount);
+                var beginDate = new Date(sessBeginDate);
 
-                    if ((flatRate > 0) && (unitRate > 0)) {
-                        if (unitRate > flatRate) {
-                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
-                            $scope.ratesOK = false;
-                        }
-                    }
+                if (beginDate < $scope.semStart) {
+                    alert("Entered date is from a previous semester.");
+                    $scope.session.sessionBreaks[i].startDate = '';
                 }
             }
-        }   // checkRateAmount()
+
+            var sessEndDate = $scope.session.sessionBreaks[i].endDate;
+
+            if (sessEndDate > '') {
+
+                var endDate = new Date(sessEndDate);
+
+                if (endDate < $scope.semStart) {
+                    alert("Entered date is from a previous semester.");
+                    $scope.session.sessionBreaks[i].endDate = '';
+                }
+            }
+
+            if ((sessBeginDate > '') && (sessEndDate > '')) {
+
+                if (endDate < beginDate) {
+                    alert("The session end date is earlier than the session begin date.");
+                }
+            }
+        }
 
         $scope.deleteBreaks = function () {
 
@@ -680,16 +714,28 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }
 
+
+        $scope.CheckRateAmount = function (value, fieldName) {
+
+            if ($scope.session.rateType == 'OTH') {
+                if (value < 1) {
+                    alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
+                }
+            }
+        }   // CheckRateAmount()
+
+
         $(document).ready(function () {
 
             $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
 
             PopulateSemesterDropdown();             // calculates the semester options for the user
 
-            GetRateTable();                         // Reads the rate table from the database
+            $scope.semStart = SemStartDates.sStart;      // Ultimate start date.  Do not accept any date before this date.
+
+            GetRateTable();                                 // Reads the rate table from the database
 
             $scope.campusLocs = CampusLocations;
-
             /*
                                             2017 	                2018 	                2019 	                2020
                     New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
