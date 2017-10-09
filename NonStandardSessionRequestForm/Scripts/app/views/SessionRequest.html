@@ -51,7 +51,8 @@
                     <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type:</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="rateType" name="rateType" ng-model="session.rateType" ng-change="SetRates();">
+                    <select class="form-control" id="rateType" name="rateType" ng-disabled="!session.academicTerm"
+                            ng-model="session.rateType" ng-change="SetRates();">
                         <option ng-repeat="eachRate in rateTypes" value="{{ eachRate.rateCode }}">{{ eachRate.rateName }}</option>
                     </select>
                 </div>
@@ -59,7 +60,7 @@
             <div class="form-group">
                 <div class="col-md-4">
                     <abbr title="Check this box ONLY IF this session will not have an interruption of instruction for five days or more. For example, check the box if instruction will continue for students in this session during the university's Thanksgiving holiday or during Spring Break.">
-                        <b>No Breaks</b>&nbsp;&nbsp;<input type="checkbox" ng-model="noBreaks" ng-click="deleteBreaks()" />
+                        <b>No Breaks</b>&nbsp;&nbsp;<input type="checkbox" ng-model="noBreaks" ng-click="deleteBreaks()" ng-required="requireBreaks" />
                     </abbr>
                 </div>
                 <div class="col-md-8" style="align-content:center">
@@ -131,13 +132,16 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionUnitRate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': unitRateRequired && (!ratesOK || !(session.ratePerUnitAmount > 0)) }">
                 <label for="tuitionUnitRate" class="col-md-4 control-label">
                     <abbr title="Tuition per unit rate in dollars">Tuition <br /> per Unit:</abbr>
                 </label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="tuitionUnitRate" name="tuitionUnitRate"
-                           ng-readonly="(session.rateType != 'OTH')" ng-model="session.ratePerUnitAmount" />
+                           ng-readonly="(session.rateType != 'OTH') && (session.rateType != 'OTHU')"
+                           ng-required="unitRateRequired"
+                           ng-change="checkRateAmount(session.ratePerUnitAmount, 'Tuition per unit');"
+                           ng-model="session.ratePerUnitAmount" ng-model-options="{ updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': sessionRequestForm.sessionComment.$invalid && sessionRequestForm.$submitted}">
@@ -175,7 +179,8 @@
                     <abbr title="Last day to Withdraw classes">Last day <br> to Withdraw:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="lastDayWithdraw" name="lastDayWithdraw" maxlength="20" readonly ng-model="session.lastDayForWithdrawal" />
+                    <input type="text" class="form-control" id="lastDayWithdraw" name="lastDayWithdraw"
+                           maxlength="20" readonly ng-model="session.lastDayForWithdrawal" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireOtherLoc && sessionRequestForm.$submitted}">
@@ -187,12 +192,16 @@
                            ng-disabled="(session.uscCampusLocation != 'OTH')" ng-model="session.otherCampusLocation" />
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': sessionRequestForm.tuitionFlatRate.$invalid && sessionRequestForm.$submitted}">
+            <div class="form-group" ng-class="{'has-error': flatRateRequired && (!ratesOK || !(session.flatRateAmount > 0)) }">
                 <label for="tuitionFlatRate" class="col-md-6 control-label">
                     <abbr title="Tuition flat rate in dollars">Tuition <br /> Flat Rate:</abbr>
                 </label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate" ng-readonly="session.rateType != 'OTH'" ng-model="session.flatRateAmount" />
+                    <input type="text" class="form-control" id="tuitionFlatRate" name="tuitionFlatRate"
+                           ng-required="flatRateRequired"
+                           ng-readonly="session.rateType != 'OTH'"
+                           ng-change="checkRateAmount(session.flatRateAmount, 'Tuition flat rate');"
+                           ng-model="session.flatRateAmount" ng-model-options="{ updateOn: 'blur' }" />
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
@@ -200,10 +209,10 @@
                     <abbr title="Tuition flat rate in dollars">Flat Rate Range:(units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == 0)"
+                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
                            ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
                     &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="30" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == 0)"
+                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
@@ -426,6 +435,12 @@
         <div class="col-md-5">
         </div>
     </div>
+
+    <div kendo-window="spinningWheel" k-modal="true" style="display:none;">
+        Processing. Please wait...
+        <img src="/Content/images/gears.gif" />
+    </div>
+
     <input type="hidden" ng-model="session.firstDayForFinalGrading" value="" />
     <input type="hidden" ng-model="session.lastDayForFinalGrading" value="" />
     <input type="hidden" ng-model="session.userContact" value="@(ViewBag.ShibUserName)" />

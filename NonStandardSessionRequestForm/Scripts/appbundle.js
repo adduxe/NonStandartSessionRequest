@@ -1244,8 +1244,7 @@ sessionModule.controller("sessionRequestCtrl",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
 
-        // Add Semester Break functionality
-        $scope.AddSemesterBreaks = function () {
+        $scope.AddSemesterBreaks = function () {                                // Add Semester Break functionality
 
             var semBreak = { startDate: "", endDate: "" };
 
@@ -1297,9 +1296,9 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }                                                       // keep checking until the computed day is not a weekend nor a holiday
             while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
+
             return newDate;
         }       // AdjustDate()
-
 
         //  1) Calculates computed dates given the:
         //      a) start date
@@ -1308,7 +1307,6 @@ sessionModule.controller("sessionRequestCtrl",
         //
         //  2) If the new date falls on a weekend, or a holiday:
         //      - move it to the next school day      
-
         function ComputeDate(startDate, endDate, percentAdd) {
 
             var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
@@ -1338,8 +1336,7 @@ sessionModule.controller("sessionRequestCtrl",
         }   // convDateToString()
 
 
-        // Validate the Class Start and End dates
-        $scope.ClassDatesChanged = function () {
+        $scope.ClassDatesChanged = function () {                                    // Validate the Class Start and End dates
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {
 
@@ -1350,14 +1347,14 @@ sessionModule.controller("sessionRequestCtrl",
 
                     alert("Class Start Date later than Class End Date");
 
-                } else {        // dates OK.  Calculate computed date fields.
+                } else {                                                            // dates OK.  Calculate computed date fields.
 
                     if (($scope.sess001Dates.firstDayOfClass > '') && ($scope.sess001Dates.lastDayOfClass > ''))        // 001 dates exists for semester
                     {
                         var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
                         var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
 
-                        // if class start and end dates match Session 001 dates
+                        // check if class start and end dates match Session 001 dates
                         if ((startDt.toDateString() == stdStartDate.toDateString()) && (endDt.toDateString() == stdEndDate.toDateString())) {
 
                             $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
@@ -1367,10 +1364,10 @@ sessionModule.controller("sessionRequestCtrl",
                             $scope.session.lastDayOfFinals = $scope.sess001Dates.lastDayOfFinals;
                             $scope.FinalsDatesChanged();
 
-                        } else {            // if the Class start and end dates don't match, compute the dates.
+                        } else {                                                // if the Class start and end dates don't match, compute the dates.
                             ComputeDates(startDt, endDt);
                         }
-                    } else {        // If there are no 001 dates, compute the dates
+                    } else {                                                    // If there are no 001 dates, compute the dates
                         ComputeDates(startDt, endDt);
                     }
                 }   // if (startDt...
@@ -1397,7 +1394,9 @@ sessionModule.controller("sessionRequestCtrl",
 
                 // Compute Final Grading Period
                 if (startDt > endDt) {
+
                     alert("First day of Finals later than Last Day of Finals");
+
                 } else {
                     // First Day of Grading = First Day of Finals
                     $scope.session.firstDayForFinalGrading = (startDt.getMonth() + 1) + '/' + startDt.getDate() + '/' + startDt.getFullYear();
@@ -1409,7 +1408,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                         notaSchoolDay = false;
 
-                        do {     // keep incrementing a day until a school day is found.
+                        do {                                                                    // keep incrementing a day until a school day is found.
 
                             initialLastDay.setDate(initialLastDay.getDate() + 1);
                             newDateStr = initialLastDay.getMonth() + 1 + '/' + initialLastDay.getDate() + '/' + initialLastDay.getFullYear();
@@ -1429,8 +1428,8 @@ sessionModule.controller("sessionRequestCtrl",
             }   // if (($scope...
         }   // FinalsDatesChanged()
 
-        // Add a Section functionality
-        $scope.AddSection = function () {
+
+        $scope.AddSection = function () {                   // Add a Section functionality
 
             var section = {
                 sectionNumber: "",
@@ -1449,8 +1448,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }
 
-        // Add a Class Schedule functionality
-        $scope.AddSchedule = function (thisSection) {
+        $scope.AddSchedule = function (thisSection) {               // Add a Class Schedule functionality
             var sched = { classDayOfWeek: "", classStartTime: "", classEndTime: "" };
             thisSection.schedules.push(sched);
             return;
@@ -1514,10 +1512,9 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
 
-            $scope.rateTypes.push({
-                rateCode: "OTH",
-                rateName: "Other"
-            });
+            $scope.rateTypes.push(
+                { rateCode: "OTHU", rateName: "Other Unit Rate" },
+                { rateCode: "OTH", rateName: "Other Flat Rate" });
 
             if ($scope.session.rateType > '')
                 $scope.SetRates();
@@ -1525,38 +1522,71 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // GetDatesAndRates()
 
-        $scope.SetRates = function () {         // setting the value of the Tuition per Unit and Flat Rate fields
+
+        $scope.SetRates = function () {                 // setting the value of the Tuition per Unit and Flat Rate fields
+
             $scope.session.flatRateAmount = '';
             $scope.session.ratePerUnitAmount = '';
+            $scope.unitRateRequired = false;
 
             if ($scope.session.academicTerm > '') {
 
-                angular.forEach($scope.rates, function (value) {
+                switch ($scope.session.rateType) {
 
-                    if (value.term == $scope.session.academicTerm) {
+                    case 'OTH':
 
-                        angular.forEach(value.rateTypes, function (value) {
+                        $scope.unitRateRequired = true;
+                        $scope.flatRateRequired = true;
 
-                            if (value.rateTypeCode == $scope.session.rateType) {
+                        $scope.session.flatRateUnitsMin = '';
+                        $scope.session.flatRateUnitsMax = '';
+                        break;
 
-                                $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
-                                $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                    case 'OTHU':
 
-                                if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
-                                    $scope.session.flatRateUnitsMin = 98;
-                                    $scope.session.flatRateUnitsMax = 99;
-                                } else {
-                                    $scope.session.flatRateUnitsMin = '';
-                                    $scope.session.flatRateUnitsMax = '';
-                                }
-                            }
+                        $scope.unitRateRequired = true;
+                        $scope.flatRateRequired = false;
 
-                        })
-                    }
-                });
-            }
+                        $scope.session.flatRateUnitsMin = 98;
+                        $scope.session.flatRateUnitsMax = 99;
+                        break;
+
+                    default:
+
+                        $scope.unitRateRequired = false;
+                        $scope.flatRateRequired = false;
+
+                        angular.forEach($scope.rates, function (value) {
+
+                            if (value.term == $scope.session.academicTerm) {
+
+                                angular.forEach(value.rateTypes, function (value) {
+
+                                    if (value.rateTypeCode == $scope.session.rateType) {
+
+                                        $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+                                        $scope.session.flatRateAmount = value.rateTypeFlatRate;
+
+                                        if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
+
+                                            $scope.session.flatRateUnitsMin = 98;
+                                            $scope.session.flatRateUnitsMax = 99;
+
+                                        } else {
+
+                                            $scope.session.flatRateUnitsMin = '';
+                                            $scope.session.flatRateUnitsMax = '';
+
+                                        }   // if (value.rateType...)
+                                    }
+                                })  // angular.forEach
+                            }   // if (value.term)
+                        });
+                        break;
+                }   // switch()
+            }   // if ($scope.session..)
             return;
-        }   // SetRates
+        }   // SetRates()
 
         var holidays = [];
 
@@ -1602,12 +1632,173 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.semesters = semChoices;
         }   // PopulateSemesterDropdown
 
+
+        function areCampusLocFieldsOk() {           // Checks the Campus Location Fields
+
+            var campusOK = true;
+
+            switch ($scope.session.isClassHeldAtUpc) {
+
+                case 'true':                        // Class held on campus.  Will not require the other Location fields.
+                    break;
+
+                case 'false':                       // Would require at least one of the two other location fields.
+
+                    $scope.requireUSCLoc = false;
+                    $scope.requireOtherLoc = false;
+
+                    if ($scope.session.uscCampusLocation == '') {
+
+                        campusOK = false;
+                        $scope.requireUSCLoc = true;
+
+                    } else {
+                        // if "Other" campus location and Other campus location is blank
+                        if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
+                            campusOK = false;
+                            $scope.requireOtherLoc = true;
+                        }
+                    }
+                    break;
+
+                default:                                    // radio button unselected
+                    campusOK = false;
+                    break;
+            }   // switch()
+
+            return campusOK;
+
+        }   // areCampusLocFieldsOk()
+
+
+        function areRateFieldsOK()              // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
+        {
+            var rateFieldsOk = true;
+            var errMsg = "";
+
+            if (($scope.session.rateType == 'OTH') || ($scope.session.rateType == 'OTHU')) { // If rate type 'Others' is chosen
+                // Make sure Tuition per  Unit and 
+                //   Tuition Flat Rate are required
+                if ((!$scope.session.ratePerUnitAmount) || (parseFloat($scope.session.ratePerUnitAmount) == 0)) {
+                    errMsg = "The Tuition per Unit must have an amount greater than zero.";
+                    rateFieldsOk = false;
+                }
+
+                if (rateFieldsOk && ($scope.session.rateType == 'OTH')) {
+
+                    switch (true) {
+
+                        case (!$scope.session.flatRateAmount):
+                        case (parseFloat($scope.session.flatRateAmount) == 0):
+
+                            errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
+                            rateFieldsOk = false;
+                            break;
+
+                        case (parseInt($scope.session.ratePerUnitAmount) >= parseInt($scope.session.flatRateAmount)):
+
+                            errMsg = "The Tuition Flat Rate must be greater than the Tuition per Unit amount.";
+                            rateFieldsOk = false;
+                            $scope.ratesOK = false;
+                            break;
+
+                        default:
+                            $scope.ratesOK = true;
+                            break;
+                    }   // switch()
+                }
+            }   // if ($scope.session.rateType...)
+
+            if ($scope.session.flatRateAmount > '') {       // Check the Flat Rate Unit Range fields
+
+                switch (true) {
+
+                    case ($scope.session.flatRateUnitsMin == ''):
+                    case ($scope.session.flatRateUnitsMin == null):
+
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    case ($scope.session.flatRateUnitsMax == ''):
+                    case ($scope.session.flatRateUnitsMax == null):
+
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    case (parseInt($scope.session.flatRateUnitsMin) < 1):
+
+                        errMsg = "The Flat Rate Range minimum units should between 1 and 30.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    case (parseInt($scope.session.flatRateUnitsMax) < 2):
+
+                        errMsg = "The Flat Rate Range maximum units should between 2 and 30.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    case (parseInt($scope.session.flatRateUnitsMax) <= parseInt($scope.session.flatRateUnitsMin)):
+
+                        errMsg = "The flat rate maximum units should be more than the minimum units.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    default:
+                        $scope.requireUnitRange = false;
+                        break;
+                }
+            }   // if (rateFieldsOk...)
+
+            if (errMsg > '') {
+                alert(errMsg);
+            }
+
+            return rateFieldsOk;
+        }   // areRateFieldsOK()
+
+
+        function sessionBreaksOK()                      // check Session Breaks
+        {
+            var sessBreaksOK = true;
+            var errMsg = "";
+            $scope.requireBreaks = false;
+
+            if (!$scope.noBreaks) {                     // 1) is "No Breaks" checkbox unchecked?
+
+                if ($scope.session.sessionBreaks.length == 0) {     //  - if no Session Breaks entered, error out
+                    errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
+                    sessBreaksOK = false;
+                    $scope.requireBreaks = true;
+                } else {                                            // check for blank entries
+                    for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
+                        if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
+                            errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
+                            sessBreaksOK = false;
+                            $scope.requireBreaks = true;
+                        }
+                    }
+                }
+            }                                           // 2) if "No Breaks" is checked, no need to check Session Breaks
+
+            if (errMsg > '') {
+                alert(errMsg);
+            }
+
+            return sessBreaksOK;
+        }   // sessionBreaksOK()
+
+
+
         function IsFormValid() {
 
             var formValid = true;
 
             var reqdFields = [
-
                 $scope.session.academicTerm,        // Semester field
                 $scope.sessCode.value(),            // Session code
                 $scope.session.firstDayOfClass,     // First day of Classes
@@ -1623,81 +1814,42 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             };
 
-            // Check Campus Location
             if (formValid) {
-                switch ($scope.session.isClassHeldAtUpc) {
-
-                    case 'true':              // Class held on campus.  Will not require the other Location fields.
-                        break;
-
-                    case 'false':             // Would require at least one of the two other location fields.
-
-                        $scope.requireUSCLoc = false;
-                        $scope.requireOtherLoc = false;
-
-                        if ($scope.session.uscCampusLocation == '') {
-
-                            formValid = false;
-                            $scope.requireUSCLoc = true;
-
-                        } else {
-                            // if "Other" campus location and Other campus location is blank
-                            if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-
-                                formValid = false;
-                                $scope.requireOtherLoc = true;
-                            }
-                        }
-                        break;
-
-                    default:                // radio button unselected
-                        formValid = false;
-                        break;
-                }   // switch()
-            }   // end of Campus Location check
-
-            // Check the rate fields
-            if (formValid && ($scope.session.flatRateAmount > '')) {
-
-                if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
-
-                    $scope.requireUnitRange = true;
-                    formValid = false;
-
-                } else { // Range is specified but validate the values
-
-                    if ($scope.session.flatRateUnitsMax <= $scope.session.flatRateUnitsMin) {
-
-                        alert("The flat rate maximum units should be more than the minimum units.");
-                        $scope.requireUnitRange = true;
-                        formValid = false;
-                    }
-                }   // else
+                formValid = areCampusLocFieldsOk();                     // Check Campus Location Fields
             }
 
-            // check Session Breaks
-            // 1) if "No Breaks" is checked, no need to check Session Breaks
-            // 2) if the "No Breaks" checkbox is unchecked:
-            //      - if no Session Breaks entered, error out
+            if (formValid) {
+                formValid = areRateFieldsOK();                          // Check Tuition Rate Fields
+            }
 
-            if (formValid && !$scope.noBreaks) {     // "No Breaks" checkbox unchecked?
-
-                if ($scope.session.sessionBreaks.length == 0) {
-                    formValid = false;
-                    alert("Either check the No Breaks checkbox or enter Session Breaks");
-                } else {    // check for blank entries
-                    for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
-                        if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
-                            formValid = false;
-                            alert("Either enter Session Breaks or check the No Breaks checkbox.");
-                        }
-                    }
-                }
+            if (formValid) {
+                formValid = sessionBreaksOK();                          // Check if the Session Breaks were entered
             }
 
             return formValid;
         }   // IsFormValid()
 
+
+        $scope.checkRateAmount = function (rateAmount, rateName) {
+
+            if ($scope.session.rateType == "OTH") {
+
+                if (rateAmount < 1) {
+                    alert("Please enter a " + rateName + " that is greater than 0.");
+                } else {
+
+                    var flatRate = parseInt($scope.session.flatRateAmount);
+                    var unitRate = parseInt($scope.session.ratePerUnitAmount);
+
+                    if ((flatRate > 0) && (unitRate > 0)) {
+                        if (unitRate > flatRate) {
+                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                            $scope.ratesOK = false;
+                        }
+                    }
+                }
+            }
+        }   // checkRateAmount()
 
         $scope.deleteBreaks = function () {
 
@@ -1743,18 +1895,20 @@ sessionModule.controller("sessionRequestCtrl",
 
             $rootScope.savedSession = new Sessions($scope.session);
 
+            $scope.spinningWheel.center().open();
             $rootScope.savedSession.$save(null,
 
-                    function () {
-                        //                window.location.href = "successPage.usc.edu";
+                    function () {       // success
+
                         alert("Submission successful");
                         $location.url("/Result");
                     },
 
-                    function () {
+                    function () {       // fail
                         alert("Error in submitting the form.");
                     }
-                );
+            );
+            $scope.spinningWheel.center().close();
             return;
         }   // SubmitForm()
 
@@ -1763,7 +1917,7 @@ sessionModule.controller("sessionRequestCtrl",
         function GetRateTable() {
             $scope.rates = RateTable.query();
             return;
-        }   // GetRateTable()
+        }
 
         $(document).ready(function () {
 
@@ -1776,17 +1930,17 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.campusLocs = CampusLocations;
 
             /*
-                                    2017 	                2018 	                2019 	                2020
-            New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
-            Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
-            Presidents’ Day 	    Mon 2/20 	            Mon 2/19 	            Mon 2/18 	            Mon 2/17
-            Memorial Day 	        Mon 5/29 	            Mon 5/28 	            Mon 5/27 	            Mon 5/25
-            Independence Day 	    Mon 7/3-Tue 7/4         Wed 7/4 	            Thu 7/4-Fri 7/5         Fri 7/3
-            Labor Day 	            Mon 9/4 	            Mon 9/3 	            Mon 9/2 	            Mon 9/7
-            Thanksgiving 	        Thu 11/23–Fri 11/24     Thu 11/22–Fri 11/23     Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
-            Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
-            Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
-    */
+                                            2017 	                2018 	                2019 	                2020
+                    New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
+                    Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
+                    Presidents’ Day 	    Mon 2/20 	            Mon 2/19 	            Mon 2/18 	            Mon 2/17
+                    Memorial Day 	        Mon 5/29 	            Mon 5/28 	            Mon 5/27 	            Mon 5/25
+                    Independence Day 	    Mon 7/3-Tue 7/4         Wed 7/4 	            Thu 7/4-Fri 7/5         Fri 7/3
+                    Labor Day 	            Mon 9/4 	            Mon 9/3 	            Mon 9/2 	            Mon 9/7
+                    Thanksgiving 	        Thu 11/23–Fri 11/24     Thu 11/22–Fri 11/23     Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
+                    Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
+                    Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
+            */
             holidays = [
                 "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
                 "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018", "11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
@@ -1844,6 +1998,7 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.requireUSCLoc = false;
             $scope.requireOtherLoc = false;
             $scope.requireUnitRange = false;
+            $scope.ratesOK = true;
 
         }); // document.ready()
     }]);    // sessionModule()
