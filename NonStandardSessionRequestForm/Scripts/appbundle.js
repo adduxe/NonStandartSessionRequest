@@ -1187,23 +1187,28 @@ sessionModule.controller("sessionRequestCtrl",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
     
-        $scope.AddSemesterBreaks = function () {                                // Add Semester Break functionality
+        $scope.AddSemesterBreaks = function (){                 // Add Semester Break functionality
 
             var semBreak = { startDate: "", endDate: "" };
 
             if ($scope.session.sessionBreaks.length == 2) {
+
                 alert("A maximum of 2 semester breaks are allowed per session.");
+
             } else {
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
         }   // AddSemesterBreaks()
 
-            // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
-        Date.dateDiff = function (datepart, fromdate, todate) {
+        Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
+
             datepart = datepart.toLowerCase();
-            var diff = todate - fromdate;
+
+            var dateDiff = todate - fromdate;
+
             var divideBy = {
+
                 w: 604800000,   // weeks
                 d: 86400000,    // days
                 h: 3600000,     // hours
@@ -1211,22 +1216,35 @@ sessionModule.controller("sessionRequestCtrl",
                 s: 1000         // seconds
             };
 
-            return Math.floor(diff / divideBy[datepart]);
+            return Math.floor(dateDiff / divideBy[datepart]);
         }   // Date.dateDiff
 
 
         function AdjustDate(newDate)        // Computes a new date incrementing the day if it falls on a weekend or a holiday.
         {
             var newDtmonthDay = '';
+            weekDay = {
+                Sunday      : 0,
+                Monday      : 1,
+                Tuesday     : 2,
+                Wednesday   : 3,
+                Thursday    : 4,
+                Friday      : 5,
+                Saturday    : 6
+            }
 
             do {
-                switch (newDate.getDay()) {
-                    case 0:                                         // if the computed day falls on a Sunday
+
+                switch (newDate.getDay()) {                         // see which week day it falls on
+
+                    case weekDay.Sunday:                            // if the computed day falls on a Sunday
                         newDate.setDate(newDate.getDate() + 1);     // add a day to make it a Monday
                         break;
-                    case 6:                                         // Saturday
+
+                    case weekDay.Saturday:                          // Saturday
                         newDate.setDate(newDate.getDate() + 2);     // add 2 days to make it a Monday
                         break;
+
                     default:
                         break;
                 }   // switch()
@@ -1234,7 +1252,9 @@ sessionModule.controller("sessionRequestCtrl",
                 newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
 
                 if (holidays.indexOf(newDtmonthDay) > -1) {         // if the new date falls on a holiday, add a day
-                    newDate.setDate(newDate.getDate() + 1);
+
+                    newDate.setDate(newDate.getDate() +1);
+
                     newDtmonthDay = newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear();
                 }
             }                                                       // keep checking until the computed day is not a weekend nor a holiday
@@ -1259,8 +1279,8 @@ sessionModule.controller("sessionRequestCtrl",
             initialDate.setDate(startDate.getDate() + daysToAdd - 1);
             var adjustedDate =  AdjustDate(initialDate);
 
-            if (adjustedDate > endDate) {                                // if computed new date is beyond the Last Day of classes,
-                adjustedDate = endDate;                                  //  make it equal to the last day of classes.
+            if (adjustedDate > endDate) {                                   // if computed new date is beyond the Last Day of classes,
+                adjustedDate = endDate;                                     //  make it equal to the last day of classes.
             }
             
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
@@ -1398,11 +1418,17 @@ sessionModule.controller("sessionRequestCtrl",
         }
 
         $scope.GetDatesAndRates = function () {
+
             Get001Dates.get(
+
                 { semester: $scope.session.academicTerm },
+
                 function (data) {
+
                     if (data.classBeginDate == undefined) {
+
                         alert("No Session 001 dates found for semester " + $scope.session.academicTerm);
+
                     } else {
 
                         $scope.sess001Dates.firstDayOfClass     = convDateToString(data.classBeginDate);
@@ -1418,7 +1444,9 @@ sessionModule.controller("sessionRequestCtrl",
                         $scope.sess001Dates.lastDayOfFinals     = convDateToString(data.finalExamEndDate);
                     }
                 },
+
                 function () {
+
                     console.log("No Session 001 dates found for semester " + $scope.session.academicTerm);
                     $scope.sess001Dates.firstDayOfClass         = "";
                     $scope.sess001Dates.lastDayOfClass          = "";
@@ -1437,6 +1465,7 @@ sessionModule.controller("sessionRequestCtrl",
             );
 
             function selectTermRateType(rates, term) {
+
                 var termRateType = rates.find(function (rate) {
                     return rate.term == term;
                 })
@@ -1534,6 +1563,7 @@ sessionModule.controller("sessionRequestCtrl",
         var holidays =[];
 
         function PopulateSemesterDropdown() {
+
             var currDate = new Date();
             var currYear = currDate.getFullYear();
             var nextYear = parseInt(currYear) +1;
@@ -1546,7 +1576,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             if ((currDate >= springDate) && (currDate < summerDate)) {      // Display Spring Current Year to Spring Next Year
 
-                semChoices =[
+                semChoices = [
+
                     { semName: currYear + " Spring",    semCode: currYear + "1" },
                     { semName: currYear + " Summer",    semCode: currYear + "2" },
                     { semName: currYear + " Fall",      semCode: currYear + "3" },
@@ -1555,7 +1586,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             } else if ((currDate >= summerDate) && (currDate < fallDate)) {  // Display Summer Current Year to Summer Next Year
 
-                semChoices =[
+                semChoices = [
+
                     { semName: currYear + " Summer",    semCode: currYear + "2" },
                     { semName: currYear + " Fall",      semCode: currYear + "3" },
                     { semName: nextYear + " Spring",    semCode: nextYear + "1" },
@@ -1736,7 +1768,6 @@ sessionModule.controller("sessionRequestCtrl",
         }   // sessionBreaksOK()
 
 
-
         function IsFormValid() {
 
             var formValid = true;
@@ -1778,16 +1809,21 @@ sessionModule.controller("sessionRequestCtrl",
             if ($scope.session.rateType == "OTH") {
 
                 if (rateAmount < 1) {
+
                     alert("Please enter a " + rateName + " that is greater than 0.");
+
                 } else {
 
                     var flatRate = parseInt($scope.session.flatRateAmount);
                     var unitRate = parseInt($scope.session.ratePerUnitAmount);
                     
                     if ((flatRate > 0) && (unitRate > 0)) {
+
                         if (unitRate > flatRate) {
+
                             alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
                             $scope.ratesOK = false;
+
                         }
                     }
                 }
@@ -1829,11 +1865,15 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.sessionName = $scope.session.sessionName.trim();
 
             $rootScope.rateName = '';
+
             for (var i = 0; i < $scope.rateTypes.length; ++i) {
+
                 if ($scope.rateTypes[i].rateCode == $scope.session.rateType) {
+
                     $rootScope.rateName = $scope.rateTypes[i].rateName;
                     break;
-                };
+                }
+
             }   // for (var...)
 
             $rootScope.savedSession = new Sessions($scope.session);
@@ -1871,7 +1911,6 @@ sessionModule.controller("sessionRequestCtrl",
         GetRateTable();                         // Reads the rate table from the database
 
         $scope.campusLocs = CampusLocations;
-
 /*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
