@@ -471,8 +471,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             if (($scope.session.rateType == 'OTH') || ($scope.session.rateType == 'OTHU')){ // If rate type 'Others' is chosen
                                                                                             // Make sure Tuition per  Unit and 
-                                                                                            //   Tuition Flat Rate are required
-                if ((!$scope.session.ratePerUnitAmount) || (parseFloat($scope.session.ratePerUnitAmount) == 0)) {
+                                                                                            //   Tuition Flat Rate are required                
+                if ((!$scope.session.ratePerUnitAmount) || (parseInt($scope.session.ratePerUnitAmount) == 0)){
                     errMsg = "The Tuition per Unit must have an amount greater than zero.";
                     rateFieldsOk = false;
                 }
@@ -482,7 +482,7 @@ sessionModule.controller("sessionRequestCtrl",
                     switch (true) {
 
                         case (!$scope.session.flatRateAmount):
-                        case (parseFloat($scope.session.flatRateAmount) == 0):
+                        case (parseInt($scope.session.flatRateAmount) == 0):
 
                             errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
                             rateFieldsOk = false;
@@ -502,7 +502,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }   // if ($scope.session.rateType...)
 
-            if ($scope.session.flatRateAmount > '') {       // Check the Flat Rate Unit Range fields
+            if (parseInt($scope.session.flatRateAmount) > 0) {       // Check the Flat Rate Unit Range fields
 
                 switch (true) {
 
@@ -522,14 +522,14 @@ sessionModule.controller("sessionRequestCtrl",
 
                     case (parseInt($scope.session.flatRateUnitsMin) < 1):
 
-                        errMsg = "The Flat Rate Range minimum units should between 1 and 30.";
+                        errMsg = "The Flat Rate Range minimum units should between 1 and 40.";
                         $scope.requireUnitRange = true;
                         rateFieldsOk = false;
                         break;
 
                     case (parseInt($scope.session.flatRateUnitsMax) < 2):
 
-                        errMsg = "The Flat Rate Range maximum units should between 2 and 30.";
+                        errMsg = "The Flat Rate Range maximum units should between 2 and 40.";
                         $scope.requireUnitRange = true;
                         rateFieldsOk = false;
                         break;
@@ -537,6 +537,20 @@ sessionModule.controller("sessionRequestCtrl",
                     case (parseInt($scope.session.flatRateUnitsMax) <= parseInt($scope.session.flatRateUnitsMin)):
 
                         errMsg = "The flat rate maximum units should be more than the minimum units.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    case (parseInt($scope.session.flatRateUnitsMax) > 40):
+
+                        errMsg = "The Flat Rate Maximum Units should not exceed 40.";
+                        $scope.requireUnitRange = true;
+                        rateFieldsOk = false;
+                        break;
+
+                    case (parseInt($scope.session.flatRateUnitsMin) > 40):
+
+                        errMsg = "The Flat Rate Maximum Units should not exceed 40.";
                         $scope.requireUnitRange = true;
                         rateFieldsOk = false;
                         break;
@@ -591,6 +605,7 @@ sessionModule.controller("sessionRequestCtrl",
             var formValid = true;
 
             var reqdFields = [
+
                 $scope.session.academicTerm,        // Semester field
                 $scope.sessCode.value(),            // Session code
                 $scope.session.firstDayOfClass,     // First day of Classes
