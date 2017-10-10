@@ -1186,6 +1186,8 @@ sessionModule.controller("sessionRequestCtrl",
         ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "$scope", "$http", "$location", "$rootScope",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, $scope, $http, $location, $rootScope) {
+
+        $scope.MAXUNITS = 40;
     
         $scope.AddSemesterBreaks = function (){                 // Add Semester Break functionality
 
@@ -1223,15 +1225,16 @@ sessionModule.controller("sessionRequestCtrl",
         function AdjustDate(newDate)        // Computes a new date incrementing the day if it falls on a weekend or a holiday.
         {
             var newDtmonthDay = '';
-            weekDay = {
-                Sunday      : 0,
-                Monday      : 1,
-                Tuesday     : 2,
-                Wednesday   : 3,
-                Thursday    : 4,
-                Friday      : 5,
-                Saturday    : 6
-            }
+
+            var weekDay = {
+                Sunday  : 0,
+                Monday  : 1,
+                Tuesday : 2,
+                Wednesday:3,
+                Thursday: 4,
+                Friday  : 5,
+                Saturday: 6
+            };
 
             do {
 
@@ -1654,7 +1657,7 @@ sessionModule.controller("sessionRequestCtrl",
             if (($scope.session.rateType == 'OTH') || ($scope.session.rateType == 'OTHU')){ // If rate type 'Others' is chosen
                                                                                             // Make sure Tuition per  Unit and 
                                                                                             //   Tuition Flat Rate are required                
-                if ((!$scope.session.ratePerUnitAmount) || (parseInt($scope.session.ratePerUnitAmount) == 0)){
+                if (!(parseInt($scope.session.ratePerUnitAmount) > 0)){
                     errMsg = "The Tuition per Unit must have an amount greater than zero.";
                     rateFieldsOk = false;
                 }
@@ -1663,8 +1666,8 @@ sessionModule.controller("sessionRequestCtrl",
 
                     switch (true) {
 
-                        case (!$scope.session.flatRateAmount):
-                        case (parseInt($scope.session.flatRateAmount) == 0):
+//                        case (!$scope.session.flatRateAmount):
+                        case !(parseInt($scope.session.flatRateAmount) > 0):
 
                             errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
                             rateFieldsOk = false;
@@ -1688,30 +1691,18 @@ sessionModule.controller("sessionRequestCtrl",
 
                 switch (true) {
 
-                    case ($scope.session.flatRateUnitsMin == ''):
+                    case (typeof $scope.session.flatRateUnitsMin === "undefined"):      // value is outside field min/max value
                     case ($scope.session.flatRateUnitsMin == null):
 
+                        errMsg = "The Flat Rate Range minimum units should between 1 and " + ($scope.MAXUNITS - 1) + ".";
                         $scope.requireUnitRange = true;
                         rateFieldsOk = false;
                         break;
 
-                    case ($scope.session.flatRateUnitsMax == ''):
+                    case (typeof $scope.session.flatRateUnitsMax === "undefined"):      // value is outside field min/max value
                     case ($scope.session.flatRateUnitsMax == null):
 
-                        $scope.requireUnitRange = true;
-                        rateFieldsOk = false;
-                        break;
-
-                    case (parseInt($scope.session.flatRateUnitsMin) < 1):
-
-                        errMsg = "The Flat Rate Range minimum units should between 1 and 40.";
-                        $scope.requireUnitRange = true;
-                        rateFieldsOk = false;
-                        break;
-
-                    case (parseInt($scope.session.flatRateUnitsMax) < 2):
-
-                        errMsg = "The Flat Rate Range maximum units should between 2 and 40.";
+                        errMsg = "The Flat Rate Range maximum units should between 2 and " + $scope.MAXUNITS + ".";
                         $scope.requireUnitRange = true;
                         rateFieldsOk = false;
                         break;
@@ -1719,20 +1710,6 @@ sessionModule.controller("sessionRequestCtrl",
                     case (parseInt($scope.session.flatRateUnitsMax) <= parseInt($scope.session.flatRateUnitsMin)):
 
                         errMsg = "The flat rate maximum units should be more than the minimum units.";
-                        $scope.requireUnitRange = true;
-                        rateFieldsOk = false;
-                        break;
-
-                    case (parseInt($scope.session.flatRateUnitsMax) > 40):
-
-                        errMsg = "The Flat Rate Maximum Units should not exceed 40.";
-                        $scope.requireUnitRange = true;
-                        rateFieldsOk = false;
-                        break;
-
-                    case (parseInt($scope.session.flatRateUnitsMin) > 40):
-
-                        errMsg = "The Flat Rate Maximum Units should not exceed 40.";
                         $scope.requireUnitRange = true;
                         rateFieldsOk = false;
                         break;
