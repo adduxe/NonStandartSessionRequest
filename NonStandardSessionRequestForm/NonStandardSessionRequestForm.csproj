@@ -379,6 +379,7 @@
     <None Include="Scripts\app\AdminModule.js" />
     <None Include="Scripts\app\services\admin\writeToSisService.js" />
     <Content Include="Scripts\app\services\rateTableService.js" />
+    <Content Include="Scripts\app\services\semStartDatesService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\app\controllers\indexCtrl.js" />
     <None Include="Scripts\app\controllers\sessionRequestCtrl.js" />
