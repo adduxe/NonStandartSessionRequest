@@ -1672,7 +1672,6 @@ sessionModule.controller("sessionRequestCtrl",
 
                     switch (true) {
 
-//                        case (!$scope.session.flatRateAmount):
                         case !(parseInt($scope.session.flatRateAmount) > 0):
 
                             errMsg = "The Tuition Flat Rate amount must have an amount greater than zero.";
@@ -1698,7 +1697,7 @@ sessionModule.controller("sessionRequestCtrl",
                 switch (true) {
 
                     case (typeof $scope.session.flatRateUnitsMin === "undefined"):      // value is outside field min/max value
-                    case ($scope.session.flatRateUnitsMin == null):
+                    case !(parseInt($scope.session.flatRateUnitsMin) > 0):
 
                         errMsg = "The Flat Rate Range minimum units should between 1 and " + ($scope.MAXUNITS - 1) + ".";
                         $scope.requireUnitRange = true;
@@ -1706,7 +1705,7 @@ sessionModule.controller("sessionRequestCtrl",
                         break;
 
                     case (typeof $scope.session.flatRateUnitsMax === "undefined"):      // value is outside field min/max value
-                    case ($scope.session.flatRateUnitsMax == null):
+                    case !(parseInt($scope.session.flatRateUnitsMin) > 1):
 
                         errMsg = "The Flat Rate Range maximum units should between 2 and " + $scope.MAXUNITS + ".";
                         $scope.requireUnitRange = true;
@@ -1880,16 +1879,16 @@ sessionModule.controller("sessionRequestCtrl",
             $rootScope.savedSession.$save(null,
 
                     function () {       // success
-
                         alert("Submission successful");
+                        $scope.spinningWheel.center().close();
                         $location.url("/Result");
                     },
 
                     function () {       // fail
                         alert("Error in submitting the form.");
+                        $scope.spinningWheel.center().close();
                     }
             );
-            $scope.spinningWheel.center().close();
             return;
         }   // SubmitForm()
 
