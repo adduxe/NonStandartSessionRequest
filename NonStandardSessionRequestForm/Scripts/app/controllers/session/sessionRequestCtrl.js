@@ -2,7 +2,7 @@
 
 sessionModule.controller("sessionRequestCtrl",
 
-        ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
+            ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
 
@@ -86,11 +86,11 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
-            //      a) start date
-            //      b) end date
-            //      c) percentage number of days to be added to the start date
-            //  2) If the new date falls on a weekend, or a holiday:
-            //      - move it to the next school day      
+                                                                    //      a) start date
+                                                                    //      b) end date
+                                                                    //      c) percentage number of days to be added to the start date
+                                                                    //  2) If the new date falls on a weekend, or a holiday:
+                                                                    //      - move it to the next school day      
             var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
             var daysToAdd = Math.round(totalDays * (percentAdd / 100));       // days to add based on the percentage (percentAdd) provided
             var initialDate = new Date(startDate);
@@ -313,10 +313,12 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.rateTypes.push(
                 { rateCode: "OTHU", rateName: "Other Unit Rate" },
-                { rateCode: "OTH", rateName: "Other Flat Rate" });
+                { rateCode: "OTH", rateName: "Other Flat Rate" }
+            );
 
-            if ($scope.session.rateType > '')
+            if ($scope.session.rateType > ''){
                 $scope.SetRates();
+            }
 
             return;
         }   // GetDatesAndRates()
@@ -648,23 +650,22 @@ sessionModule.controller("sessionRequestCtrl",
 
             var sessEndDate = $scope.session.sessionBreaks[i].endDate;
 
-                if (rateAmount < 1) {
+            if (rateAmount < 1) {
 
-                    alert("Please enter a " + rateName + " that is greater than 0.");
+                alert("Please enter a " + rateName + " that is greater than 0.");
 
-                } else {
+            } else {
 
-                    var flatRate = parseInt($scope.session.flatRateAmount);
-                    var unitRate = parseInt($scope.session.ratePerUnitAmount);
+                var flatRate = parseInt($scope.session.flatRateAmount);
+                var unitRate = parseInt($scope.session.ratePerUnitAmount);
                     
-                    if ((flatRate > 0) && (unitRate > 0)) {
+                if ((flatRate > 0) && (unitRate > 0)) {
 
-                        if (unitRate > flatRate) {
+                    if (unitRate > flatRate) {
 
-                            alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
-                            $scope.ratesOK = false;
+                        alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                        $scope.ratesOK = false;
 
-                        }
                     }
                 }
             }
