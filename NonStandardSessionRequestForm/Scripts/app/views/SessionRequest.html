@@ -214,10 +214,10 @@
                     <abbr title="Tuition flat rate in dollars">Flat Rate Range (units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
+                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > 0) || ((session.flatRateAmount | uppercase) == 'N/A')"
                            ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
                     &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="40" ng-disabled="(session.flatRateAmount == '') || ((session.flatRateAmount | uppercase) == 'N/A') || (session.flatRateAmount == '0')"
+                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="{{ MAXUNITS }}" ng-disabled="!(session.flatRateAmount > 0) || ((session.flatRateAmount | uppercase) == 'N/A')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
