@@ -287,11 +287,17 @@ sessionModule.controller("sessionRequestCtrl",
 
             function selectTermRateType(rates, term) {
 
-                var termRateType = rates.find(function (rate) {
-                    return rate.term == term;
-                })
+                var termHasRates = false;
+                var termRateType = [];
 
-                if (termRateType != undefined) {
+                for (var i = 0; i < rates.length; ++i) {
+                    if (rates[i].term == term) {
+                        termHasRates = true;
+                        termRateType = rates[i];
+                    }
+                }
+
+                if (termHasRates) {
                     return termRateType.rateTypes.map(function (rateType) {
                         return {
                             rateCode: rateType.rateTypeCode,
