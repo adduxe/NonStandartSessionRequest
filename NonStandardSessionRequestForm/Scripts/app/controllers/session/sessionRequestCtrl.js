@@ -319,7 +319,6 @@ sessionModule.controller("sessionRequestCtrl",
             if ($scope.session.rateType > ''){
                 $scope.SetRates();
             }
-
             return;
         }   // GetDatesAndRates()
 
