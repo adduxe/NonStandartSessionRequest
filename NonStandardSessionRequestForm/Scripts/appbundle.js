@@ -1245,9 +1245,10 @@ sessionModule.controller("sessionRequestCtrl",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
 
+        $scope.MAXUNITS = 40;
+
         $scope.AddSemesterBreaks = function () {                                // Add Semester Break functionality
 
-            $scope.MAXUNITS = 40;
             var semBreak = { startDate: "", endDate: "" };
 
             if ($scope.session.sessionBreaks.length == 2) {
