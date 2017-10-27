@@ -442,6 +442,184 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeFlatRate"": ""0""
                                  }
                                ]     
+                           },
+                           {
+                               ""term"": ""20182"",
+                               ""rateTypes"": [
+                                 {
+                                     ""rateTypeCode"": ""STD"",
+                                     ""rateTypeDesc"": ""Standard (session 001)"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""BUSG"",
+                                     ""rateTypeDesc"": ""Graduate Business"",
+                                     ""rateTypeUnitRate"": ""1847"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""CINAG"",
+                                     ""rateTypeDesc"": ""Graduate Cinema"",
+                                     ""rateTypeUnitRate"": ""1915"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENTADV"",
+                                     ""rateTypeDesc"": ""Advanced Dentistry"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30736""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENT"",
+                                     ""rateTypeDesc"": ""Dentistry DDS"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30496""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENSP"",
+                                     ""rateTypeDesc"": ""Special Dentistry International"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30409""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DH"",
+                                     ""rateTypeDesc"": ""Dental Hygiene"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""24769""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ENGRG"",
+                                     ""rateTypeDesc"": ""Graduate Engineering"",
+                                     ""rateTypeUnitRate"": ""1937"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""LAW"",
+                                     ""rateTypeDesc"": ""Law"",
+                                     ""rateTypeUnitRate"": ""2393"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MED"",
+                                     ""rateTypeDesc"": ""Medicine"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""30714""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MPA"",
+                                     ""rateTypeDesc"": ""Master in Physician Assistant"",
+                                     ""rateTypeUnitRate"": ""1800"",
+                                     ""rateTypeFlatRate"": ""26724""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MRED"",
+                                     ""rateTypeDesc"": ""Master of Real Estate Development"",
+                                     ""rateTypeUnitRate"": ""TBA"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""PHAR"",
+                                     ""rateTypeDesc"": ""Pharmacy"",
+                                     ""rateTypeUnitRate"": ""1830"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ZERO"",
+                                     ""rateTypeDesc"": ""Zero Tuition Rate"",
+                                     ""rateTypeUnitRate"": ""0"",
+                                     ""rateTypeFlatRate"": ""0""
+                                 }
+                               ]     
+                           },
+                           {
+                               ""term"": ""20183"",
+                               ""rateTypes"": [
+                                 {
+                                     ""rateTypeCode"": ""STD"",
+                                     ""rateTypeDesc"": ""Standard (session 001)"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""BUSG"",
+                                     ""rateTypeDesc"": ""Graduate Business"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""CINAG"",
+                                     ""rateTypeDesc"": ""Graduate Cinema"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENTADV"",
+                                     ""rateTypeDesc"": ""Advanced Dentistry"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENT"",
+                                     ""rateTypeDesc"": ""Dentistry DDS"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DENSP"",
+                                     ""rateTypeDesc"": ""Special Dentistry International"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""DH"",
+                                     ""rateTypeDesc"": ""Dental Hygiene"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ENGRG"",
+                                     ""rateTypeDesc"": ""Graduate Engineering"",
+                                     ""rateTypeUnitRate"": ""1937"",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""LAW"",
+                                     ""rateTypeDesc"": ""Law"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MED"",
+                                     ""rateTypeDesc"": ""Medicine"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MPA"",
+                                     ""rateTypeDesc"": ""Master in Physician Assistant"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""MRED"",
+                                     ""rateTypeDesc"": ""Master of Real Estate Development"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": """"
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""PHAR"",
+                                     ""rateTypeDesc"": ""Pharmacy"",
+                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeFlatRate"": ""27462""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""ZERO"",
+                                     ""rateTypeDesc"": ""Zero Tuition Rate"",
+                                     ""rateTypeUnitRate"": ""0"",
+                                     ""rateTypeFlatRate"": ""0""
+                                 }
+                               ]     
                            }
                         ]";
 
