@@ -1245,9 +1245,10 @@ sessionModule.controller("sessionRequestCtrl",
 
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
 
+        $scope.MAXUNITS = 40;
+
         $scope.AddSemesterBreaks = function () {                                // Add Semester Break functionality
 
-            $scope.MAXUNITS = 40;
             var semBreak = { startDate: "", endDate: "" };
 
             if ($scope.session.sessionBreaks.length == 2) {
@@ -1267,7 +1268,6 @@ sessionModule.controller("sessionRequestCtrl",
             var dateDiff = todate - fromdate;
 
             var divideBy = {
-
                 w: 604800000,   // weeks
                 d: 86400000,    // days
                 h: 3600000,     // hours
@@ -1419,8 +1419,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-                // Compute Final Grading Period
-                // First Day of Grading = First Day of Finals
+                                                            // Compute Final Grading Period
+                                                            // First Day of Grading = First Day of Finals
                 $scope.session.firstDayForFinalGrading = ($scope.finalsStartDt.getMonth() + 1) + '/' + $scope.finalsStartDt.getDate() + '/' + $scope.finalsStartDt.getFullYear();
 
                 var initialLastDay = new Date($scope.finalsEndDt);
@@ -1679,10 +1679,10 @@ sessionModule.controller("sessionRequestCtrl",
             } else {                                                        // Display Current Fall to Next Year Fall
 
                 semChoices = [
-                        { semName: currYear + " Fall", semCode: currYear + "3" },
-                        { semName: nextYear + " Spring", semCode: nextYear + "1" },
-                        { semName: nextYear + " Summer", semCode: nextYear + "2" },
-                        { semName: nextYear + " Fall", semCode: nextYear + "3" }
+                    { semName: currYear + " Fall", semCode: currYear + "3" },
+                    { semName: nextYear + " Spring", semCode: nextYear + "1" },
+                    { semName: nextYear + " Summer", semCode: nextYear + "2" },
+                    { semName: nextYear + " Fall", semCode: nextYear + "3" }
                 ];
             }
 
@@ -1889,26 +1889,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             var sessEndDate = $scope.session.sessionBreaks[i].endDate;
 
-            if (rateAmount < 1) {
-
-                alert("Please enter a " + rateName + " that is greater than 0.");
-
-            } else {
-
-                var flatRate = parseInt($scope.session.flatRateAmount);
-                var unitRate = parseInt($scope.session.ratePerUnitAmount);
-                    
-                if ((flatRate > 0) && (unitRate > 0)) {
-
-                    if (unitRate > flatRate) {
-
-                        alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
-                        $scope.ratesOK = false;
-
-                    }
-                }
-            }
         }   // checkRateAmount()
+
 
         $scope.deleteBreaks = function () {
 
@@ -1983,13 +1965,33 @@ sessionModule.controller("sessionRequestCtrl",
         }
 
 
-        $scope.CheckRateAmount = function (value, fieldName) {
+        $scope.CheckRateAmount = function (rateAmount, rateName) {
 
             if ($scope.session.rateType == 'OTH') {
-                if (value < 1) {
-                    alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
+                if (rateAmount < 1) {
+                    alert("Please enter an amount greater than 0 in the " + rateName + " box.");
                 }
             }
+
+            if (rateAmount < 1) {
+
+                alert("Please enter a " + rateName + " that is greater than 0.");
+
+            } else {
+
+                var flatRate = parseInt($scope.session.flatRateAmount);
+                var unitRate = parseInt($scope.session.ratePerUnitAmount);
+
+                if ((flatRate > 0) && (unitRate > 0)) {
+
+                    if (unitRate > flatRate) {
+
+                        alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                        $scope.ratesOK = false;
+                    }
+                }
+            }
+
         }   // CheckRateAmount()
 
 
