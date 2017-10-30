@@ -1876,20 +1876,35 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.checkSessBreak = function (i) {
 
             var sessBeginDate = $scope.session.sessionBreaks[i].startDate;
+            var errMsg = '';
 
             if (sessBeginDate > '') {
 
                 var beginDate = new Date(sessBeginDate);
 
                 if (beginDate < $scope.semStart) {
-                    alert("Entered date is from a previous semester.");
+
+                    errMsg = "Entered date is from a previous semester.";
                     $scope.session.sessionBreaks[i].startDate = '';
+
+                } else {
+
+                    var sessEndDate = $scope.session.sessionBreaks[i].endDate;
+                    var endDate = new Date(sessEndDate);
+
+                    if (beginDate > endDate) {
+                        errMsg = "Entered Session Begin Date is later than Session End Date."
+                        $scope.session.sessionBreaks[i].endDate = '';
+                    }
                 }
             }
 
-            var sessEndDate = $scope.session.sessionBreaks[i].endDate;
+            if (errMsg > '') {
+                alert(errMsg);
+            }
+            return;
 
-        }   // checkRateAmount()
+        }   // checkSessBreak()
 
 
         $scope.deleteBreaks = function () {

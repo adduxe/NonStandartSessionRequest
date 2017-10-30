@@ -580,7 +580,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                  {
                                      ""rateTypeCode"": ""ENGRG"",
                                      ""rateTypeDesc"": ""Graduate Engineering"",
-                                     ""rateTypeUnitRate"": ""1937"",
+                                     ""rateTypeUnitRate"": """",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
@@ -611,7 +611,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                      ""rateTypeCode"": ""PHAR"",
                                      ""rateTypeDesc"": ""Pharmacy"",
                                      ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": ""27462""
+                                     ""rateTypeFlatRate"": """"
                                  },
                                  {
                                      ""rateTypeCode"": ""ZERO"",

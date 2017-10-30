@@ -248,7 +248,7 @@
                 <input kendo-date-picker class="form-control" min="semStart" ng-model="eachBreak.startDate" ng-blur="checkSessBreak($index);" />
             </div>
             <div class="col-md-4" style="align-self:center;">
-                <input kendo-date-picker class="form-control" k-min="session.sessionBreaks[$index].startDate" ng-model="eachBreak.endDate" ng-blur="checkSessBreak($index);" />
+                <input kendo-date-picker class="form-control" ng-model="eachBreak.endDate" ng-blur="checkSessBreak($index);" />
             </div>
             <div class="col-md-3" style="align-self:center;">
                 <a href="javascript:;" class="uscRedButton" title="Delete this Semester Break" ng-click="session.sessionBreaks.splice($index,1);">
