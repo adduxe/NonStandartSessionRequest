@@ -515,7 +515,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                  {
                                      ""rateTypeCode"": ""MRED"",
                                      ""rateTypeDesc"": ""Master of Real Estate Development"",
-                                     ""rateTypeUnitRate"": ""TBA"",
+                                     ""rateTypeUnitRate"": """",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
