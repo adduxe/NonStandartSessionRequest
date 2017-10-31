@@ -174,6 +174,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
+
         [Route("ratetable")]
         public async Task<IHttpActionResult> GetRateTable()
         {

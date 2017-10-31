@@ -714,6 +714,12 @@ sessionModule.controller("sessionRequestCtrl",
 
             }   // for (var...)
 
+
+            if (($scope.session.ratePerUnitAmount.trim() == "") && ($scope.session.flatRateAmount.trim() == "")) {
+                $scope.session.ratePerUnitAmount = null;
+                $scope.session.flatRateAmount = null;
+            }
+
             $rootScope.savedSession = new Sessions($scope.session);
 
             $scope.spinningWheel.center().open();

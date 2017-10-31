@@ -17,7 +17,7 @@ The following settings are used for generating the API client using AutoRest.
 
 ``` yaml
 # Location of the OpenAPI file
-input-file: http://oweb7-vm.usc.edu/DataApi/swagger/docs/sessionrequest
+input-file: http://localhost:1615/DataApi/swagger/docs/sessionrequest
 
 # Language code generator options
 csharp:

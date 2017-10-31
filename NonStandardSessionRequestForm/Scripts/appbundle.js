@@ -1953,6 +1953,12 @@ sessionModule.controller("sessionRequestCtrl",
 
             }   // for (var...)
 
+
+            if (($scope.session.ratePerUnitAmount.trim() == "") && ($scope.session.flatRateAmount.trim() == "")) {
+                $scope.session.ratePerUnitAmount = null;
+                $scope.session.flatRateAmount = null;
+            }
+
             $rootScope.savedSession = new Sessions($scope.session);
 
             $scope.spinningWheel.center().open();
@@ -2123,6 +2129,11 @@ sessionModule.controller("sessionResultCtrl",
                 break;
 
         }; // switch()
+
+        if (($rootScope.savedSession.ratePerUnitAmount == null) && ($rootScope.savedSession.flatRateAmount == null)) {
+            $scope.session.ratePerUnitAmount = "TBD";
+            $scope.session.flatRateAmount = "TBD";
+        }
 
         $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
 
