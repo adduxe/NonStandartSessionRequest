@@ -383,8 +383,8 @@ sessionModule.controller("sessionRequestCtrl",
 
                                         if ((value.rateTypeUnitRate == '') && (value.rateTypeFlatRate == '')) {        // to be determined rate
 
-                                            $scope.session.ratePerUnitAmount = "TBD";
-                                            $scope.session.flatRateAmount = "TBD";
+                                            $scope.session.ratePerUnitAmount = "TBA";
+                                            $scope.session.flatRateAmount = "TBA";
 
                                         } else {
 
@@ -394,7 +394,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                                         switch (true){
 
-                                            case (($scope.session.ratePerUnitAmount == 'TBD') && ($scope.session.flatRateAmount == 'TBD')):
+                                            case (($scope.session.ratePerUnitAmount == 'TBA') && ($scope.session.flatRateAmount == 'TBA')):
 
                                                 $scope.session.flatRateUnitsMin = '';
                                                 $scope.session.flatRateUnitsMax = '';
@@ -543,7 +543,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }   // if ($scope.session.rateType...)
 
-            if (parseInt($scope.session.flatRateAmount) > 0) {       // Check the Flat Rate Unit Range fields
+            if ($scope.session.flatRateAmount > '') {                                   // Check the Flat Rate Unit Range fields
 
                 switch (true) {
 
@@ -556,7 +556,7 @@ sessionModule.controller("sessionRequestCtrl",
                         break;
 
                     case (typeof $scope.session.flatRateUnitsMax === "undefined"):      // value is outside field min/max value
-                    case !(parseInt($scope.session.flatRateUnitsMin) > 1):
+                    case !(parseInt($scope.session.flatRateUnitsMax) > 1):
 
                         errMsg = "The Flat Rate Range maximum units should between 2 and " + $scope.MAXUNITS + ".";
                         $scope.requireUnitRange = true;
@@ -731,7 +731,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }   // for (var...)
 
-            if (($scope.session.ratePerUnitAmount == "TBD") && ($scope.session.flatRateAmount == "TBD")) {
+            if (($scope.session.ratePerUnitAmount == "TBA") && ($scope.session.flatRateAmount == "TBA")) {
                 $scope.session.ratePerUnitAmount = null;
                 $scope.session.flatRateAmount = null;
             }
