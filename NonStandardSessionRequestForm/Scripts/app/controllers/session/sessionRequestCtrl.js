@@ -385,11 +385,13 @@ sessionModule.controller("sessionRequestCtrl",
 
                                             $scope.session.ratePerUnitAmount = "TBA";
                                             $scope.session.flatRateAmount = "TBA";
+                                            $scope.MAXUNITS = 99;
 
                                         } else {
 
                                             $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
                                             $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                                            $scope.MAXUNITS = 40;
                                         }
 
                                         switch (true){
@@ -582,6 +584,15 @@ sessionModule.controller("sessionRequestCtrl",
 
             return rateFieldsOk;
         }   // areRateFieldsOK()
+
+
+        function checkTBAUnitRange(){
+
+            var errorMsg = '';
+
+
+            return errorMsg;
+        }
 
 
         function sessionBreaksOK()                      // check Session Breaks
