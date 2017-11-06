@@ -62,11 +62,11 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
-            //      a) start date
-            //      b) end date
-            //      c) percentage number of days to be added to the start date
-            //  2) If the new date falls on a weekend, or a holiday:
-            //      - move it to the next school day      
+                                                                    //      a) start date
+                                                                    //      b) end date
+                                                                    //      c) percentage number of days to be added to the start date
+                                                                    //  2) If the new date falls on a weekend, or a holiday:
+                                                                    //      - move it to the next school day      
             var totalDays = Date.dateDiff('d', startDate, endDate) + 1;
             var daysToAdd = Math.round(totalDays * (percentAdd / 100));   // days to add based on the percentage (percentAdd) provided
             var initialDate = new Date(startDate);
@@ -331,54 +331,35 @@ sessionModule.controller("sessionRequestCtrl",
 
             var formValid = true;
 
-            var reqdFields = [
-                $scope.session.academicTerm,            // Semester field
-                $scope.sessCode.value(),                // Session code
-                $scope.session.firstDayOfClass,         // First day of Classes
-                $scope.session.lastDayOfClass,          // Last day of Classes
-                $scope.session.firstDayOfFinals,        // First day of Finals
-                $scope.session.lastDayOfFinals          // Last day of Finals
-            ];
+            switch ($scope.session.isClassHeldAtUpc) {  // Check Campus Location
 
-            for (var i = 0; i < reqdFields.length; ++i) {
-                if (reqdFields[i].length == 0) {
-                    formValid = false; // test
+                case 'true':                        // Class held on campus.  Will not require the other Location fields.
                     break;
-                }
-            };
 
-            if (formValid) {                            // Check Campus Location
+                case 'false':                       // Would require at least one of the two other location fields.
 
-                switch ($scope.session.isClassHeldAtUpc) {
+                    $scope.requireUSCLoc = false;
+                    $scope.requireOtherLoc = false;
 
-                    case 'true':                        // Class held on campus.  Will not require the other Location fields.
-                        break;
+                    if ($scope.session.uscCampusLocation == '') {
 
-                    case 'false':                       // Would require at least one of the two other location fields.
+                        formValid = false;
+                        $scope.requireUSCLoc = true;
 
-                        $scope.requireUSCLoc = false;
-                        $scope.requireOtherLoc = false;
-
-                        if ($scope.session.uscCampusLocation == '') {
+                    } else {
+                        // if "Other" campus location and Other campus location is blank
+                        if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
 
                             formValid = false;
-                            $scope.requireUSCLoc = true;
-
-                        } else {
-                            // if "Other" campus location and Other campus location is blank
-                            if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-
-                                formValid = false;
-                                $scope.requireOtherLoc = true;
-                            }
+                            $scope.requireOtherLoc = true;
                         }
-                        break;
+                    }
+                    break;
 
-                    default:                            // radio button unselected
-                        formValid = false;
-                        break;
-                }   // switch()
-            }   // if (formValid)
+                default:                            // radio button unselected
+                    formValid = false;
+                    break;
+            }   // switch()
 
             // Check the rate fields
             if (formValid && ($scope.session.flatRateAmount > '')) {
@@ -427,8 +408,9 @@ sessionModule.controller("sessionRequestCtrl",
             if (sessBeginDate > '') {
 
                 var beginDate = new Date(sessBeginDate);
+                var earliestDate = new Date($scope.earliestDate); 
 
-                if (beginDate < $scope.semStart) {
+                if (beginDate < earliestDate) {
                     alert("Entered date is from a previous semester.");
                     $scope.session.sessionBreaks[i].startDate = '';
                 }
@@ -440,7 +422,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                 var endDate = new Date(sessEndDate);
 
-                if (endDate < $scope.semStart) {
+                if (endDate < earliestDate) {
                     alert("Entered date is from a previous semester.");
                     $scope.session.sessionBreaks[i].endDate = '';
                 }
@@ -536,7 +518,10 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.semesters = SemStartDates.sChoices;    // populates the semester dropdown for the user
 
-            $scope.semStart = SemStartDates.sStart;      // Ultimate start date.  Do not accept any date before this date.
+            //            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
+            var sStarDate = SemStartDates.sStart;
+            $scope.earliestDate = sStarDate.getFullYear() + '-' + sStarDate.getMonth() + '-' + sStarDate.getDate();      // Ultimate earliest date.  Do not accept any date before this date in any field.
+
 
             GetRateTable();                                 // Reads the rate table from the database
 
