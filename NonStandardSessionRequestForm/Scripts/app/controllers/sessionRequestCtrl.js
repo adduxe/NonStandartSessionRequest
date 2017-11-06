@@ -99,13 +99,34 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.classStartDt = new Date($scope.session.firstDayOfClass);
 
             if ($scope.session.firstDayOfClass > '') {
-                $scope.classEndOptions = { min: $scope.classStartDt };
+
+                var classStartDate = new Date($scope.session.firstDayOfClass);
+
+                if (classStartDate < earliestDate) {
+
+                    alert("Class Start Date is an invalid date.");
+                    $scope.session.firstDayOfClass = '';
+                    return;
+
+                } else {
+                    $scope.classEndOptions = { min: $scope.classStartDt };
+                }
             }
 
-            $scope.classEndDt = new Date($scope.session.lastDayOfClass);
-
             if ($scope.session.lastDayOfClass > '') {
-                $scope.finalsStartOptions = { min: $scope.classEndDt };
+
+                var classEndDt = new Date($scope.session.lastDayOfClass);
+
+                if (classEndDt < classStartDate) {
+
+                    alert("Class End Date is earlier than the Class Start Date.");
+                    $scope.session.lastDayOfClass = '';
+                    return;
+
+                } else {
+                    $scope.finalsStartOptions = { min: classEndDt };
+                }
+
             }
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {    // First Day and Last Day of Class entered?
@@ -115,7 +136,7 @@ sessionModule.controller("sessionRequestCtrl",
                     var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
                     var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
                     // if class start and end dates match Session 001 dates
-                    if (($scope.classStartDt.toDateString() == stdStartDate.toDateString()) && ($scope.classEndDt.toDateString() == stdEndDate.toDateString())) {
+                    if (($scope.classStartDt.toDateString() == stdStartDate.toDateString()) && (classEndDt.toDateString() == stdEndDate.toDateString())) {
 
                         $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
                         $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
@@ -125,10 +146,10 @@ sessionModule.controller("sessionRequestCtrl",
                         $scope.FinalsDatesChanged();
 
                     } else {                                                                        // if the Class start and end dates don't match, compute the dates.
-                        ComputeDates($scope.classStartDt, $scope.classEndDt);
+                        ComputeDates($scope.classStartDt, classEndDt);
                     }
                 } else {                                                                            // If there are no 001 dates, compute the dates
-                    ComputeDates($scope.classStartDt, $scope.classEndDt);
+                    ComputeDates($scope.classStartDt, classEndDt);
                 }
             }   // if (($scope...
             return null;
@@ -367,10 +388,31 @@ sessionModule.controller("sessionRequestCtrl",
         function areClassDatesOK() {                        // check the Class Start and End Dates
 
             var classDatesOK = true;
-                                                            // Class Start Date should not be earlier than the earliest date
-            if ($scope.classStartDt )                                             // Class End Date should not be earlier than the Class Start Date
+            var errMsg = "";
+            
+            var classEndDate = new Date($scope.session.lastDayOfClass);
+            
+            switch(true){
+            
+                case ($scope.session.firstDayOfClass == ''):
+                case (classStartDate < earliestDate):               // Class Start Date should not be earlier than the earliest date
+                    classDatesOK = false;
+                    break;
+
+                case ($scope.session.lastDayOfClass == ''):
+                case (classEndDate < classStartDate):               // Class End Date should not be earlier than the Class Start Date
+                    classDatesOK = false;
+                    errMsg = "Class Start Date is an invalid date.";
+                    break;
+
+                default:
+                    break;
+            }
                                                             // Finals Start Date should not be earlier than Class End Date
                                                             // Finals End Date should not be earlier than the Finals Start Date
+            if (errMsg > '') {
+                alert(errMsg);
+            }
             return classDatesOK;
         }   // areClassDatesOK()
 
