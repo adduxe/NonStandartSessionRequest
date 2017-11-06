@@ -387,11 +387,11 @@ sessionModule.controller("sessionRequestCtrl",
         }   // SetRates()
 
 
-        function IsClassLocationProvided() {
+        function areCampusLocFieldsOk() {           // Checks the Campus Location Fields
 
-            var classLocProvided = true;
+            var campusOK = true;
 
-            switch ($scope.session.isClassHeldAtUpc) {  // Check Campus Location
+            switch ($scope.session.isClassHeldAtUpc) {
 
                 case 'true':                        // Class held on campus.  Will not require the other Location fields.
                     break;
@@ -403,35 +403,52 @@ sessionModule.controller("sessionRequestCtrl",
 
                     if ($scope.session.uscCampusLocation == '') {
 
-                        classLocProvided = false;
+                        campusOK = false;
                         $scope.requireUSCLoc = true;
 
                     } else {
                         // if "Other" campus location and Other campus location is blank
                         if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-
-                            classLocProvided = false;
+                            campusOK = false;
                             $scope.requireOtherLoc = true;
                         }
                     }
                     break;
 
-                default:                            // radio button unselected
-                    classLocProvided = false;
+                default:                                    // radio button unselected
+                    campusOK = false;
                     break;
             }   // switch()
 
-            return classLocProvided;
-        }   // IsCampusLocationProvided()
+            return campusOK;
+
+        }   // areCampusLocFieldsOk()
 
 
-        var holidays = [];
+        function areClassDatesOK() {                        // check the Class Start and End Dates
+
+            var classDatesOK = true;
+                                                            // Class Start Date should not be earlier than the earliest date
+            if ($scope.classStartDt )                                             // Class End Date should not be earlier than the Class Start Date
+                                                            // Finals Start Date should not be earlier than Class End Date
+                                                            // Finals End Date should not be earlier than the Finals Start Date
+            return classDatesOK;
+        }   // areClassDatesOK()
+
 
         function IsFormValid() {
 
             var formValid = true;
 
-            formValid = IsClassLocationProvided();
+            if (formValid) {
+                formValid = areCampusLocFieldsOk();                     // Check Campus Location Fields
+            }
+
+
+            if (formValid) {
+                formValid = areClassDatesOK();
+            }
+
                                                     // Check the rate fields
             if (formValid && ($scope.session.flatRateAmount > '')) {
 
@@ -480,7 +497,6 @@ sessionModule.controller("sessionRequestCtrl",
             if (sessBeginDate > '') {
 
                 var beginDate = new Date(sessBeginDate);
-                var earliestDate = new Date($scope.earliestDate); 
 
                 if (beginDate < earliestDate) {
                     alert("Entered date is from a previous semester.");
@@ -583,6 +599,8 @@ sessionModule.controller("sessionRequestCtrl",
             }
         }   // CheckRateAmount()
 
+        var holidays = [];                                  // holiday needs to be a global that's why it's outside document.ready()
+        var earliestDate = new Date(SemStartDates.sStart);
 
         $(document).ready(function () {
 
@@ -590,10 +608,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.semesters = SemStartDates.sChoices;    // populates the semester dropdown for the user
 
-            //            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
-            var sStarDate = SemStartDates.sStart;
-            $scope.earliestDate = sStarDate.getFullYear() + '-' + sStarDate.getMonth() + '-' + sStarDate.getDate();      // Ultimate earliest date.  Do not accept any date before this date in any field.
-
+            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
 
             GetRateTable();                                 // Reads the rate table from the database
 
@@ -871,7 +886,7 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     }
 
     return {
-        sStart: semStart,
+        sStart: semStart.getFullYear() + '-' + parseInt(semStart.getMonth() + 1) + '-' + semStart.getDate(),
         sChoices: semChoices
     };
 }])

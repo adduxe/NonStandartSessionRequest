@@ -51,7 +51,7 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
     }
 
     return {
-        sStart: semStart,
+        sStart: semStart.getFullYear() + '-' + parseInt(semStart.getMonth() + 1) + '-' + semStart.getDate(),
         sChoices: semChoices
     };
 }])
