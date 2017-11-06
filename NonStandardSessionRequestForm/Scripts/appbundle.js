@@ -386,11 +386,10 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // SetRates()
 
-        var holidays = [];
 
-        function IsFormValid() {
+        function IsClassLocationProvided() {
 
-            var formValid = true;
+            var classLocProvided = true;
 
             switch ($scope.session.isClassHeldAtUpc) {  // Check Campus Location
 
@@ -404,25 +403,36 @@ sessionModule.controller("sessionRequestCtrl",
 
                     if ($scope.session.uscCampusLocation == '') {
 
-                        formValid = false;
+                        classLocProvided = false;
                         $scope.requireUSCLoc = true;
 
                     } else {
                         // if "Other" campus location and Other campus location is blank
                         if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
 
-                            formValid = false;
+                            classLocProvided = false;
                             $scope.requireOtherLoc = true;
                         }
                     }
                     break;
 
                 default:                            // radio button unselected
-                    formValid = false;
+                    classLocProvided = false;
                     break;
             }   // switch()
 
-            // Check the rate fields
+            return classLocProvided;
+        }   // IsCampusLocationProvided()
+
+
+        var holidays = [];
+
+        function IsFormValid() {
+
+            var formValid = true;
+
+            formValid = IsClassLocationProvided();
+                                                    // Check the rate fields
             if (formValid && ($scope.session.flatRateAmount > '')) {
 
                 if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
@@ -440,6 +450,7 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }
             } // if (formValid...)
+
             // check Session Breaks
             if (formValid && !$scope.noBreaks) {        // if "No Breaks" checkbox checked, no need to check Session Breaks
 
@@ -448,7 +459,7 @@ sessionModule.controller("sessionRequestCtrl",
                     alert("Either check the No Breaks checkbox or enter Session Breaks");
 
                 } else {                                // if the "No Breaks" checkbox is unchecked 
-                    // and no Session Breaks were entered: error out
+                                                        // and no Session Breaks were entered: error out
                     for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
                         if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
                             formValid = false;
