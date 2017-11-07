@@ -2,8 +2,7 @@
 
 sessionModule.controller("sessionRequestCtrl",
 
-            ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
-
+       ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
 
         $scope.MAXUNITS = 40;
@@ -17,6 +16,7 @@ sessionModule.controller("sessionRequestCtrl",
                 alert("A maximum of 2 semester breaks are allowed per session.");
 
             } else {
+
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
@@ -464,8 +464,6 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // SetRates()
 
-
-
         
         function PopulateSemesterDropdown() {
 
@@ -552,14 +550,6 @@ sessionModule.controller("sessionRequestCtrl",
         {
             var rateFieldsOk = true;
             var errMsg = "";
-                    } else {
-                        // if "Other" campus location and Other campus location is blank
-                        if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
-                            campusOK = false;
-                            $scope.requireOtherLoc = true;
-                        }
-                    }
-                    break;
 
             if (($scope.session.rateType == 'OTH') || ($scope.session.rateType == 'OTHU')){ // If rate type 'Others' is chosen
                                                                                             // Make sure Tuition per  Unit and 
@@ -632,7 +622,6 @@ sessionModule.controller("sessionRequestCtrl",
 
             return rateFieldsOk;
         }   // areRateFieldsOK()
-
 
 
         function sessionBreaksOK()                      // check Session Breaks

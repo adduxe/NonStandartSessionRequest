@@ -1241,8 +1241,7 @@ sessionModule.controller("indexCtrl", ["$scope", "$q", function ($scope, $q) {
 
 sessionModule.controller("sessionRequestCtrl",
 
-            ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
-
+       ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
     function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
 
         $scope.MAXUNITS = 40;
@@ -1256,6 +1255,7 @@ sessionModule.controller("sessionRequestCtrl",
                 alert("A maximum of 2 semester breaks are allowed per session.");
 
             } else {
+
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
@@ -1362,13 +1362,33 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.classStartDt = new Date($scope.session.firstDayOfClass);
 
             if ($scope.session.firstDayOfClass > '') {
-                $scope.classEndOptions = { min: $scope.classStartDt };
+
+                var classStartDate = new Date($scope.session.firstDayOfClass);
+
+                if (classStartDate < earliestDate) {
+
+                    alert("Class Start Date is an invalid date.");
+                    $scope.session.firstDayOfClass = '';
+                    return;
+
+                } else {
+                    $scope.classEndOptions = { min: $scope.classStartDt };
+                }
             }
 
-            $scope.classEndDt = new Date($scope.session.lastDayOfClass);
-
             if ($scope.session.lastDayOfClass > '') {
-                $scope.finalsStartOptions = { min: $scope.classEndDt };
+
+                var classEndDt = new Date($scope.session.lastDayOfClass);
+
+                if (classEndDt < classStartDate) {
+
+                    alert("Class End Date cannot be earlier than the Class Start Date.");
+                    $scope.session.lastDayOfClass = '';
+                    return;
+
+                } else {
+                    $scope.finalsStartOptions = { min: classEndDt };
+                }
             }
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {                    // First Day and Last Day of Class entered?
@@ -1378,7 +1398,7 @@ sessionModule.controller("sessionRequestCtrl",
                     var stdStartDate = new Date($scope.sess001Dates.firstDayOfClass);
                     var stdEndDate = new Date($scope.sess001Dates.lastDayOfClass);
                     // if class start and end dates match Session 001 dates
-                    if (($scope.classStartDt.toDateString() == stdStartDate.toDateString()) && ($scope.classEndDt.toDateString() == stdEndDate.toDateString())) {
+                    if (($scope.classStartDt.toDateString() == stdStartDate.toDateString()) && (classEndDt.toDateString() == stdEndDate.toDateString())) {
 
                         $scope.session.lastDayForAddDrop = $scope.sess001Dates.lastDayForAddDrop;
                         $scope.session.lastDayForEnrollmentOptionChange = $scope.sess001Dates.lastDayForEnrollmentOptionChange;
@@ -1388,10 +1408,10 @@ sessionModule.controller("sessionRequestCtrl",
                         $scope.FinalsDatesChanged();
 
                     } else {                                                                        // if the Class start and end dates don't match, compute the dates.
-                        ComputeDates($scope.classStartDt, $scope.classEndDt);
+                        ComputeDates($scope.classStartDt, classEndDt);
                     }
                 } else {                                                                            // If there are no 001 dates, compute the dates
-                    ComputeDates($scope.classStartDt, $scope.classEndDt);
+                    ComputeDates($scope.classStartDt, classEndDt);
                 }
             }   // if (($scope...
             return null;
@@ -1409,21 +1429,41 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.FinalsDatesChanged = function () {
 
-            $scope.finalsStartDt = new Date($scope.session.firstDayOfFinals);
-
             if ($scope.session.firstDayOfFinals > '') {
-                $scope.finalsEndOptions = { min: $scope.finalsStartDt };
+
+                var finalsStartDt = new Date($scope.session.firstDayOfFinals);
+                var classEndDt = new Date($scope.session.lastDayOfClass);
+
+                if (finalsStartDt < classEndDt) {
+
+                    alert("Finals Start Date cannot be earlier than the Class End Date.");
+                    $scope.session.firstDayOfFinals = '';
+                    return;
+
+                } else {
+                    $scope.finalsEndOptions = { min: finalsStartDt };
+                }
             }
 
-            $scope.finalsEndDt = new Date($scope.session.lastDayOfFinals);
+            if ($scope.session.lastDayOfFinals > '') {
+
+                var finalsEndDt = new Date($scope.session.lastDayOfFinals);
+
+                if (finalsEndDt < finalsStartDt) {
+                    alert("Finals End Date cannot be earlier than the Finals Start Date.");
+                    $scope.session.lastDayOfFinals = '';
+                    return;
+                }
+            }
+
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-                                                            // Compute Final Grading Period
-                                                            // First Day of Grading = First Day of Finals
-                $scope.session.firstDayForFinalGrading = ($scope.finalsStartDt.getMonth() + 1) + '/' + $scope.finalsStartDt.getDate() + '/' + $scope.finalsStartDt.getFullYear();
+                                                        // Compute Final Grading Period
+                                                        // First Day of Grading = First Day of Finals
+                $scope.session.firstDayForFinalGrading = (finalsStartDt.getMonth() + 1) + '/' + finalsStartDt.getDate() + '/' + finalsStartDt.getFullYear();
 
-                var initialLastDay = new Date($scope.finalsEndDt);
+                var initialLastDay = new Date(finalsEndDt);
                 var notaSchoolDay = false, newDateStr = "";
 
                 for (var i = 0; i < 4; ++i) {
@@ -1663,8 +1703,7 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // SetRates()
 
-        var holidays = [];
-
+        
         function PopulateSemesterDropdown() {
 
             var currDate = new Date();
@@ -1824,15 +1863,6 @@ sessionModule.controller("sessionRequestCtrl",
         }   // areRateFieldsOK()
 
 
-        function checkTBAUnitRange(){
-
-            var errorMsg = '';
-
-
-            return errorMsg;
-        }
-
-
         function sessionBreaksOK()                      // check Session Breaks
         {
             var sessBreaksOK = true;
@@ -1910,8 +1940,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                 var beginDate = new Date(sessBeginDate);
 
-                if (beginDate < $scope.semStart) {
-
+                if (beginDate < earliestDate) {
                     errMsg = "Entered date is from a previous semester.";
                     $scope.session.sessionBreaks[i].startDate = '';
 
@@ -2041,6 +2070,8 @@ sessionModule.controller("sessionRequestCtrl",
 
         }   // CheckRateAmount()
 
+        var holidays = [];                                  // holiday needs to be a global that's why it's outside document.ready()
+        var earliestDate = new Date(SemStartDates.sStart);
 
         $(document).ready(function () {
 
@@ -2048,7 +2079,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             PopulateSemesterDropdown();             // calculates the semester options for the user
 
-            $scope.semStart = SemStartDates.sStart;      // Ultimate start date.  Do not accept any date before this date.
+            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
 
             GetRateTable();                                 // Reads the rate table from the database
 
