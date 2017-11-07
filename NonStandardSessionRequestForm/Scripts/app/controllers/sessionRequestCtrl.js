@@ -182,7 +182,17 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }
 
-            $scope.finalsEndDt = new Date($scope.session.lastDayOfFinals);
+            if ($scope.session.lastDayOfFinals > '') {
+
+                var finalsEndDt = new Date($scope.session.lastDayOfFinals);
+
+                if (finalsEndDt < finalsStartDt) {
+                    alert("Finals End Date cannot be earlier than the Finals Start Date.");
+                    $scope.session.lastDayOfFinals = '';
+                    return;
+                }
+            }
+
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
@@ -190,7 +200,7 @@ sessionModule.controller("sessionRequestCtrl",
                                                         // First Day of Grading = First Day of Finals
                 $scope.session.firstDayForFinalGrading = (finalsStartDt.getMonth() + 1) + '/' + finalsStartDt.getDate() + '/' + finalsStartDt.getFullYear();
 
-                var initialLastDay = new Date($scope.finalsEndDt);
+                var initialLastDay = new Date(finalsEndDt);
                 var notaSchoolDay = false, newDateStr = "";
 
                 for (var i = 0; i < 4; ++i) {
