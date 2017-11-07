@@ -29,7 +29,6 @@ sessionModule.controller("sessionRequestCtrl",
             var dateDiff = todate - fromdate;
 
             var divideBy = {
-
                 w: 604800000,   // weeks
                 d: 86400000,    // days
                 h: 3600000,     // hours
@@ -181,8 +180,8 @@ sessionModule.controller("sessionRequestCtrl",
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-                // Compute Final Grading Period
-                // First Day of Grading = First Day of Finals
+                                                            // Compute Final Grading Period
+                                                            // First Day of Grading = First Day of Finals
                 $scope.session.firstDayForFinalGrading = ($scope.finalsStartDt.getMonth() + 1) + '/' + $scope.finalsStartDt.getDate() + '/' + $scope.finalsStartDt.getFullYear();
 
                 var initialLastDay = new Date($scope.finalsEndDt);
@@ -381,20 +380,40 @@ sessionModule.controller("sessionRequestCtrl",
 
                                     if (value.rateTypeCode == $scope.session.rateType) {
 
-                                        $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
-                                        $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                                        if ((value.rateTypeUnitRate == '') && (value.rateTypeFlatRate == '')) {        // to be determined rate
 
-                                        if ((value.rateTypeCode == "ZERO") || (value.rateTypeFlatRate == '')) {
-
-                                            $scope.session.flatRateUnitsMin = 98;
-                                            $scope.session.flatRateUnitsMax = 99;
+                                            $scope.session.ratePerUnitAmount = "TBA";
+                                            $scope.session.flatRateAmount = "TBA";
+                                            $scope.MAXUNITS = 99;
 
                                         } else {
 
-                                            $scope.session.flatRateUnitsMin = '';
-                                            $scope.session.flatRateUnitsMax = '';
+                                            $scope.session.ratePerUnitAmount = value.rateTypeUnitRate;
+                                            $scope.session.flatRateAmount = value.rateTypeFlatRate;
+                                            $scope.MAXUNITS = 40;
+                                        }
 
-                                        }   // if (value.rateType...)
+                                        switch (true){
+
+                                            case (($scope.session.ratePerUnitAmount == 'TBA') && ($scope.session.flatRateAmount == 'TBA')):
+
+                                                $scope.session.flatRateUnitsMin = '';
+                                                $scope.session.flatRateUnitsMax = '';
+                                                break;                                                
+
+                                            case (value.rateTypeCode == "ZERO"):
+                                            case (value.rateTypeFlatRate == ''):
+
+                                                $scope.session.flatRateUnitsMin = 98;
+                                                $scope.session.flatRateUnitsMax = 99;
+                                                break;
+
+                                            default:
+
+                                                $scope.session.flatRateUnitsMin = '';
+                                                $scope.session.flatRateUnitsMax = '';
+                                                break;                                                
+                                        }   // switch(true)
                                     }
                                 })  // angular.forEach
                             }   // if (value.term)
@@ -440,10 +459,10 @@ sessionModule.controller("sessionRequestCtrl",
             } else {                                                        // Display Current Fall to Next Year Fall
 
                 semChoices = [
-                        { semName: currYear + " Fall", semCode: currYear + "3" },
-                        { semName: nextYear + " Spring", semCode: nextYear + "1" },
-                        { semName: nextYear + " Summer", semCode: nextYear + "2" },
-                        { semName: nextYear + " Fall", semCode: nextYear + "3" }
+                    { semName: currYear + " Fall", semCode: currYear + "3" },
+                    { semName: nextYear + " Spring", semCode: nextYear + "1" },
+                    { semName: nextYear + " Summer", semCode: nextYear + "2" },
+                    { semName: nextYear + " Fall", semCode: nextYear + "3" }
                 ];
             }
 
@@ -525,7 +544,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }   // if ($scope.session.rateType...)
 
-            if (parseInt($scope.session.flatRateAmount) > 0) {       // Check the Flat Rate Unit Range fields
+            if ($scope.session.flatRateAmount > '') {                                   // Check the Flat Rate Unit Range fields
 
                 switch (true) {
 
@@ -564,6 +583,15 @@ sessionModule.controller("sessionRequestCtrl",
 
             return rateFieldsOk;
         }   // areRateFieldsOK()
+
+
+        function checkTBAUnitRange(){
+
+            var errorMsg = '';
+
+
+            return errorMsg;
+        }
 
 
         function sessionBreaksOK()                      // check Session Breaks
@@ -637,39 +665,36 @@ sessionModule.controller("sessionRequestCtrl",
         $scope.checkSessBreak = function (i) {
 
             var sessBeginDate = $scope.session.sessionBreaks[i].startDate;
+            var errMsg = '';
 
             if (sessBeginDate > '') {
 
                 var beginDate = new Date(sessBeginDate);
 
                 if (beginDate < $scope.semStart) {
-                    alert("Entered date is from a previous semester.");
+
+                    errMsg = "Entered date is from a previous semester.";
                     $scope.session.sessionBreaks[i].startDate = '';
-                }
-            }
 
-            var sessEndDate = $scope.session.sessionBreaks[i].endDate;
+                } else {
 
-            if (rateAmount < 1) {
+                    var sessEndDate = $scope.session.sessionBreaks[i].endDate;
+                    var endDate = new Date(sessEndDate);
 
-                alert("Please enter a " + rateName + " that is greater than 0.");
-
-            } else {
-
-                var flatRate = parseInt($scope.session.flatRateAmount);
-                var unitRate = parseInt($scope.session.ratePerUnitAmount);
-                    
-                if ((flatRate > 0) && (unitRate > 0)) {
-
-                    if (unitRate > flatRate) {
-
-                        alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
-                        $scope.ratesOK = false;
-
+                    if (beginDate > endDate) {
+                        errMsg = "Entered Session Begin Date is later than Session End Date."
+                        $scope.session.sessionBreaks[i].endDate = '';
                     }
                 }
             }
-        }   // checkRateAmount()
+
+            if (errMsg > '') {
+                alert(errMsg);
+            }
+            return;
+
+        }   // checkSessBreak()
+
 
         $scope.deleteBreaks = function () {
 
@@ -714,8 +739,12 @@ sessionModule.controller("sessionRequestCtrl",
                     $rootScope.rateName = $scope.rateTypes[i].rateName;
                     break;
                 }
-
             }   // for (var...)
+
+            if (($scope.session.ratePerUnitAmount == "TBA") && ($scope.session.flatRateAmount == "TBA")) {
+                $scope.session.ratePerUnitAmount = null;
+                $scope.session.flatRateAmount = null;
+            }
 
             $rootScope.savedSession = new Sessions($scope.session);
 
@@ -744,13 +773,33 @@ sessionModule.controller("sessionRequestCtrl",
         }
 
 
-        $scope.CheckRateAmount = function (value, fieldName) {
+        $scope.CheckRateAmount = function (rateAmount, rateName) {
 
             if ($scope.session.rateType == 'OTH') {
-                if (value < 1) {
-                    alert("Please enter an amount greater than 0 in the " + fieldName + " box.");
+                if (rateAmount < 1) {
+                    alert("Please enter an amount greater than 0 in the " + rateName + " box.");
                 }
             }
+
+            if (rateAmount < 1) {
+
+                alert("Please enter a " + rateName + " that is greater than 0.");
+
+            } else {
+
+                var flatRate = parseInt($scope.session.flatRateAmount);
+                var unitRate = parseInt($scope.session.ratePerUnitAmount);
+
+                if ((flatRate > 0) && (unitRate > 0)) {
+
+                    if (unitRate > flatRate) {
+
+                        alert("The Tuition Unit Rate amount cannot be higher than the Tuition Flat Rate amount.");
+                        $scope.ratesOK = false;
+                    }
+                }
+            }
+
         }   // CheckRateAmount()
 
 

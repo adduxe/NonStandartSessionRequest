@@ -214,10 +214,10 @@
                     <abbr title="Tuition flat rate in dollars">Flat Rate Range (units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
-                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > 0) || ((session.flatRateAmount | uppercase) == 'N/A')"
+                    <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > '')"
                            ng-model="session.flatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
                     &nbsp;&nbsp;to&nbsp;&nbsp;
-                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="{{ MAXUNITS }}" ng-disabled="!(session.flatRateAmount > 0) || ((session.flatRateAmount | uppercase) == 'N/A')"
+                    <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="{{ MAXUNITS }}" ng-disabled="!(session.flatRateAmount > '')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
@@ -248,7 +248,7 @@
                 <input kendo-date-picker class="form-control" min="semStart" ng-model="eachBreak.startDate" ng-blur="checkSessBreak($index);" />
             </div>
             <div class="col-md-4" style="align-self:center;">
-                <input kendo-date-picker class="form-control" k-min="session.sessionBreaks[$index].startDate" ng-model="eachBreak.endDate" ng-blur="checkSessBreak($index);" />
+                <input kendo-date-picker class="form-control" ng-model="eachBreak.endDate" ng-blur="checkSessBreak($index);" />
             </div>
             <div class="col-md-3" style="align-self:center;">
                 <a href="javascript:;" class="uscRedButton" title="Delete this Semester Break" ng-click="session.sessionBreaks.splice($index,1);">
@@ -453,7 +453,8 @@
 
     <div kendo-window="spinningWheel" k-modal="true" style="display:none;">
         Processing. Please wait...
-        <img src="/Content/images/gears.gif" />
+        <img src="../../../Content/images/gears.gif" />
+        
     </div>
 
     <input type="hidden" ng-model="session.firstDayForFinalGrading" value="" />

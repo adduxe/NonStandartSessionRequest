@@ -28,6 +28,11 @@ sessionModule.controller("sessionResultCtrl",
 
         }; // switch()
 
+        if (($rootScope.savedSession.ratePerUnitAmount == null) && ($rootScope.savedSession.flatRateAmount == null)) {
+            $scope.session.ratePerUnitAmount = "TBA";
+            $scope.session.flatRateAmount = "TBA";
+        }
+
         $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
 
         return;
