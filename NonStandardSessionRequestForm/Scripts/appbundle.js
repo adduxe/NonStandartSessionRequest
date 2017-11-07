@@ -180,14 +180,13 @@ sessionModule.controller("sessionRequestCtrl",
 
                 if (classEndDt < classStartDate) {
 
-                    alert("Class End Date is earlier than the Class Start Date.");
+                    alert("Class End Date cannot be earlier than the Class Start Date.");
                     $scope.session.lastDayOfClass = '';
                     return;
 
                 } else {
                     $scope.finalsStartOptions = { min: classEndDt };
                 }
-
             }
 
             if (($scope.session.firstDayOfClass > '') && ($scope.session.lastDayOfClass > '')) {    // First Day and Last Day of Class entered?
@@ -228,19 +227,29 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.FinalsDatesChanged = function () {
 
-            $scope.finalsStartDt = new Date($scope.session.firstDayOfFinals);
-
             if ($scope.session.firstDayOfFinals > '') {
-                $scope.finalsEndOptions = { min: $scope.finalsStartDt };
+
+                var finalsStartDt = new Date($scope.session.firstDayOfFinals);
+                var classEndDt = new Date($scope.session.lastDayOfClass);
+
+                if (finalsStartDt < classEndDt) {
+
+                    alert("Finals Start Date cannot be earlier than the Class End Date.");
+                    $scope.session.firstDayOfFinals = '';
+                    return;
+
+                } else {
+                    $scope.finalsEndOptions = { min: finalsStartDt };
+                }
             }
 
             $scope.finalsEndDt = new Date($scope.session.lastDayOfFinals);
 
             if (($scope.session.firstDayOfFinals > '') && ($scope.session.lastDayOfFinals > '')) {
 
-                // Compute Final Grading Period
-                // First Day of Grading = First Day of Finals
-                $scope.session.firstDayForFinalGrading = ($scope.finalsStartDt.getMonth() + 1) + '/' + $scope.finalsStartDt.getDate() + '/' + $scope.finalsStartDt.getFullYear();
+                                                        // Compute Final Grading Period
+                                                        // First Day of Grading = First Day of Finals
+                $scope.session.firstDayForFinalGrading = (finalsStartDt.getMonth() + 1) + '/' + finalsStartDt.getDate() + '/' + finalsStartDt.getFullYear();
 
                 var initialLastDay = new Date($scope.finalsEndDt);
                 var notaSchoolDay = false, newDateStr = "";
@@ -446,38 +455,6 @@ sessionModule.controller("sessionRequestCtrl",
         }   // areCampusLocFieldsOk()
 
 
-        function areClassDatesOK() {                        // check the Class Start and End Dates
-
-            var classDatesOK = true;
-            var errMsg = "";
-            
-            var classEndDate = new Date($scope.session.lastDayOfClass);
-            
-            switch(true){
-            
-                case ($scope.session.firstDayOfClass == ''):
-                case (classStartDate < earliestDate):               // Class Start Date should not be earlier than the earliest date
-                    classDatesOK = false;
-                    break;
-
-                case ($scope.session.lastDayOfClass == ''):
-                case (classEndDate < classStartDate):               // Class End Date should not be earlier than the Class Start Date
-                    classDatesOK = false;
-                    errMsg = "Class Start Date is an invalid date.";
-                    break;
-
-                default:
-                    break;
-            }
-                                                            // Finals Start Date should not be earlier than Class End Date
-                                                            // Finals End Date should not be earlier than the Finals Start Date
-            if (errMsg > '') {
-                alert(errMsg);
-            }
-            return classDatesOK;
-        }   // areClassDatesOK()
-
-
         function IsFormValid() {
 
             var formValid = true;
@@ -485,13 +462,7 @@ sessionModule.controller("sessionRequestCtrl",
             if (formValid) {
                 formValid = areCampusLocFieldsOk();                     // Check Campus Location Fields
             }
-
-
-            if (formValid) {
-                formValid = areClassDatesOK();
-            }
-
-                                                    // Check the rate fields
+                                                                        // Check the rate fields
             if (formValid && ($scope.session.flatRateAmount > '')) {
 
                 if (($scope.session.flatRateUnitsMin == '') || ($scope.session.flatRateUnitsMax == '')) {
