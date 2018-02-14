@@ -691,7 +691,7 @@ sessionModule.factory('SessionCodes', ['$resource', function ($resource) {
             "685  CINEMATIC ARTS - SUMMER",
             "686  MARSHALL - GSBA",
             "687  CINEMATIC ARTS - SUMMER",
-            "688  CINEMATIC ARTS - SUMMER",
+            "688  BOVARD COLLEGE",
             "689  CINEMATIC ARTS - SUMMER",
             "690  ENGR",
             "691  ENGR",
