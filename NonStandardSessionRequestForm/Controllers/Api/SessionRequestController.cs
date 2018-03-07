@@ -539,80 +539,92 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                                  {
                                      ""rateTypeCode"": ""STD"",
                                      ""rateTypeDesc"": ""Standard (session 001)"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""27660""
                                  },
                                  {
                                      ""rateTypeCode"": ""BUSG"",
                                      ""rateTypeDesc"": ""Graduate Business"",
-                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeUnitRate"": ""1912"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
                                      ""rateTypeCode"": ""CINAG"",
                                      ""rateTypeDesc"": ""Graduate Cinema"",
-                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeUnitRate"": ""1982"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
                                      ""rateTypeCode"": ""DENTADV"",
                                      ""rateTypeDesc"": ""Advanced Dentistry"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""31811""
                                  },
                                  {
                                      ""rateTypeCode"": ""DENT"",
                                      ""rateTypeDesc"": ""Dentistry DDS"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""31473""
                                  },
                                  {
                                      ""rateTypeCode"": ""DENSP"",
                                      ""rateTypeDesc"": ""Special Dentistry International"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""31473""
                                  },
                                  {
                                      ""rateTypeCode"": ""DH"",
                                      ""rateTypeDesc"": ""Dental Hygiene"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""25636""
                                  },
                                  {
                                      ""rateTypeCode"": ""ENGRG"",
                                      ""rateTypeDesc"": ""Graduate Engineering"",
-                                     ""rateTypeUnitRate"": """",
+                                     ""rateTypeUnitRate"": ""2005"",
                                      ""rateTypeFlatRate"": """"
                                  },
                                  {
                                      ""rateTypeCode"": ""LAW"",
                                      ""rateTypeDesc"": ""Law"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""2477"",
+                                     ""rateTypeFlatRate"": ""32032""
                                  },
                                  {
                                      ""rateTypeCode"": ""MED"",
                                      ""rateTypeDesc"": ""Medicine"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""31482""
                                  },
                                  {
                                      ""rateTypeCode"": ""MPA"",
                                      ""rateTypeDesc"": ""Master in Physician Assistant"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""27660""
                                  },
                                  {
                                      ""rateTypeCode"": ""MRED"",
                                      ""rateTypeDesc"": ""Master of Real Estate Development"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""2066"",
+                                     ""rateTypeFlatRate"": ""33056""
                                  },
                                  {
                                      ""rateTypeCode"": ""PHAR"",
                                      ""rateTypeDesc"": ""Pharmacy"",
-                                     ""rateTypeUnitRate"": """",
-                                     ""rateTypeFlatRate"": """"
+                                     ""rateTypeUnitRate"": ""1894"",
+                                     ""rateTypeFlatRate"": ""38423""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""BKNPT1"",
+                                     ""rateTypeDesc"": ""Biokinesiology & Physical Therapy Years 1-2"",
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""33695""
+                                 },
+                                 {
+                                     ""rateTypeCode"": ""BKNPT3"",
+                                     ""rateTypeDesc"": ""Biokinesiology & Physical Therapy Years 3"",
+                                     ""rateTypeUnitRate"": ""1863"",
+                                     ""rateTypeFlatRate"": ""20358""
                                  },
                                  {
                                      ""rateTypeCode"": ""ZERO"",
