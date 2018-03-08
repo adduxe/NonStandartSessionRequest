@@ -60,6 +60,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
+
         [Route("sessionrequests/{requestId}")]
         public async Task<IHttpActionResult> GetSessionRequest(int requestId)
         {
@@ -664,6 +665,29 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
 
             return Ok();
+        }
+
+        [Route("sessioncodes")]
+        public async Task<IHttpActionResult> GetSessionCodes()
+        {
+            try
+            {
+                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                {
+                    string[] sessionCodes = client.SessionCodes.Get();
+                    
+                    if (sessionCodes == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(new { sessionCodes });
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET Session Codes! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
         }
 
         [Route("sessions/{term}/001")]

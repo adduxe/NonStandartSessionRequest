@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -184,10 +185,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\PEApi.Client.dll.config" />
     <None Include="Content\bootstrap-theme.css" />
     <None Include="Content\bootstrap-theme.min.css" />
     <None Include="Content\bootstrap.css" />
     <None Include="Content\bootstrap.min.css" />
+    <Content Include="bin\PEApi.Client.dll" />
+    <Content Include="bin\PEApi.Client.pdb" />
+    <Content Include="bin\PEApi.DTO.dll" />
+    <Content Include="bin\PEApi.DTO.pdb" />
     <Content Include="Content\coreBundle.css" />
     <Content Include="Content\coreBundle.min.css">
       <DependentUpon>coreBundle.css</DependentUpon>
@@ -349,21 +355,21 @@
     <Content Include="Scripts\adminbundle.min.js">
       <DependentUpon>adminbundle.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\appbundle.js" />
-    <Content Include="Scripts\appbundle.min.js">
-      <DependentUpon>appbundle.js</DependentUpon>
-    </Content>
     <None Include="Scripts\app\controllers\admin\burQueueCtrl.js" />
     <None Include="Scripts\app\controllers\admin\faoQueueCtrl.js" />
     <None Include="Scripts\app\controllers\admin\rnrQueueCtrl.js" />
     <None Include="Scripts\app\controllers\session\SessionResultCtrl.js" />
     <None Include="Scripts\app\services\admin\emailService.js" />
     <None Include="Scripts\app\services\admin\rateTypesService.js" />
-    <None Include="Scripts\app\services\session\sessionTableService.js" />
+    <None Include="Scripts\app\services\session\sessionCodesService.js" />
     <None Include="Scripts\app\services\session\get001DatesService.js" />
     <None Include="Scripts\app\services\admin\submissionsService.js" />
     <None Include="Scripts\app\Modules.js" />
     <None Include="Scripts\app\services\admin\writeToSisService.js" />
+    <Content Include="Scripts\appbundle.js" />
+    <Content Include="Scripts\appbundle.min.js">
+      <DependentUpon>appbundle.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\app\services\session\semStartDatesService.js" />
     <Content Include="Scripts\app\services\shared\campusLocationsService.js" />
     <Content Include="Scripts\app\services\shared\getCampusName.js" />

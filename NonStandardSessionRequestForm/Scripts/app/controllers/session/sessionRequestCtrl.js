@@ -836,7 +836,9 @@ sessionModule.controller("sessionRequestCtrl",
 
         $(document).ready(function () {
 
-            $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
+            SessionCodes.get(function (data) {
+                $scope.sessionCodes = data.sessionCodes;    //  note: $scope.sessionCodes = SessionCodes.get().sessionCodes   will not work because
+            })                                              //                                                              it's an asynchronous call
 
             PopulateSemesterDropdown();             // calculates the semester options for the user
 
