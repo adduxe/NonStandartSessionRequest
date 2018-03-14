@@ -577,7 +577,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
 
                 if (termHasRates) {
-                    return termRateType.rateTypes.map(function (rateType) {
+                    return termRateType.termRates.map(function (rateType) {
                         return {
                             rateCode: rateType.rateTypeCode,
                             rateName: rateType.rateTypeDesc
@@ -655,7 +655,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                             if (value.term == $scope.session.academicTerm) {
 
-                                angular.forEach(value.rateTypes, function (value) {
+                                angular.forEach(value.termRates, function (value) {
 
                                     if (value.rateTypeCode == $scope.session.rateType) {
 
@@ -1076,7 +1076,18 @@ sessionModule.controller("sessionRequestCtrl",
         $(document).ready(function () {
 
             SessionCodes.get(function (data) {
-                $scope.sessionCodes = data.sessionCodes;    //  note: $scope.sessionCodes = SessionCodes.get().sessionCodes   will not work because
+
+                var sessCodes = [];
+                var data_codes = data.sessionCodes;
+
+                if (data_codes != null) {
+
+                    for (var i = 0; i < data_codes.length; ++i) {
+                        sessCodes[i] = data_codes[i].sessionCode + "  " + data_codes[i].sessionDesc;
+                    }
+                }
+
+                $scope.sessionCodes = sessCodes;    //  note: $scope.sessionCodes = SessionCodes.get().sessionCodes   will not work because
             })                                              //                                                              it's an asynchronous call
 
             PopulateSemesterDropdown();             // calculates the semester options for the user
