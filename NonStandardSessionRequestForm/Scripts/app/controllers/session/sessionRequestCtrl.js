@@ -849,15 +849,15 @@ sessionModule.controller("sessionRequestCtrl",
                 }
 
                 $scope.sessionCodes = sessCodes;    //  note: $scope.sessionCodes = SessionCodes.get().sessionCodes   will not work because
-            })                                              //                                                              it's an asynchronous call
+            })                                              // it's an asynchronous call
 
-            PopulateSemesterDropdown();             // calculates the semester options for the user
+            PopulateSemesterDropdown();                     // calculates the semester options for the user
 
-            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
+            $scope.earliestDate = SemStartDates.sStart;     // Ultimate earliest date.  Do not accept any date before this date in any field.
 
             GetRateTable();                                 // Reads the rate table from the database
 
-        $scope.campusLocs = CampusLocations;
+            $scope.campusLocs = CampusLocations.query();
 /*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1

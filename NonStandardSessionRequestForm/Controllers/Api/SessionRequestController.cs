@@ -40,7 +40,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     var createdSession = await client.SessionRequest.PostBySessionDTOAsync(session);
                     var submission = new SubmissionDTO
                     {
-                        RequestId = createdSession.RequestId,                        
+                        RequestId = createdSession.RequestId,
                     };
 
                     await client.Submissions.PostBySubmissionDTOAsync(submission);
@@ -70,15 +70,15 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 {
                     var sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestId);
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
-                        {
-                            NullValueHandling = NullValueHandling.Ignore,
-                            PreserveReferencesHandling = PreserveReferencesHandling.All
-                        });
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        PreserveReferencesHandling = PreserveReferencesHandling.All
+                    });
                     return ResponseMessage(new HttpResponseMessage
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
                     });
-                }            
+                }
             }
             catch (HttpOperationException apiEx)
             {
@@ -130,10 +130,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 {
                     var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(department, status);
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore,
-                                PreserveReferencesHandling = PreserveReferencesHandling.All
-                            });
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        PreserveReferencesHandling = PreserveReferencesHandling.All
+                    });
                     return ResponseMessage(new HttpResponseMessage
                     {
                         Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
@@ -202,6 +202,35 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                 return InternalServerError(ex);
             }
         }
+
+
+        [Route("usclocations")]
+        public async Task<IHttpActionResult> GetUscLocations() {
+
+            try
+            {
+                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                {
+                    var uscLocations = client.UscLocations.Get();
+
+                    if (uscLocations == null)
+                        return NotFound();
+                    else
+                        return Ok(uscLocations);
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET USC Locations! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET USC Locations! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
 
         [Route("rnrswebsess")]
         public async Task<IHttpActionResult> PostRnrSWebSess(JToken json)
