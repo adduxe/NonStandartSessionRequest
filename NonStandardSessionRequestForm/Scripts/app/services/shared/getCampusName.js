@@ -15,10 +15,10 @@ function GetCampusName(cCode, cLocations) {
 
 adminModule.factory('GetCampusName',
     [
-        "CampusLocations", function(CampusLocations){
-
+        "CampusLocations", function (CampusLocations){
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                var campusLocs = CampusLocations.query();
+                return GetCampusName(campusCode, campusLocs)
             }
         }
     ]
@@ -27,9 +27,9 @@ adminModule.factory('GetCampusName',
 sessionModule.factory('GetCampusName',
     [
         "CampusLocations", function (CampusLocations) {
-
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                var campusLocs = CampusLocations.query();
+                return GetCampusName(campusCode, campusLocs)
             }
         }
     ]

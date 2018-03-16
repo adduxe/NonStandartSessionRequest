@@ -142,10 +142,10 @@ function GetCampusName(cCode, cLocations) {
 
 adminModule.factory('GetCampusName',
     [
-        "CampusLocations", function(CampusLocations){
-
+        "CampusLocations", function (CampusLocations){
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                var campusLocs = CampusLocations.query();
+                return GetCampusName(campusCode, campusLocs)
             }
         }
     ]
@@ -154,9 +154,9 @@ adminModule.factory('GetCampusName',
 sessionModule.factory('GetCampusName',
     [
         "CampusLocations", function (CampusLocations) {
-
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                var campusLocs = CampusLocations.query();
+                return GetCampusName(campusCode, campusLocs)
             }
         }
     ]
@@ -1074,7 +1074,11 @@ sessionModule.controller("sessionRequestCtrl",
 
             GetRateTable();                                 // Reads the rate table from the database
 
-            $scope.campusLocs = CampusLocations.query();
+            $scope.campusLocs = CampusLocations.query(function() {          // Add the Others location only if something is returned from DB
+                $scope.campusLocs.push(
+                    { campusCode: "OTH", campusName: "Other Location" }
+                );
+            });
 /*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
