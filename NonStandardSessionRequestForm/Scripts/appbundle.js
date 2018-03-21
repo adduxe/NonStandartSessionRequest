@@ -795,7 +795,7 @@ sessionModule.factory('SessionCodes', ['$resource', function ($resource) {
             "685  CINEMATIC ARTS - SUMMER",
             "686  MARSHALL - GSBA",
             "687  CINEMATIC ARTS - SUMMER",
-            "688  CINEMATIC ARTS - SUMMER",
+            "688  BOVARD COLLEGE",
             "689  CINEMATIC ARTS - SUMMER",
             "690  ENGR",
             "691  ENGR",
@@ -1278,7 +1278,6 @@ sessionModule.controller("sessionRequestCtrl",
             return Math.floor(dateDiff / divideBy[datepart]);
         }   // Date.dateDiff
 
-
         function AdjustDate(newDate)                                // Computes a new date incrementing the day if it falls on a weekend or a holiday.
         {
             var newDtmonthDay = '';
@@ -1323,7 +1322,6 @@ sessionModule.controller("sessionRequestCtrl",
             return newDate;
         }       // AdjustDate()
 
-
         function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
                                                                     //      a) start date
                                                                     //      b) end date
@@ -1344,7 +1342,6 @@ sessionModule.controller("sessionRequestCtrl",
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
         }   // ComputeDate()
 
-
         function convDateToString(givenDate) {
 
             var dateString = "";
@@ -1355,7 +1352,6 @@ sessionModule.controller("sessionRequestCtrl",
             }
             return dateString;
         }   // convDateToString()
-
 
         $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
@@ -1417,7 +1413,6 @@ sessionModule.controller("sessionRequestCtrl",
             return null;
         }       // ClassDateChanged()
 
-
         function ComputeDates(beginDate, endDate) {
 
             $scope.session.lastDayForAddDrop = ComputeDate(beginDate, endDate, 20);                 // Last day to Add/Drop (20%)
@@ -1425,7 +1420,6 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.lastDayForWithdrawal = ComputeDate(beginDate, endDate, 80);              // Last Day to Withdraw (80%)
             return;
         }   // ComputeDates()
-
 
         $scope.FinalsDatesChanged = function () {
 
@@ -1703,7 +1697,6 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // SetRates()
 
-        
         function PopulateSemesterDropdown() {
 
             var currDate = new Date();
@@ -1747,6 +1740,84 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.semesters = semChoices;
         }   // PopulateSemesterDropdown
 
+        function PopulateUscHolidays()
+        {
+            /*
+                                            2017 	                2018 	                2019 	                2020
+                    New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
+                    Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
+                    Presidents’ Day 	    Mon 2/20 	            Mon 2/19 	            Mon 2/18 	            Mon 2/17
+                    Memorial Day 	        Mon 5/29 	            Mon 5/28 	            Mon 5/27 	            Mon 5/25
+                    Independence Day 	    Mon 7/3-Tue 7/4         Wed 7/4 	            Thu 7/4-Fri 7/5         Fri 7/3
+                    Labor Day 	            Mon 9/4 	            Mon 9/3 	            Mon 9/2 	            Mon 9/7
+                    Thanksgiving 	        Thu 11/23–Fri 11/24     Thu 11/22–Fri 11/23     Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
+                    Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
+                    Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
+            */
+            holidays = [
+                "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
+                "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018", "11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
+                "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019", "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
+                "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020", "11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
+            ];
+        }
+
+        function InitializeVariables()
+        {
+            $scope.session = {
+                academicTerm: "",
+                sessionCode: "",
+                sessionName: "",
+                owningSchool: "",     // from Shib
+                owningDepartment: "",     // from Shib
+                userContact: "",     // from Shib
+                userEmail: "",     // from Shib
+                userPhone: "",     // from Shib
+                firstDayOfClass: "",
+                lastDayOfClass: "",
+                lastDayForAddDrop: "",
+                lastDayForEnrollmentOptionChange: "",
+                lastDayForWithdrawal: "",
+                firstDayOfFinals: "",
+                firstDayForFinalGrading: "",
+                lastDayForFinalGrading: "",
+                isClassHeldAtUpc: null,
+                uscCampusLocation: "",
+                otherCampusLocation: "",
+                rateType: "",
+                ratePerUnitAmount: "",
+                flatRateAmount: "",
+                flatRateUnitsMin: "",
+                flatRateUnitsMax: "",
+                comments: "",
+                sessionBreaks: [],
+                sections: [],
+                submitDate: "",
+            };
+
+            $scope.sess001Dates = {
+
+                firstDayOfClass: "",
+                lastDayOfClass: "",
+                lastDayForAddDrop: "",
+                lastDayForWithdrawal: "",
+                lastDayForEnrollmentOptionChange: "",
+                firstDayForFinalGrading: "",
+                lastDayForFinalGrading: "",
+                sessBreak1Begin: "",
+                sessBreak1End: "",
+                sessBreak2Begin: "",
+                sessBreak2End: ""
+            }
+
+            // field validation flags
+            $scope.requireUSCLoc = false;
+            $scope.requireOtherLoc = false;
+            $scope.requireUnitRange = false;
+            $scope.ratesOK = true;
+
+            return; 
+        }
 
         function areCampusLocFieldsOk() {           // Checks the Campus Location Fields
 
@@ -1783,7 +1854,6 @@ sessionModule.controller("sessionRequestCtrl",
 
             return campusOK;
         }   // areCampusLocFieldsOk()
-
 
         function areRateFieldsOK()              // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
         {
@@ -1862,7 +1932,6 @@ sessionModule.controller("sessionRequestCtrl",
             return rateFieldsOk;
         }   // areRateFieldsOK()
 
-
         function sessionBreaksOK()                      // check Session Breaks
         {
             var sessBreaksOK = true;
@@ -1892,7 +1961,6 @@ sessionModule.controller("sessionRequestCtrl",
 
             return sessBreaksOK;
         }   // sessionBreaksOK()
-
 
         function IsFormValid() {
 
@@ -1930,7 +1998,6 @@ sessionModule.controller("sessionRequestCtrl",
             return formValid;
         }   // IsFormValid()
 
-
         $scope.checkSessBreak = function (i) {
 
             var sessBeginDate = $scope.session.sessionBreaks[i].startDate;
@@ -1963,7 +2030,6 @@ sessionModule.controller("sessionRequestCtrl",
 
         }   // checkSessBreak()
 
-
         $scope.deleteBreaks = function () {
 
             if ($scope.noBreaks) {
@@ -1972,7 +2038,6 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }   // deleteBreaks()
 
-
         $scope.BlankOtherLocation = function () {
 
             if (($scope.session.uscCampusLocation != "OTH") && ($scope.session.otherCampusLocation > "")) {
@@ -1980,7 +2045,6 @@ sessionModule.controller("sessionRequestCtrl",
             }
             return;
         }
-
 
         $scope.SubmitForm = function () {
 
@@ -2040,7 +2104,6 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }
 
-
         $scope.CheckRateAmount = function (rateAmount, rateName) {
 
             if ($scope.session.rateType == 'OTH') {
@@ -2083,77 +2146,11 @@ sessionModule.controller("sessionRequestCtrl",
 
             GetRateTable();                                 // Reads the rate table from the database
 
-        $scope.campusLocs = CampusLocations;
-/*
-                                2017 	                2018 	                2019 	                2020
-        New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
-        Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
-        Presidents’ Day 	    Mon 2/20 	            Mon 2/19 	            Mon 2/18 	            Mon 2/17
-        Memorial Day 	        Mon 5/29 	            Mon 5/28 	            Mon 5/27 	            Mon 5/25
-        Independence Day 	    Mon 7/3-Tue 7/4         Wed 7/4 	            Thu 7/4-Fri 7/5         Fri 7/3
-        Labor Day 	            Mon 9/4 	            Mon 9/3 	            Mon 9/2 	            Mon 9/7
-        Thanksgiving 	        Thu 11/23–Fri 11/24     Thu 11/22–Fri 11/23     Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
-        Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
-        Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
-*/
-        holidays = [
-            "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
-            "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018","11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
-            "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019",  "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
-            "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020","11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
-        ];
+            $scope.campusLocs = CampusLocations;
 
-            $scope.session = {
-                academicTerm: "",
-                sessionCode: "",
-                sessionName: "",
-                owningSchool: "",     // from Shib
-                owningDepartment: "",     // from Shib
-                userContact: "",     // from Shib
-                userEmail: "",     // from Shib
-                userPhone: "",     // from Shib
-                firstDayOfClass: "",
-                lastDayOfClass: "",
-                lastDayForAddDrop: "",
-                lastDayForEnrollmentOptionChange: "",
-                lastDayForWithdrawal: "",
-                firstDayOfFinals: "",
-                firstDayForFinalGrading: "",
-                lastDayForFinalGrading: "",
-                isClassHeldAtUpc: null,
-                uscCampusLocation: "",
-                otherCampusLocation: "",
-                rateType: "",
-                ratePerUnitAmount: "",
-                flatRateAmount: "",
-                flatRateUnitsMin: "",
-                flatRateUnitsMax: "",
-                comments: "",
-                sessionBreaks: [],
-                sections: [],
-                submitDate: "",
-            };
+            PopulateUscHolidays();
 
-            $scope.sess001Dates = {
-
-                firstDayOfClass: "",
-                lastDayOfClass: "",
-                lastDayForAddDrop: "",
-                lastDayForWithdrawal: "",
-                lastDayForEnrollmentOptionChange: "",
-                firstDayForFinalGrading: "",
-                lastDayForFinalGrading: "",
-                sessBreak1Begin: "",
-                sessBreak1End: "",
-                sessBreak2Begin: "",
-                sessBreak2End: ""
-            }
-
-            // field validation flags
-            $scope.requireUSCLoc = false;
-            $scope.requireOtherLoc = false;
-            $scope.requireUnitRange = false;
-            $scope.ratesOK = true;
+            InitializeVariables();
 
         }); // document.ready()
     }]);    // sessionModule()
