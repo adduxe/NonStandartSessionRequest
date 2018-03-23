@@ -168,6 +168,20 @@ sessionModule.factory('GetCampusName',
 );
 'use strict';
 
+adminModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
+
+    return $resource("api/specialfeecodes");
+
+}]);
+
+sessionModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
+
+    return $resource("api/specialfeecodes");
+
+}]);
+
+'use strict';
+
 adminModule.factory('RateTable', ['$resource', function ($resource) {
 
     return $resource(

@@ -1185,6 +1185,20 @@ sessionModule.factory('GetCampusName',
 );
 'use strict';
 
+adminModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
+
+    return $resource("api/specialfeecodes");
+
+}]);
+
+sessionModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
+
+    return $resource("api/specialfeecodes");
+
+}]);
+
+'use strict';
+
 adminModule.factory('RateTable', ['$resource', function ($resource) {
 
     return $resource(
@@ -1259,7 +1273,7 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
-        }   // AddSemesterBreaks()
+        }                  // AddSemesterBreaks()
 
         Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
 
@@ -1320,7 +1334,7 @@ sessionModule.controller("sessionRequestCtrl",
             while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
 
             return newDate;
-        }       // AdjustDate()
+        }                            // AdjustDate()
 
         function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
                                                                     //      a) start date
@@ -1340,7 +1354,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
-        }   // ComputeDate()
+        }    // ComputeDate()
 
         function convDateToString(givenDate) {
 
@@ -1351,7 +1365,7 @@ sessionModule.controller("sessionRequestCtrl",
                 dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
             }
             return dateString;
-        }   // convDateToString()
+        }                    // convDateToString()
 
         $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
@@ -1411,7 +1425,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }   // if (($scope...
             return null;
-        }       // ClassDateChanged()
+        }                  // ClassDateChanged()
 
         function ComputeDates(beginDate, endDate) {
 
@@ -1419,7 +1433,7 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.lastDayForEnrollmentOptionChange = ComputeDate(beginDate, endDate, 40);  // Last day to Change Enrollment Options (40%)
             $scope.session.lastDayForWithdrawal = ComputeDate(beginDate, endDate, 80);              // Last Day to Withdraw (80%)
             return;
-        }   // ComputeDates()
+        }               // ComputeDates()
 
         $scope.FinalsDatesChanged = function () {
 
@@ -1481,9 +1495,8 @@ sessionModule.controller("sessionRequestCtrl",
                 var lastDayGradingDt = initialLastDay;
                 $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }   // if (($scope...
-        }   // FinalsDatesChanged()
+        }                 // FinalsDatesChanged()
 
-            // Add a Section functionality
         $scope.AddSection = function () {
 
             var section = {
@@ -1501,7 +1514,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.session.sections.push(section);
             return;
-        }
+        }                         // Add a Section functionality
 
         $scope.AddSchedule = function (thisSection) {           // Adding a Class Schedule functionality
 
@@ -1593,7 +1606,7 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.SetRates();
             }
             return;
-        }   // GetDatesAndRates()
+        }                   // GetDatesAndRates()
 
         $scope.SetRates = function () {                     // setting the value of the Tuition per Unit and Flat Rate fields
 
@@ -1695,7 +1708,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }   // switch()
             }   // if ($scope.session..)
             return;
-        }   // SetRates()
+        }                           // SetRates()
 
         function PopulateSemesterDropdown() {
 
@@ -1738,7 +1751,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             $scope.semesters = semChoices;
-        }   // PopulateSemesterDropdown
+        }                     // PopulateSemesterDropdown
 
         function PopulateUscHolidays()
         {
@@ -1853,7 +1866,7 @@ sessionModule.controller("sessionRequestCtrl",
             }   // switch()
 
             return campusOK;
-        }   // areCampusLocFieldsOk()
+        }                         // areCampusLocFieldsOk()
 
         function areRateFieldsOK()              // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
         {
@@ -1930,7 +1943,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             return rateFieldsOk;
-        }   // areRateFieldsOK()
+        }                               // areRateFieldsOK()
 
         function sessionBreaksOK()                      // check Session Breaks
         {
@@ -1960,7 +1973,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             return sessBreaksOK;
-        }   // sessionBreaksOK()
+        }                               // sessionBreaksOK()
 
         function IsFormValid() {
 
@@ -1996,7 +2009,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             return formValid;
-        }   // IsFormValid()
+        }                                   // IsFormValid()
 
         $scope.checkSessBreak = function (i) {
 
@@ -2028,7 +2041,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
             return;
 
-        }   // checkSessBreak()
+        }                     // checkSessBreak()
 
         $scope.deleteBreaks = function () {
 
@@ -2036,7 +2049,7 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.session.sessionBreaks = [];  // delete existing breaks
             }
             return;
-        }   // deleteBreaks()
+        }                        // deleteBreaks()
 
         $scope.BlankOtherLocation = function () {
 
@@ -2095,7 +2108,7 @@ sessionModule.controller("sessionRequestCtrl",
                     }
             );
             return;
-        }   // SubmitForm()
+        }                          // SubmitForm()
 
         $scope.rates = [];
 
@@ -2133,18 +2146,18 @@ sessionModule.controller("sessionRequestCtrl",
 
         }   // CheckRateAmount()
 
-        var holidays = [];                                  // holiday needs to be a global that's why it's outside document.ready()
+        var holidays = [];                                            // holiday needs to be a global that's why it's outside document.ready()
         var earliestDate = new Date(SemStartDates.sStart);
 
         $(document).ready(function () {
 
-            $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
+            $scope.sessionCodes = SessionCodes;                     // get the Session Codes for the Autocomplete feature on the Session field.
 
-            PopulateSemesterDropdown();             // calculates the semester options for the user
+            PopulateSemesterDropdown();                             // calculates the semester options for the user
 
-            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
+            $scope.earliestDate = SemStartDates.sStart;             // Ultimate earliest date.  Do not accept any date before this date in any field.
 
-            GetRateTable();                                 // Reads the rate table from the database
+            GetRateTable();                                         // Reads the rate table from the database
 
             $scope.campusLocs = CampusLocations;
 

@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -367,6 +368,7 @@
     <Content Include="Scripts\app\services\session\semStartDatesService.js" />
     <Content Include="Scripts\app\services\shared\campusLocationsService.js" />
     <Content Include="Scripts\app\services\shared\getCampusName.js" />
+    <Content Include="Scripts\app\services\shared\getSpecialFeeCodes.js" />
     <Content Include="Scripts\app\services\shared\rateTableService.js" />
     <Content Include="Scripts\app\views\dummyData\sessions.json" />
     <None Include="Scripts\app\controllers\session\indexCtrl.js" />
