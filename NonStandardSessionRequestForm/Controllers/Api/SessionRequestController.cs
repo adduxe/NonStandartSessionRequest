@@ -174,6 +174,32 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
+        [Route("specialfeecodes")]
+        public async Task<IHttpActionResult> GetSpecialFeeCodes() {
+
+            try
+            {
+                using (var client = new RNRSessionRequestAPI(_peApiUri))
+                {
+//                    var sessionRequest = await client.SessionRequest.
+
+
+//                    await client.RnrSWebSess.PostAsync(json.ToString());
+                    return Ok();
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET Special Fee Codes! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET Special Fee Codes! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
 
         [Route("ratetable")]
         public async Task<IHttpActionResult> GetRateTable()

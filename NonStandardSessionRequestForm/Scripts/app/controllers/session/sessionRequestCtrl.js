@@ -2,8 +2,8 @@
 
 sessionModule.controller("sessionRequestCtrl",
 
-       ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
-    function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
+    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "GetSpecialFeeCodes", "$scope", "$http", "$location", "$rootScope",
+        function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, GetSpecialFeeCodes, $scope, $http, $location, $rootScope) {
 
         $scope.MAXUNITS = 40;
 
@@ -911,6 +911,8 @@ sessionModule.controller("sessionRequestCtrl",
             PopulateUscHolidays();
 
             InitializeVariables();
+
+            $scope.rocknroll = GetSpecialFeeCodes.query();
 
         }); // document.ready()
     }]);    // sessionModule()
