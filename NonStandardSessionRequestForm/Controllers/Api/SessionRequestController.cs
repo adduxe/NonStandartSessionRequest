@@ -190,11 +190,10 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                         return NotFound();
                     }
                     else {
-                        string[] SFCodes = new string[] { };
-                        int n = 0;
+                        List<string> SFCodes = new List<string>();
                         foreach (SpecialFeeCode specFeeCode in feeCodes)
                         {
-                            SFCodes[n++] = specFeeCode.FTCode + " " +  specFeeCode.FTDescription;
+                            SFCodes.Add(specFeeCode.FTCode + " " + specFeeCode.FTDescription);
                         }
                         return Ok(SFCodes);
                     }
