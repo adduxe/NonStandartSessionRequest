@@ -1710,6 +1710,11 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }                           // SetRates()
 
+        function PopulateSpecialFeeCodes()
+        {
+
+        }
+
         function PopulateSemesterDropdown() {
 
             var currDate = new Date();
@@ -2165,7 +2170,9 @@ sessionModule.controller("sessionRequestCtrl",
 
             InitializeVariables();
 
-            $scope.rocknroll = GetSpecialFeeCodes.query();
+            GetSpecialFeeCodes.query(function(data) {
+                $scope.rocknroll = data;
+            });
 
         }); // document.ready()
     }]);    // sessionModule()

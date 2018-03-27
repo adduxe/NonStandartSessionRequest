@@ -12,6 +12,8 @@ using System.Web.Http;
 using USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers;
 using UvApi.RnrSWebSess.Client;
 using System.Net.Mail;
+using USC.PE.Api.DTO.RnrApps;
+using System.Collections.Generic;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 {
@@ -179,13 +181,23 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
             try
             {
-                using (var client = new RNRSessionRequestAPI(_peApiUri))
+                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
                 {
-//                    var sessionRequest = await client.SessionRequest.
+                    IEnumerable<SpecialFeeCode> feeCodes = client.SpecialFeeCodes.Get();
 
-
-//                    await client.RnrSWebSess.PostAsync(json.ToString());
-                    return Ok();
+                    if (feeCodes == null)
+                    {
+                        return NotFound();
+                    }
+                    else {
+                        string[] SFCodes = new string[] { };
+                        int n = 0;
+                        foreach (SpecialFeeCode specFeeCode in feeCodes)
+                        {
+                            SFCodes[n++] = specFeeCode.FTCode + " " +  specFeeCode.FTDescription;
+                        }
+                        return Ok(SFCodes);
+                    }
                 }
             }
             catch (HttpOperationException apiEx)
