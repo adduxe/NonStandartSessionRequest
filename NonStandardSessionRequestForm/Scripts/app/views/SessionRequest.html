@@ -86,6 +86,18 @@
                     </abbr>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+                <div class="col-md-8">
+                    <abbr title="Click the Add a Special Fee button if this session requires additional fees">
+                        <kendo-button id="addSpecialFee" name="addSpecialFee" class="form-control uscRedButton" ng-click="AddSpecialFee();" >
+                            Add a Special Fee
+                        </kendo-button>
+                    </abbr>
+                </div>
+            </div>
         </div>
         <!-- End of 1st Column -->
         <!--  2nd Column-->
@@ -220,20 +232,13 @@
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
-            <div class="form-group">
-                <label for="rockNroll" class="col-md-6">Rock 'n Roll</label>
-                <div class="col-md-6">
-                    <input kendo-auto-complete="rockNroll" class="form-control" id="rockroll" name="rockroll" maxlength="4"
-                           k-ng-model="session.rocknroll" k-data-source="rocknroll" ng-required="true" />
-                </div>
-            </div>
         </div>
         <!-- End of 3rd Column -->
     </div> <!-- class="row" -->
     <!--  Session Breaks section -->
-    <div ng-show="session.sessionBreaks.length" style="background-color:rgba(153,0,0,.7);padding-bottom:15px;color:#ffcc00;">
+    <div ng-show="session.sessionBreaks.length" class="Breaks">
 
-        <div class="row" sstyle="align-self:center;color:#ffcc00;">
+        <div class="row" style="align-self:center;color:#ffcc00;">
             <div class="col-md-1">
             </div>
             <div class="col-md-4" style="text-align:center;">
@@ -268,7 +273,7 @@
     <br />
 
     <!--  Start of Section section -->
-    <div ng-show="session.sections.length" style="background-color:#ffcc00;padding-top:5px;padding-right:10px;border:solid;border-color:white;">
+    <div ng-show="session.sections.length" class="Section">
 
         <div class="row">
             <div class="col-md-12" style="text-align:center;">
@@ -446,6 +451,31 @@
     <!--  End of Section section -->
 
     <br>
+
+    <div class="Fees" ng-show="session.specialFees.length">
+        <div class="row" style="align-self:center;">
+            <div class="col-md-1"></div>
+            <h4 class="col-md-4">Special Fee</h4>
+            <h4 class="col-md-4">Amount</h4>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row" ng-repeat="specialFee in session.specialFees">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <input kendo-auto-complete="rockNroll" class="form-control" maxlength="4"
+                       k-ng-model="specialFee.Code" k-data-source="rocknroll" ng-required="true" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" maxlength="4" ng-required="true" k-ng-model="specialFee.Amount" />
+            </div>
+            <div class="col-md-3">
+                <a href="javascript:;" class="uscRedButton" title="Delete this Special Fee" ng-click="session.specialFees.splice($index,1);">
+                    [X] Remove this Fee
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="row" style="align-content:center;" ng-init="(formError = '')">
         <div class="col-md-5 text-center red">
             <b>{{ formError }}</b>
@@ -460,7 +490,7 @@
     <div kendo-window="spinningWheel" k-modal="true" style="display:none;">
         Processing. Please wait...
         <img src="../../../Content/images/gears.gif" />
-        
+
     </div>
 
     <input type="hidden" ng-model="session.firstDayForFinalGrading" value="" />

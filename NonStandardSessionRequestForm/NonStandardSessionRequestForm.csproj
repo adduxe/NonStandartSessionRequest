@@ -286,6 +286,7 @@
     <None Include="Content\site-md.css" />
     <None Include="Content\site-xs.css" />
     <None Include="Content\site.css" />
+    <Content Include="Content\SessionRequest.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />

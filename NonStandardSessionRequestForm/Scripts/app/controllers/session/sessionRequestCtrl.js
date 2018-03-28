@@ -22,6 +22,13 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }                  // AddSemesterBreaks()
 
+
+        $scope.AddSpecialFee = function () {
+            var specialFee = { Code: "", Amount: "" };
+            $scope.session.specialFees.push(specialFee);
+        }
+
+
         Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
 
             datepart = datepart.toLowerCase();
@@ -558,6 +565,7 @@ sessionModule.controller("sessionRequestCtrl",
                 sessionBreaks: [],
                 sections: [],
                 submitDate: "",
+                specialFees: []
             };
 
             $scope.sess001Dates = {
@@ -920,6 +928,8 @@ sessionModule.controller("sessionRequestCtrl",
             GetSpecialFeeCodes.query(function(data) {
                 $scope.rocknroll = data;
             });
+
+//            $scope.AddSpecialFee();
 
         }); // document.ready()
     }]);    // sessionModule()
