@@ -1837,6 +1837,7 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.requireUnitRange = false;
             $scope.ratesOK = true;
             $scope.usedFees = [];
+            $scope.requireFees = false;
 
             return; 
         }
@@ -1954,28 +1955,53 @@ sessionModule.controller("sessionRequestCtrl",
             return rateFieldsOk;
         }                               // areRateFieldsOK()
 
+
+        function specialFeesOK(){
+
+            var allFeesEntered = true;
+            $scope.requireFees = false;
+
+            angular.forEach($scope.session.specialFees, function (eachFee) {
+
+                if (eachFee.code > '') {
+                    if (eachFee.amount == '') {
+                        allFeesEntered = false;
+                        $scope.requireFees = true;
+                    }
+                }
+
+                if (eachFee.amount > '') {
+                    if (eachFee.code == '') {
+                        allFeesEntered = false;
+                        $scope.requireFees = true;
+                    }
+                }
+            });
+
+            return allFeesEntered;
+        }
+
         function sessionBreaksOK()                      // check Session Breaks
         {
             var sessBreaksOK = true;
             var errMsg = "";
-            $scope.requireBreaks = false;
+            $scope.requireBreaks = false;               // to highlight the fields if not provided
 
-            if (!$scope.noBreaks) {                     // 1) is "No Breaks" checkbox unchecked?
+            if ($scope.session.sessionBreaks.length == 0) {     //  - if no Session Breaks entered, error out
 
-                if ($scope.session.sessionBreaks.length == 0) {     //  - if no Session Breaks entered, error out
-                    errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
-                    sessBreaksOK = false;
-                    $scope.requireBreaks = true;
-                } else {                                            // check for blank entries
-                    for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
-                        if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
-                            errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
-                            sessBreaksOK = false;
-                            $scope.requireBreaks = true;
-                        }
+                errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
+                sessBreaksOK = false;
+                $scope.requireBreaks = true;
+
+            } else {                                            // check for blank entries
+                for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
+                    if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
+                        errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
+                        sessBreaksOK = false;
+                        $scope.requireBreaks = true;
                     }
                 }
-            }                                           // 2) if "No Breaks" is checked, no need to check Session Breaks
+            }
 
             if (errMsg > '') {
                 alert(errMsg);
@@ -2014,8 +2040,17 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             if (formValid) {
-                formValid = sessionBreaksOK();                          // Check if the Session Breaks were entered
+                if (!$scope.noBreaks) {                                 // Check session Breaks only if "No Breaks" is unchecked
+                    formValid = sessionBreaksOK();
+                }
             }
+
+            if (formValid) {
+                if ($scope.session.specialFees.length > 0) {           // Check Special Fees if any were entered.
+                    formValid = specialFeesOK();
+                }
+            }
+
 
             return formValid;
         }                                   // IsFormValid()
@@ -2100,8 +2135,8 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.session.flatRateAmount = null;
             }
 
-            $rootScope.savedSession = new Sessions($scope.session);
-
+            $rootScope.savedSession = new Sessions($scope.session);     // needed to save to rootscope 
+                                                                        // to carry over to the submission page.
             $scope.spinningWheel.center().open();
             $rootScope.savedSession.$save(null,
 
@@ -2152,14 +2187,13 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }
             }
-
         }   // CheckRateAmount()
 
-            $scope.checkForDuplicateFee = function (feeCode, i) {
+        $scope.checkForDuplicateFee = function (feeCode, i) {
 
             if ($scope.usedFees.indexOf(feeCode) > -1) {
                 alert("Fee code is already used. Choose a different one.");
-                $scope.session.specialFees[i].description = 0;
+                $scope.session.specialFees[i].code = 0;      // reset the dropdown
             } else {
                 $scope.usedFees[$scope.usedFees.length] = feeCode;
             }
@@ -2186,9 +2220,8 @@ sessionModule.controller("sessionRequestCtrl",
             InitializeVariables();
 
             GetSpecialFeeCodes.query(function(data) {
-                $scope.SpecialFees = data;
+                $scope.SpecialFeeList = data;
             });
-
 
         }); // document.ready()
     }]);    // sessionModule()
