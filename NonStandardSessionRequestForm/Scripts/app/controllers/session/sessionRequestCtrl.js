@@ -24,7 +24,7 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         $scope.AddSpecialFee = function () {
-            var specialFee = { Code: "", Amount: "" };
+            var specialFee = { description: "", amount: "" };
             $scope.session.specialFees.push(specialFee);
         }
 
@@ -464,11 +464,6 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }                           // SetRates()
 
-        function PopulateSpecialFeeCodes()
-        {
-
-        }
-
         function PopulateSemesterDropdown() {
 
             var currDate = new Date();
@@ -588,6 +583,7 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.requireOtherLoc = false;
             $scope.requireUnitRange = false;
             $scope.ratesOK = true;
+            $scope.usedFees = [];
 
             return; 
         }
@@ -906,6 +902,17 @@ sessionModule.controller("sessionRequestCtrl",
 
         }   // CheckRateAmount()
 
+            $scope.checkForDuplicateFee = function (feeCode, i) {
+
+            if ($scope.usedFees.indexOf(feeCode) > -1) {
+                alert("Fee code is already used. Choose a different one.");
+                $scope.session.specialFees[i].description = 0;
+            } else {
+                $scope.usedFees[$scope.usedFees.length] = feeCode;
+            }
+            return;
+        }   // checkForDuplicateFee()
+
         var holidays = [];                                            // holiday needs to be a global that's why it's outside document.ready()
         var earliestDate = new Date(SemStartDates.sStart);
 
@@ -926,10 +933,9 @@ sessionModule.controller("sessionRequestCtrl",
             InitializeVariables();
 
             GetSpecialFeeCodes.query(function(data) {
-                $scope.rocknroll = data;
+                $scope.SpecialFees = data;
             });
 
-//            $scope.AddSpecialFee();
 
         }); // document.ready()
     }]);    // sessionModule()
