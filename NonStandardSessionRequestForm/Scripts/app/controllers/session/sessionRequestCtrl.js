@@ -24,10 +24,9 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         $scope.AddSpecialFee = function () {
-            var specialFee = { description: "", amount: "" };
+            var specialFee = { description: "", amount: "", assessedTo: "" };
             $scope.session.specialFees.push(specialFee);
         }
-
 
         Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
 

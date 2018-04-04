@@ -1277,10 +1277,9 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         $scope.AddSpecialFee = function () {
-            var specialFee = { description: "", amount: "" };
+            var specialFee = { description: "", amount: "", assessedTo: "" };
             $scope.session.specialFees.push(specialFee);
         }
-
 
         Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
 
@@ -2265,3 +2264,28 @@ sessionModule.controller("sessionResultCtrl",
         return;
     }
 ]);
+sessionModule.directive('numbersOnly', function () {
+
+    return {
+
+        require: 'ngModel',
+
+        link: function (scope, element, attr, ngModelCtrl) {
+
+            function fromUser(text) {
+
+                if (text) {
+                    var transformedInput = text.replace(/[^0-9]/g, '');
+                    if (transformedInput !== text) {
+                        ngModelCtrl.$setViewValue(transformedInput)
+                        ngModelCtrl.$render();
+                    }
+                    return transformedInput;
+                }
+                return undefined;
+            }
+
+            ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});

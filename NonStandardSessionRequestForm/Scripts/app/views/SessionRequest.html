@@ -455,24 +455,33 @@
     <div class="Fees" ng-show="session.specialFees.length" ng-class="{'has-error': requireFees && sessionRequestForm.$submitted}">
         <div class="row" style="align-self:center;">
             <div class="col-md-1"></div>
-            <h4 class="col-md-6">Special Fee</h4>
+            <h4 class="col-md-5">Special Fee</h4>
             <h4 class="col-md-2">Amount</h4>
-            <div class="col-md-3"></div>
+            <h4 class="col-md-2">Assessed to</h4>
+            <h4 class="col-md-2"></h4>
         </div>
         <div class="row" ng-repeat="specialFee in session.specialFees">
             <div class="col-md-1"></div>
-            <div class="col-md-6">
-                <select class="form-control" id="sFeeCode" name="sFeeCode" ng-change="checkForDuplicateFee(specialFee.code, $index);" 
-                        ng-model="specialFee.code" ng-required="requireFees"> 
+            <div class="col-md-5">
+                <select class="form-control" id="sFeeCode" name="sFeeCode" ng-change="checkForDuplicateFee(specialFee.code, $index);"
+                        ng-model="specialFee.code" ng-required="requireFees">
                     <option ng-repeat="eachFee in SpecialFeeList" value="{{ eachFee.substring(0, eachFee.indexOf(' ')) }}">{{ eachFee }}</option>
                 </select>
             </div>
             <div class="col-md-2">
-                <input type="text" maxlength="4" ng-required="requireFees" ng-model="specialFee.amount" class="form-control"/>
+                <input type="text" maxlength="4" ng-required="requireFees" ng-model="specialFee.amount" numbers-only class="form-control" />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <select class="form-control" ng-model="specialFee.assessedTo">
+                    <option value=""></option>
+                    <option value="G">Graduate</option>
+                    <option value="U">Undergraduate</option>
+                    <option value="A">All</option>
+                </select>
+            </div>
+            <div class="col-md-2">
                 <a href="javascript:;" class="uscRedButton" title="Delete this Special Fee" ng-click="session.specialFees.splice($index,1);">
-                    [X] Remove this Fee
+                    [X] Remove
                 </a>
             </div>
         </div>
