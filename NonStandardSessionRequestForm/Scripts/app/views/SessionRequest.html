@@ -222,7 +222,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
                 <label for="flatUnitsMin" class="col-md-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Flat Rate Range (units)</abbr>
+                    <abbr title="Tuition flat rate in dollars">Undergraduate Flat Rate Range (units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
                     <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > '')"
@@ -230,6 +230,18 @@
                     &nbsp;&nbsp;to&nbsp;&nbsp;
                     <input id="flatUnitsMax" name="flatUnitsMax" type="number" min="2" max="{{ MAXUNITS }}" ng-disabled="!(session.flatRateAmount > '')"
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
+                <label for="flatUnitsMin" class="col-md-6 control-label">
+                    <abbr title="Tuition flat rate in dollars">Graduate Flat Rate Range (units)</abbr>
+                </label>
+                <div class="col-md-6" style="align-items:center;">
+                    <input id="gradFlatUnitsMin" name="gradFlatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > '')"
+                           ng-model="session.gradFlatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
+                    &nbsp;&nbsp;to&nbsp;&nbsp;
+                    <input id="gradFlatUnitsMax" name="gradFlatUnitsMax" type="number" min="2" max="{{ MAXUNITS }}" ng-disabled="!(session.flatRateAmount > '')"
+                           ng-model="session.gradFlatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
         </div>
@@ -476,7 +488,7 @@
                     <option value=""></option>
                     <option value="G">Graduate</option>
                     <option value="U">Undergraduate</option>
-                    <option value="A">All</option>
+                    <option value="B">All</option>
                 </select>
             </div>
             <div class="col-md-2">

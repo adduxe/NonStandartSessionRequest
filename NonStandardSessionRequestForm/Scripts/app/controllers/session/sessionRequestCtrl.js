@@ -371,6 +371,12 @@ sessionModule.controller("sessionRequestCtrl",
                 $('#flatUnitsMin').prop('readonly', true);
                 $('#flatUnitsMax').prop('readonly', true);
 
+                $scope.session.gradFlatRateUnitsMin = 98;
+                $scope.session.gradFlatRateUnitsMax = 99;
+
+                $('#gradFlatUnitsMin').prop('readonly', true);
+                $('#gradFlatUnitsMax').prop('readonly', true);
+
             } else {
 
                 $scope.session.flatRateUnitsMin = '';
@@ -378,6 +384,12 @@ sessionModule.controller("sessionRequestCtrl",
 
                 $('#flatUnitsMin').prop('readonly', false);
                 $('#flatUnitsMax').prop('readonly', false);
+
+                $scope.session.gradFlatRateUnitsMin = '';
+                $scope.session.gradFlatRateUnitsMax = '';
+
+                $('#gradFlatUnitsMin').prop('readonly', false);
+                $('#gradFlatUnitsMax').prop('readonly', false);
             }
 
             $scope.session.flatRateAmount = '';
@@ -395,6 +407,10 @@ sessionModule.controller("sessionRequestCtrl",
 
                         $scope.session.flatRateUnitsMin = '';
                         $scope.session.flatRateUnitsMax = '';
+
+                        $scope.session.gradFlatRateUnitsMin = '';
+                        $scope.session.gradFlatRateUnitsMax = '';
+
                         break;
 
                     case 'OTHU':
@@ -404,6 +420,10 @@ sessionModule.controller("sessionRequestCtrl",
 
                         $scope.session.flatRateUnitsMin = 98;
                         $scope.session.flatRateUnitsMax = 99;
+
+                        $scope.session.gradFlatRateUnitsMin = 98;
+                        $scope.session.gradFlatRateUnitsMax = 99;
+
                         break;
 
                     default:
@@ -438,6 +458,10 @@ sessionModule.controller("sessionRequestCtrl",
 
                                                 $scope.session.flatRateUnitsMin = '';
                                                 $scope.session.flatRateUnitsMax = '';
+
+                                                $scope.session.gradFlatRateUnitsMin = '';
+                                                $scope.session.gradFlatRateUnitsMax = '';
+
                                                 break;                                                
 
                                             case (value.rateTypeCode == "ZERO"):
@@ -445,12 +469,19 @@ sessionModule.controller("sessionRequestCtrl",
 
                                                 $scope.session.flatRateUnitsMin = 98;
                                                 $scope.session.flatRateUnitsMax = 99;
+
+                                                $scope.session.gradFlatRateUnitsMin = 98;
+                                                $scope.session.gradFlatRateUnitsMax = 99;
+
                                                 break;
 
                                             default:
 
                                                 $scope.session.flatRateUnitsMin = '';
                                                 $scope.session.flatRateUnitsMax = '';
+
+                                                $scope.session.gradFlatRateUnitsMin = '';
+                                                $scope.session.gradFlatRateUnitsMax = '';
                                                 break;                                                
                                         }   // switch(true)
                                     }
@@ -554,6 +585,8 @@ sessionModule.controller("sessionRequestCtrl",
                 ratePerUnitAmount: "",
                 flatRateAmount: "",
                 flatRateUnitsMin: "",
+                gradFlatRateUnitsMax: "",
+                gradFlatRateUnitsMin: "",
                 flatRateUnitsMax: "",
                 comments: "",
                 sessionBreaks: [],
@@ -772,7 +805,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             for (var i = 0; i < reqdFields.length; ++i) {
                 if (reqdFields[i].length == 0) {
-                    formValid = false; // test
+                    formValid = false;
                     break;
                 }
             };
@@ -830,8 +863,8 @@ sessionModule.controller("sessionRequestCtrl",
                 alert(errMsg);
             }
             return;
-
         }                     // checkSessBreak()
+
 
         $scope.deleteBreaks = function () {
 
@@ -877,8 +910,8 @@ sessionModule.controller("sessionRequestCtrl",
             }   // for (var...)
 
             if (($scope.session.ratePerUnitAmount == "TBA") && ($scope.session.flatRateAmount == "TBA")) {
-                $scope.session.ratePerUnitAmount = null;
-                $scope.session.flatRateAmount = null;
+                $scope.session.ratePerUnitAmount = [];
+                $scope.session.flatRateAmount = [];
             }
 
             $rootScope.savedSession = new Sessions($scope.session);     // needed to save to rootscope 
@@ -900,12 +933,6 @@ sessionModule.controller("sessionRequestCtrl",
             return;
         }                          // SubmitForm()
 
-        $scope.rates = [];
-
-        function GetRateTable() {
-            $scope.rates = RateTable.query();
-            return;
-        }
 
         $scope.CheckRateAmount = function (rateAmount, rateName) {
 
@@ -935,19 +962,23 @@ sessionModule.controller("sessionRequestCtrl",
             }
         }   // CheckRateAmount()
 
+
         $scope.checkForDuplicateFee = function (feeCode, i) {
 
             if ($scope.usedFees.indexOf(feeCode) > -1) {
                 alert("Fee code is already used. Choose a different one.");
-                $scope.session.specialFees[i].code = 0;      // reset the dropdown
+                $scope.session.specialFees[i].code = 0;                 // reset the dropdown if the code is already used.
             } else {
-                $scope.usedFees[$scope.usedFees.length] = feeCode;
+                $scope.usedFees[$scope.usedFees.length] = feeCode;      // mark this code so it won't be re-used.
             }
             return;
         }   // checkForDuplicateFee()
 
-        var holidays = [];                                            // holiday needs to be a global that's why it's outside document.ready()
+
+        $scope.rates = [];                                          // holds the lookup table for the tuition rates per semester
+        var holidays = [];                                          // holiday needs to be a global that's why it's outside document.ready()
         var earliestDate = new Date(SemStartDates.sStart);
+
 
         $(document).ready(function () {
 
@@ -957,7 +988,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.earliestDate = SemStartDates.sStart;             // Ultimate earliest date.  Do not accept any date before this date in any field.
 
-            GetRateTable();                                         // Reads the rate table from the database
+            $scope.rates = RateTable.query();                       // Reads the rate table from the database
 
             $scope.campusLocs = CampusLocations;
 
