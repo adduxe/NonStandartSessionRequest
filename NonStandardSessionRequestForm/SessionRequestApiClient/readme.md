@@ -1,6 +1,8 @@
 ﻿# RNR Session Request API 
 > see http://oweb7-vm.usc.edu/dataapi/swagger/ui/index#/ 
 
+> see https://aka.ms/autorest 
+
 ## Getting Started 
 To generate the API client for RNR Session Request API, simply install AutoRest via `npm` (`npm install -g autorest`) and then run the following in the directory of this readme file:
 > `autorest`
