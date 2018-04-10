@@ -6,7 +6,8 @@ sessionModule.controller("sessionResultCtrl",
     function (Sessions, GetCampusName, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
-        $scope.rateName = $rootScope.rateName;
+        $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
+                                                    // it was decoded before it was submitted.
 
         var sessBreaks = $scope.session.sessionBreaks;
 

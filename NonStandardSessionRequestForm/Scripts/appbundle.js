@@ -1277,7 +1277,7 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         $scope.AddSpecialFee = function () {
-            var specialFee = { description: "", amount: "", assessedTo: "" };
+            var specialFee = { code: "", amount: "", assessedTo: "" };
             $scope.session.specialFees.push(specialFee);
         }
 
@@ -1838,9 +1838,9 @@ sessionModule.controller("sessionRequestCtrl",
                 ratePerUnitAmount: "",
                 flatRateAmount: "",
                 flatRateUnitsMin: "",
-                gradFlatRateUnitsMax: "",
-                gradFlatRateUnitsMin: "",
                 flatRateUnitsMax: "",
+                gradFlatRateUnitsMin: "",
+                gradFlatRateUnitsMax: "",
                 comments: "",
                 sessionBreaks: [],
                 sections: [],
@@ -1988,7 +1988,7 @@ sessionModule.controller("sessionRequestCtrl",
         }                               // areRateFieldsOK()
 
 
-        function specialFeesOK(){
+        function specialFeesOK(){       // checks to see if all the Special Fee fields (if any) are provided by user
 
             var allFeesEntered = true;
             $scope.requireFees = false;
@@ -2011,7 +2011,8 @@ sessionModule.controller("sessionRequestCtrl",
             });
 
             return allFeesEntered;
-        }
+        }   // specialFeesOK()
+
 
         function sessionBreaksOK()                      // check Session Breaks
         {
@@ -2083,9 +2084,9 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }
 
-
             return formValid;
         }                                   // IsFormValid()
+
 
         $scope.checkSessBreak = function (i) {
 
@@ -2241,7 +2242,9 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.earliestDate = SemStartDates.sStart;             // Ultimate earliest date.  Do not accept any date before this date in any field.
 
-            $scope.rates = RateTable.query();                       // Reads the rate table from the database
+            RateTable.query(function (data) {                       // Reads the rate (per semester) lookup table from the database
+                $scope.rates = data;
+            });                       
 
             $scope.campusLocs = CampusLocations;
 
@@ -2263,7 +2266,8 @@ sessionModule.controller("sessionResultCtrl",
     function (Sessions, GetCampusName, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
-        $scope.rateName = $rootScope.rateName;
+        $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
+                                                    // it was decoded before it was submitted.
 
         var sessBreaks = $scope.session.sessionBreaks;
 

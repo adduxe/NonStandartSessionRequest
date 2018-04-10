@@ -169,12 +169,18 @@
     <table class="table table-bordered table-hover" ng-show="session.sessionCode">
         <thead>
             <tr class="red">
-                <th>Rate Type</th>
-                <th>Rate per Unit</th>
-                <th>Flat Rate</th>
+                <th rowspan="2">Rate Type</th>
+                <th rowspan="2">Rate per Unit</th>
+                <th rowspan="2">Flat Rate</th>
+                <th colspan="2">Undergraduate</th>
+                <th colspan="2">Graduate</th>
+            </tr>
+            <tr class="red">
                 <th>Flat Rate<br>Min. Units</th>
                 <th>Flat Rate<br>Max. Units</th>
-            </tr>
+                <th>Flat Rate<br>Min. Units</th>
+                <th>Flat Rate<br>Max. Units</th>
+            </>
         </thead>
         <tbody>
             <tr class="black">
@@ -183,6 +189,8 @@
                 <td>{{ session.flatRateAmount }}</td>
                 <td>{{ session.flatRateUnitsMin }}</td>
                 <td>{{ session.flatRateUnitsMax }}</td>
+                <td>{{ session.gradFlatRateUnitsMin }}</td>
+                <td>{{ session.gradFlatRateUnitsMax }}</td>
             </tr>
         <tbody>
     </table>
