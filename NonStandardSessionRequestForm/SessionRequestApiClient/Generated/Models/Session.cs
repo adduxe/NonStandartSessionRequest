@@ -25,7 +25,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the Session class.
         /// </summary>
-        public Session(string academicTerm, string sessionCode, string owningSchool, string userContact, string userEmail, string userPhone, int? requestId = default(int?), System.DateTime? lastUpdateTimeStamp = default(System.DateTime?), string owningDepartment = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), int? gradFlatRateUnitsMin = default(int?), int? gradFlatRateUnitsMax = default(int?), System.DateTime? requestDate = default(System.DateTime?), string comments = default(string), IList<Section> sections = default(IList<Section>), IList<SessionBreak> sessionBreaks = default(IList<SessionBreak>), IList<Submission> submissions = default(IList<Submission>))
+        public Session(string academicTerm, string sessionCode, string owningSchool, string userContact, string userEmail, string userPhone, int? requestId = default(int?), System.DateTime? lastUpdateTimeStamp = default(System.DateTime?), string owningDepartment = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), int? gradFlatRateUnitsMin = default(int?), int? gradFlatRateUnitsMax = default(int?), System.DateTime? requestDate = default(System.DateTime?), string comments = default(string), IList<Section> sections = default(IList<Section>), IList<SessionBreak> sessionBreaks = default(IList<SessionBreak>), IList<Submission> submissions = default(IList<Submission>), IList<SpecialFee> specialFees = default(IList<SpecialFee>))
         {
             RequestId = requestId;
             LastUpdateTimeStamp = lastUpdateTimeStamp;
@@ -60,6 +60,7 @@ namespace SessionRequestApi.Client.Models
             Sections = sections;
             SessionBreaks = sessionBreaks;
             Submissions = submissions;
+            SpecialFees = specialFees;
             CustomInit();
         }
 
@@ -234,6 +235,11 @@ namespace SessionRequestApi.Client.Models
         public IList<Submission> Submissions { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "specialFees")]
+        public IList<SpecialFee> SpecialFees { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -369,6 +375,16 @@ namespace SessionRequestApi.Client.Models
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (SpecialFees != null)
+            {
+                foreach (var element3 in SpecialFees)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

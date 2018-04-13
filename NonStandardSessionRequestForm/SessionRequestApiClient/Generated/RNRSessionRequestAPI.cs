@@ -123,7 +123,7 @@ namespace SessionRequestApi.Client
         {
             SessionRequest = new SessionRequest(this);
             Submissions = new Submissions(this);
-            BaseUri = new System.Uri("http://oweb7-vm.usc.edu/DataApi");
+            BaseUri = new System.Uri("http://localhost:1615/dataapi");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

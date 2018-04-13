@@ -1,5 +1,6 @@
 ﻿# RNR Session Request API 
-> see http://oweb7-vm.usc.edu/dataapi/swagger/ui/index#/ 
+> see http://localhost:1615/dataapi/swagger/ui/index#/ 
+#> see http://oweb7-vm.usc.edu/dataapi/swagger/ui/index#/
 
 > see https://aka.ms/autorest 
 
@@ -19,7 +20,8 @@ The following settings are used for generating the API client using AutoRest.
 
 ``` yaml
 # Location of the OpenAPI file
-input-file: http://oweb7-vm.usc.edu/DataApi/swagger/docs/sessionrequest
+input-file: http://localhost:1615/DataApi/swagger/docs/sessionrequest
+#input-file: http://oweb7-vm.usc.edu/DataApi/swagger/docs/sessionrequest
 
 # Language code generator options
 csharp:
