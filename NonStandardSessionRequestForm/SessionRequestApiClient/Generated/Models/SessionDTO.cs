@@ -24,7 +24,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the SessionDTO class.
         /// </summary>
-        public SessionDTO(int? requestId = default(int?), string academicTerm = default(string), string owningSchool = default(string), string owningDepartment = default(string), string userContact = default(string), string userEmail = default(string), string userPhone = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string sessionCode = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), int? gradFlatRateUnitsMin = default(int?), int? gradFlatRateUnitsMax = default(int?), System.DateTime? submitDate = default(System.DateTime?), string comments = default(string), IList<SessionBreakDTO> sessionBreaks = default(IList<SessionBreakDTO>), IList<SectionDTO> sections = default(IList<SectionDTO>))
+        public SessionDTO(int? requestId = default(int?), string academicTerm = default(string), string owningSchool = default(string), string owningDepartment = default(string), string userContact = default(string), string userEmail = default(string), string userPhone = default(string), System.DateTime? firstDayOfClass = default(System.DateTime?), System.DateTime? lastDayOfClass = default(System.DateTime?), System.DateTime? lastDayForAddDrop = default(System.DateTime?), System.DateTime? lastDayForWithdrawal = default(System.DateTime?), System.DateTime? firstDayOfFinals = default(System.DateTime?), System.DateTime? lastDayOfFinals = default(System.DateTime?), System.DateTime? firstDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForFinalGrading = default(System.DateTime?), System.DateTime? lastDayForEnrollmentOptionChange = default(System.DateTime?), bool? isClassHeldAtUpc = default(bool?), string uscCampusLocation = default(string), string otherCampusLocation = default(string), string sessionCode = default(string), string rateType = default(string), double? ratePerUnitAmount = default(double?), double? flatRateAmount = default(double?), int? flatRateUnitsMin = default(int?), int? flatRateUnitsMax = default(int?), int? gradFlatRateUnitsMin = default(int?), int? gradFlatRateUnitsMax = default(int?), System.DateTime? submitDate = default(System.DateTime?), string comments = default(string), IList<SessionBreakDTO> sessionBreaks = default(IList<SessionBreakDTO>), IList<SectionDTO> sections = default(IList<SectionDTO>), IList<SpecialFeeDTO> specialFees = default(IList<SpecialFeeDTO>))
         {
             RequestId = requestId;
             AcademicTerm = academicTerm;
@@ -57,6 +57,7 @@ namespace SessionRequestApi.Client.Models
             Comments = comments;
             SessionBreaks = sessionBreaks;
             Sections = sections;
+            SpecialFees = specialFees;
             CustomInit();
         }
 
@@ -219,6 +220,11 @@ namespace SessionRequestApi.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "sections")]
         public IList<SectionDTO> Sections { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "specialFees")]
+        public IList<SpecialFeeDTO> SpecialFees { get; set; }
 
     }
 }
