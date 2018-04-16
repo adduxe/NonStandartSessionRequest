@@ -182,6 +182,45 @@ sessionModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
 
 'use strict';
 
+function GetSpecialFeeDescription(fCode, feeCodes) {
+
+    var feeDesc = '', burEntry = '', burCode = '';
+
+    for (var i = 0; i < feeCodes.length; ++i) {
+
+        burEntry = feeCodes[i];
+        burCode = burEntry.substring(0, burEntry.indexOf(' '));
+        
+        if (burCode === fCode) {
+            feeDesc = burEntry.substring(burCode.length, burEntry.length)
+        }
+    }
+
+    return feeDesc;
+}
+
+adminModule.factory('GetSpecialFeeDescription',
+    [
+        "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
+            return function (fee_code) {
+                return GetSpecialFeeDescription(fee_code, GetSpecialFeeCodes)
+            }
+        }
+    ]
+);
+
+sessionModule.factory('GetSpecialFeeDescription',
+    [
+        "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
+
+            return function (fee_code) {
+                return GetSpecialFeeDescription(fee_code, GetSpecialFeeCodes)
+            }
+        }
+    ]
+);
+'use strict';
+
 adminModule.factory('RateTable', ['$resource', function ($resource) {
 
     return $resource(
@@ -497,6 +536,7 @@ adminModule.controller("faoQueueCtrl",
                                             requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
                                             sections            : subm.session.sections,
                                             sessionBreaks       : subm.session.sessionBreaks,
+                                            specialFees         : subm.session.specialFees,
                                             comments            : subm.session.comments,
                                             faoAction           : subm.faoAction,
                                             faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
@@ -588,6 +628,22 @@ adminModule.controller("faoQueueCtrl",
                     { field: "classDayOfWeek",  title: "Class Day",     width: "100px" },
                     { field: "classStartTime",  title: "Start Time",    width: "150px" },
                     { field: "classEndTime",    title: "End Time",      width: "150px" }
+                ]
+            };
+        };
+
+        $scope.specialFeeGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.specialFees
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "feeCode", title: "Fee Code", width: "100px" },
+                    { field: "amount", title: "Amount", width: "100px" },
+                    { field: "assessedTo", title: "Assessed To", width: "100px" }
                 ]
             };
         };

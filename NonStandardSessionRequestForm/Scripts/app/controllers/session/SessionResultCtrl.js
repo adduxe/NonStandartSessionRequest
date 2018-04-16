@@ -1,41 +1,41 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-        ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope",
+    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
 
-    function (Sessions, GetCampusName, $scope, $location, $rootScope) {
+        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
 
-        $scope.session = $rootScope.savedSession;
-        $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
-                                                    // it was decoded before it was submitted.
+            $scope.session = $rootScope.savedSession;
+            $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
+                                                        // it was decoded before it was submitted.
 
-        var sessBreaks = $scope.session.sessionBreaks;
+            var sessBreaks = $scope.session.sessionBreaks;
 
-        switch (sessBreaks.length) {
+            switch (sessBreaks.length) {
 
-            case 2:
-                $scope.session.sessionBreakStart_2 = sessBreaks[1].startDate;
-                $scope.session.sessionBreakEnd_2 = sessBreaks[1].endDate;
+                case 2:
+                    $scope.session.sessionBreakStart_2 = sessBreaks[1].startDate;
+                    $scope.session.sessionBreakEnd_2 = sessBreaks[1].endDate;
 
-            case 1:
-                $scope.session.sessionBreakStart_1 = sessBreaks[0].startDate;
-                $scope.session.sessionBreakEnd_1 = sessBreaks[0].endDate;
-                break;
+                case 1:
+                    $scope.session.sessionBreakStart_1 = sessBreaks[0].startDate;
+                    $scope.session.sessionBreakEnd_1 = sessBreaks[0].endDate;
+                    break;
 
-            default:
-                $scope.session.sessionBreakStart_2 = "";
-                $scope.session.sessionBreakEnd_2 = "";
-                break;
+                default:
+                    $scope.session.sessionBreakStart_2 = "";
+                    $scope.session.sessionBreakEnd_2 = "";
+                    break;
 
-        }; // switch()
+            }; // switch()
 
-        if (($rootScope.savedSession.ratePerUnitAmount == null) && ($rootScope.savedSession.flatRateAmount == null)) {
-            $scope.session.ratePerUnitAmount = "TBA";
-            $scope.session.flatRateAmount = "TBA";
+            if (($rootScope.savedSession.ratePerUnitAmount == null) && ($rootScope.savedSession.flatRateAmount == null)) {
+                $scope.session.ratePerUnitAmount = "TBA";
+                $scope.session.flatRateAmount = "TBA";
+            }
+
+            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+
+            return;
         }
-
-        $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
-
-        return;
-    }
 ]);
