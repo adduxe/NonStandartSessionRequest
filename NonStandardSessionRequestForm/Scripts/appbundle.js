@@ -1277,7 +1277,7 @@ sessionModule.controller("sessionRequestCtrl",
 
 
         $scope.AddSpecialFee = function () {
-            var specialFee = { code: "", amount: "", assessedTo: "" };
+            var specialFee = { feeCode: "", amount: "", assessedTo: "" };
             $scope.session.specialFees.push(specialFee);
         }
 
@@ -1995,7 +1995,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             angular.forEach($scope.session.specialFees, function (eachFee) {
 
-                if (eachFee.code > '') {
+                if (eachFee.feeCode > '') {
                     if (eachFee.amount == '') {
                         allFeesEntered = false;
                         $scope.requireFees = true;
@@ -2003,7 +2003,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
 
                 if (eachFee.amount > '') {
-                    if (eachFee.code == '') {
+                    if (eachFee.feeCode == '') {
                         allFeesEntered = false;
                         $scope.requireFees = true;
                     }
@@ -2221,7 +2221,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             if ($scope.usedFees.indexOf(feeCode) > -1) {
                 alert("Fee code is already used. Choose a different one.");
-                $scope.session.specialFees[i].code = 0;                 // reset the dropdown if the code is already used.
+                $scope.session.specialFees[i].feeCode = 0;                 // reset the dropdown if the code is already used.
             } else {
                 $scope.usedFees[$scope.usedFees.length] = feeCode;      // mark this code so it won't be re-used.
             }

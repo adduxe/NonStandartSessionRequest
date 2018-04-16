@@ -199,6 +199,24 @@
         <p>{{ session.comments }}</p>
     </article>
 
+    <table class="table" align="center">
+        <tr>
+            <th class="red" colspan="4"><h3>Special Fees</h3></th>
+        </tr>
+        <tr>
+            <th>Fee Code</th>
+            <!--th>Description</th-->
+            <th>Amount</th>
+            <th>Assessed To</th>
+        </tr>
+        <tr ng-repeat="eachFee in session.specialFees">
+            <td>{{ eachFee.feeCode }}</td>
+            <!--td>{{ //fee.description }}</td-->
+            <td>{{ eachFee.amount }}</td>
+            <td>{{ eachFee.assessedTo }}</td>
+        </tr>
+    </table>
+
     <table align="center" ng-hide="session.sections.length == 0">
     <tr>
         <th class="red"><h3>Sections</h3></th>

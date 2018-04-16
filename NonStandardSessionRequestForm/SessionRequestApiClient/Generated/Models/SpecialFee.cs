@@ -23,7 +23,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the SpecialFee class.
         /// </summary>
-        public SpecialFee(int requestId, int feeCode, string assessedTo, int amount, int? feeId = default(int?))
+        public SpecialFee(int requestId, string feeCode, string assessedTo, int amount, int? feeId = default(int?))
         {
             FeeId = feeId;
             RequestId = requestId;
@@ -51,7 +51,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "feeCode")]
-        public int FeeCode { get; set; }
+        public string FeeCode { get; set; }
 
         /// <summary>
         /// </summary>
@@ -71,6 +71,10 @@ namespace SessionRequestApi.Client.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (FeeCode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FeeCode");
+            }
             if (AssessedTo == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AssessedTo");

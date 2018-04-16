@@ -22,7 +22,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// Initializes a new instance of the SpecialFeeDTO class.
         /// </summary>
-        public SpecialFeeDTO(int? feeId = default(int?), int? requestId = default(int?), int? feeCode = default(int?), string assessedTo = default(string), int? amount = default(int?))
+        public SpecialFeeDTO(int? feeId = default(int?), int? requestId = default(int?), string feeCode = default(string), string assessedTo = default(string), int? amount = default(int?))
         {
             FeeId = feeId;
             RequestId = requestId;
@@ -50,7 +50,7 @@ namespace SessionRequestApi.Client.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "feeCode")]
-        public int? FeeCode { get; set; }
+        public string FeeCode { get; set; }
 
         /// <summary>
         /// </summary>
