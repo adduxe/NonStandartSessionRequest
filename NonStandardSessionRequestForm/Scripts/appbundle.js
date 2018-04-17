@@ -1167,7 +1167,7 @@ adminModule.factory('GetCampusName',
         "CampusLocations", function(CampusLocations){
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                return GetCampusName(campusCode, CampusLocations);
             }
         }
     ]
@@ -1178,7 +1178,7 @@ sessionModule.factory('GetCampusName',
         "CampusLocations", function (CampusLocations) {
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                return GetCampusName(campusCode, CampusLocations);
             }
         }
     ]
@@ -1199,7 +1199,7 @@ sessionModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
 
 'use strict';
 
-function GetSpecialFeeDescription(fCode, feeCodes) {
+function GetFeeDescription(fCode, feeCodes) {
 
     var feeDesc = '', burEntry = '', burCode = '';
 
@@ -1209,7 +1209,7 @@ function GetSpecialFeeDescription(fCode, feeCodes) {
         burCode = burEntry.substring(0, burEntry.indexOf(' '));
         
         if (burCode === fCode) {
-            feeDesc = burEntry.substring(burCode.length, burEntry.length)
+            feeDesc = burEntry.substring(burCode.length, burEntry.length);
         }
     }
 
@@ -1219,8 +1219,11 @@ function GetSpecialFeeDescription(fCode, feeCodes) {
 adminModule.factory('GetSpecialFeeDescription',
     [
         "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-            return function (fee_code) {
-                return GetSpecialFeeDescription(fee_code, GetSpecialFeeCodes)
+            return {
+                getFeeDesc:
+                    function (fee_code) {
+                        return GetFeeDescription(fee_code, GetSpecialFeeCodes);
+                    }
             }
         }
     ]
@@ -1229,9 +1232,13 @@ adminModule.factory('GetSpecialFeeDescription',
 sessionModule.factory('GetSpecialFeeDescription',
     [
         "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-
-            return function (fee_code) {
-                return GetSpecialFeeDescription(fee_code, GetSpecialFeeCodes)
+            "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
+                return {
+                    getFeeDesc:
+                        function (fee_code) {
+                            return GetFeeDescription(fee_code, GetSpecialFeeCodes);
+                        }
+                }
             }
         }
     ]
@@ -2300,10 +2307,13 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
+    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
+
+    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
+
     ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
 
         function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
-
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
                                                         // it was decoded before it was submitted.
@@ -2326,16 +2336,21 @@ sessionModule.controller("sessionResultCtrl",
                     $scope.session.sessionBreakEnd_2 = "";
                     break;
 
-            }; // switch()
+            } // switch()
 
             if (($rootScope.savedSession.ratePerUnitAmount == null) && ($rootScope.savedSession.flatRateAmount == null)) {
                 $scope.session.ratePerUnitAmount = "TBA";
                 $scope.session.flatRateAmount = "TBA";
             }
 
-            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+//            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
 
-            return;
+            $scope.getCampusName = function(campusCode) { GetCampusName(campusCode); } 
+
+            function sample() {
+                return "here!";
+            }
+
         }
 ]);
 sessionModule.directive('numbersOnly', function () {

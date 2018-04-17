@@ -1,10 +1,13 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
+    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
+
+    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
+
     ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
 
         function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
-
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
                                                         // it was decoded before it was submitted.
@@ -27,15 +30,20 @@ sessionModule.controller("sessionResultCtrl",
                     $scope.session.sessionBreakEnd_2 = "";
                     break;
 
-            }; // switch()
+            } // switch()
 
             if (($rootScope.savedSession.ratePerUnitAmount == null) && ($rootScope.savedSession.flatRateAmount == null)) {
                 $scope.session.ratePerUnitAmount = "TBA";
                 $scope.session.flatRateAmount = "TBA";
             }
 
-            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+//            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
 
-            return;
+            $scope.getCampusName = function(campusCode) { GetCampusName(campusCode); } 
+
+            function sample() {
+                return "here!";
+            }
+
         }
 ]);

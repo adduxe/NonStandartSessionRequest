@@ -18,7 +18,7 @@ adminModule.factory('GetCampusName',
         "CampusLocations", function(CampusLocations){
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                return GetCampusName(campusCode, CampusLocations);
             }
         }
     ]
@@ -29,7 +29,7 @@ sessionModule.factory('GetCampusName',
         "CampusLocations", function (CampusLocations) {
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+                return GetCampusName(campusCode, CampusLocations);
             }
         }
     ]
