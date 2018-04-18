@@ -1,16 +1,16 @@
 ﻿'use strict';
 
-function GetCampusName(cCode, cLocations) {
+function getCampusLocation(cCode, cLocations) {
 
-    var campusName = "";
+    var campusLocation = "";
 
     for (var i = 0; i < cLocations.length; ++i) {
         if (cLocations[i].campusCode == cCode) {
-            campusName = cLocations[i].campusName;
+            campusLocation = cLocations[i].campusName;
             break;
         }
     }
-    return campusName;
+    return campusLocation;
 }
 
 adminModule.factory('GetCampusName',
@@ -18,7 +18,8 @@ adminModule.factory('GetCampusName',
         "CampusLocations", function(CampusLocations){
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations);
+                var campusName = getCampusLocation(campusCode, CampusLocations);
+                return campusName;
             }
         }
     ]
@@ -29,7 +30,8 @@ sessionModule.factory('GetCampusName',
         "CampusLocations", function (CampusLocations) {
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations);
+                var campusName = getCampusLocation(campusCode, CampusLocations);
+                return campusName;
             }
         }
     ]

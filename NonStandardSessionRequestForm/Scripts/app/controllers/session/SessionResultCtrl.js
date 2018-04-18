@@ -1,13 +1,10 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
+    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes",
 
-    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
+        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes) {
 
-    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
-
-        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
                                                         // it was decoded before it was submitted.
@@ -37,13 +34,14 @@ sessionModule.controller("sessionResultCtrl",
                 $scope.session.flatRateAmount = "TBA";
             }
 
-//            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+            $scope.campusName = GetCampusName($scope.session.uscCampusLocation);
 
-            $scope.getCampusName = function(campusCode) { GetCampusName(campusCode); } 
+            GetSpecialFeeCodes.query(function (data) {
+                $scope.SpecialFeeList = data;
+            });
 
-            function sample() {
-                return "here!";
+            $scope.getFeeDescription = function (feeCode) {
+                return GetSpecialFeeDescription(feeCode, $scope.SpecialFeeList);
             }
-
         }
 ]);

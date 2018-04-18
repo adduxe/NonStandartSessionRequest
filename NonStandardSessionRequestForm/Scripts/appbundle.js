@@ -1149,17 +1149,17 @@ sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
 }]);
 'use strict';
 
-function GetCampusName(cCode, cLocations) {
+function getCampusLocation(cCode, cLocations) {
 
-    var campusName = "";
+    var campusLocation = "";
 
     for (var i = 0; i < cLocations.length; ++i) {
         if (cLocations[i].campusCode == cCode) {
-            campusName = cLocations[i].campusName;
+            campusLocation = cLocations[i].campusName;
             break;
         }
     }
-    return campusName;
+    return campusLocation;
 }
 
 adminModule.factory('GetCampusName',
@@ -1167,7 +1167,8 @@ adminModule.factory('GetCampusName',
         "CampusLocations", function(CampusLocations){
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations);
+                var campusName = getCampusLocation(campusCode, CampusLocations);
+                return campusName;
             }
         }
     ]
@@ -1178,7 +1179,8 @@ sessionModule.factory('GetCampusName',
         "CampusLocations", function (CampusLocations) {
 
             return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations);
+                var campusName = getCampusLocation(campusCode, CampusLocations);
+                return campusName;
             }
         }
     ]
@@ -1218,12 +1220,9 @@ function GetFeeDescription(fCode, feeCodes) {
 
 adminModule.factory('GetSpecialFeeDescription',
     [
-        "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-            return {
-                getFeeDesc:
-                    function (fee_code) {
-                        return GetFeeDescription(fee_code, GetSpecialFeeCodes);
-                    }
+        function () {
+            return function (fee_code, codeList) {
+                return GetFeeDescription(fee_code, codeList);
             }
         }
     ]
@@ -1231,14 +1230,9 @@ adminModule.factory('GetSpecialFeeDescription',
 
 sessionModule.factory('GetSpecialFeeDescription',
     [
-        "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-            "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-                return {
-                    getFeeDesc:
-                        function (fee_code) {
-                            return GetFeeDescription(fee_code, GetSpecialFeeCodes);
-                        }
-                }
+        function () {
+            return function (fee_code, codeList) {
+                return GetFeeDescription(fee_code, codeList);
             }
         }
     ]
@@ -2307,13 +2301,10 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
+    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes",
 
-    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
+        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes) {
 
-    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription",
-
-        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription) {
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
                                                         // it was decoded before it was submitted.
@@ -2343,14 +2334,15 @@ sessionModule.controller("sessionResultCtrl",
                 $scope.session.flatRateAmount = "TBA";
             }
 
-//            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+            $scope.campusName = GetCampusName($scope.session.uscCampusLocation);
 
-            $scope.getCampusName = function(campusCode) { GetCampusName(campusCode); } 
+            GetSpecialFeeCodes.query(function (data) {
+                $scope.SpecialFeeList = data;
+            });
 
-            function sample() {
-                return "here!";
+            $scope.getFeeDescription = function (feeCode) {
+                return GetSpecialFeeDescription(feeCode, $scope.SpecialFeeList);
             }
-
         }
 ]);
 sessionModule.directive('numbersOnly', function () {

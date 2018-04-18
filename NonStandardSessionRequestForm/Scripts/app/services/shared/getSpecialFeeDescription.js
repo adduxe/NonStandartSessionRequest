@@ -19,12 +19,9 @@ function GetFeeDescription(fCode, feeCodes) {
 
 adminModule.factory('GetSpecialFeeDescription',
     [
-        "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-            return {
-                getFeeDesc:
-                    function (fee_code) {
-                        return GetFeeDescription(fee_code, GetSpecialFeeCodes);
-                    }
+        function () {
+            return function (fee_code, codeList) {
+                return GetFeeDescription(fee_code, codeList);
             }
         }
     ]
@@ -32,14 +29,9 @@ adminModule.factory('GetSpecialFeeDescription',
 
 sessionModule.factory('GetSpecialFeeDescription',
     [
-        "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-            "GetSpecialFeeCodes", function (GetSpecialFeeCodes) {
-                return {
-                    getFeeDesc:
-                        function (fee_code) {
-                            return GetFeeDescription(fee_code, GetSpecialFeeCodes);
-                        }
-                }
+        function () {
+            return function (fee_code, codeList) {
+                return GetFeeDescription(fee_code, codeList);
             }
         }
     ]

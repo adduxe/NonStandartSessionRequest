@@ -159,7 +159,7 @@
             <b class="red">Classes held on campus?</b>&nbsp;&nbsp;{{ session.isClassHeldAtUpc ? 'Yes' : 'No' }}
         </div>
         <div class="col-md-3">
-            <b class="red">Campus Location</b>&nbsp;&nbsp;{{ getCampusName(session.uscCampusLocation); }}
+            <b class="red">Campus Location</b>&nbsp;&nbsp;{{ campusName }}
         </div>
         <div class="col-md-4">
             <b class="red">Other Campus:</b>&nbsp;&nbsp;{{ session.otherCampusLocation }}
@@ -211,7 +211,7 @@
         </tr>
         <tr ng-repeat="eachFee in session.specialFees">
             <td>{{ eachFee.feeCode }}</td>
-            <td>{{ GetSpecialFeeDescription(eachFee.feeCode) }}</td>
+            <td>{{ getFeeDescription(eachFee.feeCode) }}</td>
             <td>{{ eachFee.amount }}</td>
             <td>{{ eachFee.assessedTo }}</td>
         </tr>
