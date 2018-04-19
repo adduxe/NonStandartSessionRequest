@@ -77,8 +77,8 @@
                             <tbody>
                                 <tr class="black">
                                     <td>#= data.rateType #</td>
-                                    <td>#= data.ratePerUnitAmount #</td>
-                                    <td>#= data.flatRateAmount #</td>
+                                    <td>#= (data.ratePerUnitAmount == null) ? '' : data.ratePerUnitAmount #</td>
+                                    <td>#= (data.flatRateAmount == null) ? '' : data.flatRateAmount #</td>
                                     <td align="center">#= data.flatRateUnitsMin #</td>
                                     <td align="center">#= data.flatRateUnitsMax #</td>
                                     <td align="center">#= data.gradFlatRateUnitsMin #</td>

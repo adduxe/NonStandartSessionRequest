@@ -67,7 +67,6 @@
                                     <td colspan="2" align="center"><b>Graduate</b></td>
                                 </tr>
                                 <tr class="red">
-                                <tr class="red">
                                     <td align="center"><b>Flat Rate<br>Min. Units</b></td>
                                     <td align="center"><b>Flat Rate<br>Max. Units</b></td>
                                     <td align="center"><b>Flat Rate<br>Min. Units</b></td>
@@ -77,8 +76,8 @@
                             <tbody>
                                 <tr class="black">
                                     <td>#= data.rateType #</td>
-                                    <td>#= data.ratePerUnitAmount #</td>
-                                    <td>#= data.flatRateAmount #</td>
+                                    <td>#= (data.ratePerUnitAmount == null) ? '' : data.ratePerUnitAmount #</td>
+                                    <td>#= (data.flatRateAmount == null) ? '' : data.flatRateAmount #</td>
                                     <td align="center">#= data.flatRateUnitsMin #</td>
                                     <td align="center">#= data.flatRateUnitsMax #</td>
                                     <td align="center">#= data.gradFlatRateUnitsMin #</td>
