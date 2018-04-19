@@ -2343,6 +2343,24 @@ sessionModule.controller("sessionResultCtrl",
             $scope.getFeeDescription = function (feeCode) {
                 return GetSpecialFeeDescription(feeCode, $scope.SpecialFeeList);
             }
+
+            $scope.assessDecode = function (aCode) {
+
+                var assessTo = "";
+
+                switch (aCode) {
+                    case 'G':
+                        assessTo = "Graduate";
+                        break;
+                    case 'U':
+                        assessTo = "Undergraduate";
+                        break;
+                    case 'B':
+                        assessTo = "All";
+                        break;
+                }
+                return assessTo;
+            }
         }
 ]);
 sessionModule.directive('numbersOnly', function () {

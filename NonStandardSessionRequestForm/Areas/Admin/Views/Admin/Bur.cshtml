@@ -7,6 +7,7 @@
                 <ul>
                     <li class="k-state-active">Dates</li>
                     <li>Rates</li>
+                    <li>Special Fees</li>
                     <li>Sections</li>
                     <li>Session Breaks</li>
                     <li>Class Location</li>
@@ -77,6 +78,9 @@
                             <tbody>
                         </table>
                     </div>
+                </div>
+                <div id="specialFeeTab">
+                    <kendo-grid k-options="specialFeeGridOptions(dataItem)"></kendo-grid>
                 </div>
                 <div id="sectionsTab">
                     <kendo-grid k-options="sectionGridOptions(dataItem)">

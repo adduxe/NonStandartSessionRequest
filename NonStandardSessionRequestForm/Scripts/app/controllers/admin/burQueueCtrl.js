@@ -53,6 +53,7 @@
                                             requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
                                             sections            : subm.session.sections,
                                             sessionBreaks       : subm.session.sessionBreaks,
+                                            specialFees         : subm.session.specialFees,
                                             comments            : subm.session.comments,
                                             faoAction           : subm.faoAction,
                                             faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
@@ -145,6 +146,23 @@
             ]
         };
     };  // scheduleGridOptions
+
+
+    $scope.specialFeeGridOptions = function (dataItem) {
+        return {
+            dataSource: {
+                data: dataItem.specialFees
+            },
+            scrollable: false,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: "feeCode", title: "Fee Code", width: "100px" },
+                { field: "amount", title: "Amount", width: "100px" },
+                { field: "assessedTo", title: "Assessed To", width: "100px" }
+            ]
+        };
+    };  // specialFeeGridOptions
 
     $scope.sessionBrkGridOptions = function (dataItem) {
         return {

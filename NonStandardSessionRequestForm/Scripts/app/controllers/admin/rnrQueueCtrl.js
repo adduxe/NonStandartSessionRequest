@@ -46,6 +46,7 @@
                                         requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
                                         sections            : subm.session.sections,
                                         sessionBreaks       : subm.session.sessionBreaks,
+                                        specialFees         : subm.session.specialFees,
                                         comments            : subm.session.comments,
                                         faoAction           : subm.faoAction,
                                         faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
@@ -140,6 +141,22 @@
                     { field: "classDayOfWeek",  title: "Class Day",     width: "100px" },
                     { field: "classStartTime",  title: "Start Time",    width: "150px" },
                     { field: "classEndTime",    title: "End Time",      width: "150px" }
+                ]
+            };
+        };
+
+        $scope.specialFeeGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.specialFees
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "feeCode", title: "Fee Code", width: "100px" },
+                    { field: "amount", title: "Amount", width: "100px" },
+                    { field: "assessedTo", title: "Assessed To", width: "100px" }
                 ]
             };
         };
@@ -324,6 +341,23 @@
             return;
         }   // EmailResultAndUpdateList()
 
+        $scope.assessDecode = function (aCode) {
+
+            var assessTo = "";
+
+            switch (aCode) {
+                case 'G':
+                    assessTo = "Graduate";
+                    break;
+                case 'U':
+                    assessTo = "Undergraduate";
+                    break;
+                case 'B':
+                    assessTo = "All";
+                    break;
+            }
+            return assessTo;
+        }
 
         $(document).ready(function () {
             $scope.spinningWheel.center().open();
