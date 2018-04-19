@@ -40,6 +40,8 @@
                                         flatRateAmount      : subm.session.flatRateAmount,
                                         flatRateUnitsMin    : subm.session.flatRateUnitsMin,
                                         flatRateUnitsMax    : subm.session.flatRateUnitsMax,
+                                        gradFlatRateUnitsMin: subm.session.gradFlatRateUnitsMin,
+                                        gradFlatRateUnitsMax: subm.session.gradFlatRateUnitsMax,
                                         owningSchool        : subm.session.owningSchool,
                                         owningDepartment    : subm.session.owningDepartment,
                                         userContact         : subm.session.userContact,
