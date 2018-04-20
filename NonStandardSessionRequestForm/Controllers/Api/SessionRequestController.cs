@@ -176,14 +176,14 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
         }
 
-        [Route("specialfeecodes")]
-        public async Task<IHttpActionResult> GetSpecialFeeCodes() {
+        [Route("specialfeecodes/{term}")]
+        public async Task<IHttpActionResult> GetSpecialFeeCodes(string term) {
 
             try
             {
                 using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
                 {
-                    IEnumerable<SpecialFeeCode> feeCodes = client.SpecialFeeCodes.Get();
+                    IEnumerable<SpecialFeeCode> feeCodes = client.SpecialFeeCodes.Get(term);
 
                     if (feeCodes == null)
                     {
@@ -201,12 +201,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to GET Special Fee Codes! Error: {Error}", apiEx.Message);
+                Log.Logger.Error("Failed to GET Special Fee Codes for term " + term + "! Error: {Error}", apiEx.Message);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to GET Special Fee Codes! Error: {Error}", ex.Message);
+                Log.Logger.Error("Failed to GET Special Fee Codes for " + term + "! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
         }

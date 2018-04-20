@@ -180,6 +180,7 @@ sessionModule.controller("sessionRequestCtrl",
             return null;
         }                  // ClassDateChanged()
 
+
         function ComputeDates(beginDate, endDate) {
 
             $scope.session.lastDayForAddDrop = ComputeDate(beginDate, endDate, 20);                 // Last day to Add/Drop (20%)
@@ -187,6 +188,7 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.lastDayForWithdrawal = ComputeDate(beginDate, endDate, 80);              // Last Day to Withdraw (80%)
             return;
         }               // ComputeDates()
+
 
         $scope.FinalsDatesChanged = function () {
 
@@ -275,7 +277,27 @@ sessionModule.controller("sessionRequestCtrl",
 
             thisSection.schedules.push(sched);
             return;
-        }
+        }   // AddSchedule
+
+
+        $scope.GetSpecialFeesByTerm = function () {     // Populates the Special fee code dropdown depending on the semester selected by user.
+
+            GetSpecialFeeCodes.query(
+
+                { term: $scope.session.academicTerm },
+
+                function (data) {
+                    $scope.SpecialFeeList = data;
+                },
+
+                function (err) {
+                    $scope.SpecialFeeList = '';
+                    alert("No Special Fee Codes found for term " + $scope.session.academicTerm);
+                    console.log(err);
+                }
+            );
+        }   // GetSpecialFeesByTerm
+
 
         $scope.GetDatesAndRates = function () {
 
@@ -358,6 +380,9 @@ sessionModule.controller("sessionRequestCtrl",
             if ($scope.session.rateType > ''){
                 $scope.SetRates();
             }
+
+            $scope.GetSpecialFeesByTerm();  // Limit the Special Fees selection specific to the chosen semester only.
+
             return;
         }                   // GetDatesAndRates()
 
@@ -998,10 +1023,6 @@ sessionModule.controller("sessionRequestCtrl",
             PopulateUscHolidays();
 
             InitializeVariables();
-
-            GetSpecialFeeCodes.query(function(data) {
-                $scope.SpecialFeeList = data;
-            });
 
         }); // document.ready()
     }]);    // sessionModule()
