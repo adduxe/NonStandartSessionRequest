@@ -1,9 +1,9 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-        ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope",
+    ["Sessions", "GetCampusName", "CampusLocations", "$scope", "$location", "$rootScope",
 
-    function (Sessions, GetCampusName, $scope, $location, $rootScope) {
+        function (Sessions, GetCampusName, CampusLocations, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
         $scope.rateName = $rootScope.rateName;
@@ -33,8 +33,9 @@ sessionModule.controller("sessionResultCtrl",
             $scope.session.flatRateAmount = "TBA";
         }
 
-        $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+        CampusLocations.query(function(campusLocations) {
+            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation, campusLocations);
+        });
 
-        return;
     }
 ]);

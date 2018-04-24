@@ -127,7 +127,7 @@ sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
 }]);
 'use strict';
 
-function GetCampusName(cCode, cLocations) {
+function GetCampusLocation(cCode, cLocations) {
 
     var campusName = "";
 
@@ -140,27 +140,26 @@ function GetCampusName(cCode, cLocations) {
     return campusName;
 }
 
-adminModule.factory('GetCampusName',
+sessionModule.factory('GetCampusName',
     [
-        "CampusLocations", function (CampusLocations){
-            return function (campusCode) {
-                var campusLocs = CampusLocations.query();
-                return GetCampusName(campusCode, campusLocs)
+        function () {
+            return function (campusCode, campusLocs) {
+                return GetCampusLocation(campusCode, campusLocs);
             }
         }
     ]
 );
 
-sessionModule.factory('GetCampusName',
+adminModule.factory('GetCampusName',
     [
-        "CampusLocations", function (CampusLocations) {
-            return function (campusCode) {
-                var campusLocs = CampusLocations.query();
-                return GetCampusName(campusCode, campusLocs)
+        function () {
+            return function (campusCode, campusLocs) {
+                return GetCampusLocation(campusCode, campusLocs);
             }
         }
     ]
 );
+
 'use strict';
 
 adminModule.factory('RateTable', ['$resource', function ($resource) {
@@ -1155,9 +1154,9 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
-        ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope",
+    ["Sessions", "GetCampusName", "CampusLocations", "$scope", "$location", "$rootScope",
 
-    function (Sessions, GetCampusName, $scope, $location, $rootScope) {
+        function (Sessions, GetCampusName, CampusLocations, $scope, $location, $rootScope) {
 
         $scope.session = $rootScope.savedSession;
         $scope.rateName = $rootScope.rateName;
@@ -1187,8 +1186,9 @@ sessionModule.controller("sessionResultCtrl",
             $scope.session.flatRateAmount = "TBA";
         }
 
-        $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation);
+        CampusLocations.query(function(campusLocations) {
+            $scope.campusDescription = GetCampusName($scope.session.uscCampusLocation, campusLocations);
+        });
 
-        return;
     }
 ]);
