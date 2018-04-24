@@ -1,8 +1,8 @@
 ﻿adminModule.controller("rnrQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "GetCampusName",
+    ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "GetCampusName", "CampusLocations",
 
-    function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, GetCampusName) {
+        function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, GetCampusName, CampusLocations) {
 
         $scope.dataSource = new kendo.data.DataSource({
             transport: {
@@ -21,7 +21,7 @@
                                         userEmail           : subm.session.userEmail,
                                         userPhone           : subm.session.userPhone,
                                         isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
-                                        uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation),
+                                        uscCampusLocation: GetCampusName(subm.session.uscCampusLocation, $scope.campusLocations),
                                         otherCampusLocation : subm.session.otherCampusLocation,
                                         lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                         lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
@@ -328,6 +328,11 @@
         $(document).ready(function () {
             $scope.spinningWheel.center().open();
             $scope.rates = RateTable.query();
+            CampusLocations.query(
+                function (data) {
+                    $scope.campusLocations = data;
+                }
+            );
         })
 
     }]);
