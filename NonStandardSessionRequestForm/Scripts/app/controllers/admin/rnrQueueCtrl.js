@@ -10,15 +10,15 @@
                 }
             );
 
-            CampusLocations.query(
-                function (data) {
-                    $scope.campusLocations = data;
-                }
-            );
-
             SessionCodes.get(
                 function (data) {       // lookup table to get the Session Name
                     $scope.sessCodes = data.sessionCodes;
+                }
+            );
+
+            CampusLocations.query(
+                function (data) {
+                    $scope.campusLocations = data;
                 }
             );
 

@@ -370,11 +370,11 @@
     <None Include="Scripts\app\services\admin\submissionsService.js" />
     <None Include="Scripts\app\Modules.js" />
     <None Include="Scripts\app\services\admin\writeToSisService.js" />
-    <Content Include="Scripts\app\directives\numbersOnly.js" />
     <Content Include="Scripts\appbundle.js" />
     <Content Include="Scripts\appbundle.min.js">
       <DependentUpon>appbundle.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\app\directives\numbersOnly.js" />
     <Content Include="Scripts\app\services\admin\getSessionNameService.js" />
     <Content Include="Scripts\app\services\session\semStartDatesService.js" />
     <Content Include="Scripts\app\services\shared\campusLocationsService.js" />

@@ -133,24 +133,26 @@ sessionModule.factory('CampusLocations', ['$resource', function ($resource) {
 }]);
 'use strict';
 
-function GetCampusLocation(cCode, cLocations) {
+function getCampusLocation(cCode, cLocations) {
 
-    var campusName = "";
+    var campusLocation = "";
 
     for (var i = 0; i < cLocations.length; ++i) {
         if (cLocations[i].campusCode == cCode) {
-            campusName = cLocations[i].campusName;
+            campusLocation = cLocations[i].campusName;
             break;
         }
     }
-    return campusName;
+    return campusLocation;
 }
 
 sessionModule.factory('GetCampusName',
     [
-        function () {
-            return function (campusCode, campusLocs) {
-                return GetCampusLocation(campusCode, campusLocs);
+        "CampusLocations", function(CampusLocations){
+
+            return function (campusCode) {
+                var campusName = getCampusLocation(campusCode, CampusLocations);
+                return campusName;
             }
         }
     ]
@@ -158,14 +160,68 @@ sessionModule.factory('GetCampusName',
 
 adminModule.factory('GetCampusName',
     [
-        function () {
-            return function (campusCode, campusLocs) {
-                return GetCampusLocation(campusCode, campusLocs);
+        "CampusLocations", function (CampusLocations) {
+
+            return function (campusCode) {
+                var campusName = getCampusLocation(campusCode, CampusLocations);
+                return campusName;
             }
         }
     ]
 );
 
+'use strict';
+
+adminModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
+
+    return $resource("api/specialfeecodes/:term", {term: '@id'});
+
+}]);
+
+sessionModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
+
+    return $resource("api/specialfeecodes/:term", { term: '@id'});
+
+}]);
+
+'use strict';
+
+function GetFeeDescription(fCode, feeCodes) {
+
+    var feeDesc = '', burEntry = '', burCode = '';
+
+    for (var i = 0; i < feeCodes.length; ++i) {
+
+        burEntry = feeCodes[i];
+        burCode = burEntry.substring(0, burEntry.indexOf(' '));
+        
+        if (burCode === fCode) {
+            feeDesc = burEntry.substring(burCode.length, burEntry.length);
+        }
+    }
+
+    return feeDesc;
+}
+
+adminModule.factory('GetSpecialFeeDescription',
+    [
+        function () {
+            return function (fee_code, codeList) {
+                return GetFeeDescription(fee_code, codeList);
+            }
+        }
+    ]
+);
+
+sessionModule.factory('GetSpecialFeeDescription',
+    [
+        function () {
+            return function (fee_code, codeList) {
+                return GetFeeDescription(fee_code, codeList);
+            }
+        }
+    ]
+);
 'use strict';
 
 adminModule.factory('RateTable',
@@ -218,15 +274,15 @@ adminModule.controller("burQueueCtrl",
                 }
             );
 
-            CampusLocations.query(
-                function (data) {
-                    $scope.campusLocations = data;
-                }
-            );
-
             SessionCodes.get(
                 function (data) {       // lookup table to get the Session Name
                     $scope.sessCodes = data.sessionCodes;
+                }
+            );
+
+            CampusLocations.query(
+                function (data) {
+                    $scope.campusLocations = data;
                 }
             );
 
@@ -372,29 +428,46 @@ adminModule.controller("burQueueCtrl",
                 };
             };  // scheduleGridOptions
 
-            $scope.sessionBrkGridOptions = function (dataItem) {
-                return {
-                        dataSource: {
-                            data: dataItem.sessionBreaks,
-                            pageSize: 5,
-                            schema: {
-                                model: {
-                                    fields: {
-                                        startDate: { type: "date" },
-                                        endDate: { type: "date" }
-                                    }
-                                }
+
+    $scope.specialFeeGridOptions = function (dataItem) {
+        return {
+            dataSource: {
+                data: dataItem.specialFees
+            },
+            scrollable: false,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: "feeCode", title: "Fee Code", width: "100px" },
+                { field: "amount", title: "Amount", width: "100px" },
+                { field: "assessedTo", title: "Assessed To", width: "100px" }
+            ]
+        };
+    };  // specialFeeGridOptions
+
+    $scope.sessionBrkGridOptions = function (dataItem) {
+        return {
+                dataSource: {
+                    data: dataItem.sessionBreaks,
+                    pageSize: 5,
+                    schema: {
+                        model: {
+                            fields: {
+                                startDate: { type: "date" },
+                                endDate: { type: "date" }
                             }
-                        },
-                        scrollable: false,
-                        sortable: true,
-                        pageable: true,
-                        columns: [
-                            { field: "startDate",   title: "Start Date",format: "{0:MMM dd, yyyy}" },
-                            { field: "endDate",     title: "End Date",  format: "{0:MMM dd, yyyy}" }
-                        ]
-                    };
-            };  // sessionBrkGridOptions
+                        }
+                    }
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "startDate",   title: "Start Date",format: "{0:MMM dd, yyyy}" },
+                    { field: "endDate",     title: "End Date",  format: "{0:MMM dd, yyyy}" }
+                ]
+            };
+    };  // sessionBrkGridOptions
 
             $scope.ChangeBurStatus = function (submID, burStatus)
             {
@@ -482,15 +555,15 @@ adminModule.controller("faoQueueCtrl",
                 }
             );
 
-            CampusLocations.query(
-                function (data) {
-                    $scope.campusLocations = data;
-                }
-            );
-
             SessionCodes.get(
                 function (data) {       // lookup table to get the Session Name
                     $scope.sessCodes = data.sessionCodes;
+                }
+            );
+
+            CampusLocations.query(
+                function (data) {
+                    $scope.campusLocations = data;
                 }
             );
 
@@ -530,29 +603,32 @@ adminModule.controller("faoQueueCtrl",
                                             firstDayForFinalGrading:
                                                 $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
-                                                $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                            rateType: RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
-                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
-                                            flatRateAmount: subm.session.flatRateAmount,
-                                            flatRateUnitsMin: subm.session.flatRateUnitsMin,
-                                            flatRateUnitsMax: subm.session.flatRateUnitsMax,
-                                            owningSchool: subm.session.owningSchool,
-                                            owningDepartment: subm.session.owningDepartment,
-                                            userContact: subm.session.userContact,
-                                            requestDate: $filter('date')(subm.session.requestDate, "mediumDate"),
-                                            sections: subm.session.sections,
-                                            sessionBreaks: subm.session.sessionBreaks,
-                                            comments: subm.session.comments,
-                                            faoAction: subm.faoAction,
-                                            faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
-                                            faoActionReason: subm.faoActionReason,
-                                            rnrAction: subm.rnrAction,
-                                            rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason: subm.rnrActionReason,
-                                            burAction: subm.burAction,
-                                            burActionDate: $filter('date')(subm.burActionDate, "mediumDate"),
-                                            burActionReason: subm.burActionReason
-                                        };
+                                                                $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
+                                            rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
+                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
+                                            flatRateAmount      : subm.session.flatRateAmount,
+                                            flatRateUnitsMin    : subm.session.flatRateUnitsMin,
+                                            flatRateUnitsMax    : subm.session.flatRateUnitsMax,
+                                            gradFlatRateUnitsMin: subm.session.gradFlatRateUnitsMin,
+                                            gradFlatRateUnitsMax: subm.session.gradFlatRateUnitsMax,
+                                            owningSchool        : subm.session.owningSchool,
+                                            owningDepartment    : subm.session.owningDepartment,
+                                            userContact         : subm.session.userContact,
+                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
+                                            sections            : subm.session.sections,
+                                            sessionBreaks       : subm.session.sessionBreaks,
+                                            specialFees         : subm.session.specialFees,
+                                            comments            : subm.session.comments,
+                                            faoAction           : subm.faoAction,
+                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
+                                            faoActionReason     : subm.faoActionReason,
+                                            rnrAction           : subm.rnrAction,
+                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                            rnrActionReason     : subm.rnrActionReason,
+                                            burAction           : subm.burAction,
+                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
+                                            burActionReason     : subm.burActionReason
+                                    };
                                     }));
                             $scope.spinningWheel.center().close();
                         }, function (error) {
@@ -637,8 +713,24 @@ adminModule.controller("faoQueueCtrl",
                 };
             };
 
-            $scope.sessionBrkGridOptions = function (dataItem) {
-                return {
+        $scope.specialFeeGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.specialFees
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "feeCode", title: "Fee Code", width: "100px" },
+                    { field: "amount", title: "Amount", width: "100px" },
+                    { field: "assessedTo", title: "Assessed To", width: "100px" }
+                ]
+            };
+        };
+
+        $scope.sessionBrkGridOptions = function (dataItem) {
+            return {
                     dataSource: {
                         data: dataItem.sessionBreaks,
                         pageSize: 5,
@@ -765,15 +857,15 @@ adminModule.controller("rnrQueueCtrl",
                 }
             );
 
-            CampusLocations.query(
-                function (data) {
-                    $scope.campusLocations = data;
-                }
-            );
-
             SessionCodes.get(
                 function (data) {       // lookup table to get the Session Name
                     $scope.sessCodes = data.sessionCodes;
+                }
+            );
+
+            CampusLocations.query(
+                function (data) {
+                    $scope.campusLocations = data;
                 }
             );
 
@@ -917,29 +1009,45 @@ adminModule.controller("rnrQueueCtrl",
                 };
             };
 
-            $scope.sessionBrkGridOptions = function (dataItem) {
-                return {
-                    dataSource: {
-                        data: dataItem.sessionBreaks,
-                        pageSize: 5,
-                        schema: {
-                            model: {
-                                fields: {
-                                    startDate: { type: "date" },
-                                    endDate: { type: "date" }
-                                }
+        $scope.specialFeeGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.specialFees
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "feeCode", title: "Fee Code", width: "100px" },
+                    { field: "amount", title: "Amount", width: "100px" },
+                    { field: "assessedTo", title: "Assessed To", width: "100px" }
+                ]
+            };
+        };
+
+        $scope.sessionBrkGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.sessionBreaks,
+                    pageSize: 5,
+                    schema: {
+                        model: {
+                            fields: {
+                                startDate: { type: "date" },
+                                endDate: { type: "date" }
                             }
                         }
-                    },
-                    scrollable: false,
-                    sortable: true,
-                    pageable: true,
-                    columns: [
-                        { field: "startDate",   title: "Start Date",    format: "{0:MMM dd, yyyy}" },
-                        { field: "endDate",     title: "End Date",      format: "{0:MMM dd, yyyy}" }
-                    ]
-                };
-            };  // $scope.sessionBrkGridOptions
+                    }
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "startDate",   title: "Start Date",    format: "{0:MMM dd, yyyy}" },
+                    { field: "endDate",     title: "End Date",      format: "{0:MMM dd, yyyy}" }
+                ]
+            };
+        };  // $scope.sessionBrkGridOptions
 
             $scope.rejectSess = {};
 
@@ -1097,8 +1205,27 @@ adminModule.controller("rnrQueueCtrl",
                 return;
             }   // EmailResultAndUpdateList()
 
-            $(document).ready(function () {
-                $scope.spinningWheel.center().open();
-            })
+        $scope.assessDecode = function (aCode) {
+
+            var assessTo = "";
+
+            switch (aCode) {
+                case 'G':
+                    assessTo = "Graduate";
+                    break;
+                case 'U':
+                    assessTo = "Undergraduate";
+                    break;
+                case 'B':
+                    assessTo = "All";
+                    break;
+            }
+            return assessTo;
+        }
+
+        $(document).ready(function () {
+            $scope.spinningWheel.center().open();
+            $scope.rates = RateTable.query();
+        })
 
     }]);

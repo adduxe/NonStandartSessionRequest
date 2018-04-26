@@ -1086,8 +1086,6 @@ sessionModule.controller("sessionRequestCtrl",
                 submitDate: "",
             };
 
-            $scope.sess001Dates = {
-
             PopulateUscHolidays();
 
             InitializeVariables();
