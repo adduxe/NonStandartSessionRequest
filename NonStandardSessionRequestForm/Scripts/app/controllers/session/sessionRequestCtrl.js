@@ -338,7 +338,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
 
                 if (termHasRates) {
-                    return termRateType.rateTypes.map(function (rateType) {
+                    return termRateType.termRates.map(function (rateType) {
                         return {
                             rateCode: rateType.rateTypeCode,
                             rateName: rateType.rateTypeDesc
@@ -416,7 +416,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                             if (value.term == $scope.session.academicTerm) {
 
-                                angular.forEach(value.rateTypes, function (value) {
+                                angular.forEach(value.termRates, function (value) {
 
                                     if (value.rateTypeCode == $scope.session.rateType) {
 
@@ -836,15 +836,32 @@ sessionModule.controller("sessionRequestCtrl",
 
         $(document).ready(function () {
 
-            $scope.sessionCodes = SessionCodes;     // get the Session Codes for the Autocomplete feature on the Session field.
+            SessionCodes.get(function (data) {
 
-            PopulateSemesterDropdown();             // calculates the semester options for the user
+                var sessCodes = [];
+                var data_codes = data.sessionCodes;
 
-            $scope.earliestDate = SemStartDates.sStart;      // Ultimate earliest date.  Do not accept any date before this date in any field.
+                if (data_codes != null) {
+
+                    for (var i = 0; i < data_codes.length; ++i) {
+                        sessCodes[i] = data_codes[i].sessionCode + "  " + data_codes[i].sessionDesc;
+                    }
+                }
+
+                $scope.sessionCodes = sessCodes;    //  note: $scope.sessionCodes = SessionCodes.get().sessionCodes   will not work because
+            })                                              // it's an asynchronous call
+
+            PopulateSemesterDropdown();                     // calculates the semester options for the user
+
+            $scope.earliestDate = SemStartDates.sStart;     // Ultimate earliest date.  Do not accept any date before this date in any field.
 
             GetRateTable();                                 // Reads the rate table from the database
 
-        $scope.campusLocs = CampusLocations;
+            $scope.campusLocs = CampusLocations.query(function() {          // Add the Others location only if something is returned from DB
+                $scope.campusLocs.push(
+                    { campusCode: "OTH", campusName: "Other Location" }
+                );
+            });
 /*
                                 2017 	                2018 	                2019 	                2020
         New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1

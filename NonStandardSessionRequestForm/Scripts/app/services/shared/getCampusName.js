@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-function GetCampusName(cCode, cLocations) {
+function GetCampusLocation(cCode, cLocations) {
 
     var campusName = "";
 
@@ -13,23 +13,21 @@ function GetCampusName(cCode, cLocations) {
     return campusName;
 }
 
-adminModule.factory('GetCampusName',
+sessionModule.factory('GetCampusName',
     [
-        "CampusLocations", function(CampusLocations){
-
-            return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+        function () {
+            return function (campusCode, campusLocs) {
+                return GetCampusLocation(campusCode, campusLocs);
             }
         }
     ]
 );
 
-sessionModule.factory('GetCampusName',
+adminModule.factory('GetCampusName',
     [
-        "CampusLocations", function (CampusLocations) {
-
-            return function (campusCode) {
-                return GetCampusName(campusCode, CampusLocations)
+        function () {
+            return function (campusCode, campusLocs) {
+                return GetCampusLocation(campusCode, campusLocs);
             }
         }
     ]
