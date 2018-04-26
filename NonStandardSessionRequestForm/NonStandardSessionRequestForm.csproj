@@ -373,6 +373,7 @@
     <Content Include="Scripts\appbundle.min.js">
       <DependentUpon>appbundle.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\app\services\admin\getSessionNameService.js" />
     <Content Include="Scripts\app\services\session\semStartDatesService.js" />
     <Content Include="Scripts\app\services\shared\campusLocationsService.js" />
     <Content Include="Scripts\app\services\shared\getCampusName.js" />

@@ -1,29 +1,27 @@
-﻿function GetSessionName(sessCode, sCodes) {
-
-    var sessionName = '';
-
-    for (var i = 0; i < sCodes.length; ++i) {
-        if (sCodes[i].sessionCode == sessCode) {
-            sessionName = sCodes[i].sessionDesc;
-            break;
-        }
-    }
-
-    return sessionName;
-}   // GetSessionName()
-
+﻿
 adminModule.controller("faoQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "GetCampusName", "CampusLocations", "SessionCodes",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "GetCampusName", "CampusLocations", "SessionCodes", "GetSessionName",
 
-        function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, GetCampusName, CampusLocations, SessionCodes) {
+        function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, GetCampusName, CampusLocations, SessionCodes, GetSessionName) {
+
+            RateTable.query(
+                function (data) {
+                    $scope.rates = data;
+                }
+            );
+
+            CampusLocations.query(
+                function (data) {
+                    $scope.campusLocations = data;
+                }
+            );
 
             SessionCodes.get(
                 function (data) {       // lookup table to get the Session Name
                     $scope.sessCodes = data.sessionCodes;
                 }
             );
-
 
             $scope.dataSource = new kendo.data.DataSource({
 
@@ -279,14 +277,6 @@ adminModule.controller("faoQueueCtrl",
             $(document).ready(function () {
 
                 $scope.spinningWheel.center().open();
-
-                $scope.rates = RateTable.query();
-
-                CampusLocations.query(                      // lookup table to decode the Campus Location code
-                    function (data) {
-                        $scope.campusLocations = data;
-                    }
-                );
 
             })   // function ($scope...
         }
