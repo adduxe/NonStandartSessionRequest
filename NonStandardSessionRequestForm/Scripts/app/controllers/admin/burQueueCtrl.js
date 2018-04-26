@@ -164,29 +164,46 @@
                 };
             };  // scheduleGridOptions
 
-            $scope.sessionBrkGridOptions = function (dataItem) {
-                return {
-                        dataSource: {
-                            data: dataItem.sessionBreaks,
-                            pageSize: 5,
-                            schema: {
-                                model: {
-                                    fields: {
-                                        startDate: { type: "date" },
-                                        endDate: { type: "date" }
-                                    }
-                                }
+
+    $scope.specialFeeGridOptions = function (dataItem) {
+        return {
+            dataSource: {
+                data: dataItem.specialFees
+            },
+            scrollable: false,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { field: "feeCode", title: "Fee Code", width: "100px" },
+                { field: "amount", title: "Amount", width: "100px" },
+                { field: "assessedTo", title: "Assessed To", width: "100px" }
+            ]
+        };
+    };  // specialFeeGridOptions
+
+    $scope.sessionBrkGridOptions = function (dataItem) {
+        return {
+                dataSource: {
+                    data: dataItem.sessionBreaks,
+                    pageSize: 5,
+                    schema: {
+                        model: {
+                            fields: {
+                                startDate: { type: "date" },
+                                endDate: { type: "date" }
                             }
-                        },
-                        scrollable: false,
-                        sortable: true,
-                        pageable: true,
-                        columns: [
-                            { field: "startDate",   title: "Start Date",format: "{0:MMM dd, yyyy}" },
-                            { field: "endDate",     title: "End Date",  format: "{0:MMM dd, yyyy}" }
-                        ]
-                    };
-            };  // sessionBrkGridOptions
+                        }
+                    }
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "startDate",   title: "Start Date",format: "{0:MMM dd, yyyy}" },
+                    { field: "endDate",     title: "End Date",  format: "{0:MMM dd, yyyy}" }
+                ]
+            };
+    };  // sessionBrkGridOptions
 
             $scope.ChangeBurStatus = function (submID, burStatus)
             {

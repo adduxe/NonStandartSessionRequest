@@ -11,7 +11,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers
         {
             var user = new UserHelper();
 
-            ViewBag.Title = "Non-standard Session Request";
+            ViewBag.Title = "Session Request";
             ViewBag.ShibCollege = user.School;
             ViewBag.ShibDepartment = user.Department;
             ViewBag.ShibUserName = user.FirstName + " " + user.Surname;

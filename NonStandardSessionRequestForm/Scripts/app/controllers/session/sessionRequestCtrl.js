@@ -2,8 +2,8 @@
 
 sessionModule.controller("sessionRequestCtrl",
 
-       ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "$scope", "$http", "$location", "$rootScope",
-    function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, $scope, $http, $location, $rootScope) {
+    ["RateTable", "Sessions", "Get001Dates", "SessionCodes", "CampusLocations", "SemStartDates", "GetSpecialFeeCodes", "$scope", "$http", "$location", "$rootScope",
+        function (RateTable, Sessions, Get001Dates, SessionCodes, CampusLocations, SemStartDates, GetSpecialFeeCodes, $scope, $http, $location, $rootScope) {
 
         $scope.MAXUNITS = 40;
 
@@ -20,7 +20,13 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.session.sessionBreaks.push(semBreak);
             }
             return;
-        }   // AddSemesterBreaks()
+        }                  // AddSemesterBreaks()
+
+
+        $scope.AddSpecialFee = function () {
+            var specialFee = { feeCode: "", amount: "", assessedTo: "" };
+            $scope.session.specialFees.push(specialFee);
+        }
 
         Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
 
@@ -38,7 +44,6 @@ sessionModule.controller("sessionRequestCtrl",
 
             return Math.floor(dateDiff / divideBy[datepart]);
         }   // Date.dateDiff
-
 
         function AdjustDate(newDate)                                // Computes a new date incrementing the day if it falls on a weekend or a holiday.
         {
@@ -82,8 +87,7 @@ sessionModule.controller("sessionRequestCtrl",
             while ((newDate.getDay() == 0) || (newDate.getDay() == 6) || (holidays.indexOf(newDtmonthDay) > -1));
 
             return newDate;
-        }       // AdjustDate()
-
+        }                            // AdjustDate()
 
         function ComputeDate(startDate, endDate, percentAdd) {      //  1) Calculates computed dates given the:
                                                                     //      a) start date
@@ -103,8 +107,7 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             return ((adjustedDate.getMonth() + 1) + '/' + adjustedDate.getDate() + '/' + adjustedDate.getFullYear());
-        }   // ComputeDate()
-
+        }    // ComputeDate()
 
         function convDateToString(givenDate) {
 
@@ -115,8 +118,7 @@ sessionModule.controller("sessionRequestCtrl",
                 dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
             }
             return dateString;
-        }   // convDateToString()
-
+        }                    // convDateToString()
 
         $scope.ClassDatesChanged = function () {                    // Validate the Class Start and End dates
 
@@ -176,7 +178,7 @@ sessionModule.controller("sessionRequestCtrl",
                 }
             }   // if (($scope...
             return null;
-        }       // ClassDateChanged()
+        }                  // ClassDateChanged()
 
 
         function ComputeDates(beginDate, endDate) {
@@ -185,7 +187,7 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.session.lastDayForEnrollmentOptionChange = ComputeDate(beginDate, endDate, 40);  // Last day to Change Enrollment Options (40%)
             $scope.session.lastDayForWithdrawal = ComputeDate(beginDate, endDate, 80);              // Last Day to Withdraw (80%)
             return;
-        }   // ComputeDates()
+        }               // ComputeDates()
 
 
         $scope.FinalsDatesChanged = function () {
@@ -248,9 +250,8 @@ sessionModule.controller("sessionRequestCtrl",
                 var lastDayGradingDt = initialLastDay;
                 $scope.session.lastDayForFinalGrading = (lastDayGradingDt.getMonth() + 1) + '/' + lastDayGradingDt.getDate() + '/' + lastDayGradingDt.getFullYear();
             }   // if (($scope...
-        }   // FinalsDatesChanged()
+        }                 // FinalsDatesChanged()
 
-            // Add a Section functionality
         $scope.AddSection = function () {
 
             var section = {
@@ -268,7 +269,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.session.sections.push(section);
             return;
-        }
+        }                         // Add a Section functionality
 
         $scope.AddSchedule = function (thisSection) {           // Adding a Class Schedule functionality
 
@@ -276,7 +277,27 @@ sessionModule.controller("sessionRequestCtrl",
 
             thisSection.schedules.push(sched);
             return;
-        }
+        }   // AddSchedule
+
+
+        $scope.GetSpecialFeesByTerm = function () {     // Populates the Special fee code dropdown depending on the semester selected by user.
+
+            GetSpecialFeeCodes.query(
+
+                { term: $scope.session.academicTerm },
+
+                function (data) {
+                    $scope.SpecialFeeList = data;
+                },
+
+                function (err) {
+                    $scope.SpecialFeeList = '';
+                    alert("No Special Fee Codes found for term " + $scope.session.academicTerm);
+                    console.log(err);
+                }
+            );
+        }   // GetSpecialFeesByTerm
+
 
         $scope.GetDatesAndRates = function () {
 
@@ -359,8 +380,11 @@ sessionModule.controller("sessionRequestCtrl",
             if ($scope.session.rateType > ''){
                 $scope.SetRates();
             }
+
+            $scope.GetSpecialFeesByTerm();  // Limit the Special Fees selection specific to the chosen semester only.
+
             return;
-        }   // GetDatesAndRates()
+        }                   // GetDatesAndRates()
 
         $scope.SetRates = function () {                     // setting the value of the Tuition per Unit and Flat Rate fields
 
@@ -372,6 +396,12 @@ sessionModule.controller("sessionRequestCtrl",
                 $('#flatUnitsMin').prop('readonly', true);
                 $('#flatUnitsMax').prop('readonly', true);
 
+                $scope.session.gradFlatRateUnitsMin = 98;
+                $scope.session.gradFlatRateUnitsMax = 99;
+
+                $('#gradFlatUnitsMin').prop('readonly', true);
+                $('#gradFlatUnitsMax').prop('readonly', true);
+
             } else {
 
                 $scope.session.flatRateUnitsMin = '';
@@ -379,6 +409,12 @@ sessionModule.controller("sessionRequestCtrl",
 
                 $('#flatUnitsMin').prop('readonly', false);
                 $('#flatUnitsMax').prop('readonly', false);
+
+                $scope.session.gradFlatRateUnitsMin = '';
+                $scope.session.gradFlatRateUnitsMax = '';
+
+                $('#gradFlatUnitsMin').prop('readonly', false);
+                $('#gradFlatUnitsMax').prop('readonly', false);
             }
 
             $scope.session.flatRateAmount = '';
@@ -396,6 +432,10 @@ sessionModule.controller("sessionRequestCtrl",
 
                         $scope.session.flatRateUnitsMin = '';
                         $scope.session.flatRateUnitsMax = '';
+
+                        $scope.session.gradFlatRateUnitsMin = '';
+                        $scope.session.gradFlatRateUnitsMax = '';
+
                         break;
 
                     case 'OTHU':
@@ -405,6 +445,10 @@ sessionModule.controller("sessionRequestCtrl",
 
                         $scope.session.flatRateUnitsMin = 98;
                         $scope.session.flatRateUnitsMax = 99;
+
+                        $scope.session.gradFlatRateUnitsMin = 98;
+                        $scope.session.gradFlatRateUnitsMax = 99;
+
                         break;
 
                     default:
@@ -439,6 +483,10 @@ sessionModule.controller("sessionRequestCtrl",
 
                                                 $scope.session.flatRateUnitsMin = '';
                                                 $scope.session.flatRateUnitsMax = '';
+
+                                                $scope.session.gradFlatRateUnitsMin = '';
+                                                $scope.session.gradFlatRateUnitsMax = '';
+
                                                 break;                                                
 
                                             case (value.rateTypeCode == "ZERO"):
@@ -446,12 +494,19 @@ sessionModule.controller("sessionRequestCtrl",
 
                                                 $scope.session.flatRateUnitsMin = 98;
                                                 $scope.session.flatRateUnitsMax = 99;
+
+                                                $scope.session.gradFlatRateUnitsMin = 98;
+                                                $scope.session.gradFlatRateUnitsMax = 99;
+
                                                 break;
 
                                             default:
 
                                                 $scope.session.flatRateUnitsMin = '';
                                                 $scope.session.flatRateUnitsMax = '';
+
+                                                $scope.session.gradFlatRateUnitsMin = '';
+                                                $scope.session.gradFlatRateUnitsMax = '';
                                                 break;                                                
                                         }   // switch(true)
                                     }
@@ -462,9 +517,8 @@ sessionModule.controller("sessionRequestCtrl",
                 }   // switch()
             }   // if ($scope.session..)
             return;
-        }   // SetRates()
+        }                           // SetRates()
 
-        
         function PopulateSemesterDropdown() {
 
             var currDate = new Date();
@@ -506,8 +560,91 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             $scope.semesters = semChoices;
-        }   // PopulateSemesterDropdown
+        }                     // PopulateSemesterDropdown
 
+        function PopulateUscHolidays()
+        {
+            /*
+                                            2017 	                2018 	                2019 	                2020
+                    New Year’s Day 	        Mon 1/2 	            Mon 1/1 	            Tue 1/1 	            Wed 1/1
+                    Martin Luther King Day 	Mon 1/16 	            Mon 1/15 	            Mon 1/21 	            Mon 1/20
+                    Presidents’ Day 	    Mon 2/20 	            Mon 2/19 	            Mon 2/18 	            Mon 2/17
+                    Memorial Day 	        Mon 5/29 	            Mon 5/28 	            Mon 5/27 	            Mon 5/25
+                    Independence Day 	    Mon 7/3-Tue 7/4         Wed 7/4 	            Thu 7/4-Fri 7/5         Fri 7/3
+                    Labor Day 	            Mon 9/4 	            Mon 9/3 	            Mon 9/2 	            Mon 9/7
+                    Thanksgiving 	        Thu 11/23–Fri 11/24     Thu 11/22–Fri 11/23     Thu 11/28–Fri 11/29 	Thu 11/26–Fri 11/27
+                    Christmas 	            Mon 12/25 	            Mon 12/24–Tue 12/25     Wed 12/25 	            Fri 12/25
+                    Winter Recess 	        Tue 12/26–Fri 12/29     Wed 12/26–Mon 12/31     Thu 12/26–Tue 12/31 	Mon 12/28–Thu 12/31
+            */
+            holidays = [
+                "1/2/2017", "1/16/2017", "2/20/2017", "5/29/2017", "7/3/2017", "7/4/2017", "9/14/2017", "11/23/2017", "11/24/2017", "11/24/2017", "12/25/2017", "12/26/2017", "12/27/2017", "12/28/2017", "12/29/2017",
+                "1/1/2018", "1/15/2018", "2/19/2018", "5/28/2018", "7/4/2018", "9/3/2018", "11/22/2018", "11/23/2018", "12/24/2018", "12/25/2018", "12/25/2018", "12/26/2018", "12/27/2018", "12/28/2018", "12/29/2018", "12/30/2017", "12/31/2018",
+                "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019", "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
+                "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020", "11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
+            ];
+        }
+
+        function InitializeVariables()
+        {
+            $scope.session = {
+                academicTerm: "",
+                sessionCode: "",
+                sessionName: "",
+                owningSchool: "",     // from Shib
+                owningDepartment: "",     // from Shib
+                userContact: "",     // from Shib
+                userEmail: "",     // from Shib
+                userPhone: "",     // from Shib
+                firstDayOfClass: "",
+                lastDayOfClass: "",
+                lastDayForAddDrop: "",
+                lastDayForEnrollmentOptionChange: "",
+                lastDayForWithdrawal: "",
+                firstDayOfFinals: "",
+                firstDayForFinalGrading: "",
+                lastDayForFinalGrading: "",
+                isClassHeldAtUpc: null,
+                uscCampusLocation: "",
+                otherCampusLocation: "",
+                rateType: "",
+                ratePerUnitAmount: "",
+                flatRateAmount: "",
+                flatRateUnitsMin: "",
+                flatRateUnitsMax: "",
+                gradFlatRateUnitsMin: "",
+                gradFlatRateUnitsMax: "",
+                comments: "",
+                sessionBreaks: [],
+                sections: [],
+                submitDate: "",
+                specialFees: []
+            };
+
+            $scope.sess001Dates = {
+
+                firstDayOfClass: "",
+                lastDayOfClass: "",
+                lastDayForAddDrop: "",
+                lastDayForWithdrawal: "",
+                lastDayForEnrollmentOptionChange: "",
+                firstDayForFinalGrading: "",
+                lastDayForFinalGrading: "",
+                sessBreak1Begin: "",
+                sessBreak1End: "",
+                sessBreak2Begin: "",
+                sessBreak2End: ""
+            }
+
+            // field validation flags
+            $scope.requireUSCLoc = false;
+            $scope.requireOtherLoc = false;
+            $scope.requireUnitRange = false;
+            $scope.ratesOK = true;
+            $scope.usedFees = [];
+            $scope.requireFees = false;
+
+            return; 
+        }
 
         function areCampusLocFieldsOk() {           // Checks the Campus Location Fields
 
@@ -543,8 +680,7 @@ sessionModule.controller("sessionRequestCtrl",
             }   // switch()
 
             return campusOK;
-        }   // areCampusLocFieldsOk()
-
+        }                         // areCampusLocFieldsOk()
 
         function areRateFieldsOK()              // Checks the Rate Type, Unit Rate Amount, Flat Rate Amount, and Flat Unit Range Fields
         {
@@ -621,39 +757,63 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             return rateFieldsOk;
-        }   // areRateFieldsOK()
+        }                               // areRateFieldsOK()
+
+
+        function specialFeesOK(){       // checks to see if all the Special Fee fields (if any) are provided by user
+
+            var allFeesEntered = true;
+            $scope.requireFees = false;
+
+            angular.forEach($scope.session.specialFees, function (eachFee) {
+
+                if (eachFee.feeCode > '') {
+                    if (eachFee.amount == '') {
+                        allFeesEntered = false;
+                        $scope.requireFees = true;
+                    }
+                }
+
+                if (eachFee.amount > '') {
+                    if (eachFee.feeCode == '') {
+                        allFeesEntered = false;
+                        $scope.requireFees = true;
+                    }
+                }
+            });
+
+            return allFeesEntered;
+        }   // specialFeesOK()
 
 
         function sessionBreaksOK()                      // check Session Breaks
         {
             var sessBreaksOK = true;
             var errMsg = "";
-            $scope.requireBreaks = false;
+            $scope.requireBreaks = false;               // to highlight the fields if not provided
 
-            if (!$scope.noBreaks) {                     // 1) is "No Breaks" checkbox unchecked?
+            if ($scope.session.sessionBreaks.length == 0) {     //  - if no Session Breaks entered, error out
 
-                if ($scope.session.sessionBreaks.length == 0) {     //  - if no Session Breaks entered, error out
-                    errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
-                    sessBreaksOK = false;
-                    $scope.requireBreaks = true;
-                } else {                                            // check for blank entries
-                    for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
-                        if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
-                            errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
-                            sessBreaksOK = false;
-                            $scope.requireBreaks = true;
-                        }
+                errMsg = "Either check the No Breaks checkbox or enter Session Breaks";
+                sessBreaksOK = false;
+                $scope.requireBreaks = true;
+
+            } else {                                            // check for blank entries
+                for (var i = 0; i < $scope.session.sessionBreaks.length; ++i) {
+                    if (($scope.session.sessionBreaks[i].startDate == "") || ($scope.session.sessionBreaks[i].endDate == "")) {
+                        errMsg = "Either enter Session Breaks or check the No Breaks checkbox.";
+                        sessBreaksOK = false;
+                        $scope.requireBreaks = true;
                     }
                 }
-            }                                           // 2) if "No Breaks" is checked, no need to check Session Breaks
+            }
 
             if (errMsg > '') {
                 alert(errMsg);
             }
 
             return sessBreaksOK;
-        }   // sessionBreaksOK()
-
+        }                               // sessionBreaksOK()
 
         function IsFormValid() {
 
@@ -671,7 +831,7 @@ sessionModule.controller("sessionRequestCtrl",
 
             for (var i = 0; i < reqdFields.length; ++i) {
                 if (reqdFields[i].length == 0) {
-                    formValid = false; // test
+                    formValid = false;
                     break;
                 }
             };
@@ -685,11 +845,19 @@ sessionModule.controller("sessionRequestCtrl",
             }
 
             if (formValid) {
-                formValid = sessionBreaksOK();                          // Check if the Session Breaks were entered
+                if (!$scope.noBreaks) {                                 // Check session Breaks only if "No Breaks" is unchecked
+                    formValid = sessionBreaksOK();
+                }
+            }
+
+            if (formValid) {
+                if ($scope.session.specialFees.length > 0) {           // Check Special Fees if any were entered.
+                    formValid = specialFeesOK();
+                }
             }
 
             return formValid;
-        }   // IsFormValid()
+        }                                   // IsFormValid()
 
 
         $scope.checkSessBreak = function (i) {
@@ -721,8 +889,7 @@ sessionModule.controller("sessionRequestCtrl",
                 alert(errMsg);
             }
             return;
-
-        }   // checkSessBreak()
+        }                     // checkSessBreak()
 
 
         $scope.deleteBreaks = function () {
@@ -731,8 +898,7 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.session.sessionBreaks = [];  // delete existing breaks
             }
             return;
-        }   // deleteBreaks()
-
+        }                        // deleteBreaks()
 
         $scope.BlankOtherLocation = function () {
 
@@ -741,7 +907,6 @@ sessionModule.controller("sessionRequestCtrl",
             }
             return;
         }
-
 
         $scope.SubmitForm = function () {
 
@@ -771,12 +936,12 @@ sessionModule.controller("sessionRequestCtrl",
             }   // for (var...)
 
             if (($scope.session.ratePerUnitAmount == "TBA") && ($scope.session.flatRateAmount == "TBA")) {
-                $scope.session.ratePerUnitAmount = null;
-                $scope.session.flatRateAmount = null;
+                $scope.session.ratePerUnitAmount = [];
+                $scope.session.flatRateAmount = [];
             }
 
-            $rootScope.savedSession = new Sessions($scope.session);
-
+            $rootScope.savedSession = new Sessions($scope.session);     // needed to save to rootscope 
+                                                                        // to carry over to the submission page.
             $scope.spinningWheel.center().open();
             $rootScope.savedSession.$save(null,
 
@@ -792,14 +957,7 @@ sessionModule.controller("sessionRequestCtrl",
                     }
             );
             return;
-        }   // SubmitForm()
-
-        $scope.rates = [];
-
-        function GetRateTable() {
-            $scope.rates = RateTable.query();
-            return;
-        }
+        }                          // SubmitForm()
 
 
         $scope.CheckRateAmount = function (rateAmount, rateName) {
@@ -828,11 +986,25 @@ sessionModule.controller("sessionRequestCtrl",
                     }
                 }
             }
-
         }   // CheckRateAmount()
 
-        var holidays = [];                                  // holiday needs to be a global that's why it's outside document.ready()
+
+        $scope.checkForDuplicateFee = function (feeCode, i) {
+
+            if ($scope.usedFees.indexOf(feeCode) > -1) {
+                alert("Fee code is already used. Choose a different one.");
+                $scope.session.specialFees[i].feeCode = 0;                 // reset the dropdown if the code is already used.
+            } else {
+                $scope.usedFees[$scope.usedFees.length] = feeCode;      // mark this code so it won't be re-used.
+            }
+            return;
+        }   // checkForDuplicateFee()
+
+
+        $scope.rates = [];                                          // holds the lookup table for the tuition rates per semester
+        var holidays = [];                                          // holiday needs to be a global that's why it's outside document.ready()
         var earliestDate = new Date(SemStartDates.sStart);
+
 
         $(document).ready(function () {
 
@@ -855,7 +1027,9 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.earliestDate = SemStartDates.sStart;     // Ultimate earliest date.  Do not accept any date before this date in any field.
 
-            GetRateTable();                                 // Reads the rate table from the database
+            RateTable.query(function (data) {                       // Reads the rate (per semester) lookup table from the database
+                $scope.rates = data;
+            });                       
 
             $scope.campusLocs = CampusLocations.query(function() {          // Add the Others location only if something is returned from DB
                 $scope.campusLocs.push(
@@ -914,24 +1088,9 @@ sessionModule.controller("sessionRequestCtrl",
 
             $scope.sess001Dates = {
 
-                firstDayOfClass: "",
-                lastDayOfClass: "",
-                lastDayForAddDrop: "",
-                lastDayForWithdrawal: "",
-                lastDayForEnrollmentOptionChange: "",
-                firstDayForFinalGrading: "",
-                lastDayForFinalGrading: "",
-                sessBreak1Begin: "",
-                sessBreak1End: "",
-                sessBreak2Begin: "",
-                sessBreak2End: ""
-            }
+            PopulateUscHolidays();
 
-            // field validation flags
-            $scope.requireUSCLoc = false;
-            $scope.requireOtherLoc = false;
-            $scope.requireUnitRange = false;
-            $scope.ratesOK = true;
+            InitializeVariables();
 
         }); // document.ready()
     }]);    // sessionModule()

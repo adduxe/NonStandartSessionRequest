@@ -162,29 +162,45 @@
                 };
             };
 
-            $scope.sessionBrkGridOptions = function (dataItem) {
-                return {
-                    dataSource: {
-                        data: dataItem.sessionBreaks,
-                        pageSize: 5,
-                        schema: {
-                            model: {
-                                fields: {
-                                    startDate: { type: "date" },
-                                    endDate: { type: "date" }
-                                }
+        $scope.specialFeeGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.specialFees
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "feeCode", title: "Fee Code", width: "100px" },
+                    { field: "amount", title: "Amount", width: "100px" },
+                    { field: "assessedTo", title: "Assessed To", width: "100px" }
+                ]
+            };
+        };
+
+        $scope.sessionBrkGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.sessionBreaks,
+                    pageSize: 5,
+                    schema: {
+                        model: {
+                            fields: {
+                                startDate: { type: "date" },
+                                endDate: { type: "date" }
                             }
                         }
-                    },
-                    scrollable: false,
-                    sortable: true,
-                    pageable: true,
-                    columns: [
-                        { field: "startDate",   title: "Start Date",    format: "{0:MMM dd, yyyy}" },
-                        { field: "endDate",     title: "End Date",      format: "{0:MMM dd, yyyy}" }
-                    ]
-                };
-            };  // $scope.sessionBrkGridOptions
+                    }
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "startDate",   title: "Start Date",    format: "{0:MMM dd, yyyy}" },
+                    { field: "endDate",     title: "End Date",      format: "{0:MMM dd, yyyy}" }
+                ]
+            };
+        };  // $scope.sessionBrkGridOptions
 
             $scope.rejectSess = {};
 
@@ -342,8 +358,27 @@
                 return;
             }   // EmailResultAndUpdateList()
 
-            $(document).ready(function () {
-                $scope.spinningWheel.center().open();
-            })
+        $scope.assessDecode = function (aCode) {
+
+            var assessTo = "";
+
+            switch (aCode) {
+                case 'G':
+                    assessTo = "Graduate";
+                    break;
+                case 'U':
+                    assessTo = "Undergraduate";
+                    break;
+                case 'B':
+                    assessTo = "All";
+                    break;
+            }
+            return assessTo;
+        }
+
+        $(document).ready(function () {
+            $scope.spinningWheel.center().open();
+            $scope.rates = RateTable.query();
+        })
 
     }]);

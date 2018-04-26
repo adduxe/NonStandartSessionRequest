@@ -12,6 +12,8 @@ using System.Web.Http;
 using USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers;
 using UvApi.RnrSWebSess.Client;
 using System.Net.Mail;
+using USC.PE.Api.DTO.RnrApps;
+using System.Collections.Generic;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 {
@@ -171,6 +173,41 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             catch (Exception ex)
             {
                 Log.Logger.Error("Failed to PUT submission! Error: {Error}", ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("specialfeecodes/{term}")]
+        public async Task<IHttpActionResult> GetSpecialFeeCodes(string term) {
+
+            try
+            {
+                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                {
+                    IEnumerable<SpecialFeeCode> feeCodes = client.SpecialFeeCodes.Get(term);
+
+                    if (feeCodes == null)
+                    {
+                        return NotFound();
+                    }
+                    else {
+                        List<string> SFCodes = new List<string>();
+                        foreach (SpecialFeeCode specFeeCode in feeCodes)
+                        {
+                            SFCodes.Add(specFeeCode.FTCode + " " + specFeeCode.FTDescription);
+                        }
+                        return Ok(SFCodes);
+                    }
+                }
+            }
+            catch (HttpOperationException apiEx)
+            {
+                Log.Logger.Error("Failed to GET Special Fee Codes for term " + term + "! Error: {Error}", apiEx.Message);
+                return InternalServerError(apiEx);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to GET Special Fee Codes for " + term + "! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
         }

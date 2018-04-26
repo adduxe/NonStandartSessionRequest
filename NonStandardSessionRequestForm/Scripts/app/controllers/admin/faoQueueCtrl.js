@@ -59,29 +59,32 @@ adminModule.controller("faoQueueCtrl",
                                             firstDayForFinalGrading:
                                                 $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
-                                                $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
-                                            rateType: RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
-                                            ratePerUnitAmount: subm.session.ratePerUnitAmount,
-                                            flatRateAmount: subm.session.flatRateAmount,
-                                            flatRateUnitsMin: subm.session.flatRateUnitsMin,
-                                            flatRateUnitsMax: subm.session.flatRateUnitsMax,
-                                            owningSchool: subm.session.owningSchool,
-                                            owningDepartment: subm.session.owningDepartment,
-                                            userContact: subm.session.userContact,
-                                            requestDate: $filter('date')(subm.session.requestDate, "mediumDate"),
-                                            sections: subm.session.sections,
-                                            sessionBreaks: subm.session.sessionBreaks,
-                                            comments: subm.session.comments,
-                                            faoAction: subm.faoAction,
-                                            faoActionDate: $filter('date')(subm.faoActionDate, "mediumDate"),
-                                            faoActionReason: subm.faoActionReason,
-                                            rnrAction: subm.rnrAction,
-                                            rnrActionDate: $filter('date')(subm.rnrActionDate, "mediumDate"),
-                                            rnrActionReason: subm.rnrActionReason,
-                                            burAction: subm.burAction,
-                                            burActionDate: $filter('date')(subm.burActionDate, "mediumDate"),
-                                            burActionReason: subm.burActionReason
-                                        };
+                                                                $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
+                                            rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
+                                            ratePerUnitAmount   : subm.session.ratePerUnitAmount,
+                                            flatRateAmount      : subm.session.flatRateAmount,
+                                            flatRateUnitsMin    : subm.session.flatRateUnitsMin,
+                                            flatRateUnitsMax    : subm.session.flatRateUnitsMax,
+                                            gradFlatRateUnitsMin: subm.session.gradFlatRateUnitsMin,
+                                            gradFlatRateUnitsMax: subm.session.gradFlatRateUnitsMax,
+                                            owningSchool        : subm.session.owningSchool,
+                                            owningDepartment    : subm.session.owningDepartment,
+                                            userContact         : subm.session.userContact,
+                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate"),
+                                            sections            : subm.session.sections,
+                                            sessionBreaks       : subm.session.sessionBreaks,
+                                            specialFees         : subm.session.specialFees,
+                                            comments            : subm.session.comments,
+                                            faoAction           : subm.faoAction,
+                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate"),
+                                            faoActionReason     : subm.faoActionReason,
+                                            rnrAction           : subm.rnrAction,
+                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate"),
+                                            rnrActionReason     : subm.rnrActionReason,
+                                            burAction           : subm.burAction,
+                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate"),
+                                            burActionReason     : subm.burActionReason
+                                    };
                                     }));
                             $scope.spinningWheel.center().close();
                         }, function (error) {
@@ -166,8 +169,24 @@ adminModule.controller("faoQueueCtrl",
                 };
             };
 
-            $scope.sessionBrkGridOptions = function (dataItem) {
-                return {
+        $scope.specialFeeGridOptions = function (dataItem) {
+            return {
+                dataSource: {
+                    data: dataItem.specialFees
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "feeCode", title: "Fee Code", width: "100px" },
+                    { field: "amount", title: "Amount", width: "100px" },
+                    { field: "assessedTo", title: "Assessed To", width: "100px" }
+                ]
+            };
+        };
+
+        $scope.sessionBrkGridOptions = function (dataItem) {
+            return {
                     dataSource: {
                         data: dataItem.sessionBreaks,
                         pageSize: 5,

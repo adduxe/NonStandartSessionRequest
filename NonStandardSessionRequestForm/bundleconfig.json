@@ -15,7 +15,8 @@
       "Content/site-xs.css",
       "Content/site-md.css",
       "Content/site-lg.css",
-      "Content/site.css"
+      "Content/site.css",
+      "Content/SessionRequest.css"
     ]
   },
 
@@ -37,7 +38,8 @@
       "Scripts/app/Modules.js",
       "Scripts/app/services/session/*.js",
       "Scripts/app/services/shared/*.js",
-      "Scripts/app/controllers/session/*.js" //,
+      "Scripts/app/controllers/session/*.js",
+      "Scripts/app/directives/*.js"
     ]
   },
 

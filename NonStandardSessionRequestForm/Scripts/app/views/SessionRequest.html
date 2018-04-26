@@ -54,7 +54,8 @@
                     <abbr title="Indicate the appropriate tuition rate type for this Session">Tuition Rate Type</abbr>
                 </label>
                 <div class="col-md-8">
-                    <select class="form-control" id="rateType" name="rateType" ng-model="session.rateType" ng-change="SetRates();" ng-required="true">
+                    <select class="form-control" id="rateType" name="rateType" ng-disabled="(session.academicTerm == '')"
+                            ng-model="session.rateType" ng-change="SetRates();" ng-required="true">
                         <option ng-repeat="eachRate in rateTypes" value="{{ eachRate.rateCode }}">{{ eachRate.rateName }}</option>
                     </select>
                 </div>
@@ -82,6 +83,18 @@
                     <abbr title="Click the Add a Section button if you want to provide a list of the sections that will be scheduled in the session you are requesting.">
                         <kendo-button id="addSections" name="addSections" class="form-control uscRedButton" ng-click="AddSection();">
                             Add a Section
+                        </kendo-button>
+                    </abbr>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+                <div class="col-md-8">
+                    <abbr title="Click the Add a Special Fee button if this session requires additional fees">
+                        <kendo-button id="addSpecialFee" name="addSpecialFee" class="form-control uscRedButton" ng-click="AddSpecialFee();" >
+                            Add a Special Fee
                         </kendo-button>
                     </abbr>
                 </div>
@@ -210,7 +223,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
                 <label for="flatUnitsMin" class="col-md-6 control-label">
-                    <abbr title="Tuition flat rate in dollars">Flat Rate Range (units)</abbr>
+                    <abbr title="Tuition flat rate in dollars">Undergraduate Flat Rate Range (units)</abbr>
                 </label>
                 <div class="col-md-6" style="align-items:center;">
                     <input id="flatUnitsMin" name="flatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > '')"
@@ -220,13 +233,25 @@
                            ng-model="session.flatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
                 </div>
             </div>
+            <div class="form-group" ng-class="{'has-error': requireUnitRange && sessionRequestForm.$submitted}">
+                <label for="flatUnitsMin" class="col-md-6 control-label">
+                    <abbr title="Tuition flat rate in dollars">Graduate Flat Rate Range (units)</abbr>
+                </label>
+                <div class="col-md-6" style="align-items:center;">
+                    <input id="gradFlatUnitsMin" name="gradFlatUnitsMin" type="number" min="1" max="{{ MAXUNITS - 1 }}" ng-disabled="!(session.flatRateAmount > '')"
+                           ng-model="session.gradFlatRateUnitsMin" class="form-control" style="width:60px;display:inline;" />
+                    &nbsp;&nbsp;to&nbsp;&nbsp;
+                    <input id="gradFlatUnitsMax" name="gradFlatUnitsMax" type="number" min="2" max="{{ MAXUNITS }}" ng-disabled="!(session.flatRateAmount > '')"
+                           ng-model="session.gradFlatRateUnitsMax" class="form-control" style="width:60px;display:inline;" />
+                </div>
+            </div>
         </div>
         <!-- End of 3rd Column -->
     </div> <!-- class="row" -->
     <!--  Session Breaks section -->
-    <div ng-show="session.sessionBreaks.length" style="background-color:rgba(153,0,0,.7);padding-bottom:15px;color:#ffcc00;">
+    <div ng-show="session.sessionBreaks.length" class="Breaks">
 
-        <div class="row" sstyle="align-self:center;color:#ffcc00;">
+        <div class="row" style="align-self:center;color:#ffcc00;">
             <div class="col-md-1">
             </div>
             <div class="col-md-4" style="text-align:center;">
@@ -261,7 +286,7 @@
     <br />
 
     <!--  Start of Section section -->
-    <div ng-show="session.sections.length" style="background-color:#ffcc00;padding-top:5px;padding-right:10px;border:solid;border-color:white;">
+    <div ng-show="session.sections.length" class="Section">
 
         <div class="row">
             <div class="col-md-12" style="text-align:center;">
@@ -439,6 +464,42 @@
     <!--  End of Section section -->
 
     <br>
+
+    <div class="Fees" ng-show="session.specialFees.length" ng-class="{'has-error': requireFees && sessionRequestForm.$submitted}">
+        <div class="row" style="align-self:center;">
+            <div class="col-md-1"></div>
+            <h4 class="col-md-5">Special Fee</h4>
+            <h4 class="col-md-2">Amount</h4>
+            <h4 class="col-md-2">Assessed to</h4>
+            <h4 class="col-md-2"></h4>
+        </div>
+        <div class="row" ng-repeat="eachFee in session.specialFees">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <select class="form-control" id="sFeeCode" name="sFeeCode" ng-change="checkForDuplicateFee(eachFee.feeCode, $index);"
+                        ng-model="eachFee.feeCode" ng-required="requireFees">
+                    <option ng-repeat="eachFee in SpecialFeeList" value="{{ eachFee.substring(0, eachFee.indexOf(' ')) }}">{{ eachFee }}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="text" maxlength="4" ng-required="requireFees" ng-model="eachFee.amount" numbers-only class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="eachFee.assessedTo">
+                    <option value=""></option>
+                    <option value="G">Graduate</option>
+                    <option value="U">Undergraduate</option>
+                    <option value="B">All</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <a href="javascript:;" class="uscRedButton" title="Delete this Special Fee" ng-click="session.specialFees.splice($index,1);">
+                    [X] Remove
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="row" style="align-content:center;" ng-init="(formError = '')">
         <div class="col-md-5 text-center red">
             <b>{{ formError }}</b>
@@ -453,7 +514,7 @@
     <div kendo-window="spinningWheel" k-modal="true" style="display:none;">
         Processing. Please wait...
         <img src="../../../Content/images/gears.gif" />
-        
+
     </div>
 
     <input type="hidden" ng-model="session.firstDayForFinalGrading" value="" />
