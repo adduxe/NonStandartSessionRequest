@@ -364,7 +364,7 @@
     <None Include="Scripts\app\controllers\session\SessionResultCtrl.js" />
     <None Include="Scripts\app\services\admin\emailService.js" />
     <None Include="Scripts\app\services\admin\rateTypesService.js" />
-    <None Include="Scripts\app\services\session\sessionCodesService.js" />
+    <None Include="Scripts\app\services\shared\sessionCodesService.js" />
     <None Include="Scripts\app\services\session\get001DatesService.js" />
     <None Include="Scripts\app\services\admin\submissionsService.js" />
     <None Include="Scripts\app\Modules.js" />

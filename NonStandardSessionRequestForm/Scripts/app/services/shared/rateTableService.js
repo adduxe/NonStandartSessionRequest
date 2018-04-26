@@ -1,17 +1,20 @@
 ﻿'use strict';
 
-adminModule.factory('RateTable', ['$resource', function ($resource) {
+adminModule.factory('RateTable',
 
-    return $resource(
-        "api/ratetable"
-    );
+    [   '$resource',
+        function ($resource) {
+            return $resource("api/ratetable");
+        }
+    ]
+);
 
-}]);
+sessionModule.factory('RateTable',
 
-sessionModule.factory('RateTable', ['$resource', function ($resource) {
+    [   '$resource',
+        function ($resource) {
 
-    return $resource(
-        "api/ratetable"
-    );
-
-}])
+            return $resource("api/ratetable");
+        }
+    ]
+);

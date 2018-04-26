@@ -95,15 +95,6 @@ sessionModule.factory('SemStartDates', ['$resource', function ($resource) {
 }])
 'use strict';
 
-sessionModule.factory('SessionCodes', ['$resource', function ($resource) {
-
-    return $resource(
-        'api/sessioncodes' 
-    );
-
-}])
-'use strict';
-
 sessionModule.factory('Sessions', ['$resource', function ($resource) {
 
     return $resource(
@@ -162,21 +153,44 @@ adminModule.factory('GetCampusName',
 
 'use strict';
 
-adminModule.factory('RateTable', ['$resource', function ($resource) {
+adminModule.factory('RateTable',
 
-    return $resource(
-        "api/ratetable"
-    );
+    [   '$resource',
+        function ($resource) {
+            return $resource("api/ratetable");
+        }
+    ]
+);
 
-}]);
+sessionModule.factory('RateTable',
 
-sessionModule.factory('RateTable', ['$resource', function ($resource) {
+    [   '$resource',
+        function ($resource) {
 
-    return $resource(
-        "api/ratetable"
-    );
+            return $resource("api/ratetable");
+        }
+    ]
+);
+'use strict';
 
-}])
+sessionModule.factory('SessionCodes',
+    [
+        '$resource',
+        function ($resource) {
+            return $resource('api/sessioncodes');
+        }
+    ]
+);
+
+adminModule.factory('SessionCodes',
+    [
+        '$resource',
+        function ($resource) {
+            return $resource('api/sessioncodes');
+        }
+    ]
+);
+
 "use strict";
 sessionModule.controller("indexCtrl", ["$scope", "$q", function ($scope, $q) {
     var init = function () {
