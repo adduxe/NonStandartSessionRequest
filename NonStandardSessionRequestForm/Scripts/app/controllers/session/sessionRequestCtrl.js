@@ -359,6 +359,8 @@ sessionModule.controller("sessionRequestCtrl",
                 }
 
                 if (termHasRates) {
+
+
                     return termRateType.termRates.map(function (rateType) {
                         return {
                             rateCode: rateType.rateTypeCode,
@@ -371,6 +373,20 @@ sessionModule.controller("sessionRequestCtrl",
             }   // selectTermRateType            
 
             $scope.rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
+            $scope.rateTypes.sort(
+                function (a, b) {
+                    var textA = a.rateName.toUpperCase();
+                    var textB = b.rateName.toUpperCase();
+                    if (textA < textB) {
+                        return -1;
+                    }
+                    if (textA > textB) {
+                        return 1;
+                    }
+                    return 0;
+                }
+            );
+
 
             $scope.rateTypes.push(
                 { rateCode: "OTHU", rateName: "Other Unit Rate" },

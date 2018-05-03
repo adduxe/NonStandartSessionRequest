@@ -12,27 +12,3 @@ function getCampusLocation(cCode, cLocations) {
     }
     return campusLocation;
 }
-
-sessionModule.factory('GetCampusName',
-    [
-        "CampusLocations", function(CampusLocations){
-
-            return function (campusCode) {
-                var campusName = getCampusLocation(campusCode, CampusLocations);
-                return campusName;
-            }
-        }
-    ]
-);
-
-adminModule.factory('GetCampusName',
-    [
-        "CampusLocations", function (CampusLocations) {
-
-            return function (campusCode) {
-                var campusName = getCampusLocation(campusCode, CampusLocations);
-                return campusName;
-            }
-        }
-    ]
-);

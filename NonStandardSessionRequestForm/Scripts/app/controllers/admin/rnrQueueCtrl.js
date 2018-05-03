@@ -1,8 +1,8 @@
 ﻿adminModule.controller("rnrQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "GetCampusName", "CampusLocations", "SessionCodes", "GetSessionName",
+    ["$scope", "$filter", "Submissions", "WriteToSis", "EmailResult", "RateTable", "RateDescription", "CampusLocations", "SessionCodes", "GetSessionName",
 
-        function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, GetCampusName, CampusLocations, SessionCodes, GetSessionName) {
+        function ($scope, $filter, Submissions, WriteToSis, EmailResult, RateTable, RateDescription, CampusLocations, SessionCodes, GetSessionName) {
 
             RateTable.query(
                 function (data) {
@@ -39,7 +39,7 @@
                                             userEmail           : subm.session.userEmail,
                                             userPhone           : subm.session.userPhone,
                                             isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
-                                            uscCampusLocation   : GetCampusName(subm.session.uscCampusLocation, $scope.campusLocations),
+                                            uscCampusLocation   : getCampusLocation(subm.session.uscCampusLocation, $scope.campusLocations),
                                             otherCampusLocation : subm.session.otherCampusLocation,
                                             lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                             lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),

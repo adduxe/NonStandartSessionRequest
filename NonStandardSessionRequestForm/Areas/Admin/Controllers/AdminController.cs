@@ -51,6 +51,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Areas.Admin.Controllers
             return View();
         }
 
+
         public void GetUserRole()
         {
             string role = Request.QueryString["User"];              // Read the role off of the Querystring

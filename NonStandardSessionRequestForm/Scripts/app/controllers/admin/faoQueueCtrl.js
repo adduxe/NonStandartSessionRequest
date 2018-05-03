@@ -1,9 +1,9 @@
 ﻿
 adminModule.controller("faoQueueCtrl",
 
-    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "GetCampusName", "CampusLocations", "SessionCodes", "GetSessionName",
+    ["$scope", "$filter", "Submissions", "RateTable", "RateDescription", "EmailResult", "CampusLocations", "SessionCodes", "GetSessionName",
 
-        function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, GetCampusName, CampusLocations, SessionCodes, GetSessionName) {
+        function ($scope, $filter, Submissions, RateTable, RateDescription, EmailResult, CampusLocations, SessionCodes, GetSessionName) {
 
             RateTable.query(
                 function (data) {
@@ -38,26 +38,26 @@ adminModule.controller("faoQueueCtrl",
                                 data.map(
                                     function (subm) {
                                         return {
-                                            requestId: subm.requestId,
-                                            submissionId: subm.submissionId,
-                                            academicTerm: subm.session.academicTerm,
-                                            sessionCode: subm.session.sessionCode,
-                                            sessionName: GetSessionName(subm.session.sessionCode, $scope.sessCodes),
-                                            userEmail: subm.session.userEmail,
-                                            userPhone: subm.session.userPhone,
-                                            isClassHeldAtUpc: subm.session.isClassHeldAtUpc,
-                                            uscCampusLocation: GetCampusName(subm.session.uscCampusLocation, $scope.campusLocations),
-                                            otherCampusLocation: subm.session.otherCampusLocation,
-                                            lastDayForAddDrop: $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
+                                            requestId           : subm.requestId,
+                                            submissionId        : subm.submissionId,
+                                            academicTerm        : subm.session.academicTerm,
+                                            sessionCode         : subm.session.sessionCode,
+                                            sessionName         : GetSessionName(subm.session.sessionCode, $scope.sessCodes),
+                                            userEmail           : subm.session.userEmail,
+                                            userPhone           : subm.session.userPhone,
+                                            isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
+                                            uscCampusLocation   : getCampusLocation(subm.session.uscCampusLocation, $scope.campusLocations),
+                                            otherCampusLocation : subm.session.otherCampusLocation,
+                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate"),
                                             lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate"),
                                             lastDayForEnrollmentOptionChange:
-                                                $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
-                                            firstDayOfClass: $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
-                                            lastDayOfClass: $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
-                                            firstDayOfFinals: $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
-                                            lastDayOfFinals: $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
+                                                                    $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate"),
+                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate"),
+                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate"),
+                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate"),
+                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate"),
                                             firstDayForFinalGrading:
-                                                $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
+                                                                    $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
                                                                 $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                             rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),

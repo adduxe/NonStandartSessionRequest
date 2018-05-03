@@ -131,30 +131,6 @@ function getCampusLocation(cCode, cLocations) {
     return campusLocation;
 }
 
-sessionModule.factory('GetCampusName',
-    [
-        "CampusLocations", function(CampusLocations){
-
-            return function (campusCode) {
-                var campusName = getCampusLocation(campusCode, CampusLocations);
-                return campusName;
-            }
-        }
-    ]
-);
-
-adminModule.factory('GetCampusName',
-    [
-        "CampusLocations", function (CampusLocations) {
-
-            return function (campusCode) {
-                var campusName = getCampusLocation(campusCode, CampusLocations);
-                return campusName;
-            }
-        }
-    ]
-);
-
 'use strict';
 
 adminModule.factory('GetSpecialFeeCodes', ['$resource', function ($resource) {
@@ -645,6 +621,8 @@ sessionModule.controller("sessionRequestCtrl",
                 }
 
                 if (termHasRates) {
+
+
                     return termRateType.termRates.map(function (rateType) {
                         return {
                             rateCode: rateType.rateTypeCode,
@@ -657,6 +635,20 @@ sessionModule.controller("sessionRequestCtrl",
             }   // selectTermRateType            
 
             $scope.rateTypes = selectTermRateType($scope.rates, $scope.session.academicTerm);
+            $scope.rateTypes.sort(
+                function (a, b) {
+                    var textA = a.rateName.toUpperCase();
+                    var textB = b.rateName.toUpperCase();
+                    if (textA < textB) {
+                        return -1;
+                    }
+                    if (textA > textB) {
+                        return 1;
+                    }
+                    return 0;
+                }
+            );
+
 
             $scope.rateTypes.push(
                 { rateCode: "OTHU", rateName: "Other Unit Rate" },
@@ -1381,13 +1373,17 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes",
+    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
 
-        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes) {
+    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
+
+    ["Sessions", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
+
+        function (Sessions, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
 
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
-                                                        // it was decoded before it was submitted.
+            // it was decoded before it was submitted.
 
             var sessBreaks = $scope.session.sessionBreaks;
 
@@ -1414,8 +1410,14 @@ sessionModule.controller("sessionResultCtrl",
                 $scope.session.flatRateAmount = "TBA";
             }
 
-            $scope.campusName = GetCampusName($scope.session.uscCampusLocation);
-
+            if ($scope.session.uscCampusLocation) {
+                CampusLocations.query(function (data) {
+                    $scope.campusName = getCampusLocation($scope.session.uscCampusLocation, data);
+                });
+            } else {
+                $scope.campusName = "";
+            }
+            
             GetSpecialFeeCodes.query(function (data) {
                 $scope.SpecialFeeList = data;
             });

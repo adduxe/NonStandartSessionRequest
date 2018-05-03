@@ -220,11 +220,13 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             {
                 using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
                 {
-                    var rateTable = client.RateTable.Get();
+                    IEnumerable<TermRates> rateTable = client.RateTable.Get();
 
-                    if (rateTable == null) {
+                    if (rateTable == null)
+                    {
                         return NotFound();
                     }
+
                     return Ok(rateTable);
                 }
             }

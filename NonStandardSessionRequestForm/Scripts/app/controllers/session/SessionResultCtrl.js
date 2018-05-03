@@ -1,13 +1,17 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    ["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes",
+    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
 
-        function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes) {
+    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
+
+    ["Sessions", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
+
+        function (Sessions, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
 
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
-                                                        // it was decoded before it was submitted.
+            // it was decoded before it was submitted.
 
             var sessBreaks = $scope.session.sessionBreaks;
 
@@ -34,8 +38,14 @@ sessionModule.controller("sessionResultCtrl",
                 $scope.session.flatRateAmount = "TBA";
             }
 
-            $scope.campusName = GetCampusName($scope.session.uscCampusLocation);
-
+            if ($scope.session.uscCampusLocation) {
+                CampusLocations.query(function (data) {
+                    $scope.campusName = getCampusLocation($scope.session.uscCampusLocation, data);
+                });
+            } else {
+                $scope.campusName = "";
+            }
+            
             GetSpecialFeeCodes.query(function (data) {
                 $scope.SpecialFeeList = data;
             });
