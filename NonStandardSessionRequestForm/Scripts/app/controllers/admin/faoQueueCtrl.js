@@ -59,7 +59,7 @@ adminModule.controller("faoQueueCtrl",
                                             firstDayForFinalGrading:
                                                                     $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate"),
                                             lastDayForFinalGrading:
-                                                                $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
+                                                                    $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate"),
                                             rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
                                             ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,

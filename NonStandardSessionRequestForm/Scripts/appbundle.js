@@ -1422,9 +1422,9 @@ sessionModule.controller("sessionRequestCtrl",
 "use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    ["Sessions", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
+    ["Sessions", "$scope", "$location", "$rootScope", "GetSpecialFeeCodes", "CampusLocations",
 
-        function (Sessions, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
+        function (Sessions, $scope, $location, $rootScope, GetSpecialFeeCodes, CampusLocations) {
 
             $scope.session = $rootScope.savedSession;
             $scope.rateName = $rootScope.rateName;      // instead of looking up the code on this side,
@@ -1463,12 +1463,17 @@ sessionModule.controller("sessionResultCtrl",
                 $scope.campusName = "";
             }
             
-            GetSpecialFeeCodes.query(function (data) {
-                $scope.SpecialFeeList = data;
-            });
+            GetSpecialFeeCodes.query(
+
+                { term: $scope.session.academicTerm },
+
+                function (data) {
+                    $scope.SpecialFeeList = data;
+                }
+            );
 
             $scope.getFeeDescription = function (feeCode) {
-                return GetSpecialFeeDescription(feeCode, $scope.SpecialFeeList);
+                return GetFeeDescription(feeCode, $scope.SpecialFeeList);
             }
 
             $scope.assessDecode = function (aCode) {
