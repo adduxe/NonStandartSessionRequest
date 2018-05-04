@@ -779,23 +779,54 @@ sessionModule.controller("sessionRequestCtrl",
         function specialFeesOK(){       // checks to see if all the Special Fee fields (if any) are provided by user
 
             var allFeesEntered = true;
+            var feeEntered = false;
             $scope.requireFees = false;
 
             angular.forEach($scope.session.specialFees, function (eachFee) {
 
-                if (eachFee.feeCode > '') {
-                    if (eachFee.amount == '') {
+                feeEntered = false;
+
+                switch (true) {
+
+                    case (eachFee.feeCode > ''):                // Fee code is specified with no amount
+                        feeEntered = true;
+
+                        if ((parseInt(eachFee.amount) < 0) ||
+                            (parseInt(eachFee.amount) > 10000) ||
+                            (eachFee.amount == '') ||
+                            isNaN(eachFee.amount)) {
+
+                            allFeesEntered = false;
+                            $scope.requireFees = true;
+                            alert("Special Fee amounts should be between 0 to 10000.");
+                        }
+                        break;
+
+                    case (eachFee.amount > ''):                 // Amount is indicated with no Special Fee code
+                        feeEntered = true;
+                        if (eachFee.feeCode == '') {
+                            allFeesEntered = false;
+                            $scope.requireFees = true;
+                            alert("Please indicate the code for each Special Fee.");
+                        }
+                        break;
+
+                    case (feeEntered && (eachFee.assessedTo == '')):    // Special Fee code and amount indicated with no Assess To
                         allFeesEntered = false;
                         $scope.requireFees = true;
-                    }
+                        alert("Please indicate to where each Special Fee is to be assessed to.");
+                        break;
+
+                    case (!feeEntered && (eachFee.assessedTo > '')):    // Assessed To indicated with no Codes
+                        allFeesEntered = false;
+                        $scope.requireFees = true;
+                        alert("Please indicate all Special Fee Codes and amounts.");
+                        break;
+
+                    default:
+                        break;
                 }
 
-                if (eachFee.amount > '') {
-                    if (eachFee.feeCode == '') {
-                        allFeesEntered = false;
-                        $scope.requireFees = true;
-                    }
-                }
             });
 
             return allFeesEntered;

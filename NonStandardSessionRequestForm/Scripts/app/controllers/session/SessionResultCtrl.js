@@ -1,10 +1,6 @@
 ﻿"use strict";
 sessionModule.controller("sessionResultCtrl",
 
-    //["Sessions", "GetCampusName", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
-
-    //    function (Sessions, GetCampusName, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
-
     ["Sessions", "$scope", "$location", "$rootScope", "GetSpecialFeeDescription", "GetSpecialFeeCodes", "CampusLocations",
 
         function (Sessions, $scope, $location, $rootScope, GetSpecialFeeDescription, GetSpecialFeeCodes, CampusLocations) {
