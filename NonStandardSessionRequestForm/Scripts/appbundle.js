@@ -1073,23 +1073,41 @@ sessionModule.controller("sessionRequestCtrl",
                         }
                         break;
 
-                    case (feeEntered && (eachFee.assessedTo == '')):    // Special Fee code and amount indicated with no Assess To
-                        allFeesEntered = false;
-                        $scope.requireFees = true;
-                        alert("Please indicate to where each Special Fee is to be assessed to.");
-                        break;
-
-                    case (!feeEntered && (eachFee.assessedTo > '')):    // Assessed To indicated with no Codes
-                        allFeesEntered = false;
-                        $scope.requireFees = true;
-                        alert("Please indicate all Special Fee Codes and amounts.");
-                        break;
-
                     default:
                         break;
                 }
 
+                if (allFeesEntered){
+
+                    switch (true) {  // check the Assessed to fields
+
+                        case (feeEntered && (eachFee.assessedTo == '')):    // Special Fee code and amount indicated with no Assess To
+                            allFeesEntered = false;
+                            $scope.requireFees = true;
+                            alert("Please indicate to where each Special Fee is to be assessed to.");
+                            break;
+
+                        case (!feeEntered && (eachFee.assessedTo > '')):    // Assessed To indicated with no Codes
+                            allFeesEntered = false;
+                            $scope.requireFees = true;
+                            alert("Please indicate all Special Fee Codes and amounts.");
+                            break;
+
+                        default:
+                            break;
+                    };
+                }
+
             });
+
+            var eachFee = '';
+            for (var i = 0; i < $scope.session.specialFees.length; ++i) {   // remove fees with no entries
+                    eachFee = $scope.session.specialFees[i];
+                if ((eachFee.assessedTo == '') && (eachFee.feeCode == '') && (eachFee.amount == '')) {
+                    $scope.session.specialFees.splice(i, 1);     // remove the fee from the list
+                    break;
+                }
+            }
 
             return allFeesEntered;
         }   // specialFeesOK()
