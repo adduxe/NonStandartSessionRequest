@@ -93,7 +93,8 @@
                 </div>
                 <div class="col-md-8">
                     <abbr title="Click the Add a Special Fee button if this session requires additional fees">
-                        <kendo-button id="addSpecialFee" name="addSpecialFee" class="form-control uscRedButton" ng-click="AddSpecialFee();" >
+                        <kendo-button id="addSpecialFee" name="addSpecialFee" class="form-control uscRedButton" 
+                                      ng-disabled="(session.academicTerm == '')" ng-click="AddSpecialFee();" >
                             Add a Special Fee
                         </kendo-button>
                     </abbr>
@@ -493,7 +494,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <a href="javascript:;" class="uscRedButton" title="Delete this Special Fee" ng-click="session.specialFees.splice($index,1);">
+                <a href="javascript:;" class="uscRedButton" title="Delete this Special Fee" ng-click="DeleteThisFee($index, eachFee.feeCode);">
                     [X] Remove
                 </a>
             </div>
@@ -501,8 +502,8 @@
     </div>
     <br>
     <div class="row" style="align-content:center;" ng-init="(formError = '')">
-        <div class="col-md-5 text-center red">
-            <b>{{ formError }}</b>
+        <div class="col-md-5 red" style="text-align: center;">
+            <b><h4>{{ formError }}</h4></b>
         </div>
         <div class="col-md-2">
             <input type="submit" class="form-control uscRedButton" ng-click="SubmitForm();" value="Submit" />

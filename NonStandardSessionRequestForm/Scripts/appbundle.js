@@ -860,10 +860,11 @@ sessionModule.controller("sessionRequestCtrl",
                 "1/1/2019", "1/21/2019", "2/18/2019", "5/27/2019", "7/4/2019", "7/5/2019", "9/2/2019", "11/28/2019", "11/29/2019", "12/25/2019", "12/26/2019", "12/27/2019", "12/28/2019", "12/29/2019", "12/30/2019", "12/31/2019",
                 "1/1/2020", "1/20/2020", "2/17/2020", "5/25/2020", "7/3/2020", "9/7/2020", "11/26/2020", "11/27/2020", "12/25/2020", "12/28/2020", "12/29/2020", "12/30/2020", "12/31/2020"
             ];
-        }
+            }   // PopulateUscHolidays()
 
-        function InitializeVariables()
-        {
+
+         function InitializeVariables() {
+
             $scope.session = {
                 academicTerm: "",
                 sessionCode: "",
@@ -922,7 +923,8 @@ sessionModule.controller("sessionRequestCtrl",
             $scope.requireFees = false;
 
             return; 
-        }
+            }  // InitializeVariables()
+
 
         function areCampusLocFieldsOk() {           // Checks the Campus Location Fields
 
@@ -942,12 +944,14 @@ sessionModule.controller("sessionRequestCtrl",
 
                         campusOK = false;
                         $scope.requireUSCLoc = true;
+                        alert("Please specify the USC Campus Location.")
 
                     } else {
                         // if "Other" campus location and Other campus location is blank
                         if (($scope.session.uscCampusLocation == 'OTH') && ($scope.session.otherCampusLocation == "")) {
                             campusOK = false;
                             $scope.requireOtherLoc = true;
+                            alert("Please specify the USC Campus Location.")
                         }
                     }
                     break;
@@ -1060,7 +1064,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                             allFeesEntered = false;
                             $scope.requireFees = true;
-                            alert("Special Fee amounts should be between 0 to 10000.");
+                            alert("Special Fee amounts should be between 1 and 10000.");
                         }
                         break;
 
@@ -1237,8 +1241,10 @@ sessionModule.controller("sessionRequestCtrl",
 
         $scope.SubmitForm = function () {
 
+            $scope.formError = "";
+
             if (!IsFormValid()) {
-                alert("Please provide required fields.");
+                $scope.formError = "* Please provide or correct the marked fields.";
                 return;
             };
 
@@ -1315,6 +1321,13 @@ sessionModule.controller("sessionRequestCtrl",
             }
         }   // CheckRateAmount()
 
+        $scope.DeleteThisFee = function(feeIndex, feeCode){
+
+            $scope.session.specialFees.splice(feeIndex, 1);
+            var i = $scope.usedFees.indexOf(feeCode);
+            $scope.usedFees.splice(i, 1);
+
+        }   // deletes a Special Fee entry
 
         $scope.checkForDuplicateFee = function (feeCode, i) {
 
@@ -1322,7 +1335,7 @@ sessionModule.controller("sessionRequestCtrl",
                 alert("Fee code is already used. Choose a different one.");
                 $scope.session.specialFees[i].feeCode = 0;                 // reset the dropdown if the code is already used.
             } else {
-                $scope.usedFees[$scope.usedFees.length] = feeCode;      // mark this code so it won't be re-used.
+                $scope.usedFees.push(feeCode);      // mark this code so it won't be re-used.
             }
             return;
         }   // checkForDuplicateFee()
