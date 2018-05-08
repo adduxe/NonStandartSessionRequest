@@ -285,9 +285,14 @@ sessionModule.controller("sessionRequestCtrl",
         }                  // AddSemesterBreaks()
 
 
-        $scope.AddSpecialFee = function () {
-            var specialFee = { feeCode: "", amount: "", assessedTo: "" };
-            $scope.session.specialFees.push(specialFee);
+       $scope.AddSpecialFee = function () {
+
+           if ($scope.SpecialFeeList == '') {
+               alert("No Special Fee Codes found in the system for term " + $scope.session.academicTerm);
+           } else {
+               var specialFee = { feeCode: "", amount: "", assessedTo: "" };
+               $scope.session.specialFees.push(specialFee);
+           }
         }
 
         Date.dateDiff = function (datepart, fromdate, todate) {      // datepart: 'y', 'm', 'w', 'd', 'h', 'm', 's'
@@ -659,6 +664,7 @@ sessionModule.controller("sessionRequestCtrl",
                 $scope.SetRates();
             }
 
+            $scope.session.specialFees = [];
             $scope.GetSpecialFeesByTerm();  // Limit the Special Fees selection specific to the chosen semester only.
 
             return;
@@ -1064,7 +1070,7 @@ sessionModule.controller("sessionRequestCtrl",
 
                             allFeesEntered = false;
                             $scope.requireFees = true;
-                            alert("Special Fee amounts should be between 1 and 10000.");
+                            alert("Special Fee amounts should be between 1 and 9999.");
                         }
                         break;
 

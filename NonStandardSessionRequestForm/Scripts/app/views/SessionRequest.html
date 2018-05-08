@@ -478,7 +478,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-5">
                 <select class="form-control" id="sFeeCode" name="sFeeCode" ng-change="checkForDuplicateFee(eachFee.feeCode, $index);"
-                        ng-model="eachFee.feeCode" ng-required="requireFees">
+                        ng-model="eachFee.feeCode" ng-required="requireFees" ng-disabled="(SpecialFeeList == '')">
                     <option ng-repeat="eachFee in SpecialFeeList" value="{{ eachFee.substring(0, eachFee.indexOf(' ')) }}">{{ eachFee }}</option>
                 </select>
             </div>
