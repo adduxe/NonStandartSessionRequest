@@ -2,18 +2,17 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
-using SessionRequestApi.Client;
-using SessionRequestApi.Client.Models;
 using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using USC.RNR.NonStandardSessionRequestForm.Controllers.Helpers;
-using UvApi.RnrSWebSess.Client;
 using System.Net.Mail;
-using USC.PE.Api.DTO.RnrApps;
 using System.Collections.Generic;
+using DataApi.Models;
+using DataApi;
+using PeApi;
 
 namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 {
@@ -30,7 +29,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
-                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                using (var client = new DataAPI(_dataApiUri))
                 {
                     var user = new UserHelper();
                     session.OwningSchool = user.School;
@@ -68,7 +67,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
-                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                using (var client = new DataAPI(_dataApiUri))
                 {
                     var sessionRequest = await client.SessionRequest.GetByRequestIdAsync(requestId);
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
@@ -128,7 +127,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
                     department = "Bur";
                 }
 
-                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                using (var client = new DataAPI(_dataApiUri))
                 {
                     var sessionRequest = await client.Submissions.GetByDepartmentStatusAsync(department, status);
                     var json = JsonConvert.SerializeObject(sessionRequest, new JsonSerializerSettings
@@ -159,7 +158,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
-                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                using (var client = new DataAPI(_dataApiUri))
                 {
                     await client.Submissions.PutBySubmissionIdSubmissionDTOAsync(submissionId, submission);
                     return Ok();
@@ -178,23 +177,25 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("specialfeecodes/{term}")]
-        public async Task<IHttpActionResult> GetSpecialFeeCodes(string term) {
+        public IHttpActionResult GetSpecialFeeCodes(string term)
+        {
 
             try
             {
-                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                using (var client = new PEApi(_peApiUri))
                 {
-                    IEnumerable<SpecialFeeCode> feeCodes = client.SpecialFeeCodes.Get(term);
+                    var feeCodes = client.SpecialFeeCodes.Get1(term);
 
                     if (feeCodes == null)
                     {
                         return NotFound();
                     }
-                    else {
+                    else
+                    {
                         List<string> SFCodes = new List<string>();
-                        foreach (SpecialFeeCode specFeeCode in feeCodes)
+                        foreach (var specFeeCode in feeCodes)
                         {
-                            SFCodes.Add(specFeeCode.FTCode + " " + specFeeCode.FTDescription);
+                            SFCodes.Add(specFeeCode.FtCode + " " + specFeeCode.FtDescription);
                         }
                         return Ok(SFCodes);
                     }
@@ -214,13 +215,13 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
 
         [Route("ratetable")]
-        public async Task<IHttpActionResult> GetRateTable()
+        public IHttpActionResult GetRateTable()
         {
             try
             {
-                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                using (var client = new PeApi.PEApi(_peApiUri))
                 {
-                    IEnumerable<TermRates> rateTable = client.RateTable.Get();
+                    var rateTable = client.RateTable.Get();
 
                     if (rateTable == null)
                     {
@@ -244,11 +245,11 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
 
 
         [Route("usclocations")]
-        public async Task<IHttpActionResult> GetUscLocations() {
+        public IHttpActionResult GetUscLocations() {
 
             try
             {
-                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                using (var client = new PEApi(_peApiUri))
                 {
                     var uscLocations = client.UscLocations.Get();
 
@@ -276,9 +277,9 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
-                using (var client = new UvApiClient(_uvApiUri))
+                using (var client = new UvApi.USCCommonUVApi(_uvApiUri))
                 {
-                    await client.RnrSWebSess.PostAsync(json.ToString());
+                    await client.RnrSWebSess.PostWithHttpMessagesAsync(json.ToString());
                 }
             }
             catch (HttpOperationException apiEx)
@@ -296,11 +297,11 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("sessioncodes")]
-        public async Task<IHttpActionResult> GetSessionCodes()
+        public IHttpActionResult GetSessionCodes()
         {
             try
             {
-                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                using (var client = new PEApi(_peApiUri))
                 {
                     var sessionCodes = client.SessionCodes.Get();
                     
@@ -319,13 +320,13 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         }
 
         [Route("sessions/{term}/001")]
-        public async Task<IHttpActionResult> GetSession001(string term)
+        public IHttpActionResult GetSession001(string term)
         {
             try
             {
-                using (var client = new PE.Api.Client.RnrAppsClient(_peApiUri))
+                using (var client = new PEApi(_peApiUri))
                 {
-                    var sessionDate = client.SessionDates.Get(term, "001");
+                    var sessionDate = client.SessionDates.Get1(term, "001");
                     if (sessionDate == null)
                     {
                         return NotFound();
@@ -335,12 +336,12 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             }
             catch (HttpOperationException apiEx)
             {
-                Log.Logger.Error("Failed to GET Session 001 dates! Error: {Error}", apiEx.Message);
+                Log.Logger.Warning("Failed to GET Session 001 dates! Error: {Error}", apiEx.Message);
                 return InternalServerError(apiEx);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to GET Session 001 dates! Error: {Error}", ex.Message);
+                Log.Logger.Warning("Failed to GET Session 001 dates! Error: {Error}", ex.Message);
                 return InternalServerError(ex);
             }
         }
@@ -466,7 +467,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
             try
             {
                 Submission Submission;
-                using (var client = new RNRSessionRequestAPI(_dataApiUri))
+                using (var client = new DataAPI(_dataApiUri))
                 {
                     Submission = await client.Submissions.GetBySubmissionIdAsync(submId);
                 }
