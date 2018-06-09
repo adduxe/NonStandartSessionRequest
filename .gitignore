@@ -216,3 +216,13 @@ ModelManifest.xml
 NonStandardSessionRequestForm/Scripts/appbundle\.js
 
 NonStandardSessionRequestForm/Scripts/appbundle\.min\.js
+
+NonStandardSessionRequestForm/Scripts/adminbundle\.js
+
+NonStandardSessionRequestForm/Scripts/adminbundle\.min\.js
+
+NonStandardSessionRequestForm/Scripts/coreBundle\.min\.js
+
+NonStandardSessionRequestForm/Scripts/sharedBundle\.js
+
+NonStandardSessionRequestForm/Scripts/sharedBundle\.min\.js
