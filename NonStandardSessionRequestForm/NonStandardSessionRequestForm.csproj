@@ -291,6 +291,7 @@
     <None Include="Content\bootstrap-theme.min.css.map" />
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\angular-mocks.js" />
     <None Include="Scripts\angular-resource.js" />
     <None Include="Scripts\angular-resource.min.js" />

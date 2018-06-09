@@ -750,7 +750,9 @@ sessionModule.controller("sessionRequestCtrl",
                 switch (true) {
 
                     case (typeof $scope.session.flatRateUnitsMin === "undefined"):      // value is outside field min/max value
+                    case (typeof $scope.session.gradFlatRateUnitsMin === "undefined"):      // value is outside field min/max value
                     case !(parseInt($scope.session.flatRateUnitsMin) > 0):
+                    case !(parseInt($scope.session.gradFlatRateUnitsMin) > 0):
 
                         errMsg = "The Flat Rate Range minimum units should be between 1 and " + ($scope.MAXUNITS - 1) + ".";
                         $scope.requireUnitRange = true;
@@ -758,7 +760,9 @@ sessionModule.controller("sessionRequestCtrl",
                         break;
 
                     case (typeof $scope.session.flatRateUnitsMax === "undefined"):      // value is outside field min/max value
+                    case (typeof $scope.session.gradFlatRateUnitsMax === "undefined"):      // value is outside field min/max value
                     case !(parseInt($scope.session.flatRateUnitsMax) > 1):
+                    case !(parseInt($scope.session.gradFlatRateUnitsMax) > 0):
 
                         errMsg = "The Flat Rate Range maximum units should be between 2 and " + $scope.MAXUNITS + ".";
                         $scope.requireUnitRange = true;
