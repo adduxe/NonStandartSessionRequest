@@ -277,6 +277,7 @@ namespace USC.RNR.NonStandardSessionRequestForm.Controllers.Api
         {
             try
             {
+                //Log.Logger.Debug("{Json} sent to SIS.", json);
                 using (var client = new UvApi.USCCommonUVApi(_uvApiUri))
                 {
                     await client.RnrSWebSess.PostWithHttpMessagesAsync(json.ToString());

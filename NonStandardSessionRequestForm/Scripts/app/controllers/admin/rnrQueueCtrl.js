@@ -41,18 +41,18 @@
                                             isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
                                             uscCampusLocation   : getCampusLocation(subm.session.uscCampusLocation, $scope.campusLocations),
                                             otherCampusLocation : subm.session.otherCampusLocation,
-                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate", "+0"),
-                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate", "+0"),
+                                            lastDayForAddDrop   : convDateToString(subm.session.lastDayForAddDrop),
+                                            lastDayForWithdrawal: convDateToString(subm.session.lastDayForWithdrawal),
                                             lastDayForEnrollmentOptionChange:
-                                                                $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate", "+0"),
-                                            firstDayOfClass: $filter('date')(subm.session.firstDayOfClass, "mediumDate", "+0"),
-                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate", "+0"),
-                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate", "+0"),
-                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate", "+0"),
+                                                                convDateToString(subm.session.lastDayForEnrollmentOptionChange),
+                                            firstDayOfClass: convDateToString(subm.session.firstDayOfClass),
+                                            lastDayOfClass      : convDateToString(subm.session.lastDayOfClass),
+                                            firstDayOfFinals    : convDateToString(subm.session.firstDayOfFinals),
+                                            lastDayOfFinals     : convDateToString(subm.session.lastDayOfFinals),
                                             firstDayForFinalGrading:
-                                                                $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate", "+0"),
+                                                                convDateToString(subm.session.firstDayForFinalGrading),
                                             lastDayForFinalGrading:
-                                                                $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate", "+0"),
+                                                                convDateToString(subm.session.lastDayForFinalGrading),
                                             rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
                                             ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
@@ -61,18 +61,18 @@
                                             owningSchool        : subm.session.owningSchool,
                                             owningDepartment    : subm.session.owningDepartment,
                                             userContact         : subm.session.userContact,
-                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate", "+0"),
+                                            requestDate         : convDateToString(subm.session.requestDate),
                                             sections            : subm.session.sections,
                                             sessionBreaks       : subm.session.sessionBreaks,
                                             comments            : subm.session.comments,
                                             faoAction           : subm.faoAction,
-                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate", "+0"),
+                                            faoActionDate       : convDateToString(subm.faoActionDate),
                                             faoActionReason     : subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
-                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate", "+0"),
+                                            rnrActionDate       : convDateToString(subm.rnrActionDate),
                                             rnrActionReason     : subm.rnrActionReason,
                                             burAction           : subm.burAction,
-                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate", "+0"),
+                                            burActionDate       : convDateToString(subm.burActionDate),
                                             burActionReason     : subm.burActionReason
                                         };
                                     }));
@@ -216,11 +216,10 @@
                 var dateString = "";
 
                 if (givenDate) {
-                    var newDate = new Date(givenDate);
-                    dateString = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+                    dateString = $filter('date')(givenDate, "mediumDate", "+0");
                 }
                 return dateString;
-            }   // convDateToString()
+            }   // )
 
             $scope.approveRequest = function (submID) {
 
@@ -247,22 +246,23 @@
                         break;
                 }   // end of switch()
 
+
                 var sisDatesPacket = {
-                    academicTerm            : session.academicTerm,
-                    sessionCode             : session.sessionCode,
-                    firstDayOfClass         : convDateToString(session.firstDayOfClass),
-                    lastDayOfClass          : convDateToString(session.lastDayOfClass),
-                    firstDayOfFinals        : convDateToString(session.firstDayOfFinals),
-                    lastDayOfFinals         : convDateToString(session.lastDayOfFinals),
-                    lastDayForAddDrop       : convDateToString(session.lastDayForAddDrop),
-                    lastDayForWithdrawal    : convDateToString(session.lastDayForWithdrawal),
+                    academicTerm: session.academicTerm,
+                    sessionCode: session.sessionCode,
+                    firstDayOfClass: convDateToString(session.firstDayOfClass),
+                    lastDayOfClass: convDateToString(session.lastDayOfClass),
+                    firstDayOfFinals: convDateToString(session.firstDayOfFinals),
+                    lastDayOfFinals: convDateToString(session.lastDayOfFinals),
+                    lastDayForAddDrop: convDateToString(session.lastDayForAddDrop),
+                    lastDayForWithdrawal: convDateToString(session.lastDayForWithdrawal),
                     lastDayForEnrollmentOptionChange: convDateToString(session.lastDayForEnrollmentOptionChange),
-                    firstDayForFinalGrading : convDateToString(session.firstDayForFinalGrading),
-                    lastDayForFinalGrading  : convDateToString(session.lastDayForFinalGrading),
-                    sessionBreak1BeginDate  : convDateToString(sessBreaks[sessDates.Sess1Start]),
-                    sessionBreak1EndDate    : convDateToString(sessBreaks[sessDates.Sess1End]),
-                    sessionBreak2BeginDate  : convDateToString(sessBreaks[sessDates.Sess2Start]),
-                    sessionBreak2EndDate    : convDateToString(sessBreaks[sessDates.Sess2End])
+                    firstDayForFinalGrading: convDateToString(session.firstDayForFinalGrading),
+                    lastDayForFinalGrading: convDateToString(session.lastDayForFinalGrading),
+                    sessionBreak1BeginDate: convDateToString(sessBreaks[sessDates.Sess1Start]),
+                    sessionBreak1EndDate: convDateToString(sessBreaks[sessDates.Sess1End]),
+                    sessionBreak2BeginDate: convDateToString(sessBreaks[sessDates.Sess2Start]),
+                    sessionBreak2EndDate: convDateToString(sessBreaks[sessDates.Sess2End])
                 };
 
                 $scope.spinningWheel.center().open();
