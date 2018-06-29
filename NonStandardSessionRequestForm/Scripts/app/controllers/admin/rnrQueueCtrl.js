@@ -100,6 +100,17 @@
                 pageSize: 10
             });
 
+            function convDateToString(givenDate) {
+
+                var dateString = "";
+
+                if (givenDate) {
+                    dateString = $filter('date')(givenDate, "mediumDate", "+0");
+                }
+
+                return dateString;
+            }
+
 
             $scope.mainGridOptions =
                 {
@@ -210,16 +221,6 @@
                 $scope.selectedSess = $filter('filter')($scope.submissions, { "submissionId": $scope.submID }, true)[0];
                 return;
             }
-
-            function convDateToString(givenDate) {
-
-                var dateString = "";
-
-                if (givenDate) {
-                    dateString = $filter('date')(givenDate, "mediumDate", "+0");
-                }
-                return dateString;
-            }   // )
 
             $scope.approveRequest = function (submID) {
 
