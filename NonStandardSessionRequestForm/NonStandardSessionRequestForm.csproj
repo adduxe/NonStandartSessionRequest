@@ -368,7 +368,6 @@
     <Content Include="Scripts\app\services\admin\getSessionNameService.js" />
     <Content Include="Scripts\app\services\session\semStartDatesService.js" />
     <Content Include="Scripts\app\services\shared\campusLocationsService.js" />
-    <Content Include="Scripts\app\services\shared\ConvDateToString.js" />
     <Content Include="Scripts\app\services\shared\getCampusName.js" />
     <Content Include="Scripts\app\services\shared\getSpecialFeeCodes.js" />
     <Content Include="Scripts\app\services\shared\getSpecialFeeDescription.js" />

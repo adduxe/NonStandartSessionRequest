@@ -48,18 +48,18 @@ adminModule.controller("faoQueueCtrl",
                                             isClassHeldAtUpc    : subm.session.isClassHeldAtUpc,
                                             uscCampusLocation   : getCampusLocation(subm.session.uscCampusLocation, $scope.campusLocations),
                                             otherCampusLocation : subm.session.otherCampusLocation,
-                                            lastDayForAddDrop   : convDateToString(subm.session.lastDayForAddDrop),
-                                            lastDayForWithdrawal: convDateToString(subm.session.lastDayForWithdrawal),
+                                            lastDayForAddDrop   : $filter('date')(subm.session.lastDayForAddDrop, "mediumDate", "+0"),
+                                            lastDayForWithdrawal: $filter('date')(subm.session.lastDayForWithdrawal, "mediumDate", "+0"),
                                             lastDayForEnrollmentOptionChange:
-                                                                    convDateToString(subm.session.lastDayForEnrollmentOptionChange),
-                                            firstDayOfClass     : convDateToString(subm.session.firstDayOfClass),
-                                            lastDayOfClass      : convDateToString(subm.session.lastDayOfClass),
-                                            firstDayOfFinals    : convDateToString(subm.session.firstDayOfFinals),
-                                            lastDayOfFinals     : convDateToString(subm.session.lastDayOfFinals),
+                                                                    $filter('date')(subm.session.lastDayForEnrollmentOptionChange, "mediumDate", "+0"),
+                                            firstDayOfClass     : $filter('date')(subm.session.firstDayOfClass, "mediumDate", "+0"),
+                                            lastDayOfClass      : $filter('date')(subm.session.lastDayOfClass, "mediumDate", "+0"),
+                                            firstDayOfFinals    : $filter('date')(subm.session.firstDayOfFinals, "mediumDate", "+0"),
+                                            lastDayOfFinals     : $filter('date')(subm.session.lastDayOfFinals, "mediumDate", "+0"),
                                             firstDayForFinalGrading:
-                                                                    convDateToString(subm.session.firstDayForFinalGrading),
+                                                                    $filter('date')(subm.session.firstDayForFinalGrading, "mediumDate", "+0"),
                                             lastDayForFinalGrading:
-                                                                    convDateToString(subm.session.lastDayForFinalGrading),
+                                                                    $filter('date')(subm.session.lastDayForFinalGrading, "mediumDate", "+0"),
                                             rateType            : RateDescription(subm.session.rateType, subm.session.academicTerm, $scope.rates),
                                             ratePerUnitAmount   : subm.session.ratePerUnitAmount,
                                             flatRateAmount      : subm.session.flatRateAmount,
@@ -70,19 +70,19 @@ adminModule.controller("faoQueueCtrl",
                                             owningSchool        : subm.session.owningSchool,
                                             owningDepartment    : subm.session.owningDepartment,
                                             userContact         : subm.session.userContact,
-                                            requestDate         : convDateToString(subm.session.requestDate),
+                                            requestDate         : $filter('date')(subm.session.requestDate, "mediumDate", "+0"),
                                             sections            : subm.session.sections,
                                             sessionBreaks       : subm.session.sessionBreaks,
                                             specialFees         : subm.session.specialFees,
                                             comments            : subm.session.comments,
                                             faoAction           : subm.faoAction,
-                                            faoActionDate       : convDateToString(subm.faoActionDate),
+                                            faoActionDate       : $filter('date')(subm.faoActionDate, "mediumDate", "+0"),
                                             faoActionReason     : subm.faoActionReason,
                                             rnrAction           : subm.rnrAction,
-                                            rnrActionDate       : convDateToString(subm.rnrActionDate),
+                                            rnrActionDate       : $filter('date')(subm.rnrActionDate, "mediumDate", "+0"),
                                             rnrActionReason     : subm.rnrActionReason,
                                             burAction           : subm.burAction,
-                                            burActionDate       : convDateToString(subm.burActionDate),
+                                            burActionDate       : $filter('date')(subm.burActionDate, "mediumDate", "+0"),
                                             burActionReason     : subm.burActionReason
                                     };
                                     }));
@@ -107,18 +107,6 @@ adminModule.controller("faoQueueCtrl",
                 },
                 pageSize: 10
             });
-
-            function convDateToString(givenDate) {
-
-                var dateString = "";
-
-                if (givenDate) {
-                    dateString = $filter('date')(givenDate, "mediumDate", "+0");
-                }
-
-                return dateString;
-            }
-
 
             $scope.mainGridOptions = {
 
